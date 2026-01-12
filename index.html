@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         :root {
             --primary: #0d5c33;
             --secondary: #e63946;
@@ -21,25 +22,25 @@
             --accent: #a8dadc;
             --card-bg: rgba(255, 255, 255, 0.9);
         }
-        
+
         body {
             background: linear-gradient(135deg, #0d5c33 0%, #1d3557 100%);
             color: var(--light);
             min-height: 100vh;
             padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
             padding: 30px 0;
             margin-bottom: 30px;
         }
-        
+
         .logo-container {
             display: flex;
             justify-content: center;
@@ -47,7 +48,7 @@
             gap: 15px;
             margin-bottom: 15px;
         }
-        
+
         .logo {
             width: 70px;
             height: 70px;
@@ -58,19 +59,19 @@
             align-items: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        
+
         .logo i {
             color: var(--primary);
             font-size: 36px;
         }
-        
+
         h1 {
             font-size: 2.8rem;
             font-weight: 700;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 1px;
         }
-        
+
         .subtitle {
             font-size: 1.2rem;
             opacity: 0.9;
@@ -78,14 +79,14 @@
             margin: 0 auto;
             line-height: 1.6;
         }
-        
+
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
-        
+
         .tool-card {
             background: var(--card-bg);
             border-radius: 15px;
@@ -94,12 +95,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             color: var(--dark);
         }
-        
+
         .tool-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
-        
+
         .card-header {
             background: var(--primary);
             color: white;
@@ -108,26 +109,26 @@
             align-items: center;
             gap: 15px;
         }
-        
+
         .card-header i {
             font-size: 28px;
         }
-        
+
         .card-header h2 {
             font-size: 1.5rem;
             font-weight: 600;
         }
-        
+
         .card-body {
             padding: 25px;
         }
-        
+
         .card-body p {
             margin-bottom: 20px;
             line-height: 1.6;
             color: #444;
         }
-        
+
         .btn {
             display: inline-block;
             background: var(--secondary);
@@ -142,13 +143,13 @@
             width: 100%;
             font-size: 1.1rem;
         }
-        
+
         .btn:hover {
             background: transparent;
             color: var(--secondary);
             transform: scale(1.05);
         }
-        
+
         .emergency-btn {
             background: var(--secondary);
             padding: 18px;
@@ -156,12 +157,12 @@
             margin-top: 20px;
             box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
         }
-        
+
         .emergency-btn:hover {
             background: #c1121f;
             transform: scale(1.05) translateY(-3px);
         }
-        
+
         footer {
             text-align: center;
             padding: 20px;
@@ -170,21 +171,21 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             margin-top: 20px;
         }
-        
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
-            
+
             .tools-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .btn {
                 padding: 14px 20px;
             }
         }
-        
+
         .search-container {
             background: var(--card-bg);
             border-radius: 15px;
@@ -192,7 +193,7 @@
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
-        
+
         .search-container h2 {
             color: var(--dark);
             margin-bottom: 15px;
@@ -200,12 +201,12 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .search-box {
             display: flex;
             gap: 10px;
         }
-        
+
         .search-box input {
             flex: 1;
             padding: 14px 20px;
@@ -214,11 +215,11 @@
             font-size: 1.1rem;
             outline: none;
         }
-        
+
         .search-box input:focus {
             border-color: var(--primary);
         }
-        
+
         .search-box button {
             background: var(--primary);
             color: white;
@@ -229,12 +230,13 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        
+
         .search-box button:hover {
             background: #0a4a28;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -244,9 +246,10 @@
                 </div>
             </div>
             <h1>Luxembourg Paramedic Toolkit</h1>
-            <p class="subtitle">Your essential guide to critical resources and tools for emergency medical services in Luxembourg</p>
+            <p class="subtitle">Your essential guide to critical resources and tools for emergency medical services in
+                Luxembourg</p>
         </header>
-        
+
         <div class="search-container">
             <h2><i class="fas fa-pills"></i> Medication Database Search</h2>
             <p>Search for medications available in Luxembourg pharmacies and hospitals</p>
@@ -255,8 +258,22 @@
                 <button>Search</button>
             </div>
         </div>
-        
+
         <div class="tools-grid">
+
+            <!-- Hôpital de garde -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-hospital"></i>
+                    <h2>Hôpital de garde</h2>
+                </div>
+                <div class="card-body">
+                    <p>CHôpitaux de Garde – Luxembourg</p>
+                    <a href="hopitaux-garde-luxembourg.html" target="_blank" class="btn">Consulter hôpital de garde</a>
+                </div>
+            </div>
+
+
             <!-- CGDIS Portail -->
             <div class="tool-card">
                 <div class="card-header">
@@ -264,11 +281,12 @@
                     <h2>CGDIS Portail</h2>
                 </div>
                 <div class="card-body">
-                    <p>Official portal for Luxembourg's Grand Ducal Fire and Rescue Service. Access protocols, documentation, and official resources.</p>
-                    <a href="https://www.cgdis.lu" target="_blank" class="btn">Open CGDIS Portal</a>
+                    <p>Official portal for Luxembourg's Grand Ducal Fire and Rescue Service. Access protocols,
+                        documentation, and official resources.</p>
+                    <a href="https://portailcgdis.intranet.etat.lu/" target="_blank" class="btn">Open CGDIS Portal</a>
                 </div>
             </div>
-            
+
             <!-- CGDIS Leveso -->
             <div class="tool-card">
                 <div class="card-header">
@@ -276,23 +294,25 @@
                     <h2>CGDIS Leveso</h2>
                 </div>
                 <div class="card-body">
-                    <p>Training and formation dashboard for paramedics. Access courses, certifications, and educational resources.</p>
-                    <a href="https://leveso.cgdis.lu" target="_blank" class="btn">Access Training Dashboard</a>
+                    <p>Prendre rendez-vous pour une formation</p>
+                    <a href="https://inscription.cgdis.lu/mobile/#/login" target="_blank" class="btn">Ouvrir Leveso
+                        mobile</a>
                 </div>
             </div>
-            
+
             <!-- Garde Wirtz -->
             <div class="tool-card">
                 <div class="card-header">
-                    <i class="fas fa-hospital"></i>
-                    <h2>Garde Wirtz</h2>
+                    <i class="fas fa-file-alt"></i>
+                    <h2>Leveso Handouts</h2>
                 </div>
                 <div class="card-body">
-                    <p>Check which hospital is currently on call for emergency services in Luxembourg.</p>
-                    <a href="https://garde.wirtz.click" target="_blank" class="btn">View On-Call Hospital</a>
+                    <p>Documets complémentaires publics des formations</p>
+                    <a href="https://112.public.lu/fr/Doc/handoutsleveso.html" target="_blank" class="btn">consulter les
+                        documents</a>
                 </div>
             </div>
-            
+
             <!-- OSCAR Monitor -->
             <div class="tool-card">
                 <div class="card-header">
@@ -301,64 +321,114 @@
                 </div>
                 <div class="card-body">
                     <p>Real-time monitoring of ambulance personnel and vehicle status across Luxembourg.</p>
-                    <a href="#" class="btn">Access OSCAR Monitor</a>
+                    <a href="osc.systems/" class="btn">Ouvrir OSCAR</a>
                 </div>
             </div>
-            
-            <!-- Medication Database -->
+
+            <!-- Study SAMU Meds-->
             <div class="tool-card">
                 <div class="card-header">
-                    <i class="fas fa-prescription-bottle-alt"></i>
-                    <h2>Medication Database</h2>
+                    <i class="fas fa-pills"></i>
+                    <h2>Apprendre les Médicaments du SAMU</h2>
                 </div>
                 <div class="card-body">
-                    <p>Comprehensive database of all medications available in Luxembourg with dosage information and availability.</p>
-                    <a href="#" class="btn">Search Medications</a>
+                    <p>Apprendre les noms et effets des médicaments du SAMU</p>
+                    <a href="samuMedsQuizlet.html" class="btn">Commencer le quiz</a>
                 </div>
             </div>
-            
-            <!-- Emergency Protocols -->
+
+            <!-- Status-->
             <div class="tool-card">
                 <div class="card-header">
-                    <i class="fas fa-book-medical"></i>
-                    <h2>Emergency Protocols</h2>
+                    <i class="fas fa-ambulance"></i>
+                    <h2>Voir le statut des ambulances</h2>
                 </div>
                 <div class="card-body">
-                    <p>Quick access to Luxembourg-specific emergency medical protocols and procedures.</p>
-                    <a href="#" class="btn">View Protocols</a>
+                    <p>Cette fonction n'est pas approuvé par le CGDIS!!!</p>
+                    <a href="status/index.html" class="btn">Ouvrir l'application</a>
+                </div>
+            </div>
+
+            <!-- CGDIS Infopage-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-info"></i>
+                    <h2>Page intern d'information CGDIS</h2>
+                </div>
+                <div class="card-body">
+                    <p>Liste des liens internes du cgdis. (Seullement accessible depuis le réseau interne)</p>
+                    <a href="CGDIS INFOPAGE.htm" class="btn">Ouvrir la page</a>
+                </div>
+            </div>
+
+            <!-- Study Rescue Rush-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>Réviser pour examen SAP</h2>
+                </div>
+                <div class="card-body">
+                    <p>Quiz inofficiel pour réviser pour les examen théorique SAP</p>
+                    <a href="https://rescue-rush.lu/?games" class="btn">Ouvrir Rescue Rush</a>
+                </div>
+            </div>
+
+            <!-- Rescue Rush Quiz -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>Réviser pour examen SAP</h2>
+                </div>
+                <div class="card-body">
+                    <p>Quiz inofficiel pour réviser pour les examen théorique SAP</p>
+                    <a href="https://rescue-rush.lu/?games" class="btn">Commencer le quiz</a>
+                </div>
+            </div>
+
+            <!-- Buy Rescue Rush -->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-dice"></i>
+                    <h2>Jeux sur les premiers secours</h2>
+                </div>
+                <div class="card-body">
+                    <p>Rescue Rush, un jeu de simulation de premiers secours</p>
+                    <a href="https://rescue-rush.lu/?shop#main-content" class="btn">Acheter Rescue Rush</a>
                 </div>
             </div>
         </div>
-        
+
         <div style="text-align: center;">
             <a href="tel:112" class="btn emergency-btn">
-                <i class="fas fa-phone-alt"></i> EMERGENCY: CALL 112
+                <i class="fas fa-phone-alt"></i> Urgence: APPELEZ 112
             </a>
         </div>
-        
+
         <footer>
             <p>Luxembourg Paramedic Toolkit &copy; 2026 | For emergency medical personnel only</p>
-            <p>Note: All external links open in new tabs. Ensure you have proper authorization before accessing secure systems.</p>
+            <p>Note: All external links open in new tabs. Ensure you have proper authorization before accessing secure
+                systems.</p>
         </footer>
     </div>
 
     <script>
         // Simple search functionality for medication database
-        document.querySelector('.search-box button').addEventListener('click', function() {
+        document.querySelector('.search-box button').addEventListener('click', function () {
             const searchTerm = document.querySelector('.search-box input').value.trim();
-            if(searchTerm) {
+            if (searchTerm) {
                 alert(`Searching for medication: ${searchTerm}\n\nIn a real implementation, this would query the Luxembourg medication database.`);
             } else {
                 alert('Please enter a medication name to search');
             }
         });
-        
+
         // Allow Enter key to trigger search
-        document.querySelector('.search-box input').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
+        document.querySelector('.search-box input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
                 document.querySelector('.search-box button').click();
             }
         });
     </script>
 </body>
+
 </html>

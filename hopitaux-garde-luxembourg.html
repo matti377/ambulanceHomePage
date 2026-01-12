@@ -1,0 +1,427 @@
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏥 Hôpitaux de Garde – Luxembourg</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edff 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      margin: 20px 0 30px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      color: #0033a0;
+      /* Luxembourg blue */
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #d00000;
+      /* Luxembourg red */
+      font-weight: 500;
+    }
+
+    .time {
+      font-size: 1.1rem;
+      margin-top: 12px;
+      color: #555;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      max-width: 1000px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 280px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: #0033a0;
+    }
+
+    .card .hospital {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #d00000;
+    }
+
+    .card .note {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .card.nord h2 {
+      border-top: 4px solid #00a040;
+    }
+
+    /* green for Nord */
+    .card.sud h2 {
+      border-top: 4px solid #d00000;
+    }
+
+    /* red for Sud */
+    .card.centre h2 {
+      border-top: 4px solid #0033a0;
+    }
+
+    /* blue for Centre */
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 620px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🏥 Hôpitaux de Garde – Luxembourg</h1>
+    <div class="subtitle">Service d'urgence 24/7 – Régions Nord, Sud, Centre</div>
+    <div class="time" id="current-time">Heure actuelle (Luxembourg) : 08/01/2026 08:27</div>
+  </header>
+
+  <div style="text-align: center; margin-bottom: 24px;">
+    <label for="select-date" style="font-weight: 600; color: #0033a0; margin-right: 10px;">
+      Voir la garde pour le :
+    </label>
+    <input type="date" id="select-date" min="2026-01-01" max="2026-06-30"
+      style="padding: 6px; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc;">
+    <label for="select-hour" style="margin-left: 16px; font-weight: 600; color: #0033a0;">
+      Heure :
+    </label>
+    <input type="time" id="select-hour" value="14:00"
+      style="padding: 6px; font-size: 1rem; border-radius: 6px; border: 1px solid #ccc; margin-left: 6px;">
+  </div>
+
+  <div class="cards">
+    <div class="card centre">
+      <h2>Région Centre</h2>
+      <div class="hospital" id="centre">Grande Garde : Centre Hospitalier de Luxembourg<br>Petite Garde : Hôpital
+        Kirchberg</div>
+      <div class="note" id="centre-note">La Petite Garde n'assure plus les admissions après 15h00.</div>
+    </div>
+    <div class="card nord">
+      <h2>Région Nord</h2>
+      <div class="hospital" id="nord">Centre Hospitalier du Nord (Ettelbruck)</div>
+    </div>
+    <div class="card sud">
+      <h2>Région Sud</h2>
+      <div class="hospital" id="sud">Centre Hospitalier Emile Mayrisch (Esch-sur-Alzette)</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Source: Algorithme automatique – Paut faire des fautes!<br>
+    Mise à jour automatique chaque minute<br>
+    <a href="#" id="download-link"
+      style="color: #0033a0; text-decoration: underline; margin-top: 8px; display: inline-block;">
+      📥 Télécharger cette page pour l'utiliser hors ligne
+    </a>
+  </footer>
+
+  <script>
+    // Hospital names
+    const NORD = "Centre Hospitalier du Nord (Ettelbruck)";
+    const SUD = "Centre Hospitalier Emile Mayrisch (Esch-sur-Alzette)";
+    const CHL = "Centre Hospitalier de Luxembourg";
+    const HK = "Hôpital Kirchberg";
+
+    document.getElementById('select-date').addEventListener('change', updateFromPicker);
+    document.getElementById('select-hour').addEventListener('change', updateFromPicker);
+
+    function updateFromPicker() {
+      const dateInput = document.getElementById('select-date').value;
+      const timeInput = document.getElementById('select-hour').value;
+      if (!dateInput || !timeInput) return;
+
+      // Combine into ISO string and parse as local time (treat as Luxembourg time)
+      const dtStr = dateInput + 'T' + timeInput;
+      const selected = new Date(dtStr);
+
+      // Force interpretation as Luxembourg time (not UTC)
+      const luxOffset = -60; // CET = UTC+1 → offset = -60 minutes
+      const userOffset = selected.getTimezoneOffset();
+      const corrected = new Date(selected.getTime() + (userOffset + luxOffset) * 60000);
+
+      displayForDateTime(corrected);
+    }
+
+    // Get current time in Luxembourg (without seconds, French format)
+    function luxembourgTime() {
+      return new Date().toLocaleString("fr-FR", {
+        timeZone: "Europe/Luxembourg",
+        hour12: false,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    // Parse French-formatted date string like "08/01/2026 à 14:30"
+    function parseLuxDate(str) {
+      // Split on " à " (note the space!)
+      const parts = str.split(' à ');
+      if (parts.length !== 2) {
+        console.error("Format de date inattendu:", str);
+        return new Date(); // fallback
+      }
+      const [datePart, timePart] = parts;
+      const [day, month, year] = datePart.split('/');
+      const [hour, minute] = timePart.split(':');
+
+      const d = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1, // months are 0-indexed
+        parseInt(day, 10),
+        parseInt(hour, 10),
+        parseInt(minute, 10)
+      );
+
+      // Safety check
+      if (isNaN(d.getTime())) {
+        console.error("Date invalide générée:", str);
+        return new Date();
+      }
+      return d;
+    }
+
+    // Determine which hospital is on night duty on a given DATE (ignores time)
+    function getNightHospital(date) {
+      const refAlt = new Date(2026, 0, 2); // Jan 2, 2026 → CHL
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const diffAlt = Math.floor((today - refAlt) / (1000 * 60 * 60 * 24));
+      if (diffAlt < 0) return CHL;
+      return (diffAlt % 2 === 0) ? CHL : HK;
+    }
+// Reusable function to display hospitals for any Date object
+function displayForDateTime(selectedDate) {
+  const dayOfWeek = selectedDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+  const hours = selectedDate.getHours();
+
+  const nord = NORD;
+  const sud = SUD;
+
+  // Weekend: Saturday (6) or Sunday (0)
+  if (dayOfWeek === 6 || dayOfWeek === 0) {
+    // Find Saturday of this weekend
+    const sat = new Date(selectedDate);
+    if (dayOfWeek === 0) { // Sunday → go back 1 day
+      sat.setDate(sat.getDate() - 1);
+    }
+    const refSat = new Date(2026, 0, 3); // Jan 3, 2026 = CHL
+    const diffDays = Math.floor((sat - refSat) / (1000 * 60 * 60 * 24));
+    const weeksSince = Math.floor(diffDays / 7);
+    const hospital = (weeksSince % 2 === 0) ? CHL : HK;
+    document.getElementById('nord').textContent = nord;
+    document.getElementById('sud').textContent = sud;
+    document.getElementById('centre').textContent = hospital;
+    document.getElementById('centre-note').textContent = "";
+    return;
+  }
+
+  // Weekday day shift: Mon–Fri, 7:00–16:59
+  if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+    // Grande Garde = hospital on duty TONIGHT (same calendar day night)
+    const grandeGarde = getNightHospital(selectedDate);
+    const petiteGarde = (grandeGarde === HK) ? CHL : HK;
+    document.getElementById('nord').textContent = nord;
+    document.getElementById('sud').textContent = sud;
+    document.getElementById('centre').innerHTML = 
+      `Grande Garde : ${grandeGarde}<br>Petite Garde : ${petiteGarde}`;
+    document.getElementById('centre-note').textContent = 
+      "La Petite Garde n'assure plus les admissions après 15h00.";
+    return;
+  }
+
+  // Night or outside hours
+  const hospital = getNightHospital(selectedDate);
+  document.getElementById('nord').textContent = nord;
+  document.getElementById('sud').textContent = sud;
+  document.getElementById('centre').textContent = hospital;
+  document.getElementById('centre-note').textContent = "";
+}
+    function getHospitalOnDuty(luxDate) {
+      const d = luxDate;
+      const dayOfWeek = d.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+      const hours = d.getHours();
+
+      const nord = NORD;
+      const sud = SUD;
+
+      // Weekend logic: Saturday (6) or Sunday (0)
+      if (dayOfWeek === 6 || dayOfWeek === 0) {
+        const refSat = new Date(2026, 0, 3); // Saturday, Jan 3, 2026 → CHL
+        // Find the Saturday of the current weekend
+        let satOfThisWeekend;
+        if (dayOfWeek === 6) {
+          satOfThisWeekend = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        } else { // Sunday (0)
+          satOfThisWeekend = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+        }
+        const diffDays = Math.floor((satOfThisWeekend - refSat) / (1000 * 60 * 60 * 24));
+        const weeksSince = Math.floor(diffDays / 7);
+        const hospital = (weeksSince % 2 === 0) ? CHL : HK;
+        return { nord, sud, centre: hospital, note: "" };
+      }
+
+      // Weekday day shift: 7:00 to 16:59
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        // Grande Garde = hospital on duty TONIGHT (same as night of current day)
+        const grandeGarde = getNightHospital(d);
+        const petiteGarde = (grandeGarde === HK) ? CHL : HK;
+        const centreDisplay = `Grande Garde : ${grandeGarde}<br>Petite Garde : ${petiteGarde}`;
+        const note = "La Petite Garde n'assure plus les admissions après 15h00.";
+        return { nord, sud, centre: centreDisplay, note };
+      }
+
+      // Night or outside hours: single hospital (tonight's duty)
+      const hospital = getNightHospital(d);
+      return { nord, sud, centre: hospital, note: "" };
+    }
+
+function updateDisplay() {
+  try {
+    // Get current time as string in Luxembourg (e.g., "11/01/2026 à 14:30")
+    const luxStr = luxembourgTime();
+    const luxDate = parseLuxDate(luxStr);
+    document.getElementById('current-time').textContent = `Heure actuelle (Luxembourg) : ${luxStr}`;
+
+    // 👇 NEW: Set date/time pickers to Luxembourg time correctly
+    const luxYear = luxDate.getFullYear();
+    const luxMonth = String(luxDate.getMonth() + 1).padStart(2, '0');
+    const luxDay = String(luxDate.getDate()).padStart(2, '0');
+    const luxHour = String(luxDate.getHours()).padStart(2, '0');
+    const luxMinute = String(luxDate.getMinutes()).padStart(2, '0');
+
+    document.getElementById('select-date').value = `${luxYear}-${luxMonth}-${luxDay}`;
+    document.getElementById('select-hour').value = `${luxHour}:${luxMinute}`;
+
+    displayForDateTime(luxDate);
+  } catch (e) {
+    console.error("Erreur :", e);
+    document.getElementById('current-time').textContent = "Erreur de chargement";
+  }
+}
+    // Download current page as HTML file
+    function downloadSelf() {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'hopitaux-garde-luxembourg.html';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    }
+
+    document.getElementById('download-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      downloadSelf();
+    });
+
+    // First update
+    updateDisplay();
+    // Then every minute
+    setInterval(updateDisplay, 60000);
+  </script>
+  <!-- Code injected by live-server -->
+  <script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+      (function () {
+        function refreshCSS() {
+          var sheets = [].slice.call(document.getElementsByTagName("link"));
+          var head = document.getElementsByTagName("head")[0];
+          for (var i = 0; i < sheets.length; ++i) {
+            var elem = sheets[i];
+            var parent = elem.parentElement || head;
+            parent.removeChild(elem);
+            var rel = elem.rel;
+            if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+              var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+              elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+            }
+            parent.appendChild(elem);
+          }
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function (msg) {
+          if (msg.data == 'reload') window.location.reload();
+          else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+          console.log('Live reload enabled.');
+          sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+      })();
+    }
+    else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+  </script>
+
+</body>
+
+</html>
