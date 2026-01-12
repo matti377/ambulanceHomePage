@@ -260,7 +260,7 @@
                 </div>
                 <div class="card-body">
                     <p>Hôpitaux de Garde – Luxembourg</p>
-                    <a href="hopitaux-garde-luxembourg.html" class="btn">Consulter hôpital de garde</a>
+                    <a href="pages/hopitalDeGarde/hopitaux-garde-luxembourg.html" class="btn">Consulter hôpital de garde</a>
                 </div>
             </div>
 
@@ -272,7 +272,19 @@
                 </div>
                 <div class="card-body">
                     <p>Apprendre les noms et effets des médicaments du SAMU</p>
-                    <a href="samuMedsQuizlet.html" class="btn">Commencer le quiz</a>
+                    <a href="pages/samuQuiz/samuMedsQuizlet.html" class="btn">Commencer le quiz</a>
+                </div>
+            </div>
+
+            <!-- Equipe CISLUX-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-person"></i>
+                    <h2>Equipe CISLUX</h2>
+                </div>
+                <div class="card-body">
+                    <p>Equipe de garde au CISLUX</p>
+                    <a href="/pages/equipeCisLux/index.html" class="btn">Accéder au plan de travail</a>
                 </div>
             </div>
 
@@ -381,7 +393,7 @@
         function openProtectedPage() {
             const password = prompt("Veuillez entrer le mot de passe d'accès :");
             if (password === "test") {
-                window.open("CGDIS INFOPAGE.htm", "_blank");
+                window.open("pages/infoPage/CGDIS INFOPAGE.htm", "_blank");
             } else if (password !== null) {
                 alert("Mot de passe incorrect.");
             }
