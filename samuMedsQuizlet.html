@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,53 +13,62 @@
             --dark: #457b9d;
             --success: #2a9d8f;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             color: var(--secondary);
             min-height: 100vh;
             padding: 20px;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
+
         header {
             text-align: center;
             padding: 20px 0;
             margin-bottom: 30px;
         }
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             color: var(--primary);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
+
         .subtitle {
             font-size: 1.2rem;
             color: var(--dark);
             max-width: 600px;
             margin: 0 auto;
         }
+
         .card-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 30px;
         }
+
         .panel {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             padding: 25px;
             flex: 1;
             min-width: 300px;
         }
+
         .panel-title {
             font-size: 1.4rem;
             margin-bottom: 20px;
@@ -67,19 +77,21 @@
             align-items: center;
             gap: 10px;
         }
-        .panel-title i {
-            font-size: 1.8rem;
-        }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: var(--secondary);
         }
-        select, button {
+
+        select,
+        button,
+        input {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
@@ -87,10 +99,14 @@
             font-size: 1rem;
             background: white;
         }
-        select:focus, button:focus {
+
+        select:focus,
+        button:focus,
+        input:focus {
             outline: none;
             border-color: var(--dark);
         }
+
         button {
             background: var(--primary);
             color: white;
@@ -99,15 +115,35 @@
             transition: all 0.3s ease;
             border: none;
         }
+
         button:hover {
             background: #c1121f;
             transform: translateY(-2px);
         }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input {
+            width: auto;
+        }
+
         .flashcard {
             perspective: 1500px;
-            height: 300px;
+            height: 350px;
             cursor: pointer;
         }
+
         .flashcard-inner {
             position: relative;
             width: 100%;
@@ -116,9 +152,11 @@
             transition: transform 0.6s;
             transform-style: preserve-3d;
         }
+
         .flashcard.flipped .flashcard-inner {
             transform: rotateY(180deg);
         }
+
         .flashcard-face {
             position: absolute;
             width: 100%;
@@ -131,43 +169,55 @@
             padding: 20px;
             border-radius: 12px;
             background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
+
         .flashcard-front {
             border: 3px solid var(--dark);
         }
+
         .flashcard-back {
             transform: rotateY(180deg);
             border: 3px solid var(--success);
         }
+
         .flashcard h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
             color: var(--secondary);
         }
-        .flashcard p {
-            font-size: 1.2rem;
-            line-height: 1.5;
+
+        .flashcard-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 0 10px;
         }
+
         .navigation {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
         }
+
         .nav-btn {
             background: var(--dark);
             padding: 10px 20px;
         }
+
         .nav-btn:hover {
             background: #375a7f;
         }
+
         .counter {
             text-align: center;
             font-size: 1.1rem;
             margin-top: 15px;
             color: var(--dark);
         }
+
         .instructions {
             background: var(--light);
             border-left: 4px solid var(--primary);
@@ -175,48 +225,59 @@
             margin-top: 20px;
             border-radius: 0 8px 8px 0;
         }
+
         @media (max-width: 768px) {
             .card-container {
                 flex-direction: column;
             }
+
             h1 {
                 font-size: 2rem;
+            }
+
+            .flashcard {
+                height: 400px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <h1>SAMU Medikamenten-Trainer</h1>
-            <p class="subtitle">Lernen Sie die wichtigsten Medikamente für den Rettungsdienst in Luxemburg - interaktiv und effizient!</p>
+            <p class="subtitle">Lernen Sie die wichtigsten Medikamente für den Rettungsdienst in Luxemburg - interaktiv
+                und effizient!</p>
         </header>
 
         <div class="card-container">
             <div class="panel">
                 <h2 class="panel-title">Einstellungen</h2>
+
                 <div class="form-group">
-                    <label for="front-select">Vorderseite der Karte:</label>
-                    <select id="front-select">
-                        <option value="Marktname">Marktname</option>
-                        <option value="Wirkstoffname">Wirkstoffname</option>
-                        <option value="Wirkstoffgruppe">Wirkstoffgruppe</option>
-                        <option value="Wirkung">Wirkung</option>
-                    </select>
+                    <label for="card-count">Anzahl Karten generieren:</label>
+                    <input type="number" id="card-count" min="1" placeholder="Alle Karten verwenden">
                 </div>
+
                 <div class="form-group">
-                    <label for="back-select">Rückseite der Karte:</label>
-                    <select id="back-select">
-                        <option value="Wirkstoffname">Wirkstoffname</option>
-                        <option value="Marktname">Marktname</option>
-                        <option value="Wirkstoffgruppe">Wirkstoffgruppe</option>
-                        <option value="Wirkung">Wirkung</option>
-                    </select>
+                    <label>Vorderseite der Karte:</label>
+                    <div class="checkbox-group" id="front-fields">
+                        <!-- Checkboxes will be generated here -->
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label>Rückseite der Karte:</label>
+                    <div class="checkbox-group" id="back-fields">
+                        <!-- Checkboxes will be generated here -->
+                    </div>
+                </div>
+
                 <button id="apply-btn">Karten generieren</button>
-                
+
                 <div class="instructions">
-                    <p><strong>So funktioniert's:</strong> Wählen Sie aus, was auf Vorder- und Rückseite der Lernkarten angezeigt werden soll. Klicken Sie auf eine Karte, um sie umzudrehen!</p>
+                    <p><strong>So funktioniert's:</strong> Wählen Sie mehrere Felder für Vorder- und Rückseite. Geben
+                        Sie eine Zahl ein, um nur eine Teilmenge der Karten zu laden (leer = alle Karten).</p>
                 </div>
             </div>
 
@@ -225,12 +286,12 @@
                 <div class="flashcard" id="flashcard">
                     <div class="flashcard-inner">
                         <div class="flashcard-face flashcard-front">
-                            <h2 id="front-title">Marktname</h2>
-                            <p id="front-content">[Medikament]</p>
+                            <h2>Vorderseite</h2>
+                            <div class="flashcard-content" id="front-content"></div>
                         </div>
                         <div class="flashcard-face flashcard-back">
-                            <h2 id="back-title">Wirkstoffname</h2>
-                            <p id="back-content">[Wirkstoff]</p>
+                            <h2>Rückseite</h2>
+                            <div class="flashcard-content" id="back-content"></div>
                         </div>
                     </div>
                 </div>
@@ -245,121 +306,119 @@
         </div>
     </div>
 
-    <script>
-        // Sample medication data - replace with your actual SAMU medications
-        const medications = [
-            {
-                "Marktname": "Adrenalin",
-                "Wirkstoffname": "Epinephrin",
-                "Wirkstoffgruppe": "Sympathomimetikum",
-                "Wirkung": "Erhöht Herzfrequenz und Blutdruck, bronchialerweiternd"
-            },
-            {
-                "Marktname": "Atropin",
-                "Wirkstoffname": "Atropin",
-                "Wirkstoffgruppe": "Parasympatholytikum",
-                "Wirkung": "Senkt vagalen Tonus, beschleunigt Sinusknoten"
-            },
-            {
-                "Marktname": "Diazepam",
-                "Wirkstoffname": "Diazepam",
-                "Wirkstoffgruppe": "Benzodiazepin",
-                "Wirkung": "Antikonvulsiv, anxiolytisch, muskelrelaxierend"
-            },
-            {
-                "Marktname": "Furosemid",
-                "Wirkstoffname": "Furosemid",
-                "Wirkstoffgruppe": "Schleifendiuretikum",
-                "Wirkung": "Stark harntreibend, entlastet das Herz"
-            },
-            {
-                "Marktname": "Glukose",
-                "Wirkstoffname": "Glukose",
-                "Wirkstoffgruppe": "Kohlenhydrat",
-                "Wirkung": "Schnelle Energiequelle bei Hypoglykämie"
-            }
-        ];
+<script>
+    let medications = [];
+    let currentMedications = [];
+    let selectedFrontFields = ['Marktname']; // Default front field
+    let selectedBackFields = ['Wirkstoffgruppe', 'Wirkung']; // Default back fields
+    let currentCardIndex = 0;
 
-        // DOM Elements
-        const frontSelect = document.getElementById('front-select');
-        const backSelect = document.getElementById('back-select');
-        const applyBtn = document.getElementById('apply-btn');
-        const flashcard = document.getElementById('flashcard');
-        const frontTitle = document.getElementById('front-title');
-        const frontContent = document.getElementById('front-content');
-        const backTitle = document.getElementById('back-title');
-        const backContent = document.getElementById('back-content');
-        const currentCardEl = document.getElementById('current-card');
-        const totalCardsEl = document.getElementById('total-cards');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
+    // DOM Elements
+    const frontFieldsContainer = document.getElementById('front-fields');
+    const backFieldsContainer = document.getElementById('back-fields');
+    const cardCountInput = document.getElementById('card-count');
+    const applyBtn = document.getElementById('apply-btn');
+    const flashcard = document.getElementById('flashcard');
+    const frontContent = document.getElementById('front-content');
+    const backContent = document.getElementById('back-content');
+    const currentCardEl = document.getElementById('current-card');
+    const totalCardsEl = document.getElementById('total-cards');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
 
-        // State
-        let currentCardIndex = 0;
-        let currentFront = 'Marktname';
-        let currentBack = 'Wirkstoffname';
+    // Initialize checkboxes AFTER data is loaded
+    function initCheckboxes(fields) {
+        frontFieldsContainer.innerHTML = '';
+        backFieldsContainer.innerHTML = '';
 
-        // Initialize
-        function init() {
+        fields.forEach(field => {
+            // Front
+            const frontItem = document.createElement('div');
+            frontItem.className = 'checkbox-item';
+            frontItem.innerHTML = `
+                <input type="checkbox" id="front-${field}" value="${field}" ${selectedFrontFields.includes(field) ? 'checked' : ''}>
+                <label for="front-${field}">${field}</label>
+            `;
+            frontFieldsContainer.appendChild(frontItem);
+
+            // Back
+            const backItem = document.createElement('div');
+            backItem.className = 'checkbox-item';
+            backItem.innerHTML = `
+                <input type="checkbox" id="back-${field}" value="${field}" ${selectedBackFields.includes(field) ? 'checked' : ''}>
+                <label for="back-${field}">${field}</label>
+            `;
+            backFieldsContainer.appendChild(backItem);
+        });
+    }
+
+    function updateCard() {
+        if (currentMedications.length === 0) return;
+
+        const med = currentMedications[currentCardIndex];
+        frontContent.innerHTML = selectedFrontFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
+        backContent.innerHTML = selectedBackFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
+
+        currentCardEl.textContent = currentCardIndex + 1;
+        flashcard.classList.remove('flipped');
+    }
+
+    function applySettings() {
+        selectedFrontFields = Array.from(document.querySelectorAll('#front-fields input:checked')).map(cb => cb.value);
+        selectedBackFields = Array.from(document.querySelectorAll('#back-fields input:checked')).map(cb => cb.value);
+
+        if (selectedFrontFields.length === 0 || selectedBackFields.length === 0) {
+            alert('Bitte wählen Sie mindestens ein Feld für Vorder- und Rückseite aus!');
+            return;
+        }
+
+        const cardCount = cardCountInput.value ? parseInt(cardCountInput.value) : medications.length;
+        const validCount = Math.min(Math.max(1, cardCount), medications.length);
+        currentMedications = medications.slice(0, validCount);
+        totalCardsEl.textContent = currentMedications.length;
+        currentCardIndex = 0;
+        updateCard();
+    }
+
+    function navigate(direction) {
+        if (direction === 'prev' && currentCardIndex > 0) {
+            currentCardIndex--;
+            updateCard();
+        } else if (direction === 'next' && currentCardIndex < currentMedications.length - 1) {
+            currentCardIndex++;
+            updateCard();
+        }
+    }
+
+    async function loadMedications() {
+        try {
+            const response = await fetch('samu_medications.json');
+            if (!response.ok) throw new Error('JSON-Datei nicht gefunden');
+            medications = await response.json();
+            
+            if (medications.length === 0) throw new Error('Keine Medikamente in der JSON-Datei');
+
+            const fields = Object.keys(medications[0]);
+            initCheckboxes(fields);
+            
+            currentMedications = [...medications];
             totalCardsEl.textContent = medications.length;
             updateCard();
-            
-            // Event Listeners
-            flashcard.addEventListener('click', () => {
-                flashcard.classList.toggle('flipped');
-            });
-            
-            applyBtn.addEventListener('click', () => {
-                currentFront = frontSelect.value;
-                currentBack = backSelect.value;
-                currentCardIndex = 0;
-                updateCard();
-            });
-            
-            prevBtn.addEventListener('click', () => {
-                if (currentCardIndex > 0) {
-                    currentCardIndex--;
-                    updateCard();
-                }
-            });
-            
-            nextBtn.addEventListener('click', () => {
-                if (currentCardIndex < medications.length - 1) {
-                    currentCardIndex++;
-                    updateCard();
-                }
-            });
-        }
 
-        // Update card content
-        function updateCard() {
-            const med = medications[currentCardIndex];
-            frontTitle.textContent = currentFront;
-            frontContent.textContent = med[currentFront] || '[Keine Daten]';
-            backTitle.textContent = currentBack;
-            backContent.textContent = med[currentBack] || '[Keine Daten]';
-            currentCardEl.textContent = currentCardIndex + 1;
-            flashcard.classList.remove('flipped');
+            // Set up event listeners only after UI is ready
+            flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
+            applyBtn.addEventListener('click', applySettings);
+            prevBtn.addEventListener('click', () => navigate('prev'));
+            nextBtn.addEventListener('click', () => navigate('next'));
+        } catch (error) {
+            console.error('Fehler:', error);
+            alert('Fehler beim Laden der Medikamentendaten:\n' + error.message + '\n\nStellen Sie sicher, dass "samu_medications.json" im selben Ordner existiert.');
         }
+    }
 
-        // Load data from JSON file (uncomment when you have your JSON file)
-        /*
-        async function loadMedications() {
-            try {
-                const response = await fetch('samu_medications.json');
-                if (!response.ok) throw new Error('JSON-Datei nicht gefunden');
-                medications = await response.json();
-                totalCardsEl.textContent = medications.length;
-                updateCard();
-            } catch (error) {
-                console.error('Fehler beim Laden der Medikamente:', error);
-                alert('Fehler beim Laden der Medikamentendaten. Stellen Sie sicher, dass die JSON-Datei im selben Ordner existiert.');
-            }
-        }
-        */
-
-        // Start the application
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+    // Start everything when page loads
+    document.addEventListener('DOMContentLoaded', loadMedications);
+</script>
 </body>
+
 </html>
