@@ -245,19 +245,10 @@
                     <i class="fas fa-briefcase-medical"></i>
                 </div>
             </div>
-            <h1>Luxembourg Paramedic Toolkit</h1>
-            <p class="subtitle">Your essential guide to critical resources and tools for emergency medical services in
-                Luxembourg</p>
+            <h1>Trousse à outils des ambulanciers du Luxembourg</h1>
+            <p class="subtitle">Votre guide essentiel des ressources et outils critiques pour les services médicaux
+                d'urgence au Luxembourg</p>
         </header>
-
-        <div class="search-container">
-            <h2><i class="fas fa-pills"></i> Medication Database Search</h2>
-            <p>Search for medications available in Luxembourg pharmacies and hospitals</p>
-            <div class="search-box">
-                <input type="text" placeholder="Enter medication name...">
-                <button>Search</button>
-            </div>
-        </div>
 
         <div class="tools-grid">
 
@@ -268,11 +259,46 @@
                     <h2>Hôpital de garde</h2>
                 </div>
                 <div class="card-body">
-                    <p>CHôpitaux de Garde – Luxembourg</p>
+                    <p>Hôpitaux de Garde – Luxembourg</p>
                     <a href="hopitaux-garde-luxembourg.html" target="_blank" class="btn">Consulter hôpital de garde</a>
                 </div>
             </div>
 
+            <!-- Study SAMU Meds-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-pills"></i>
+                    <h2>Apprendre les Médicaments du SAMU</h2>
+                </div>
+                <div class="card-body">
+                    <p>Apprendre les noms et effets des médicaments du SAMU</p>
+                    <a href="samuMedsQuizlet.html" class="btn">Commencer le quiz</a>
+                </div>
+            </div>
+
+            <!-- Geoportail CGDIS-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-map"></i>
+                    <h2>Geoportail CGDIS</h2>
+                </div>
+                <div class="card-body">
+                    <p>Accéder au Geoportail CGDIS pour les cartes et données géospatiales</p>
+                    <a href="https://geoportailcgdis.intranet.etat.lu/" target="_blank" class="btn">Ouvrir Geoportail CGDIS</a>
+                </div>
+            </div>
+
+            <!-- CGDIS Infopage-->
+            <div class="tool-card">
+                <div class="card-header">
+                    <i class="fas fa-info"></i>
+                    <h2>Page interne d'information CGDIS</h2>
+                </div>
+                <div class="card-body">
+                    <p>Liste des liens internes du CGDIS. (Seulement accessible depuis le réseau interne)</p>
+                    <button class="btn" onclick="openProtectedPage()">Ouvrir la page</button>
+                </div>
+            </div>
 
             <!-- CGDIS Portail -->
             <div class="tool-card">
@@ -281,8 +307,7 @@
                     <h2>CGDIS Portail</h2>
                 </div>
                 <div class="card-body">
-                    <p>Official portal for Luxembourg's Grand Ducal Fire and Rescue Service. Access protocols,
-                        documentation, and official resources.</p>
+                    <p>Portial officiel du CGDIS pour se rendre disponible pour les permanances.</p>
                     <a href="https://portailcgdis.intranet.etat.lu/" target="_blank" class="btn">Open CGDIS Portal</a>
                 </div>
             </div>
@@ -308,56 +333,8 @@
                 </div>
                 <div class="card-body">
                     <p>Documets complémentaires publics des formations</p>
-                    <a href="https://112.public.lu/fr/Doc/handoutsleveso.html" target="_blank" class="btn">consulter les
+                    <a href="https://112.public.lu/fr/Doc/handoutsleveso.html" target="_blank" class="btn">Consulter les
                         documents</a>
-                </div>
-            </div>
-
-            <!-- OSCAR Monitor -->
-            <div class="tool-card">
-                <div class="card-header">
-                    <i class="fas fa-ambulance"></i>
-                    <h2>OSCAR Monitor</h2>
-                </div>
-                <div class="card-body">
-                    <p>Real-time monitoring of ambulance personnel and vehicle status across Luxembourg.</p>
-                    <a href="osc.systems/" class="btn">Ouvrir OSCAR</a>
-                </div>
-            </div>
-
-            <!-- Study SAMU Meds-->
-            <div class="tool-card">
-                <div class="card-header">
-                    <i class="fas fa-pills"></i>
-                    <h2>Apprendre les Médicaments du SAMU</h2>
-                </div>
-                <div class="card-body">
-                    <p>Apprendre les noms et effets des médicaments du SAMU</p>
-                    <a href="samuMedsQuizlet.html" class="btn">Commencer le quiz</a>
-                </div>
-            </div>
-
-            <!-- CGDIS Infopage-->
-            <div class="tool-card">
-                <div class="card-header">
-                    <i class="fas fa-info"></i>
-                    <h2>Page intern d'information CGDIS</h2>
-                </div>
-                <div class="card-body">
-                    <p>Liste des liens internes du cgdis. (Seullement accessible depuis le réseau interne)</p>
-                    <a href="CGDIS INFOPAGE.htm" class="btn">Ouvrir la page</a>
-                </div>
-            </div>
-
-            <!-- Study Rescue Rush-->
-            <div class="tool-card">
-                <div class="card-header">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h2>Réviser pour examen SAP</h2>
-                </div>
-                <div class="card-body">
-                    <p>Quiz inofficiel pour réviser pour les examen théorique SAP</p>
-                    <a href="https://rescue-rush.lu/?games" class="btn">Ouvrir Rescue Rush</a>
                 </div>
             </div>
 
@@ -393,22 +370,22 @@
         </div>
 
         <footer>
-            <p>Luxembourg Paramedic Toolkit &copy; 2026 | For emergency medical personnel only</p>
-            <p>Note: All external links open in new tabs. Ensure you have proper authorization before accessing secure
-                systems.</p>
+            <p>Trousse à outils des ambulanciers du Luxembourg &copy; 2026 | Réservé uniquement au personnel médical
+                d'urgence</p>
+            <p>Remarque : Ce site n'est pas affilié au CGDIS.</p>
         </footer>
     </div>
 
     <script>
-        // Simple search functionality for medication database
-        document.querySelector('.search-box button').addEventListener('click', function () {
-            const searchTerm = document.querySelector('.search-box input').value.trim();
-            if (searchTerm) {
-                alert(`Searching for medication: ${searchTerm}\n\nIn a real implementation, this would query the Luxembourg medication database.`);
-            } else {
-                alert('Please enter a medication name to search');
+
+        function openProtectedPage() {
+            const password = prompt("Veuillez entrer le mot de passe d'accès :");
+            if (password === "test") {
+                window.open("CGDIS INFOPAGE.htm", "_blank");
+            } else if (password !== null) {
+                alert("Mot de passe incorrect.");
             }
-        });
+        }
 
         // Allow Enter key to trigger search
         document.querySelector('.search-box input').addEventListener('keypress', function (e) {
