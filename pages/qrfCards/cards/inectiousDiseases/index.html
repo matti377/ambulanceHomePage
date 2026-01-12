@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGDIS Infectious Diseases Reference</title>
+    <style>
+        :root {
+            --primary: #1a5fb4;
+            --secondary: #2d76b9;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --border: #dee2e6;
+            --shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .search-container {
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        #searchBox {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+        
+        #searchBox:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .disease-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .disease-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 16px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .disease-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .classification {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .infection-class { 
+            background-color: #e7f1ff; 
+            color: var(--primary); 
+        }
+        
+        .disinfection-class { 
+            background-color: #e6f4ea; 
+            color: var(--success); 
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .pathogen {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .transmission {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 0.95rem;
+        }
+        
+        .transmission-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+        
+        .notes {
+            background-color: #fff8e1;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--warning);
+        }
+        
+        .notes-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+            color: #856404;
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        @media (max-width: 768px) {
+            .disease-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CGDIS Infectious Diseases Reference</h1>
+            <p class="subtitle">Comprehensive guide to infectious diseases with transmission routes and safety protocols</p>
+        </header>
+        
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="Search diseases, pathogens, or symptoms...">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="disease-grid" id="diseaseGrid">
+            <!-- Disease cards will be populated here -->
+        </div>
+        
+        <footer>
+            <p>© CGDIS Luxembourg | Not responsible for errors or omissions. For professional use only.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load and process JSON data
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(diseases => {
+                    const diseaseGrid = document.getElementById('diseaseGrid');
+                    const searchBox = document.getElementById('searchBox');
+                    
+                    // Render all diseases initially
+                    renderDiseases(diseases);
+                    
+                    // Add search functionality
+                    searchBox.addEventListener('input', () => {
+                        const searchTerm = searchBox.value.toLowerCase();
+                        const filteredDiseases = diseases.filter(disease => 
+                            disease.name.toLowerCase().includes(searchTerm) ||
+                            (disease.aliases && disease.aliases.some(alias => alias.toLowerCase().includes(searchTerm))) ||
+                            disease.description.toLowerCase().includes(searchTerm) ||
+                            disease.pathogen.toLowerCase().includes(searchTerm) ||
+                            disease.transmission.toLowerCase().includes(searchTerm) ||
+                            disease.notes.toLowerCase().includes(searchTerm)
+                        );
+                        
+                        renderDiseases(filteredDiseases);
+                    });
+                    
+                    function renderDiseases(diseaseList) {
+                        if (diseaseList.length === 0) {
+                            diseaseGrid.innerHTML = '<div class="no-results">No diseases found matching your search</div>';
+                            return;
+                        }
+                        
+                        diseaseGrid.innerHTML = diseaseList.map(disease => `
+                            <div class="disease-card">
+                                <div class="card-header">
+                                    <div class="disease-name">${disease.name}</div>
+                                    <div>
+                                        <span class="classification infection-class">Infection: ${disease.infection_class}</span>
+                                        <span class="classification disinfection-class">Disinfection: ${disease.disinfection_class}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    ${disease.description ? `<p>${disease.description}</p>` : ''}
+                                    ${disease.pathogen ? `<span class="pathogen">Pathogen: ${disease.pathogen}</span>` : ''}
+                                    
+                                    <div class="transmission">
+                                        <span class="transmission-label">Transmission:</span>
+                                        ${disease.transmission}
+                                    </div>
+                                    
+                                    ${disease.notes ? `
+                                        <div class="notes">
+                                            <span class="notes-label">Special Notes:</span>
+                                            ${disease.notes}
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading disease data:', error);
+                    document.getElementById('diseaseGrid').innerHTML = 
+                        '<div class="no-results">Error loading disease data. Please check data.json file.</div>';
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1312 @@
+[
+  {
+    "name": "AIDS",
+    "aliases": [
+      "HIV (AIDS)",
+      "HIV-Infektion (=AIDS)"
+    ],
+    "description": "systemische Virusinfektion",
+    "pathogen": "HI-Viren",
+    "transmission": "Blut; Körperflüssigkeiten; Sekrete (allgemein)",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "PEP bei Nadelstich. Schutzstufe I1 nur wenn Kontakt mit erregerhaltigem Material möglich ist. Initial keine Infektionsstufe."
+  },
+  {
+    "name": "Amöbenruhr",
+    "aliases": [
+      "Amöben-Infektionen"
+    ],
+    "description": "Infektiöse Darmerkrankung",
+    "pathogen": "Entamoeba histolytica",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Angina Plaut-Vincent",
+    "aliases": [],
+    "description": "seltene Form der Mandelentzündung",
+    "pathogen": "Treponema vencentii + Fusobacterium nucleatum",
+    "transmission": "Mund-Rachen-Schleimhaut",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Anthrax",
+    "aliases": [
+      "Milzbrand",
+      "Bacillus anthracis"
+    ],
+    "description": "lebensgefährliche Haut- oder Darm-Infektion (bei Lungenmilzbrand siehe hochkont. Infektionskrankheiten)",
+    "pathogen": "Bacillus anthracis",
+    "transmission": "Blut; Körperflüssigkeiten; infizierte Tiere; sporenhaltiger Staub; Fleisch",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Aspergillose",
+    "aliases": [],
+    "description": "Form der Lungenentzündung (Pneumonie)",
+    "pathogen": "Aspergillus fumigatus (Schimmelpilz)",
+    "transmission": "Pilzsporen (in der Luft)",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Atemwegsinfektion (ausser Tuberkulose)",
+    "aliases": [
+      "Lungenentzündung",
+      "Pneumonie",
+      "RS-Virus-Infektion"
+    ],
+    "description": "Infektion des Atemtraktes",
+    "pathogen": "verschiedene Erreger möglich",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Bandwurm",
+    "aliases": [
+      "Echinokokkose"
+    ],
+    "description": "Würmerbefall des Verdauungstraktes",
+    "pathogen": "Echinococcus multilocarus",
+    "transmission": "Stuhl; Tierkot; rohes Fleisch; Fisch",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Borelliose (=Lyme Borelliose)",
+    "aliases": [
+      "Lyme-Borreliose",
+      "Borreliose"
+    ],
+    "description": "systemische Infektionskrankheit",
+    "pathogen": "Borellia burgdorferi",
+    "transmission": "Zecken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Botulismus",
+    "aliases": [
+      "Clostridium botulinum"
+    ],
+    "description": "Lebensmittelvergiftung",
+    "pathogen": "Clostridium botulinum",
+    "transmission": "fehlerhafte Sterilisierung; unsachgemäss haltbar gemachte Konserven",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Bronchitis",
+    "aliases": [],
+    "description": "",
+    "pathogen": "",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Brucellose (=Morbus bang, Malta-Fieber)",
+    "aliases": [],
+    "description": "bakterielle Infektionskrankheit mit undulierendem Fieber",
+    "pathogen": "Brucella-Bakterien",
+    "transmission": "kontaminierte Lebensmittel; direkter Kontakt zu infizierten Tieren",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Campylobacter-Infektion",
+    "aliases": [
+      "Enteritis infectiosa bakteriell"
+    ],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "versch. bakterielle Erreger: E.coli, Campylobacter, Salmonellen,…",
+    "transmission": "Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Candida-Infektion (=Candidiasis, Soor)",
+    "aliases": [],
+    "description": "Pilzbefall, lokal, selten systemisch",
+    "pathogen": "Candida albicans",
+    "transmission": "je nach Lokalisation",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Chikungunyafieber",
+    "aliases": [
+      "Chikungunya-Fieber"
+    ],
+    "description": "tropische Infektionskrankheit mit Fieber und Gelenkschmerzen",
+    "pathogen": "Chikungunya-Virus (CHIKV)",
+    "transmission": "Mücken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Cholera",
+    "aliases": [
+      "Choleratoxin-bildende Vibrio cholerae"
+    ],
+    "description": "lebensbedrohliche Darminfektion mit systemischen Auswirkungen",
+    "pathogen": "Vibrio cholerae",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "Meldung Direction de la Santé. Personal: Mundschutz & Schutzbrille!"
+  },
+  {
+    "name": "Clostridium difficile",
+    "aliases": [
+      "Clostridioides difficile"
+    ],
+    "description": "Antibiotika assoziierte Durchfallerkrankung",
+    "pathogen": "Clostridium difficile",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": "Desinfektionsmittel mit sporozidem Wirkbereich nötig! Die Desinfektion muss im Centre de désinfection durchgeführt werden. Desinfektionsmittel: Wasserstoffperoxid"
+  },
+  {
+    "name": "Creutzfeld-Jakob-Krankheit",
+    "aliases": [
+      "Creutzfeldt-Jakob-Krankheit"
+    ],
+    "description": "Irreversible Hirnschädigung",
+    "pathogen": "Prionen",
+    "transmission": "verschiedene Gewebearten (Hirn, Rückenmark, Auge); kontaminierte Instrumente; kontaminierte Transplantate",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé."
+  },
+  {
+    "name": "Dengue-Fieber",
+    "aliases": [
+      "Denguefieber"
+    ],
+    "description": "Virusinfektion mit Fieber, Hautausschlag, Kopf-, Muskel- und Gelenkschmerzen. Komplikation: Dengue-hämorrhagisches-Fieber (DHF)",
+    "pathogen": "Dengue-Virus",
+    "transmission": "Stechmücken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "bei hämorrhagischer Form: Meldung Direction de la Santé"
+  },
+  {
+    "name": "Durchfall (=Diarrhoe)",
+    "aliases": [],
+    "description": "Darminfektion kann ein Symptom vieler Erkrankungen sein",
+    "pathogen": "versch. Bakterien, Viren, Toxine",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Diphterie",
+    "aliases": [
+      "Diphtherie"
+    ],
+    "description": "lebensbedrohliche Infektion der oberen Atemwege",
+    "pathogen": "Corynebacterium diphteriae",
+    "transmission": "Atemwegssekrete; Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé. Patient soll wenn möglich Maske tragen ohne Ausatemventil"
+  },
+  {
+    "name": "Ebola-Infektion (=Hämorrhagisches Fieber)",
+    "aliases": [
+      "Ebolafieber",
+      "hochkontagiöse Erkrankungen"
+    ],
+    "description": "lebensbedrohliche, hoch ansteckende Erkrankungen mit hoher Mortalitätsrate",
+    "pathogen": "Ebola-Virus",
+    "transmission": "Blut; Körperflüssigkeiten; Kot; Atemwegssekrete; kontaminierte Lebensmittel; Kadaver; Gewebe",
+    "infection_class": "I4",
+    "disinfection_class": "D4",
+    "notes": "Umgehende Meldung Direction de la Santé. Abstand! Wenn irgend möglich auf Spezialkräfte warten! Während Erstversorgung mögl. mind. 1m Abstand nach getroffenen Diagnostik- + Therapiemassnahmen"
+  },
+  {
+    "name": "Echinokokkose (=Bandwurm)",
+    "aliases": [
+      "Hunde-, Fuchsbandwurm-Infektion"
+    ],
+    "description": "Würmerbefall des Verdauungstraktes",
+    "pathogen": "Echinococcus multilocarus",
+    "transmission": "Stuhl; Tierkot; rohes Fleisch; Fisch",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Enteritis infectiosa bakteriell",
+    "aliases": [
+      "EHEC",
+      "VTEC",
+      "HUS"
+    ],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "versch. bakterielle Erreger: E.coli, Campylobacter, Salmonellen,…",
+    "transmission": "Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Enteritis infectiosa viral",
+    "aliases": [
+      "Rotavirus-Infektion",
+      "Norovirus"
+    ],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "versch. virale Erreger: Rota-, Adeno-, Corona-, Echo-, Coxsackie-Viren,…",
+    "transmission": "Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Epiglottitis",
+    "aliases": [],
+    "description": "lebensbedrohliche Kehldeckel-entzündung",
+    "pathogen": "Haemophilus influenzae, (aber auch Streptokokkus pneumoniae, Streptokokken, Staphylococcus aureus möglich)",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Erysipel",
+    "aliases": [
+      "Wundrose"
+    ],
+    "description": "bakterielle Hautinfektion",
+    "pathogen": "Streptokokken-A",
+    "transmission": "Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "ESBL",
+    "aliases": [
+      "Extended spectrum beta-Laktamase",
+      "BSLE",
+      "multiresistenter Erreger"
+    ],
+    "description": "Multiresistente gramnegative Bakterien",
+    "pathogen": "",
+    "transmission": "Erbrochenes; kontaminiertes Wasser; Sekrete (allgemein)",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Die genauen Übertragungswege bei ESBL-bildenden Bakterien sind noch nicht vollständig geklärt. Zu einer Übertragung der Erreger kommt es hauptsächlich über direkten Kontakt."
+  },
+  {
+    "name": "Fleckfieber (=Rickettiose)",
+    "aliases": [
+      "Rickettsia prowazeckii"
+    ],
+    "description": "Bakterielle Hautinfektion mit rotfleckigem Ausschlag",
+    "pathogen": "Rickettsia prowazekii",
+    "transmission": "Läuse",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Flohbefall",
+    "aliases": [],
+    "description": "parasitärer Befall mit Menschenfloh",
+    "pathogen": "Pulex irritans",
+    "transmission": "Kleidung; Patient",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": "Empfohlen für Patient: Bei der Übernahme Patient dicht in eine Einmaldecke hüllen und Kopfschutz anziehen --> Massnahmen beim Transport von Patienten mit Ektoparasiten.pdf"
+  },
+  {
+    "name": "FSME (=Zeckenenzephalitis)",
+    "aliases": [
+      "Frühsommer-Meningoenzephalitis"
+    ],
+    "description": "Hirn- bzw. Hirnhautentzündung",
+    "pathogen": "FSME-Viren",
+    "transmission": "Zecken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Gasbrand",
+    "aliases": [],
+    "description": "oft tödlich und schnell verlaufende Gewebsentzündung",
+    "pathogen": "Clostridium perfringens",
+    "transmission": "Eiter; Stuhl; Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": "Sporenbildner !!! Wasserstoffperoxid als Desinfektionsmittel einsetzen"
+  },
+  {
+    "name": "Gastroenteritis",
+    "aliases": [
+      "Enteritis infectiosa bakteriell oder viral"
+    ],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "verschiedene Erreger",
+    "transmission": "Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Gelbfieber",
+    "aliases": [],
+    "description": "virusbedingtes hämorrhagisches Fieber",
+    "pathogen": "Gelbfiebervirus",
+    "transmission": "Mücken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Formal reicht die Basishygiene. Wegen der gegebenen Unsicherheit der Diagnose wird der Schutzkittel zum Selbstschutz empfohlen"
+  },
+  {
+    "name": "Giardiasis (=Lambliasis, Lamblienruhr)",
+    "aliases": [
+      "Giardiasis"
+    ],
+    "description": "Infektion des Verdauungstraktes mit Durchfällen",
+    "pathogen": "Giardia intestinalis",
+    "transmission": "Stuhl; Tierkot; kontaminiertes Wasser; kontaminierte Lebensmittel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Gonorrhoe",
+    "aliases": [
+      "Tripper"
+    ],
+    "description": "bakterielle Infektion der Geschlechtsorgane",
+    "pathogen": "Neisseria gonorrhoeae",
+    "transmission": "Schleimhaut Genitalbereich",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Gürtelrose",
+    "aliases": [
+      "Herpes zoster",
+      "Zoster"
+    ],
+    "description": "lokale Form = Gürtelrose Entzündung des Nervengewebes mit schmerzhaftem Ausschlag",
+    "pathogen": "Varizella-zoster Viren",
+    "transmission": "Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "Schutzstufe A wenn Infektion in geschlossener Wunde. Wenn Kontakt mit erregerhaltigem Material möglich ist (z.B. Verbandwechsel) dann Schutzstufe B1"
+  },
+  {
+    "name": "Hand-Fuss-Mund-Krankheit",
+    "aliases": [],
+    "description": "epidemische Erkrankung mit Bläschenbildung und Ulzerationen",
+    "pathogen": "Enteroviren der Gruppe A (zB Coxsackie-Viren)",
+    "transmission": "Atemwegssekrete; Eiter; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Hantavirus-Infektion",
+    "aliases": [],
+    "description": "milde Form des Hämorrhagischen Fiebers mit renalem Syndrom",
+    "pathogen": "Hantaviren",
+    "transmission": "Mäusekot; kontaminierter Staub",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Schutzkittel, Maske + Schutzbrille wenn mit erregerhaltigem Material (Staub, Kot) umgegangen wird"
+  },
+  {
+    "name": "Harnwegsinfektion",
+    "aliases": [],
+    "description": "Infektion der ableitenden Harnwege wie Zystitis oder Urethritis",
+    "pathogen": "versch. Bakterien",
+    "transmission": "Urin",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Helicobacter pylori",
+    "aliases": [],
+    "description": "Infektion der Magenschleimhaut",
+    "pathogen": "Helicobacter pylori",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Hepatitis A oder E",
+    "aliases": [
+      "Hepatitis E"
+    ],
+    "description": "Infektiöse Leberentzündung",
+    "pathogen": "Hepatitis A- oder E-Viren",
+    "transmission": "Stuhl; Körperflüssigkeiten; kontaminiertes Wasser; kontaminierte Lebensmittel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Maske/Schutzbrille wenn mit erregerhaltigem Material umgegangen wird"
+  },
+  {
+    "name": "Hepatitis B, C, D oder G",
+    "aliases": [],
+    "description": "Infektiöse Leberentzündung",
+    "pathogen": "Hepatitis B-, C-, D-, oder G-Viren",
+    "transmission": "Blut; Körperflüssigkeiten",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "PEP bei Exposition / Nadelstich (ohne Immunschutz)"
+  },
+  {
+    "name": "Herpes-simplex-Infektion",
+    "aliases": [],
+    "description": "generalisierte Infektion",
+    "pathogen": "Herpes-simplex Virus",
+    "transmission": "Mund-Rachen-Schleimhaut; Wundsekrete; Genitalsekrete; je nach Lokalisation",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Herpes-zoster-Infektion",
+    "aliases": [
+      "Gürtelrose",
+      "Zoster"
+    ],
+    "description": "lokale Form = Gürtelrose Entzündung des Nervengewebes mit schmerzhaftem Ausschlag",
+    "pathogen": "Varizella-zoster Viren",
+    "transmission": "Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "Schutzstufe A wenn Infektion in geschlossener Wunde. Wenn Kontakt mit erregerhaltigem Material möglich ist (z.B. Verbandwechsel) dann Schutzstufe B1"
+  },
+  {
+    "name": "Hochkontagiöse Infektionskrankheiten",
+    "aliases": [
+      "Ebola-Infektion",
+      "Lassa Fieber",
+      "Marburg-Fieber",
+      "Krim Kongo Fieber",
+      "Pocken",
+      "Milzbrand (Lungen-)",
+      "Pest (Lungen-)",
+      "Virusbedingtes hämorrhagisches Fieber"
+    ],
+    "description": "lebensbedrohliche, hoch ansteckende Erkrankungen mit hoher Mortalitätsrate",
+    "pathogen": "- virale hämorrhagische Fieber (Ebola-, Lassa-, Marburg-Virus, Krim-Kongo-Fieber) - Pocken - Milzbrand, Lungenmilzbrand - Pest, Lungenpest",
+    "transmission": "Blut; Körperflüssigkeiten; Kot; Atemwegssekrete; kontaminierte Lebensmittel; Kadaver; Gewebe",
+    "infection_class": "I4",
+    "disinfection_class": "D4",
+    "notes": "Umgehende Meldung Direction de la Santé. Abstand! Wenn irgend möglich auf Spezialkräfte warten! Während Erstversorgung mögl. mind. 1m Abstand nach getroffenen Diagnostik- + Therapiemassnahmen"
+  },
+  {
+    "name": "HUS (=hämolytisch-urämisches Syndrom)",
+    "aliases": [
+      "EHEC",
+      "Gasser Syndrom"
+    ],
+    "description": "lebensgefährliche Infektion mit Schädigung der Blutzellen, Blutgefässe und Nieren",
+    "pathogen": "E.coli-Stämme zB. EHEC, EIEC, ETEC",
+    "transmission": "Stuhl; Erbrochenes; kontaminierte Lebensmittel",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Impetigo contagiosa (=Borkenflechte)",
+    "aliases": [],
+    "description": "lokale Hautinfektion im Bereich von Gesicht, Kopf, Extremitäten",
+    "pathogen": "Staphylokokken oder Streptokokken",
+    "transmission": "Eiter; Wundsekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Influenza (=saisonale Grippe)",
+    "aliases": [
+      "Grippe",
+      "Parainfluenza"
+    ],
+    "description": "systemische Virusinfektion",
+    "pathogen": "Influenzaviren",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Influenza A/H1N1 (=Schweinegrippe)",
+    "aliases": [],
+    "description": "Infektion der Atemwege",
+    "pathogen": "Influenza A-Viren",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Influenza A/H5N1 (=Vogelgrippe)",
+    "aliases": [],
+    "description": "Virusinfektion bei Vögeln",
+    "pathogen": "Influenza A-Viren",
+    "transmission": "infiziertes Geflügel; Kot",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Keuchhusten",
+    "aliases": [
+      "Pertussis"
+    ],
+    "description": "Infektionserkrankung mit Hustenanfällen",
+    "pathogen": "Bordetella pertussis",
+    "transmission": "Atemwegssekrete; Mund-Rachen-Schleimhaut; Nasensekret",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Pertussis ist hoch kontagiös. Die Übertragung erfolgt durch Tröpfcheninfektion innerhalb ca. 1 Meter."
+  },
+  {
+    "name": "Kinderlähmung",
+    "aliases": [
+      "Poliomyelitis"
+    ],
+    "description": "Infektion mit ZNS-Beteiligung",
+    "pathogen": "Polio-Virus",
+    "transmission": "Stuhl; Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Klebsiella",
+    "aliases": [
+      "multiresistente Erreger"
+    ],
+    "description": "Verursacher von nosokomialen Infektionen",
+    "pathogen": "versch. Bakterien mit ausgeprägter Antibiotika-Resistenz",
+    "transmission": "Wundsekrete; Hautschuppen; Atemwegssekrete; Körperflüssigkeiten; je nach Lokalisation",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Konjunktivitis",
+    "aliases": [],
+    "description": "Augenbindehautentzündung",
+    "pathogen": "versch. Bakterien (zB. Chlamydien, Neisserien, Pseudomonaden) und Viren (Adeno-, Coxsackie-, Herpes-Viren)",
+    "transmission": "Eiter; Tränenflüssigkeit",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Schutzstufe B1 wenn Kontakt mit erregerhaltigem Material möglich ist"
+  },
+  {
+    "name": "Kryptosporodiose",
+    "aliases": [],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "Kryptosporiden",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Läuse",
+    "aliases": [],
+    "description": "Befall des Menschen mit Läusen",
+    "pathogen": "Kopflaus",
+    "transmission": "Hautschuppen; Haare",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": "Empfohlen für Patient: Bei der Übernahme Patient dicht in eine Einmaldecke hüllen und Kopfschutz anziehen --> Massnahmen beim Transport von Patienten mit Ektoparasiten.pdf"
+  },
+  {
+    "name": "Legionellose",
+    "aliases": [],
+    "description": "Infektion der Atmungsorgane",
+    "pathogen": "Legionella pneumophila",
+    "transmission": "kontaminiertes Wasser",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Lepra",
+    "aliases": [],
+    "description": "chronische Infektionskrankheit",
+    "pathogen": "Mycobakterium leprae",
+    "transmission": "kontaminiertes Wasser; kontaminierte Erde; Nasensekret",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "Leptospirose",
+    "aliases": [],
+    "description": "akut verlaufende Infektionskrankheit",
+    "pathogen": "Leptospira interrogans",
+    "transmission": "Urin infizierter Tiere; kontaminiertes Wasser",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Listeriose",
+    "aliases": [],
+    "description": "lebensmittelbedingte bakterielle Infektionskrankheit",
+    "pathogen": "Listeria monocytogenes",
+    "transmission": "kontaminierte Erde; kontaminiertes Wasser; kontaminierte Lebensmittel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Lungenpest",
+    "aliases": [
+      "Pest"
+    ],
+    "description": "siehe hochkontagiöse Infektionskrankheiten",
+    "pathogen": "Yersinia pestis",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Malaria / Paludisme",
+    "aliases": [],
+    "description": "systemische Infektionskrankheit mit Fieberschüben",
+    "pathogen": "Plasmodien",
+    "transmission": "Mücken",
+    "infection_class": "I0",
+    "disinfection_class": "D1",
+    "notes": "Stich der Anophelesmücke. Keine Infektionsgefahr/D1"
+  },
+  {
+    "name": "Masern (= Riedelen, Rougeole)",
+    "aliases": [],
+    "description": "systemische Infektionskrankheit mit Hautausschlag",
+    "pathogen": "Masern-Viren",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "Meldung Direction de la Santé. Abweichende Schlussdesinfektion: bei Kontamination gesamter Fahrzeuginnenraum, ansonsten nur Kontaktflächen nötig, Stosslüften"
+  },
+  {
+    "name": "Meningitis",
+    "aliases": [],
+    "description": "Hirnhautentzündung",
+    "pathogen": "versch. Bakterien (zB. Meningokokken) und Viren",
+    "transmission": "Atemwegssekrete; Blut; Körperflüssigkeiten; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "bei Kontamination gesamter Fahrzeuginnenraum desinfizieren, ansonsten nur Kontaktflächen nötig, Stosslüften 10 min."
+  },
+  {
+    "name": "MERS (=Middle East Respiratory Syndrome)",
+    "aliases": [],
+    "description": "schwere Infektion der Atemwege mit Lungenentzündung und Nierenversagen",
+    "pathogen": "MERS-Coronavirus",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "Dromedare, Kamele"
+  },
+  {
+    "name": "Mononukleose (=Pfeiffersches Drüsenfieber)",
+    "aliases": [
+      "Kissing Disease"
+    ],
+    "description": "Virusinfektion mit grippeähnlichen Symptomen",
+    "pathogen": "Epstein-Barr-Viren",
+    "transmission": "Atemwegssekrete; Speichel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "MRSA Nasen-Rachenraum",
+    "aliases": [
+      "ORSA",
+      "Methicillin-resistenter Staphylococcus aureus"
+    ],
+    "description": "Verursacher von nosokomialen Infektionen, insbesondere Wundinfektionen",
+    "pathogen": "Staphylococcus aureus",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "FFP Maske fürs RD Personal ist nur bei pflegerischen Tätigkeiten am Patienten bei denen mit Verspritzen von erregerhaltigem Material zu rechnen ist. Bei Patienten mit Auswurf die keine FFP2 Maske tolerieren, muss der Patientenraum desinfiziert werden."
+  },
+  {
+    "name": "MRSA Wunde / Rektal",
+    "aliases": [
+      "Methicillin-resistenter Staphylococcus aureus"
+    ],
+    "description": "Verursacher von nosokomialen Infektionen, insbesondere Wundinfektionen",
+    "pathogen": "Staphylococcus aureus",
+    "transmission": "Körperflüssigkeiten; Blut",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Mumps (=Oreillons)",
+    "aliases": [],
+    "description": "virale Entzündung der Ohrspeicheldrüse",
+    "pathogen": "Mumps-Viren",
+    "transmission": "Atemwegssekrete; Tränenflüssigkeit; Blut; Liquor; Urin",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "abweichende Schlussdesinfektion: bei Kontamination gesamter Fahrzeuginnenraum, ansonsten nur Kontaktflächen nötig, Stosslüften"
+  },
+  {
+    "name": "Multiresistente Erreger",
+    "aliases": [
+      "MRGN",
+      "VRE",
+      "Klebsiella",
+      "ORSA"
+    ],
+    "description": "Verursacher von nosokomialen Infektionen",
+    "pathogen": "versch. Bakterien mit ausgeprägter Antibiotika-Resistenz zB. Staphylokokken, Klebsiellen, Pseudomonaden, Enterokokken, Clostridien",
+    "transmission": "Wundsekrete; Hautschuppen; Atemwegssekrete; Körperflüssigkeiten; je nach Lokalisation",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Noro-Virus-Infektion",
+    "aliases": [],
+    "description": "Infektion des Verdauungstraktes",
+    "pathogen": "Norovirus",
+    "transmission": "Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": "sehr ansteckend"
+  },
+  {
+    "name": "Ornithose (=Psittakose, Papageienkrankheit)",
+    "aliases": [
+      "Psittacose"
+    ],
+    "description": "schwere Atemwegserkrankung mit grippeähnlichen Symptomen",
+    "pathogen": "Chlamydia psittaci",
+    "transmission": "kontaminierter Staub; Kot; Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "direkter Kontakt zu infizierten Vögeln"
+  },
+  {
+    "name": "Paratyphus",
+    "aliases": [
+      "Typhus abdominalis"
+    ],
+    "description": "lebensbedrohliche Infektion des Verdauungstraktes",
+    "pathogen": "Salmonella typhi bzw. Paratyphi",
+    "transmission": "Stuhl; Urin; Erbrochenes; Blut; Eiter; kontaminierte Lebensmittel; kontaminiertes Wasser; kontaminierte Fläche",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Q-Fieber (=Query Fieber)",
+    "aliases": [],
+    "description": "bakterielle grippeähnliche Infektionskrankheit mit Komplikationen wie Lungenentzündung",
+    "pathogen": "Coxiella burnetii",
+    "transmission": "Kot; kontaminierter Staub; kontaminierte Lebensmittel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Kot infizierter Tiere (meist Rinder, Schafe, Ziegen - kontaminierte Produkte (Nahrungsmittel, Wolle)"
+  },
+  {
+    "name": "Ringelröteln (=Erythema infectiosum)",
+    "aliases": [],
+    "description": "virale Infektionskrankheit mit Erythem, meist stumm oder mild verlaufend",
+    "pathogen": "Parvoviren (B19V)",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Röteln (=Riselen, Rubéole)",
+    "aliases": [],
+    "description": "Infektionskrankheit mit Exanthem, meist stumm oder mild verlaufend",
+    "pathogen": "Rubella-Virus",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Rotz (=Malleus, Hautwurm)",
+    "aliases": [],
+    "description": "Seuche beim Pferd humanpathogen und hoch kontagiös, Achtung: potentieller biologischer Kampfstoff",
+    "pathogen": "Burkholderia mallei",
+    "transmission": "Atemwegssekrete; Eiter; Blut",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Übertragung Mensch-zu-Mensch nur in wenigen Fällen beschrieben"
+  },
+  {
+    "name": "RS-Virus-Infektion",
+    "aliases": [
+      "RSV"
+    ],
+    "description": "löst Atemwegserkrankungen aus",
+    "pathogen": "RS-Virus (respiratory syncytial virus)",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Betroffen sind vor allem Kleinkinder, aber auch Erwachsene können erkranken."
+  },
+  {
+    "name": "Ruhr",
+    "aliases": [
+      "Shigellose",
+      "Bakterienruhr"
+    ],
+    "description": "seltene, komplikationsbehaftete Darminfektion mit schweren Durchfällen und Elektrolytverlusten",
+    "pathogen": "Shigella spez.",
+    "transmission": "kontaminierte Lebensmittel; kontaminiertes Wasser; Erbrochenes; Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "SARS (=Severe acute respiratory syndrome)",
+    "aliases": [],
+    "description": "schwere Infektion der Atemwege mit Lungenentzündung und Nierenversagen",
+    "pathogen": "SARS-Coronavirus",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Scharlach",
+    "aliases": [],
+    "description": "bakterielle Infektionskrankheit mit hohem Fieber, Hautexanthem und Entzündung des Mund-Rachenraumes",
+    "pathogen": "Streptococcus pyogenes",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "abweichende Schlussdesinfektion: bei Kontamination gesamter Fahrzeuginnenraum, ansonsten nur Kontaktflächen nötig, Stosslüften"
+  },
+  {
+    "name": "Sepsis (=Blutvergiftung)",
+    "aliases": [],
+    "description": "lebensgefährliche systemische Infektion",
+    "pathogen": "versch. bakterielle Erreger (zB. Staphylokokken, MRSA, Meningokokken)",
+    "transmission": "Blut; Körperflüssigkeiten",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Skabies (=Krätze)",
+    "aliases": [],
+    "description": "parasitäre Hautinfektion",
+    "pathogen": "Krätzmilben",
+    "transmission": "Kleidung; Hautschuppen",
+    "infection_class": "I2",
+    "disinfection_class": "D4",
+    "notes": ""
+  },
+  {
+    "name": "Syphilis (=Lues)",
+    "aliases": [],
+    "description": "sexuell übertragbare chronische Infektionskrankheit",
+    "pathogen": "Treponema pallidum",
+    "transmission": "Schleimhaut Genitalbereich; Eiter",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Tetanus (=Wundstarrkrampf)",
+    "aliases": [],
+    "description": "lebensgefährliche Infektionskrankheit mit Lähmungen",
+    "pathogen": "Clostridium tetani",
+    "transmission": "kontaminierter Staub; kontaminierte Erde; Stuhl; Wundsekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Tollwut (=Rabies)",
+    "aliases": [],
+    "description": "Infektion mit zerebralen Funktionsausfällen und Lähmungen",
+    "pathogen": "Lyssa-Virus",
+    "transmission": "Speichel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Toxoplasmose",
+    "aliases": [],
+    "description": "parasitäre Infektionskrankheit, stumm oder mit diffusen Symptomen",
+    "pathogen": "Toxoplasma gondii",
+    "transmission": "kontaminierte Lebensmittel; rohes Fleisch",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "durch Kontakt mit Katzen oder über Lebensmittel"
+  },
+  {
+    "name": "Trichinellose",
+    "aliases": [],
+    "description": "parasitäre Infektionskrankheit",
+    "pathogen": "Trichinella spiralis (Rundwurm)",
+    "transmission": "Fleisch; kontaminierte Lebensmittel; rohes Fleisch",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "ungenügend erhitztes (Schweine-) Fleisch"
+  },
+  {
+    "name": "Tuberkulose - offene Lungent.",
+    "aliases": [],
+    "description": "Infektionskrankheit mit Gewebs-einschmelzung des Lungenparenchyms",
+    "pathogen": "Mycobacterium tuberculosis",
+    "transmission": "Atemwegssekrete; kontaminierter Staub",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "Meldung Direction de la Santé. Desinfektionsmittel mit tuberkulozidem Wirkbereich nötig!"
+  },
+  {
+    "name": "Tuberkulose - übrige Formen",
+    "aliases": [],
+    "description": "Infektionskrankheit mit Gewebs-einschmelzung",
+    "pathogen": "Mycobacterium tuberculosis",
+    "transmission": "Eiter; Stuhl; Liquor; Blut; Schleimhaut Genitalbereich",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": ""
+  },
+  {
+    "name": "Tularämie (=Hasenpest)",
+    "aliases": [],
+    "description": "tödlich verlaufende ansteckende Erkrankung bei frei lebenden Nagetieren, Zoonose. Achtung: Potentieller biologischer Kampfstoff",
+    "pathogen": "Francisella tularensis",
+    "transmission": "Tierkot; kontaminierter Staub; kontaminiertes Wasser; kontaminierte Lebensmittel; infizierte Insekten",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "Achtung bei Verdacht auf absichtliche Ausbringung -> Absperrung und Dekontamination (Duschen und Kleiderwechsel)"
+  },
+  {
+    "name": "Typhus abdominalis",
+    "aliases": [
+      "Paratyphus"
+    ],
+    "description": "lebensbedrohliche Infektion des Verdauungstraktes",
+    "pathogen": "Salmonella typhi bzw. Paratyphi",
+    "transmission": "Stuhl; Urin; Erbrochenes; Blut; Eiter; kontaminierte Lebensmittel; kontaminiertes Wasser; kontaminierte Fläche",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "Varizellen-Infektion",
+    "aliases": [
+      "Windpocken",
+      "Waasserpouken"
+    ],
+    "description": "Virusinfektion mit Exanthem",
+    "pathogen": "Varizellen-Zoster-Viren",
+    "transmission": "Bläscheninhalte; Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "abweichende Schlussdesinfektion: bei Kontamination gesamter Fahrzeuginnenraum, ansonsten nur Kontaktflächen nötig, Stosslüften"
+  },
+  {
+    "name": "VRE-Infektion (=Vancomycin-resistente Enterokokken)",
+    "aliases": [
+      "multiresistente Erreger"
+    ],
+    "description": "Verursacher von nosokomialen Infektionen",
+    "pathogen": "Enterokokken",
+    "transmission": "Wundsekrete; Hautschuppen; Atemwegssekrete; Körperflüssigkeiten",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": ""
+  },
+  {
+    "name": "West-Nil-Fieber",
+    "aliases": [],
+    "description": "grippeähnliche Erkrankung mit Exanthem, ZNS-Symptomatik möglich Zoonose",
+    "pathogen": "West-Nil-Virus",
+    "transmission": "Stechmücken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Wundinfektion",
+    "aliases": [],
+    "description": "bakterielle Infektion einer Wunde mit lokaler Entzündung",
+    "pathogen": "versch. Bakterien",
+    "transmission": "Wundsekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Gegebenenfalls sind geringere Schutzmassnahmen ausreichend (zB Besiedlung in abgedeckten Wunde -> A). Im Zweifel sollten aber die hier vorgestellten Massnahmen genutzt werden"
+  },
+  {
+    "name": "Yersiniose",
+    "aliases": [],
+    "description": "gastrointestinale Erkrankung, meist lebensmittelbedingt Zoonose",
+    "pathogen": "Yersinia enterocolitica",
+    "transmission": "Blut; Kot; kontaminiertes Wasser; kontaminierte Lebensmittel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "kontaminierte Lebensmittel (Schweinefleisch)"
+  },
+  {
+    "name": "Zika-Fieber",
+    "aliases": [],
+    "description": "Virusinfektion mit Fieber, Hautausschlag, Gelenkschmerzen, Bindehautentzündung. Komplikation: Gehirnfehlbildungen bei Föten",
+    "pathogen": "Zika-Virus",
+    "transmission": "Stechmücken; Sperma",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "immunsupprimierter Patient",
+    "aliases": [],
+    "description": "Patient mit geschwächtem Immunsystem",
+    "pathogen": "",
+    "transmission": "",
+    "infection_class": "I0",
+    "disinfection_class": "D4",
+    "notes": "Ziel ist ein maximaler Schutz des Patienten gegenüber seiner Umwelt."
+  },
+  {
+    "name": "COVID-19",
+    "aliases": [],
+    "description": "Schwere Infektion der Atemwege mit Lungenentzündung",
+    "pathogen": "Coronavirus SARS-CoV-2",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": ""
+  },
+  {
+    "name": "Affenpocken (=Monkeypox)",
+    "aliases": [
+      "MPox"
+    ],
+    "description": "Virusinfektion mit pockentypischem Hautausschlag",
+    "pathogen": "Monkeypox-Virus",
+    "transmission": "direkter Kontakt zu infizierten Tieren; Atemwegssekrete; Körperflüssigkeiten; Wundsekrete",
+    "infection_class": "I3",
+    "disinfection_class": "D1",
+    "notes": "Meldung Direction de la Santé"
+  },
+  {
+    "name": "ESBL (=Extended spectrum beta-Laktamase, Beta-Laktamasen mit breitem Wirkungsspektrum)",
+    "aliases": [
+      "multiresistenter Erreger"
+    ],
+    "description": "siehe multiresistenter Erreger",
+    "pathogen": "",
+    "transmission": "Erbrochenes; kontaminiertes Wasser; Sekrete (allgemein)",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Die genauen Übertragungswege bei ESBL-bildenden Bakterien sind noch nicht vollständig geklärt. Zu einer Übertragung der Erreger kommt es hauptsächlich über direkten Kontakt. So können Träger die Keime über ihre Hände an andere Personen abgeben. Auch mit Darmbakterien verunreinigtes Wasser oder verunreinigte Lebensmittel kommen als Übertragungsquelle in Frage. Französisch: BSLE. English: ESBL"
+  },
+  {
+    "name": "Krim-Kongo-Fieber (=Hämorrhagisches Fieber)",
+    "aliases": [],
+    "description": "hochkontagiöses virales hämorrhagisches Fieber",
+    "pathogen": "Krim-Kongo-Fieber-Virus",
+    "transmission": "Zecken; Blut",
+    "infection_class": "I4",
+    "disinfection_class": "D4",
+    "notes": "#I4/D4"
+  },
+  {
+    "name": "Lassa-Fieber (=Hämorrhagisches Fieber)",
+    "aliases": [],
+    "description": "virales hämorrhagisches Fieber",
+    "pathogen": "Lassa-Virus",
+    "transmission": "Mäusekot; Urin; Blut",
+    "infection_class": "I4",
+    "disinfection_class": "D4",
+    "notes": "#I4/D4"
+  },
+  {
+    "name": "Lyme-Borreliose",
+    "aliases": [
+      "Borreliose (Lyme-Borreliose)"
+    ],
+    "description": "systemische Infektionskrankheit",
+    "pathogen": "Borrelia burgdorferi",
+    "transmission": "Zecken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "#I1/D1"
+  },
+  {
+    "name": "Marburg-Fieber (=Hämorrhagisches Fieber)",
+    "aliases": [],
+    "description": "hochkontagiöses virales hämorrhagisches Fieber",
+    "pathogen": "Marburg-Virus",
+    "transmission": "Kontakt mit infizierten Körperflüssigkeiten",
+    "infection_class": "I4",
+    "disinfection_class": "D4",
+    "notes": "#I4/D4"
+  },
+  {
+    "name": "Milzbrand (=Anthrax)",
+    "aliases": [
+      "Anthrax (Milzbrand, Bacillus anthracis)"
+    ],
+    "description": "bakterielle Zoonose",
+    "pathogen": "Bacillus anthracis",
+    "transmission": "Tierprodukte; Sporen",
+    "infection_class": "I3",
+    "disinfection_class": "D4",
+    "notes": "#I3/D4"
+  },
+  {
+    "name": "Mononukleose (=Pfeiffersches Drüsenfieber, Kissing Disease)",
+    "aliases": [],
+    "description": "virale Infektion mit Fieber, Lymphknotenschwellung, Halsschmerzen",
+    "pathogen": "Epstein-Barr-Virus (EBV)",
+    "transmission": "Speichel",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "#I1/D1"
+  },
+  {
+    "name": "Parainfluenza",
+    "aliases": [],
+    "description": "Atemwegsinfektion, besonders bei Kindern",
+    "pathogen": "Parainfluenza-Viren",
+    "transmission": "Atemwegssekrete",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "#I2/D1"
+  },
+  {
+    "name": "Pertussis (=Keuchhusten)",
+    "aliases": [
+      "Keuchhusten",
+      "coqueluche",
+      "whooping cough"
+    ],
+    "description": "bakterielle Infektion der Atemwege mit stossartigem Husten",
+    "pathogen": "Bordetella pertussis",
+    "transmission": "Tröpfcheninfektion (ca. 1 Meter durch Husten/Niesen/Sprechen)",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "Französisch: coqueluche\nEnglisch: whooping cough"
+  },
+  {
+    "name": "Rickettiose",
+    "aliases": [
+      "Fleckfieber (Rickettsia prowazeckii)"
+    ],
+    "description": "Bakterielle Hautinfektion mit rotfleckigem Ausschlag",
+    "pathogen": "Rickettsia prowazekii",
+    "transmission": "Läuse",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "#I2/D2"
+  },
+  {
+    "name": "Salmonellose",
+    "aliases": [],
+    "description": "bakterielle Darminfektion",
+    "pathogen": "Salmonella spp.",
+    "transmission": "Stuhl; kontaminierte Lebensmittel",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "#I2/D1"
+  },
+  {
+    "name": "Shigellose (=Ruhr, Bakterienruhr)",
+    "aliases": [],
+    "description": "bakterielle Darminfektion mit blutig-schleimigem Stuhl",
+    "pathogen": "Shigella spp.",
+    "transmission": "Stuhl",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "#I2/D2"
+  },
+  {
+    "name": "Typhus abdominalis, Paratyphus (A, B, C)",
+    "aliases": [],
+    "description": "systemische Salmonelleninfektion",
+    "pathogen": "Salmonella typhi, S. paratyphi",
+    "transmission": "Stuhl; kontaminierte Nahrung/Wasser",
+    "infection_class": "I2",
+    "disinfection_class": "D2",
+    "notes": "#I2/D2"
+  },
+  {
+    "name": "Windpocken (=Varizellen, Waasserpouken)",
+    "aliases": [
+      "Varizellen-Infektion"
+    ],
+    "description": "hochansteckende Viruserkrankung mit Hautausschlag",
+    "pathogen": "Varizella-Zoster-Virus (VZV)",
+    "transmission": "Tröpfchen; direkter Kontakt mit Bläschenflüssigkeit",
+    "infection_class": "I2",
+    "disinfection_class": "D1",
+    "notes": "#I2/D1"
+  },
+  {
+    "name": "Zoster (=Gürtelrose)",
+    "aliases": [
+      "Herpes-zoster-Infektion"
+    ],
+    "description": "reaktivierte Varizellen-Infektion entlang eines Nervensegments",
+    "pathogen": "Varizella-Zoster-Virus (VZV)",
+    "transmission": "Eiter; Sekrete",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "#I1/D1"
+  },
+  {
+    "name": "Zeckenenzephalitis",
+    "aliases": [
+      "FSME (Frühsommer-Meningoenzephalitis)"
+    ],
+    "description": "Hirn- bzw. Hirnhautentzündung",
+    "pathogen": "FSME-Viren",
+    "transmission": "Zecken",
+    "infection_class": "I1",
+    "disinfection_class": "D1",
+    "notes": "#I1/D1"
+  }
+]

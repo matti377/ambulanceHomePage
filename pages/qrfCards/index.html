@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>🚑 Références Rapides - Ambulance Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #0d5c33;
+            --secondary: #e63946;
+            --light: #f1faee;
+            --dark: #1d3557;
+            --accent: #a8dadc;
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d5c33 0%, #1d3557 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 10px auto 0;
+            line-height: 1.6;
+        }
+
+        .refs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .ref-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--dark);
+            text-decoration: none;
+            display: block;
+        }
+
+        .ref-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .card-icon {
+            background: var(--primary);
+            color: white;
+            padding: 22px 0;
+            text-align: center;
+        }
+
+        .card-icon i {
+            font-size: 32px;
+        }
+
+        .card-content {
+            padding: 22px;
+        }
+
+        .card-content h2 {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+        }
+
+        .btn:hover {
+            background: #c1121f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 0.85rem;
+            opacity: 0.85;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .refs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-book-medical"></i>
+                </div>
+            </div>
+            <h1>Références Rapides</h1>
+            <p class="subtitle">Documents essentiels classés par thème pour une consultation rapide sur le terrain</p>
+        </header>
+
+        <div class="refs-grid">
+            <!-- ECG -->
+            <a href="cards/EKG.pdf" target="_blank" class="ref-card">
+                <div class="card-icon" style="background: #2a9d8f;">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <div class="card-content">
+                    <h2>ECG / Rythmes</h2>
+                    <p>Interprétation des tracés ECG, problèmes courants.</p>
+                    <span class="btn">Voir le PDF</span>
+                </div>
+            </a>
+
+            <!-- Médicaments -->
+            <a href="cards/Medikamente.pdf" target="_blank" class="ref-card">
+                <div class="card-icon" style="background: #e76f51;">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Médicaments courantes</h2>
+                    <p>Médicaments courantes chez patients.</p>
+                    <span class="btn">Voir le PDF</span>
+                </div>
+            </a>
+
+            <!-- Maladies infectieuses -->
+            <a href="cards/inectiousDiseases/index.html" target="_blank" class="ref-card">
+                <div class="card-icon" style="background: #264653;">
+                    <i class="fas fa-virus"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Maladies infectieuses</h2>
+                    <p>Protocoles de protection.</p>
+                    <span class="btn">Consulter la liste</span>
+                </div>
+            </a>
+
+            <!-- Obstétrique -->
+            <a href="#" target="_blank" class="ref-card">
+                <div class="card-icon" style="background: #fb8500;">
+                    <i class="fas fa-female"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Urgences obstétricales</h2>
+                    <p>Accouchement inopiné, hémorragies, prééclampsie.</p>
+                    <span class="btn">En développement</span>
+                </div>
+            </a>
+
+            <!-- Protocoles CGDIS -->
+            <a href="#" target="_blank" class="ref-card">
+                <div class="card-icon" style="background: #0d5c33;">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="card-content">
+                    <h2>Protocoles officiels</h2>
+                    <p>Procédure AVC, urgences pédiatriques et pensées suicidaires.</p>
+                    <span class="btn">En développement</span>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p><strong>Avertissement :</strong> Ce site et les documents fournis sont à usage informatif uniquement. L'auteur ne saurait être tenu responsable des erreurs, omissions ou conséquences liées à l'utilisation de ces informations. Toujours consulter les protocoles officiels en vigueur au CGDIS.</p>
+            <p>© 2026 Ambulance Toolkit Luxembourg | Non affilié au CGDIS</p>
+        </footer>
+    </div>
+</body>
+</html>
