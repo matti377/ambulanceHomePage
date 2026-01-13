@@ -1,334 +1,30 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIS LUX Schichtplan</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --eq1-color: #f39c12;
-            --eq2-color: #3498db;
-            --eq3-color: #2ecc71;
-            --eq4-color: #9b59b6;
-            --morning-shift: #ffeb3b;
-            --afternoon-shift: #ff9800;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            padding: 2rem 0;
-            background: rgba(44, 62, 80, 0.7);
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-        }
-        
-        .date-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        input[type="date"] {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            background: white;
-            color: #333;
-            font-weight: bold;
-        }
-        
-        button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            background: var(--secondary-color);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-        
-        button:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .current-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .info-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 250px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .info-card h3 {
-            margin-bottom: 1rem;
-            color: white;
-            font-size: 1.3rem;
-        }
-        
-        .team-display {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .team-box {
-            padding: 1rem;
-            border-radius: 10px;
-            min-width: 150px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .team-box:hover {
-            transform: scale(1.05);
-        }
-        
-        .eq1 { background-color: var(--eq1-color); color: white; }
-        .eq2 { background-color: var(--eq2-color); color: white; }
-        .eq3 { background-color: var(--eq3-color); color: white; }
-        .eq4 { background-color: var(--eq4-color); color: white; }
-        
-        .shift-period {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .shift-period h3 {
-            margin-bottom: 1rem;
-            color: white;
-            text-align: center;
-        }
-        
-        .shift-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .shift-box {
-            padding: 1rem;
-            border-radius: 10px;
-            min-width: 200px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .shift-box:hover {
-            transform: translateY(-5px);
-        }
-        
-        .morning { background-color: var(--morning-shift); color: #333; }
-        .afternoon { background-color: var(--afternoon-shift); color: #333; }
-        
-        .calendar {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .calendar h3 {
-            margin-bottom: 1rem;
-            color: white;
-            text-align: center;
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .calendar-day {
-            padding: 0.5rem;
-            border-radius: 5px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .calendar-day.today {
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid white;
-        }
-        
-        .calendar-day.selected {
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid var(--secondary-color);
-        }
-        
-        .team-label {
-            font-weight: bold;
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            background: rgba(44, 62, 80, 0.7);
-            border-radius: 10px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 768px) {
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .current-info {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .info-card {
-                min-width: auto;
-            }
-            
-            .team-display {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .shift-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .shift-box {
-                min-width: auto;
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        /* Animation for team boxes */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .team-box.pulse {
-            animation: pulse 1s ease-in-out;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            font-size: 1.2rem;
-            display: none;
-        }
-        
-        .error {
-            background: rgba(231, 76, 60, 0.3);
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-            text-align: center;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
 </head>
+
 <body>
     <div class="container">
-        <header>
+        <header class="shiftplan-header">
             <h1>CIS LUX Schichtplan</h1>
-            <p class="subtitle">Aktuelle Teams & Schichten</p>
+            <p class="shiftplan-subtitle">Aktuelle Teams & Schichten</p>
         </header>
-        
+
         <div class="controls">
             <div class="date-selector">
                 <label for="dateInput">Datum auswählen:</label>
                 <input type="date" id="dateInput" value="">
             </div>
-            <button id="todayBtn">Heute</button>
-            <button id="nextShiftBtn">Nächste Schicht</button>
+            <button id="todayBtn" class="btn-shift">Heute</button>
+            <button id="nextShiftBtn" class="btn-shift">Nächste Schicht</button>
         </div>
-        
+
         <div class="current-info">
             <div class="info-card">
                 <h3>📅 Aktuelles Datum</h3>
@@ -343,14 +39,14 @@
                 <div id="currentShift">Laden...</div>
             </div>
         </div>
-        
+
         <div class="team-display">
             <div class="team-box eq1" id="morningTeam">EQ1</div>
             <div class="team-box eq2" id="afternoonTeam">EQ2</div>
             <div class="team-box eq3" id="nextMorningTeam">EQ3</div>
             <div class="team-box eq4" id="nextAfternoonTeam">EQ4</div>
         </div>
-        
+
         <div class="shift-period">
             <h3>📌 Heutige Schichtverteilung</h3>
             <div class="shift-container">
@@ -364,7 +60,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="shift-period">
             <h3>➡️ Nächste Schicht</h3>
             <div class="shift-container">
@@ -378,18 +74,18 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="calendar">
             <h3>🗓️ Monatsübersicht</h3>
             <div id="calendarGrid" class="calendar-grid">
                 <!-- Will be populated by JavaScript -->
             </div>
         </div>
-        
+
         <div class="loading" id="loading">Daten werden geladen...</div>
         <div class="error" id="error">Fehler beim Laden der Daten.</div>
-        
-        <footer>
+
+        <footer class="shiftplan-footer">
             <p>CIS LUX Schichtplan • Aktualisiert am <span id="updateTime">Laden...</span></p>
             <p>Die Teams wechseln alle 12 Stunden um 8:00 Uhr morgens und abends.</p>
         </footer>
@@ -399,51 +95,51 @@
         // Define the 4-day cycles based on the pattern in the PDF (starting Jan 1, 2025)
         const morningCycle = ['EQ3', 'EQ4', 'EQ2', 'EQ1'];  // Jan 1, 2, 3, 4 morning
         const afternoonCycle = ['EQ1', 'EQ3', 'EQ4', 'EQ2']; // Jan 1, 2, 3, 4 afternoon
-        
+
         // Function to get team for a given date
         function getTeamsForDate(dateStr) {
             const date = new Date(dateStr);
             const start = new Date('2025-01-01');
             const diffTime = Math.abs(date - start);
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Days since Jan 1, 2025
-            
+
             // Adjust for 0-based index (Jan 1 is day 0)
             const dayIndex = diffDays % 4;
-            
+
             return {
                 morning: morningCycle[dayIndex],
                 afternoon: afternoonCycle[dayIndex]
             };
         }
-        
+
         // Function to get current shift based on time
         function getCurrentShift() {
             const now = new Date();
             const hour = now.getHours();
-            
+
             if (hour >= 8 && hour < 20) {
                 return 'morning';
             } else {
                 return 'afternoon';
             }
         }
-        
+
         // Function to format date for display
         function formatDate(date) {
             const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
             return date.toLocaleDateString('de-DE', options);
         }
-        
+
         // Function to format time for display
         function formatTime(date) {
             return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
         }
-        
+
         // Function to get next shift date
         function getNextShiftDate(currentDate) {
             const now = new Date(currentDate);
             const hour = now.getHours();
-            
+
             if (hour >= 8 && hour < 20) {
                 // Currently morning shift, next is afternoon same day
                 return new Date(now.setHours(20, 0, 0, 0));
@@ -452,59 +148,60 @@
                 return new Date(now.setDate(now.getDate() + 1));
             }
         }
-        
+
         // Function to update UI
         function updateUI(selectedDate = null) {
             try {
                 let date = selectedDate ? new Date(selectedDate) : new Date();
-                
+
                 // Format date for display
                 document.getElementById('currentDate').textContent = formatDate(date);
                 document.getElementById('currentTime').textContent = formatTime(new Date());
                 document.getElementById('updateTime').textContent = formatTime(new Date());
-                
+
                 // Get teams for selected date
                 const teams = getTeamsForDate(date.toISOString().split('T')[0]);
-                
+
                 // Update team boxes
                 document.getElementById('morningTeam').textContent = teams.morning;
                 document.getElementById('afternoonTeam').textContent = teams.afternoon;
-                
+
                 // Determine current shift
                 const currentShiftType = getCurrentShift();
-                document.getElementById('currentShift').textContent = 
+                document.getElementById('currentShift').textContent =
                     currentShiftType === 'morning' ? 'Tagschicht' : 'Nachtschicht';
-                
+
                 // Update shift period boxes
                 document.getElementById('morningShiftTeam').textContent = teams.morning;
                 document.getElementById('afternoonShiftTeam').textContent = teams.afternoon;
-                
+
                 // Calculate next shift
-                const nextShiftDate = getNextShiftDate(date);
-                const nextTeams = getTeamsForDate(nextShiftDate.toISOString().split('T')[0]);
-                
+                const nextDay = new Date(date);
+                nextDay.setDate(nextDay.getDate() + 1);
+                const nextTeams = getTeamsForDate(nextDay.toISOString().split('T')[0]);
+
                 document.getElementById('nextMorningShiftTeam').textContent = nextTeams.morning;
                 document.getElementById('nextAfternoonShiftTeam').textContent = nextTeams.afternoon;
-                
+
                 // Highlight current team
-                const currentTeamBox = currentShiftType === 'morning' ? 
+                const currentTeamBox = currentShiftType === 'morning' ?
                     document.getElementById('morningTeam') : document.getElementById('afternoonTeam');
-                
+
                 // Remove pulse from all team boxes
                 document.querySelectorAll('.team-box').forEach(box => {
                     box.classList.remove('pulse');
                 });
-                
+
                 // Add pulse to current team
                 currentTeamBox.classList.add('pulse');
-                
+
                 // Generate calendar for current month
                 generateCalendar(date);
-                
+
                 // Hide loading, show content
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('error').style.display = 'none';
-                
+
             } catch (error) {
                 console.error('Error updating UI:', error);
                 document.getElementById('error').style.display = 'block';
@@ -512,22 +209,22 @@
                 document.getElementById('loading').style.display = 'none';
             }
         }
-        
+
         // Function to generate calendar for a month
         function generateCalendar(date) {
             const calendarGrid = document.getElementById('calendarGrid');
             calendarGrid.innerHTML = '';
-            
+
             const year = date.getFullYear();
             const month = date.getMonth();
-            
+
             // Get first day of month
             const firstDay = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
-            
+
             // Get day of week for first day (0 = Sunday, 6 = Saturday)
             const firstDayOfWeek = firstDay.getDay();
-            
+
             // Create calendar days
             for (let i = 0; i < firstDayOfWeek; i++) {
                 const emptyDay = document.createElement('div');
@@ -535,58 +232,59 @@
                 emptyDay.textContent = '';
                 calendarGrid.appendChild(emptyDay);
             }
-            
+
             for (let day = 1; day <= lastDay.getDate(); day++) {
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 const teams = getTeamsForDate(dateStr);
-                
+
                 const dayElement = document.createElement('div');
                 dayElement.className = 'calendar-day';
                 dayElement.innerHTML = `<strong>${day}</strong><br><span class="team-label">${teams.morning}/${teams.afternoon}</span>`;
-                
+
                 // Mark today
                 const today = new Date();
                 if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
                     dayElement.classList.add('today');
                 }
-                
+
                 calendarGrid.appendChild(dayElement);
             }
         }
-        
+
         // Event listeners
         document.getElementById('todayBtn').addEventListener('click', () => {
             document.getElementById('dateInput').value = '';
             updateUI();
         });
-        
+
         document.getElementById('nextShiftBtn').addEventListener('click', () => {
             const currentDate = document.getElementById('dateInput').value || new Date().toISOString().split('T')[0];
             const nextShiftDate = getNextShiftDate(new Date(currentDate));
             document.getElementById('dateInput').value = nextShiftDate.toISOString().split('T')[0];
             updateUI(nextShiftDate.toISOString().split('T')[0]);
         });
-        
+
         document.getElementById('dateInput').addEventListener('change', (e) => {
             if (e.target.value) {
                 updateUI(e.target.value);
             }
         });
-        
+
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             // Set default date to today
             const today = new Date();
             document.getElementById('dateInput').value = today.toISOString().split('T')[0];
-            
+
             // Start updating time every second
             setInterval(() => {
                 document.getElementById('currentTime').textContent = formatTime(new Date());
             }, 1000);
-            
+
             // Initial update
             updateUI();
         });
     </script>
 </body>
+
 </html>
