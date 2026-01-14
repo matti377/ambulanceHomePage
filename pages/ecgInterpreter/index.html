@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ECG Interpreter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        /* Page-specific styles */
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        #ecgImagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 20px auto;
+            display: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-box {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            color: var(--text-dark);
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .api-key-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            color: var(--text-dark);
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin: 10px 0;
+            background: white;
+            color: #333;
+        }
+
+        .api-key-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--secondary);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Markdown rendering styles */
+        .result-box h1,
+        .result-box h2,
+        .result-box h3 {
+            margin: 16px 0 10px;
+            color: var(--dark);
+        }
+
+        .result-box ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .result-box li {
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .result-box p {
+            margin: 0 0 12px;
+        }
+
+        .result-box strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-heartbeat"></i> AI ECG Interpreter</h1>
+            <p class="shiftplan-subtitle">Analysieren Sie 12-Kanal-EKGs mit KI</p>
+        </header>
+
+        <!-- API Key Setup -->
+        <div class="api-key-section">
+            <h3><i class="fas fa-key"></i> OpenAI API-Schlüssel</h3>
+            <p>Geben Sie Ihren OpenAI API-Schlüssel ein (wird lokal gespeichert):</p>
+            <p>OpenAI API-Schlüssel erhält man <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">hier</a>.</p>
+            <input type="password" id="apiKeyInput" class="api-key-input" placeholder="sk-...">
+            <button id="saveApiKeyBtn" class="btn-shift">Schlüssel speichern</button>
+            <button id="clearApiKeyBtn" class="btn-shift"
+                style="background: #6c757d; margin-left: 10px;">Löschen</button>
+            <p class="small" style="margin-top: 10px; opacity: 0.8; font-size: 0.9rem;">
+                🔒 Ihr Schlüssel wird nur im Browser gespeichert und niemals an Server gesendet.
+            </p>
+        </div>
+
+        <!-- ECG Upload -->
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">
+                <i class="fas fa-file-image"></i>
+            </div>
+            <h3>EKG hochladen</h3>
+            <p>Ziehen Sie ein Bild Ihres 12-Kanal-EKGs hierher oder klicken Sie zum Auswählen</p>
+            <input type="file" id="ecgImageInput" accept="image/*" class="hidden">
+        </div>
+        <img id="ecgImagePreview" alt="EKG-Vorschau">
+
+        <!-- Analyze Button -->
+        <div style="text-align: center; margin: 20px 0;">
+            <button id="analyzeBtn" class="btn-shift" disabled>
+                <i class="fas fa-brain"></i> Mit KI analysieren
+            </button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Analyse läuft... (kann 10-30 Sekunden dauern)</p>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsSection" class="hidden">
+            <h3><i class="fas fa-stethoscope"></i> KI-Analyseergebnis</h3>
+            <div class="result-box" id="analysisResult"></div>
+        </div>
+
+        <footer class="shiftplan-footer">
+            <p>Hinweis: Diese KI ist ein unterstützendes Werkzeug. Immer klinisches Urteil einholen!</p>
+            <p>© 2026 Ambulance Toolkit Luxembourg | Nicht für diagnostische Zwecke zugelassen</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
