@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 SAP-Theorie Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .quiz-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        select,
+        button {
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 2px solid var(--primary);
+            background: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .option-btn {
+            color: var(--text-dark) !important;
+            opacity: 1 !important;
+        }
+
+        button:hover {
+            background: transparent;
+            color: var(--secondary);
+        }
+
+        .question-box {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 87, 184, 0.05);
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            text-align: left;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.05rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 87, 184, 0.05);
+        }
+
+        .option-btn.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option-btn.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-graduation-cap"></i> SAP-Theorie Quiz</h1>
+            <p class="shiftplan-subtitle">Bereiten Sie sich auf die theoretische SAP-Prüfung vor</p>
+        </header>
+
+        <div class="quiz-container">
+            <!-- Controls -->
+            <div class="controls">
+                <select id="levelFilter">
+                    <option value="all">Alle Fragen</option>
+                    <option value="1">SAP I (Grundlagen)</option>
+                    <option value="2">SAP II (Fortgeschritten)</option>
+                </select>
+                <button id="startQuizBtn"><i class="fas fa-play"></i> Quiz starten</button>
+                <button id="nextQuestionBtn" class="hidden"><i class="fas fa-arrow-right"></i> Nächste Frage</button>
+            </div>
+
+            <!-- Score -->
+            <div class="score-display" id="scoreDisplay">0 von 0 beantwortet</div>
+
+            <!-- Question -->
+            <div id="questionBox" class="question-box hidden"></div>
+
+            <!-- Options -->
+            <div id="optionsContainer" class="options"></div>
+
+            <!-- Feedback -->
+            <div id="feedback" class="feedback hidden"></div>
+        </div>
+
+        <footer class="shiftplan-footer">
+            <p>Basierend auf offiziellen SAP-Lerninhalten • Nicht vom CGDIS zertifiziert</p>
+            <p>© 2026 Ambulance Toolkit Luxembourg</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add this before the quiz logic
+        let questions = [];
+
+        async function loadQuestions() {
+            try {
+                const response = await fetch('questions.csv');
+                const csvText = await response.text();
+                const lines = csvText.split('\n').slice(1); // Skip header
+
+                questions = lines.map(line => {
+                    const parts = line.split(',');
+                    return {
+                        number: parseInt(parts[0]),
+                        question: parts[1],
+                        answers: [parts[2], parts[3], parts[4]],
+                        correct: parseInt(parts[5]),
+                        level: parseInt(parts[6])
+                    };
+                }).filter(q => q.question); // Remove empty rows
+            } catch (error) {
+                console.error('Fehler beim Laden der Fragen:', error);
+                alert('Fragen konnten nicht geladen werden. Prüfen Sie die CSV-Datei.');
+            }
+        }
+
+        // Call this on page load
+        window.addEventListener('DOMContentLoaded', loadQuestions);
+
+        // DOM Elements
+        const levelFilter = document.getElementById('levelFilter');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const questionBox = document.getElementById('questionBox');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+
+        // Quiz state
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = 0;
+
+        // Start quiz
+        startQuizBtn.addEventListener('click', () => {
+            const level = levelFilter.value;
+            currentQuestions = level === 'all'
+                ? [...questions]
+                : questions.filter(q => q.level == level);
+
+            // Shuffle questions
+            currentQuestions.sort(() => Math.random() - 0.5);
+
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = 0;
+            updateScore();
+            showQuestion();
+            startQuizBtn.classList.add('hidden');
+            nextQuestionBtn.classList.remove('hidden');
+        });
+
+        // Show current question
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                endQuiz();
+                return;
+            }
+
+            const q = currentQuestions[currentQuestionIndex];
+            questionBox.textContent = `${q.number}. ${q.question}`;
+            questionBox.classList.remove('hidden');
+            feedback.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+
+            q.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = answer;
+                btn.onclick = () => selectAnswer(index, q.correct);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // Handle answer selection
+        function selectAnswer(selected, correct) {
+            answered++;
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            buttons.forEach((btn, i) => {
+                if (i == correct) {
+                    btn.classList.add('correct');
+                } else if (i == selected) {
+                    btn.classList.add('incorrect');
+                }
+                btn.disabled = true;
+            });
+
+            if (selected === correct) {
+                score++;
+                feedback.textContent = '✅ Richtig!';
+                feedback.style.backgroundColor = '#d4edda';
+                feedback.style.color = '#155724';
+            } else {
+                feedback.textContent = `❌ Falsch! Richtige Antwort: ${currentQuestions[currentQuestionIndex].answers[correct]}`;
+                feedback.style.backgroundColor = '#f8d7da';
+                feedback.style.color = '#721c24';
+            }
+            feedback.classList.remove('hidden');
+            updateScore();
+
+            // Auto-advance after 2 seconds or click next
+            setTimeout(() => {
+                if (currentQuestionIndex < currentQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    showQuestion();
+                } else {
+                    endQuiz();
+                }
+            }, 2000);
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `${score} von ${answered} richtig`;
+        }
+
+        // End quiz
+        function endQuiz() {
+            questionBox.textContent = `Quiz beendet!`;
+            optionsContainer.innerHTML = '';
+            feedback.textContent = `Endergebnis: ${score} von ${currentQuestions.length} richtig (${Math.round((score / currentQuestions.length) * 100)}%)`;
+            feedback.style.backgroundColor = '#e2e3e5';
+            feedback.style.color = '#495057';
+            feedback.classList.remove('hidden');
+            nextQuestionBtn.classList.add('hidden');
+            startQuizBtn.textContent = 'Neues Quiz starten';
+            startQuizBtn.classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>

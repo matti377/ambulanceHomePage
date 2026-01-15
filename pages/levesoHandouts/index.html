@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Leveso Handouts - Ausbildungsunterlagen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .handouts-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .handouts-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .handouts-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .handouts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .handout-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .handout-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .handout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .handout-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .handout-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .handout-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            font-size: 0.95rem;
+        }
+
+        .handout-link:hover {
+            background: #c1121f;
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            color: var(--text-light);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .handouts-grid {
+                grid-template-columns: 1fr;
+            }
+            .handout-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-book-open"></i> Leveso Handouts</h1>
+            <p class="shiftplan-subtitle">Offizielle Ausbildungsunterlagen des INFS</p>
+        </header>
+
+        <div class="category-section">
+            <h2 class="category-title">📖 Grundkurse & Spezialkurse</h2>
+            <div class="handouts-grid">
+                <!-- Link to actual PDFs or pages -->
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/20201201-abstusi-handout.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> Abstusi</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/ari.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> ARI</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/cic-i/202410-cic-i-handout-complet.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> CIC I</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/cic-ii/202410-cic-ii-handout-complet.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> CIC II</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/handout-2022-v12.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> DLK/TMF A</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/fis1.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> FIS I</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/fis2.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> FIS II</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/fis3.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> FIS III</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/ms/ms1-handout-20260102.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> MKS</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/directions/infs/formation/sap-i/20251121-infs-depp-sap1-handout-de-20-vvalid.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> SAP I</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/sap2.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> SAP II</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/com1.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> COM I</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/com2.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> COM II</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/com3.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> COM III</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/uva.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> UVA</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/jsp1.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> JSP I</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/jsp2.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> JSP II</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/2024-01-02-reader-lzk-jsp3.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> JSP III</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/2025-02-25-reader-lzk-jspiv.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> JSP IV</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/fr/Doc/handoutsleveso/leveso-release-notes.html" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> Leveso Release Notes</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+                <a href="https://112.public.lu/content/dam/112/fr/formation/handouts-leveso/kartographie/kartographie-im-einsatz-cours-20250218.pdf" target="_blank" class="handout-card">
+                    <div class="handout-title"><i class="fas fa-file-alt handout-icon"></i> Kartographie im Einsatz</div>
+                    <span class="handout-link">PDF öffnen</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="shiftplan-footer">
+            <p>Alle Unterlagen stammen vom Institut National de la Formation des Secours (INFS).</p>
+            <p>© 2026 Ambulance Toolkit Luxembourg | Nicht für diagnostische Zwecke zugelassen</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGDIS Infectious Diseases Reference</title>
+    <title>Liste der Infektionskrankheiten</title>
     <style>
         :root {
             --primary: #1a5fb4;
@@ -210,12 +210,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>CGDIS Infectious Diseases Reference</h1>
-            <p class="subtitle">Comprehensive guide to infectious diseases with transmission routes and safety protocols</p>
+            <h1>Liste der Infektionskrankheiten</h1>
+            <p class="subtitle">Liste aller Infektionskrankheiten mit Übertragungswegen und Schutzprotokollen</p>
         </header>
         
         <div class="search-container">
-            <input type="text" id="searchBox" placeholder="Search diseases, pathogens, or symptoms...">
+            <input type="text" id="searchBox" placeholder="Suche nach Krankheit, Übertragungsweg, etc...">
             <span class="search-icon">🔍</span>
         </div>
         
@@ -224,8 +224,12 @@
         </div>
         
         <footer>
-            <p><strong>Avertissement :</strong> Ce site et les documents fournis sont à usage informatif uniquement. L'auteur ne saurait être tenu responsable des erreurs, omissions ou conséquences liées à l'utilisation de ces informations. Toujours consulter les protocoles officiels en vigueur au CGDIS.</p>
-            <p>© 2026 Ambulance Toolkit Luxembourg | Non affilié au CGDIS</p>
+            <p><strong>Hinweis:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu
+                Informationszwecken.
+                Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der
+                Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.
+            </p>
+            <p>© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS</p>
         </footer>
     </div>
 
@@ -258,7 +262,7 @@
                     
                     function renderDiseases(diseaseList) {
                         if (diseaseList.length === 0) {
-                            diseaseGrid.innerHTML = '<div class="no-results">No diseases found matching your search</div>';
+                            diseaseGrid.innerHTML = '<div class="no-results">Keine Krankheiten gefunden, die Ihrer Suche entsprechen</div>';
                             return;
                         }
                         
@@ -267,8 +271,8 @@
                                 <div class="card-header">
                                     <div class="disease-name">${disease.name}</div>
                                     <div>
-                                        <span class="classification infection-class">Infection: ${disease.infection_class}</span>
-                                        <span class="classification disinfection-class">Disinfection: ${disease.disinfection_class}</span>
+                                        <span class="classification infection-class">Infektion:: ${disease.infection_class}</span>
+                                        <span class="classification disinfection-class">Desinfektion: ${disease.disinfection_class}</span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -276,13 +280,13 @@
                                     ${disease.pathogen ? `<span class="pathogen">Pathogen: ${disease.pathogen}</span>` : ''}
                                     
                                     <div class="transmission">
-                                        <span class="transmission-label">Transmission:</span>
+                                        <span class="transmission-label">Übertragung:</span>
                                         ${disease.transmission}
                                     </div>
                                     
                                     ${disease.notes ? `
                                         <div class="notes">
-                                            <span class="notes-label">Special Notes:</span>
+                                            <span class="notes-label">Zusätzliche Informationen:</span>
                                             ${disease.notes}
                                         </div>
                                     ` : ''}
@@ -294,7 +298,7 @@
                 .catch(error => {
                     console.error('Error loading disease data:', error);
                     document.getElementById('diseaseGrid').innerHTML = 
-                        '<div class="no-results">Error loading disease data. Please check data.json file.</div>';
+                        '<div class="no-results">Fehler beim Laden der Krankheitsdaten. Bitte prüfen Sie die data.json Datei.</div>';
                 });
         });
     </script>

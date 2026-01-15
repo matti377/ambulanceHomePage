@@ -1,0 +1,210 @@
+﻿Number,question,answer0,answer1,answer2,corr_answer,level
+1,Was wird in mmHG ausgedrückt?,Herzfrequenz,Blutdruck,Sauerstoffgehalt im Blut,1,1
+2,Was ist ein Ileus?,Ein Herzinfarkt,Ein Darminfarkt,Ein Darmverschluss,1,2
+3,Ein anderer Name für den zwölffingerdarm ist?,Duodem,Jejunum,Ileum,0,2
+4,"Die Colon ascendes, transversum an descendens sind ein Teil von?",Der Wirbelsäule,Dem Dickdarm,Dem Becken,1,2
+5,Was wird auch noch als Defäkation bezeichnet?,Die Gallenblase entfernen,Aufs Klo gehen,Sterben,1,2
+6,Wieviele Liter Verdauungssaft stellt der Pankreas pro Tag her?,"1,5-2l","4-6,5","0,5-1",0,2
+7,Welches Hormon senkt den Blutzuckerspiegel?,Insulin,Glukagon,Kolesterol,0,2
+8,Welches Organ produziert die Gallenflüssigkeit?,Gallenblase,Leber,Bauchspeicheldrüse,1,2
+9,Welche Vene führt die Nährstoffe vom Darm zur Leber?,Pfortader,Vena cava inferior,Vena Femoralis,0,2
+10,Was gelangt während der Osmose durch die Semipermeable Wand?,Wasser,Aufgelöste Moleküle,Nichts,0,2
+11,Wie heißt das Schienbein noch?,Tibia,Fibula,Patella,1,2
+12,Wie heißt die Kniescheibe noch?,Tibia,Fibula,Patella,2,2
+13,Wie heißt das Schienbein noch?,Tibia,Fibula,Patella,0,2
+14,Wo werden Erythrozyten produziert?,Rotes Knochenmark,Leber,Niere,0,2
+15,Was ist der Normwert der Sauerstofsättigung im Blut?,90%-92%,92-98%,100%,1,1
+16,Was ist der Normwert der Atemfrequenz bei einem Säugling?,40-50/min,10-20/min,20-30/min,0,2
+17,Was ist der Normwert der Atemfrequenz bei einem Kind?,40-50/min,10-20/min,20-30/min,2,2
+18,Was ist der Normwert der Atemfrequenz bei einem Erwachsenen?,14-16/min,10-20/min,20-30/min,0,1
+19,Was wird oft als ZNS abgekürzt?,Zentrales Nerven System,Zentrale für nervende Patienten,Zielklinik für neurologische Schusswunden,0,1
+20,Wie viele Halswirbeln hat ein Mensch?,7,8,9,0,2
+21,Wie viele Brustwirbeln hat ein Mensch?,11,12,13,1,2
+22,Wie vile Lendenwirbel hat ein Mensch?,5,6,7,0,2
+23,Welche Schicht versorgt das Gehirn?,Dura mater,Pia mater,Arachnoidea,1,2
+24,Was ist keie Funktion der Knochen?,Schutz,Kalziumspeicher,Energiespeicher,1,1
+25,Was verursacht der Parasympatikus nicht?,Verlangsamung des Herzschlages,Anregung der Verdaung,Vasokonstruktion,2,1
+26,Was verursacht der Sympatikus nicht?,Vasokonstruktion,Dilatation der Pupillen,Verengung der Bronchien,2,1
+27,Was kann man nicht benutzen um die Atemwege zu sichern?,Esmarch Griff,Güdeltubus,Absaugschlauch,2,1
+28,Was lästt einen Zyanose vermuten?,Leberinsuffizienz,Sauerstoffmangel,Shädel hirn Trauma,1,1
+29,Bei welcher Erkrankung spricht man von deen ________-Trias,Asthma,SHT,Angina Pectoris,0,1
+30,Auf was lässt ein brodelndes Geräusch in der Lunge vermuten?,Lungenödem,Lungenembolie,Herzinfarkt,0,1
+31,Wie nennt man eine infektiöse Erkrankung der Lunge?,Pneumotorax,Pneumonie,Anemie,1,1
+32,Wofür wird das SAMPLER-Schema im Rettungsdienst verwendet?,Um die Beatmungsfrequenz zu berechnen,Um die medizinische Vorgeschichte eines Patienten zu erheben,Um den Notruf korrekt abzusetzen,1,1
+33,Was bedeuten die Buchstaben im SAMPLER-Schema jeweils?,"Symptome, Allergien, Medikamente, Patientengeschichte, Letzte Mahlzeit, Ereignisse, Rettungsteam","Symptome, Allergien, Medikamente, Patienten-Vorgeschichte, Letzte Mahlzeit, Ereignisse, Risikofaktoren","Schmerzen, Allergien, Medikamente, Personenstand, Letzte Nahrung, Ereignis, Reanimation",1,1
+34,Wofür steht das AVPU-Schema bei der Beurteilung des Bewusstseins?,"Atmung, Vitalzeichen, Puls, Umgebung","Alarm, Verletzung, Pupillen, Untersuchung","Alert, Verbal, Pain, Unresponsive",2,1
+35,Wofür wird das AVPU-Schema im Rettungsdienst verwendet?,Zur schnellen Einschätzung des Bewusstseinszustands eines Patienten,Zur Überprüfung der Atemfrequenz,Zur Einschätzung der Körpertemperatur,0,1
+36,Wofür wird das ABCDE-Schema im Rettungsdienst verwendet?,Zur strukturierten Untersuchung und Versorgung eines Notfallpatienten,Zur Dokumentation von Medikamenten,Zur Entscheidung über Krankenhauswahl,0,1
+37,Was überprüft man im ersten Schritt (A) des ABCDE-Schemas?,Ob der Blutdruck stabil ist,Ob die Pupillen reagieren,Ob die Atemwege frei und offen sind,2,2
+38,Was wird im Schritt „B“ des ABCDE-Schemas beurteilt?,Hautfarbe und Schweißproduktion,"Atmung: Frequenz, Tiefe, Geräusche",Temperatur der Extremitäten,1,2
+39,Was prüft man im Schritt „C“ des ABCDE-Schemas?,Sichtbare Verletzungen,"Puls, Hautdurchblutung und Blutung",Hustenreflex,1,2
+40,Was wird im Schritt „D“ des ABCDE-Schemas kontrolliert?,"Pupillen, Bewusstsein und motorische Reaktion",Flüssigkeitsaufnahme,Herzfrequenz,0,2
+41,Was wird im Schritt „E“ des ABCDE-Schemas gemacht?,"Der Patient wird entkleidet, um Verletzungen zu erkennen",Die Sauerstoffsättigung wird überprüft,Die Umgebung wird desinfiziert,0,2
+42,Was ist die Hauptfunktion des Insulins ?,Die Herzfrequenz zu steigern,Aufnahme von Glukose aus dem Blut,Den Blutzucker-Wert ansteigen zu lassen,1,2
+43,Die Wirkung vom Sympatikus an den Pupillen ist :,Miosis,Eine Entrundung,Mydriasis ,2,2
+44,Welche Antwort beschreibt den Weg des Blutes im Körperkreislauf ?, Linkes Herz – Aorta-Arterien-Arteriolen-Kapillaren-venolen-venen-hohlvene-rechtes Herz ,Rechtes herz-aorta-arterien-arteriolen-kapillaren-venolen-venen-hohlvene-linkes herz ,Hohlvene-rechts herz-linkes herz- arterien- aorta-kapillaren-arteriolen-venolen-venen,0,1
+45,Welche Blutmenge befindet sich im Körper des Erwachsenen ? ,"Ca. 6-8% des Körpergewichts, rund 80ml Blut pro Kilogramm Körpergewicht ","Ca. 8-10% des Körpergewichts, rund 100ml pro Kilogramm Körpergewicht ",Ca. 10-12% des Körpergewichts rund 120ml pro Kilogramm Körpergewicht ,0,2
+46,Auf die Atemsteuerung beim gesunden Menschen hat stärkesten Einfluss,Der PH Wert im Blut,Der O2 Gehalt im Blut,Der CO2 Gehalt im Blut ,2,2
+47,"Welche Maßnahme muss durchgeführt werden, wenn ein Fremdkörper in den Bauchraum eingedrungen ist ? ",Entfernen der Fremdkörper und Austamponieren der Wundhöhle,Belassen und steriles fixieren des Fremdkörpers,Vorsichtiges Herausziehen,1,1
+48,Welche Aussage ist richtig ?,Ein Bein mit arteriellem Verschluss wird tief gelagert,Ein Bein mit arteriellem Verschluss wird abgebunden,Ein bein mit arteriellem Verschluss wird hoch gelagert,0,1
+49,Welche intrakraniale Blutung gibt es nicht ? ,Subduralblutung,Subarachnoidalblutung,Intraduralblutung ,2,2
+50,Welche der folgenden Aussagen ist richtig?,Ein absoluter Volumenmangel wird immer durch eine Blutung verursacht,Beim kardialen Schock liegt immer eine Tachykardie vor,Ein neurogener Schock muss nicht unbedingt traumatisch bedingt sein,2,2
+51,Was ist die Definition eines Schocks?,Missverhältnis zwischen Sauerstoffangebot und Sauerstoffbedarf,Missverhältnis zwischen Herzfrequenz und systolischer Blutdruck,Missverhältnis zwischen Pumpleistung des Herzens und Blutverlus,0,1
+52,Welcher Schutzstufe ist EBOLA zuzuordnen ? ,I2,I4,I6,1,2
+53,"Welche Farbe von LTSD wird bei einer Reanimation von einem Erwachsenen mit 1,65m benutzt ?",Rot ,Gelb,Violett,0,2
+54,Was ist hiervon kein sicheres Todeszeichen?,Leichestarre,Leichenflecken,Bewusstlosigkeit,2,2
+55,Ab wann dürfen sie ein Kind mittels Lifepak 15 defibrillieren ?,Ab 8 Jahren oder 25 Kilogramm,Ab 2 Jahren oder 13 Kilogramm,Ab 7 Jahren oder 25 Kilogramm,0,2
+56,Welche der folgenden Aussagen ist falsch ? ,Kinder haben ein erhöhtes Aspirationsrisiko,Die Gefahr der Unterkühlung ist bei Kindern deutlich größer ,Eine Herzfrequenz unter 140/min ist bei Neugebornen bedrohlich langsam ,2,2
+57,Wieviel beträgt die normale Atemfrequenz eines Säuglings ?,30-40 / Minute,50-60 / Minute,80-100 / Minute,0,2
+58,Welches der aufgeführten Symptome ist typisch für ein Pseudokrupp ?,Speichelfluss aus dem Mund,Bellender Husten ,Stark erhöhte Temperatur ,1,2
+59,Was sollte ein Notfallmedikament erfüllen ? ,"Kurzer Wirkungseintritt, lange Wirkungsdauer, gute Steuerbarkeit","Kurze Wirkungseintritt, kurze Wirkungsdauer, gute Steuerbarkeit ","Langer Wirkungseintritt, lange Wirkungsdauer, gute Steuerbarkeit",1,2
+60,Ordnen Sie die Schweregrade einer Bewusstseinsstörung von leicht bis schwer zu,"Benommenheit, Somnolenz, Sopor, Koma  ","Koma, Sopor, Benommenheit, Somnolenz","Somnolenz, Benommenheit, Sopor, Koma",0,2
+61,Was ist eine Luxation ?,Lösung der gelenkbildenden Strukturen mit Störung der Gelenkfunktion,Verstauchung durch Überdehnung der Gelenkkapsel,Lösung der gelenkbildenden Strukturen bei erhaltener Gelenkfunktion,0,2
+62,Welche Aussagen zum Kendrick Extrications Device (KED System) ist falsch ?,Mit dem KED wird ohne weitere Hilfsmittel eine komplette Ruhigstellung erreicht ,Das Anlegen des KED erfolgt am besten zu dritt aber mindestens zu zweit,Das KED dient der Immobilisation der Hals und Brustwirbelsäule,0,2
+63,Welche Aussage zu Schusswunden trifft nicht zu ?,Es gibt immer ein Ausschussloch ,Der Ausschuss ist meist größer als der Einschuss,Schusswunden müssen nicht stark bluten,0,2
+64,Welche Schockstadien gibt es?,Nur kompensierter Schock und irreversibler Schock,"Kompensierter Schock, dekompensierter Schock, irreversibler Schock","Hypovolämischer Schock, kardiogener Schock, septischer Schock",2,2
+65,Welche Schockformen gibt es nicht?,Neurogener Schock,Anaerober Schock,Hypovolämischer Schock,1,2
+66,Was sind typische Schocksymptome?,"Warme, gerötete Haut und hoher Blutdruck","Kalte, blasse Haut; schneller Puls; niedriger Blutdruck",Langsamer Puls und tiefe Atmung bei rosiger Haut,1,1
+67,Was ist ein relativer Volumenmangel?,Es fehlt dem Körper Blut durch äußere Blutungen.,Es geht Flüssigkeit durch Erbrechen oder Durchfall verloren.,"Das Blutvolumen ist unverändert, aber die Gefäße sind erweitert, sodass nicht genug Blutdruck entsteht.",2,1
+68,Was ist ein absoluter Volumenmangel?,"Die Blutgefäße sind erweitert, obwohl genug Blut vorhanden ist.","Es fehlt tatsächlich Flüssigkeit oder Blut im Kreislauf, z. B. durch Blutungen oder Dehydratation.","Der Herzmuskel ist zu schwach, um das Blut effektiv zu pumpen.",1,1
+69,Was passiert in der Kompensationsphase eines Schocks?,Der Blutdruck fällt stark ab und die Organe werden nicht mehr durchblutet.,"Der Körper versucht, den Blutdruck stabil zu halten, z. B. durch schnelleren Puls und Engstellung der Gefäße.","Der Kreislauf bricht vollständig zusammen, es kommt zum Multiorganversagen.",1,2
+70,Was passiert in der Dekompensationsphase eines Schocks?,"Der Blutdruck bleibt stabil, die Durchblutung aller Organe ist sichergestellt.",Der Körper kompensiert den Volumenmangel erfolgreich durch erhöhte Herzfrequenz.,"Der Blutdruck sinkt deutlich, die Organe werden schlechter durchblutet, erste Organschäden können entstehen.",2,2
+71,Was passiert im irreversiblen Schock?,"Der Kreislauf stabilisiert sich spontan, ohne medizinische Hilfe.","Die Organschäden sind so weit fortgeschritten, dass sie nicht mehr rückgängig gemacht werden können – der Patient stirbt meist trotz Behandlung.",Der Körper beginnt mit der Regeneration und der Blutdruck steigt wieder an.,1,2
+72,Was sind typische Gründe für einen septischen Schock?,"Schwere Infektionen mit Bakterien, die zu einer Entzündungsreaktion im ganzen Körper führen",Plötzlicher Flüssigkeitsverlust durch starkes Schwitzen,Verletzungen des Rückenmarks mit Ausfall der Nervenleitung,0,2
+73,Welche Auffälligkeit zeigt ein NSTEMI?,ST-Strecken-Hebung im EKG,Erhöhte Herzmuskelmarker ohne ST-Strecken-Hebung im EKG,Normale Herzmuskelmarker und ST-Strecken-Senkung im EKG,1,2
+74,Welche Auffälligkeit zeigt ein STEMI?,ST-Strecken-Hebung im EKG,Erhöhte Herzmuskelmarker ohne EKG-Veränderungen,Keine Veränderungen im EKG und normale Herzmuskelmarker,0,2
+75,Was ist eine Ischämie?,"Ein Zustand, bei dem Gewebe nicht ausreichend mit Sauerstoff und Nährstoffen versorgt wird, meist durch verminderte Durchblutung.",Eine Entzündung des Herzmuskels.,Eine vermehrte Durchblutung eines Organs durch Erweiterung der Blutgefäße.,0,2
+76,Welche Aufgabe hat das Epithelgewebe?,Energiespeicherung,Schutz und Resorption,Leitung von Aktionspotentialen,1,2
+77,Welche Art von Muskelgewebe ist nicht willentlich steuerbar?,Quergestreifte Muskulatur,Glatte Muskulatur,Skelettmuskulatur,1,2
+78,Was ist die Hauptfunktion der Subcutis der Haut?,Schutz vor Umwelteinflüssen,Regulation der Blutzirkulation,Fettgewebe für Polsterung und Energiespeicher,2,2
+79,Welcher pH-Bereich gilt für Blut als normal?,"7,35–7,45","6,8–7,2","7,5–7,8",0,2
+80,Welches Organ gehört zum lymphatischen System?,Leber,Thymus,Magen,1,2
+81,Welche Arterie versorgt den Oberarm?,A. poplitea,A. femoralis,A. brachialis,2,2
+82,Welche Wirkung hat der Parasympathikus auf die Herzfrequenz?,Erhöht die Herzfrequenz,Senkt die Herzfrequenz,Keine Wirkung,1,2
+83,Wie hoch ist der typische Blutdruck in Venen?,Ca. 100 mmHg,Ca. 50 mmHg,Max. 25 mmHg,2,2
+84,Welche Maßnahme reduziert den Sauerstoffbedarf des Herzens?,Stressfaktoren erhöhen,Den Patienten laufen lassen,Oberkörper hoch lagern,0,2
+85,Wie viele Lappenbronchien hat der rechte Hauptbronchus?,3,2,1,0,2
+86,Welche Maßnahme ist bei einem Inhalationstrauma wichtig?,Patienten in Bauchlage bringen,Inspektion auf Schwellung der Atemwege,Kein Sauerstoff geben,1,1
+87,Welcher Rezeptor ist für die Regulation der Herzfrequenz verantwortlich?,Alpha-Rezeptoren,Beta-2-Rezeptoren,Beta-1-Rezeptoren,0,2
+88,Welcher Bewusstseinszustand entspricht einer GCS von etwa 8?,Koma,Somnolent,Sopor,2,2
+89,Was steuert die Medulla oblongata?,Verdauung,Atmung und Herzschlag,Bewegungsapparat,1,2
+90,Welches Antidot wird bei einer Opioid-Überdosis verwendet?,Anexate,Naloxon,Aktivkohle,1,2
+91,Wie lange ist Aktivkohle nach einer Intoxikation wirksam?,Nur solange der Giftstoff im Magen ist,24 Stunden,Unbegrenzt,0,2
+92,Welche Frage ist bei einer Intoxikation besonders wichtig?,Wie viel wurde eingenommen?,Welche Farbe hat der Giftstoff?,Wo wurde der Patient geboren?,0,1
+93,Was ist ein Merkmal eines idealen Notfallmedikaments?,Langsame Wirkung,Schneller Wirkungseintritt,Lange Wirkdauer,1,2
+94,Welche Wirkung haben Beta-2-Rezeptoren?,Kontraktion der Gefäßmuskulatur,Relaxation der glatten Muskulatur (Bronchien),Erhöhung des Blutdrucks,1,2
+95,Welches Medikament wirkt auf NMDA-Rezeptoren?,Ketamin,Morphium,Ventolin,0,2
+96,Was versteht man unter Analgosedierung?,Muskelrelaxation,Vollnarkose,Schmerzausschaltung mit Beruhigung,2,2
+97,Was zeigt die P-Welle im EKG?,Vorhofkontraktion,Vorhofkontraktion,Repolarisation der Ventrikel,0,2
+98,Wie lange dauert das PQ-Intervall normalerweise?,>300 ms,<100 ms,<200 ms,2,2
+99,Welcher Rhythmus ist schockbar?,Asystolie,Kammerflimmern,Pulslose elektrische Aktivität (PEA),1,2
+100,Wie tief sollten Thoraxkompressionen bei Erwachsenen sein?,3–4 cm,5–6 cm,7–8 cm,1,1
+101,Wie hoch ist die Defibrillationsenergie beim Corpuls?,200 J,250 J,350 J,0,2
+102,Was ist ein nicht schockbarer Rhythmus?,Kammerflattern,Ventrikuläre Tachykardie,Asystolie,2,1
+103,Welche anatomische Besonderheit haben Kinder in den Atemwegen?,Kehlkopf liegt tiefer,Subglottischer Raum ist die engste Stelle,Keine Fontanellen,1,2
+104,Wie prüft man das Bewusstsein bei Kleinkindern?,Fuß kribbeln oder über dem Gesicht in die Hände klopfen,Durch lautes Schreien,Durch Schütteln,0,2
+105,Ab welchem Alter ist der Larynxtubus verwendbar?,Ab Geburt,Ab 18 Jahren,Ab 6 Jahren,1,2
+106,Was ist ein Symptom der Asthma-Trias?,Fieber,Niedriger Blutdruck,Schleim,1,1
+107,Was ist ein typisches Symptom eines Lungenödems?,Rasseln beim Atmen,Keine Atemnot,Hoher Blutdruck,0,1
+108,Was löst einen Pseudokrupp aus?,Viren,Bakterien,Pilze,0,2
+109,Welches Symptom ist typisch für eine Epiglottitis?,Bellender Husten,Kein Fieber,Ausgeprägter Speichelfluss,2,2
+110,Was ist ein Risikofaktor für SIDS (Plötzlicher Kindstod)?,Schlafen in Rückenlage,Hohes Geburtsgewicht,Rauchen während der Schwangerschaft,2,2
+111,Welches Symptom deutet auf Kindesmisshandlung hin?,Hohe Lebensfreude,Berührungsscheu,Keine Verletzungen,1,2
+112,Was ist ein Merkmal eines ketoazidotischen Komas (Diabetes Typ 1)?,Kein Azetongeruch,Normale Atmung,Kussmaul-Atmung,2,2
+113,Wie wird ein hypersomolares Koma (Diabetes Typ 2) charakterisiert?,Obstgeruch,Zeichen von Exsikkose,Niedriger Blutzucker,1,2
+114,Was ist eine Maßnahme bei einem offenen Bruch?,SAMU rufen,Kein Sauerstoff geben,Patient laufen lassen,0,1
+115,Wie wird ein bewusstloser Patient mit einer Rippenserienfraktur gelagert?,Auf die unverletzte Seite,Auf die verletzte Seite,In Bauchlage,1,2
+116,Was ist ein normales Kapnometrie-Wert (CO2)?,15–20 mmHg,35–45 mmHg,50–60 mmHg,1,2
+117,Was ist ein Zeichen für eine extreme Sepsis?,Petechien,Hoher Blutdruck,Kein Fieber,0,2
+118,Welche Hauptaufgabe hat das Lymphsystem im menschlichen Körper?,Produktion von Insulin,Abtransport von Gewebsflüssigkeit und Abwehr von Krankheitserregern,Sauerstofftransport zu den Zellen,1,2
+119,Welche Funktion haben die Lymphknoten im menschlichen Körper?,Sie produzieren rote Blutkörperchen,Sie filtern die Lymphe und helfen bei der Immunabwehr,Sie regulieren den Blutdruck,1,2
+120,Worin besteht der Unterschied zwischen dem großen und dem kleinen Blutkreislauf?,"Der große Kreislauf versorgt nur die Lunge mit Blut, der kleine den restlichen Körper","Der große Kreislauf beginnt im rechten Herzen, der kleine im linken","Der große Kreislauf versorgt den Körper, der kleine die Lunge mit Blut",2,1
+121,Was beschreibt die Vorlast im Herz-Kreislauf-System?,Den Druck in der Aorta während der Systole,Die Dehnung des Herzmuskels am Ende der Diastole durch das venöse Blutangebot,Die Kontraktionskraft des linken Ventrikels,1,2
+122,Was beeinflusst hauptsächlich die Nachlast des Herzens?,Der venöse Rückstrom zum Herzen," Der Druck, gegen den das Herz auswerfen muss (z. B. Widerstand in der Aorta)",Die Herzfrequenz,1,2
+123,Wie viele Herzklappen hat das menschliche Herz?,2,3,4,2,1
+124,Welche Struktur leitet den elektrischen Impuls vom Vorhof auf die Kammer weiter?,Purkinje-Fasern,AV-Knoten,Sinusknoten,1,2
+125,Welche Herzkammer pumpt das Blut in den Körperkreislauf?,Rechte Kammer,Linke Kammer,Beide Kammern gleichzeitig,1,1
+126,Was ist typisch für eine Myokardinfarkt-Symptomatik?,Plötzliche Sehstörungen,Druckgefühl oder Schmerz hinter dem Brustbein,Juckreiz am ganzen Körper,1,1
+127,Welche Blutgefäße versorgen den Herzmuskel selbst?,Pulmonalvenen,Vena cava,Koronararterien (Herzkranzgefäße),2,1
+128,Wie heißt der Hauptmuskel der Atmung?,Herzmuskel,Zwerchfell,Rippenmuskel,1,1
+129,Wo findet der Gasaustausch im Körper hauptsächlich statt?, In der Trachea,In den Bronchien,In den Alveolen (Lungenbläschen),2,1
+130,Wie lautet der medizinische Fachbegriff für Atemnot?,Dyspnoe,Apnoe,Bradypnoe,0,1
+131,Was ist ein typisches Symptom einer Hyperventilation?,Verlangsamte Atmung,Muskelkrämpfe durch Kalziumabfall,Bewusstlosigkeit durch Sauerstoffmangel,1,1
+132,Welche Struktur verhindert das Eindringen von Nahrung in die Luftröhre?,Kehlkopfdeckel (Epiglottis),Stimmbänder,Zwerchfell,0,2
+133,Wie viele Lungenlappen hat der Mensch insgesamt?,Zwei,Drei,Fünf,2,2
+134,Was bedeutet der Begriff „Apnoe“?,Beschleunigte Atmung,Atemstillstand,Tiefe Atmung,1,1
+135,Was passiert bei einer Aspiration?,Einatmen von Fremdmaterial in die Lunge,Atemstillstand nach Hyperventilation,Überblähung der Lunge,0,1
+136,Welche Maßnahme ist bei einer akuten Dyspnoe nicht sinnvoll?,Beruhigung und Lagerung mit erhöhtem Oberkörper,Gabe von Sauerstoff,Flachlagerung,2,1
+137,Welche Hauptaufgabe hat die Leber im Stoffwechsel?,Produktion von Insulin,Abbau von Giftstoffen und Stoffwechselprodukten,Speicherung von Sauerstoff,1,2
+138,Wo liegt die Leber im menschlichen Körper?,Unter dem Zwerchfell links, Linker Oberbauch, Rechter Oberbauch,2,2
+139,Welche Substanz wird von der Leber produziert und in der Gallenblase gespeichert?,Salzsäure,Glukose,Galle,2,2
+140,Welche Folge kann ein Verschluss des Gallengangs haben?,Gelbsucht (Ikterus),Diabetes,Bluthochdruck,0,2
+141,Wie nennt man eine Entzündung der Leber?,Hepatitis,Gastritis,Nephritis,0,2
+142,Welche Aussage zur Gallenblase ist korrekt?,Sie produziert Galle selbst,"Sie speichert Galle, die in der Leber gebildet wird",Sie filtert Blut,1,2
+143,Welche typischen Schmerzen treten bei Gallensteinen auf?,Dumpfe Schmerzen im linken Unterbauch,"techende Schmerzen im rechten Oberbauch, evtl. mit Ausstrahlung in Rücken/Schulter","Krampfartige Schmerzen im Unterbauch, vor allem morgens",1,2
+144,Welche Hauptfunktion haben die Nieren?, Produktion von Galle,Bildung von Insulin,Filterung des Blutes und Ausscheidung von Abfallstoffen,2,2
+145,Wo befinden sich die Nieren im Körper?, Im kleinen Becken,Beidseits der Wirbelsäule im Retroperitonealraum,Direkt unter dem Brustbein,1,2
+146,"Wie heißt das Röhrensystem, das den Harn von der Niere zur Blase leitet?",Harnleiter (Ureter),Harnröhre,Nierenbecken,0,2
+147,Was ist ein häufiges Symptom bei einer akuten Nierenkolik?,"Ruhiger, dumpfer Schmerz"," Plötzlicher, wellenartiger, sehr starker Flankenschmerz",Schmerzen beim Schlucken,1,2
+148,Welche Aussage zur Niere ist korrekt?,Sie produziert Insulin,Sie reguliert den Flüssigkeits- und Elektrolythaushalt,Sie produziert Hämoglobin,1,2
+149,Was kann eine Folge von chronischem Nierenversagen sein?,Atemnot durch Wassereinlagerung, Sehstörungen,Schneller Puls durch Adrenalinmangel,0,2
+150,Was ist typisch für einen Krupp-Anfall?,Bellender Husten und inspiratorischer Stridor,Giemen und expiratorischer Stridor,Fieber und Hautausschlag,0,1
+151,Welche Position ist für ein Kind mit schweren Atemproblemen am besten?,Flachlagerung,Bauchlage,Oberkörper hochlagern,2,1
+152,Welche Therapie ist bei Fremdkörperaspiration bei Kindern am wichtigsten?,Schnelle Entfernung des Fremdkörpers (z. B. durch Heimlich-Handgriff),Bettruhe,Sportliche Aktivität,0,1
+153,Was ist die häufigste Ursache einer Lungenembolie?,Tiefe Venenthrombose (TVT),Herzinfarkt, Asthma bronchiale,0,2
+154,Welches Symptom ist typisch für eine Lungenembolie?,Plötzliche Atemnot und Thoraxschmerzen,Kopfschmerzen und Schwindel, Bauchschmerzen,0,2
+155,Welche Sofortmaßnahme ist bei Verdacht auf Lungenembolie wichtig?,Hochlagerung und Sauerstoffgabe,Sofortige Bettruhe und Flüssigkeitsrestriktion,Schnellstmögliche Mobilisation,0,2
+156,Welches Risiko erhöht die Wahrscheinlichkeit einer Lungenembolie?,Immobilität über mehrere Tage,Regelmäßige Bewegung,Gesunde Ernährung,0,2
+157,Was versteht man unter Herzinsuffizienz?,Eine Überfunktion des Herzens,"Die Unfähigkeit des Herzens, genügend Blut zu pumpen",Eine Entzündung des Herzmuskels,1,1
+158,Welches Symptom ist typisch für eine Linksherzinsuffizienz?,Atemnot bei Belastung (Dyspnoe),Beinödeme,Kopfschmerzen,0,1
+159,Was ist eine mögliche Folge einer Rechtsherzinsuffizienz?,Stauung in den Venen und Beinödeme,Erhöhter Puls,Bluthochdruck,0,1
+160,Welcher Befund ist typisch bei Herzinsuffizienz?, Gestaute Halsvenen,Niedriger Blutdruck ohne weitere Symptome,Trockener Husten ohne Atemnot,0,1
+161,Was ist der sogenannte McBurney-Punkt?,Ein Punkt am linken Oberbauch,"Ein Druckschmerzpunkt im rechten Unterbauch, typisch bei Appendizitis",Ein Reflexpunkt am Knie,1,2
+162,Welches Symptom ist typisch für eine Appendizitis?,Schmerzen im rechten Unterbauch, Schmerzen im linken Oberbauch,Rückenschmerzen,0,2
+163,Welches Symptom spricht für eine beginnende Perforation der Appendix?," Plötzlicher, sehr starker Schmerz mit Abwehrspannung","Leichte Bauchschmerzen, die verschwinden",Fieber ohne Bauchschmerzen,0,2
+164,Welche Untersuchung ist zur Sicherung der Diagnose Appendizitis besonders wichtig?,Abdomensonographie (Ultraschall),EKG,Lungenröntgen,0,2
+165,Wie wird eine Appendizitis meist behandelt?,Nur Bettruhe,Schmerztabletten und Abwarten,Antibiotika und operative Entfernung (Appendektomie),2,2
+166,Was passiert bei Diabetes mellitus im Körper?,Zu viel Insulin wird produziert,Der Blutzuckerspiegel ist chronisch erhöht, Das Blut enthält zu wenig Sauerstoff,1,1
+167,Welche Form von Diabetes tritt meist im Kindesalter auf?,Typ-1-Diabetes,Typ-2-Diabetes,Schwangerschaftsdiabetes,0,2
+168,Was ist eine häufige Ursache für Typ-2-Diabetes?,Autoimmunerkrankung,Infektionen,Übergewicht und Bewegungsmangel,2,2
+169,Welches Hormon reguliert den Blutzuckerspiegel?,Adrenalin,Cortisol,Insulin,2,2
+170,Welche Symptome können bei Diabetes auftreten?,"Häufiges Wasserlassen, starker Durst, Gewichtsverlust",Kopfschmerzen und Fieber,Hautausschlag und Juckreiz,0,1
+171,Was versteht man unter Hypoglykämie?,Zu hoher Blutzucker,Normale Blutzuckerwerte,Zu niedriger Blutzucker,2,1
+172,Was ist ein Notfallsymptom bei Hypoglykämie?,Verwirrtheit und Bewusstseinsverlust,Husten,Bauchschmerzen,0,1
+173,Was sollte man bei einer bewusstlosen Person mit Diabetes tun?,Sofort Insulin spritzen,Notarzt rufen und stabile Seitenlage,Zucker geben,1,1
+174,Was bedeutet Ketoazidose bei Diabetes?,Übersäuerung des Blutes durch Ketonkörper,Unterzuckerung,Allergische Reaktion,0,2
+175,Wie wird Typ-1-Diabetes meist behandelt?,Mit Antibiotika,Nur mit Ernährung,Mit Insulininjektionen,2,1
+176,Was ist das wichtigste Ziel bei der Behandlung von Diabetes?,Den Blutzuckerspiegel möglichst normal halten,Gewichtszunahme fördern,Viel Wasser trinken,0,1
+177,"Welche Maßnahme hilft, das Risiko für Diabetes zu senken?",Regelmäßige Bewegung und gesunde Ernährung,Viel Zucker essen,Rauchen,0,1
+178,Wofür steht die Abkürzung HELLP im HELLP-Syndrom?,"Hämolyse, erhöhte Leberenzyme, niedrige Thrombozyten","Herzinfarkt, Leberversagen, Lungenödem","Husten, Erbrechen, Leberprobleme",0,2
+179,In welcher Patientengruppe tritt das HELLP-Syndrom am häufigsten auf?,"Schwangere Frauen, meist im dritten Trimester",Säuglinge,Männer mittleren Alters,0,2
+180,Welches Symptom ist typisch für das HELLP-Syndrom?,Schmerzen im rechten Oberbauch,Halsschmerzen,Juckreiz,0,2
+181,Was ist die wichtigste Maßnahme bei Verdacht auf ein HELLP-Syndrom?,Bettruhe zu Hause,Einnahme von Schmerzmitteln,Sofortige Krankenhausaufnahme und Überwachung,2,2
+182,Was ist bei einer Verätzung des Auges mit ungelöschtem Kalk zu beachten?,Sofort mit Wasser spülen,"Kalk trocken entfernen, nicht spülen",Verband anlegen und abwarten,1,2
+183,Welche Substanz verursacht in der Regel die schwerwiegenderen Verätzungen?,Säuren,Laugen,Lösungsmittel,1,2
+184,Was ist die wichtigste Maßnahme bei Augenverätzungen?,Sofortige Kühlung,Spülen mit steriler Kochsalzlösung oder Leitungswasser,Verband anlegen und Notruf abwarten,1,2
+185,Was ist ein typisches Symptom bei einer Glaukomanfall?,Gelbverfärbung der Bindehaut,"Weite, lichtstarre Pupille und harter Augapfel",Starkes Tränen,1,2
+186,Welche Maßnahme bei perforierender Augenverletzung ist korrekt?,Fremdkörper entfernen,Steriles Abdecken und ruhigstellen,Druckverband anlegen,1,2
+187,Wie äußert sich eine Augenprellung?,Nur leichte Rötung,Doppelbilder und Schmerzen,Ohrgeräusche,1,2
+188,Was ist ein Leitsymptom des plötzlichen Sehverlustes?,Rotes Auge,Einseitiger Gesichtsfeldausfall,Schielen,1,2
+189,Was ist bei Fremdkörper im Bulbus zu tun?,Sofort entfernen,Belassen und abdecken, Auge auswaschen,1,2
+190,Was gehört nicht zu den Augennotfällen?,Glaukomanfall,Trockene Augen,Verätzung,1,2
+191,Was ist die häufigste Ursache für Nasenbluten?,Hypotonie,Schleimhautreizung oder Hypertonie,Schilddrüsenüberfunktion,1,2
+192,Wie wird Nasenbluten versorgt?,Kopf nach hinten, Kompression der Nasenflügel und Kopf nach vorne,Kalte Dusche,1,2
+193,Was ist bei Blutung aus dem Ohr zu tun?,Fremdkörper entfernen,Steril abdecken,Durchspülen,1,2
+194,Welche Lagerung bei HNO-bedingter Luftnot ist richtig?,Flachlagerung,Oberkörperhochlagerung,Trendelenburg,1,2
+195,Was ist ein Symptom beim akuten Hörsturz?,Bluthochdruck,Druckgefühl im Ohr,Augenschmerzen,1,2
+196,Was beschreibt Tinnitus?,Entzündung der Ohrspeicheldrüse,Wahrnehmung von Ohrgeräuschen,Gleichgewichtsstörung,1,2
+197,Welche Maßnahme ist bei Tinnitus erforderlich?,Kühlung, Schonender Transport,Notarztalarmierung,1,2
+198,Was ist bei einem schweren Schwindelanfall hilfreich?,Hüpfen und Gehen,"Augen schließen, Raum abdunkeln",Viel Trinken,1,2
+199,Welche Ursache kann eine Blutung aus dem Mund haben?,Zahnwechsel,Nachblutung nach Tonsillektomie,Heiserkeit,1,2
+200,Was sollte bei Bewusstseinsstörung und Blutung erfolgen?,Bauchlage, Freihalten der Atemwege,Druckverband,1,2
+201,Was ist ein typisches Symptom bei Nierenkolik?,Atemnot,Krampfartige Flankenschmerzen mit Ausstrahlung,Durchfall,1,2
+202,Welche Maßnahme bei Nierenkolik ist sinnvoll?,Kälte und Bettruhe,"Wärme, Knierolle, Lagerung",Sitzenlassen,1,2
+203,Was ist ein typisches Symptom des Harnverhalts?,Häufiges Wasserlassen,Quälender Harndrang ohne Mikition,Schmerzen im Fuß,1,2
+204,Was kann Ursache eines Harnverhalts sein?,Blinddarmentzündung,Vergrößerte Prostata,Herzinfarkt,1,2
+205,Was beschreibt das „akute Skrotum“?,Muskelzucken,Plötzliche Hodenschwellung mit Schmerzen,Stuhlverhalt,1,2
+206,Was ist eine häufige Ursache des akuten Skrotums?,Husten,Hodentorsion,Blasensteine,1,2
+207,Was ist bei Hodentorsion dringend erforderlich?,Wärme und Ruhe,Schonender Transport in Klinik,Abwarten,1,2
+208,Was ist ein Symptom bei Nierenverletzung?,Sehstörungen,Hämaturie und Klopfschmerz,Tinnitus,1,2
+209,Was ist bei urologischen Notfällen oft entscheidend?,Abwarten, Früher Transport zur Vermeidung von Folgeschäden,Viel trinken lassen,1,2
