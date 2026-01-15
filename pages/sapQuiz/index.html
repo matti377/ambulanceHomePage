@@ -157,7 +157,7 @@
 
         async function loadQuestions() {
             try {
-                const response = await fetch('questions.csv');
+                const response = await fetch('Questions.csv');
                 const csvText = await response.text();
                 const lines = csvText.split('\n').slice(1); // Skip header
 
