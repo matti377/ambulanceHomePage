@@ -1,326 +1,227 @@
 [
   {
-    "Marktname": "Suprarenin 1mg/ml",
-    "Wirkstoffname": "Epinephrine",
-    "Wirkstoffgruppe": "Sympathomimetikum",
-    "Wirkung": "Vasokonstriktion, Bronchodilatation, Herzstimulation"
-  },
-  {
-    "Marktname": "Atropine 0.5mg/ml",
-    "Wirkstoffname": "Atropine",
-    "Wirkstoffgruppe": "Parasympatholytikum",
-    "Wirkung": "Senkung vagaler Tonus, Erhöhung Herzfrequenz"
-  },
-  {
-    "Marktname": "Ephedrine 50mg/ml",
-    "Wirkstoffname": "Ephedrine",
-    "Wirkstoffgruppe": "Sympathomimetikum",
-    "Wirkung": "Blutdrucksteigerung, Bronchodilatation"
-  },
-  {
-    "Marktname": "Akrinor 200mg+10mg/2ml",
-    "Wirkstoffname": "Theophylline + Caffeine",
-    "Wirkstoffgruppe": "Bronchodilatator / ZNS-Stimulans",
-    "Wirkung": "Bronchialerweiternd, Atemantrieb steigern"
-  },
-  {
-    "Marktname": "Lanoxin 0.5mg/2ml",
-    "Wirkstoffname": "Digoxin",
-    "Wirkstoffgruppe": "Herzglykosid",
-    "Wirkung": "Herzkontraktionskraft steigern, Herzfrequenz senken"
-  },
-  {
-    "Marktname": "Isoptine 5mg/2ml",
-    "Wirkstoffname": "Verapamil",
-    "Wirkstoffgruppe": "Kalziumantagonist",
-    "Wirkung": "Antiarrhythmisch, Vasodilatation"
-  },
-  {
-    "Marktname": "Lasix 20mg/2ml",
-    "Wirkstoffname": "Furosemid",
-    "Wirkstoffgruppe": "Schleifendiuretikum",
-    "Wirkung": "Schnelle Diurese, Entlastung des Kreislaufs"
-  },
-  {
-    "Marktname": "Polaramine 5mg/ml",
-    "Wirkstoffname": "Dexchlorpheniramin",
-    "Wirkstoffgruppe": "Antihistaminikum",
-    "Wirkung": "Allergische Reaktionen lindern"
-  },
-  {
-    "Marktname": "H2-Blocker 200mg/2ml",
-    "Wirkstoffname": "Cimetidine",
-    "Wirkstoffgruppe": "H2-Rezeptorantagonist",
-    "Wirkung": "Magensäureproduktion hemmen"
-  },
-  {
-    "Marktname": "Amiodarone 150mg/3ml",
-    "Wirkstoffname": "Amiodarone",
-    "Wirkstoffgruppe": "Antiarrhythmikum Klasse III",
-    "Wirkung": "Arrhythmien behandeln"
-  },
-  {
-    "Marktname": "Loxen 10mg/10ml",
-    "Wirkstoffname": "Nicardipine",
-    "Wirkstoffgruppe": "Kalziumantagonist",
-    "Wirkung": "Blutdrucksenkend, vasodilatierend"
-  },
-  {
-    "Marktname": "Seloken 5mg/5ml",
-    "Wirkstoffname": "Metoprolol",
-    "Wirkstoffgruppe": "Betablocker",
-    "Wirkung": "Herzfrequenz und Blutdruck senken"
-  },
-  {
-    "Marktname": "Ebrantil 5mg/ml",
-    "Wirkstoffname": "Urapidil",
-    "Wirkstoffgruppe": "Alpha-1-Blocker / ZNS-Wirkstoff",
-    "Wirkung": "Akute Hypertonie behandeln"
-  },
-  {
-    "Marktname": "Isoket 0,1% 10ml",
-    "Wirkstoffname": "Isosorbiddinitrat",
-    "Wirkstoffgruppe": "Nitrat",
-    "Wirkung": "Koronarvasodilatation, Vorlast senken"
-  },
-  {
-    "Marktname": "Ondansetron 4mg/2ml",
-    "Wirkstoffname": "Ondansetron",
-    "Wirkstoffgruppe": "Serotonin-Antagonist",
-    "Wirkung": "Übelkeit/Erbrechen hemmen"
-  },
-  {
-    "Marktname": "Buscopan 20mg/ml",
-    "Wirkstoffname": "Butylscopolamin",
-    "Wirkstoffgruppe": "Spasmolytikum",
-    "Wirkung": "Glattmuskulatur entspannen"
-  },
-  {
-    "Marktname": "Magnesium sulfate 1g/10ml",
-    "Wirkstoffname": "Magnesiumsulfat",
-    "Wirkstoffgruppe": "Elektrolyt / Antikonvulsivum",
-    "Wirkung": "Krampfanfälle verhindern, Muskelentspannung"
-  },
-  {
-    "Marktname": "Aspegic 500mg inj.",
-    "Wirkstoffname": "Lysinacetylsalicylat",
-    "Wirkstoffgruppe": "NSAR",
-    "Wirkung": "Schmerzstillend, entzündungshemmend"
-  },
-  {
-    "Marktname": "Aqua ad inj. 5ml",
-    "Wirkstoffname": "Wasser für Injektionen",
-    "Wirkstoffgruppe": "Lösungsmittel",
-    "Wirkung": "Zur Verdünnung von Medikamenten"
-  },
-  {
-    "Marktname": "Heparine 25000IE/5ml",
-    "Wirkstoffname": "Heparin",
-    "Wirkstoffgruppe": "Antikoagulans",
-    "Wirkung": "Gerinnung hemmen"
-  },
-  {
-    "Marktname": "Levophed 8mg/4ml",
-    "Wirkstoffname": "Noradrenaline",
-    "Wirkstoffgruppe": "Sympathomimetikum",
-    "Wirkung": "Starke Vasokonstriktion, Blutdrucksteigerung"
-  },
-  {
-    "Marktname": "Rivotril 1mg/ml",
-    "Wirkstoffname": "Clonazepam",
-    "Wirkstoffgruppe": "Benzodiazepin",
-    "Wirkung": "Antikonvulsiv, anxiolytisch"
-  },
-  {
-    "Marktname": "Aqua ad inj. 1ml",
-    "Wirkstoffname": "Wasser für Injektionen",
-    "Wirkstoffgruppe": "Lösungsmittel",
-    "Wirkung": "Zur Verdünnung von Medikamenten"
-  },
-  {
-    "Marktname": "Valium 10mg/2ml",
-    "Wirkstoffname": "Diazepam",
-    "Wirkstoffgruppe": "Benzodiazepin",
-    "Wirkung": "Antikonvulsiv, muskelrelaxierend, sedierend"
-  },
-  {
-    "Marktname": "Vesiera 50mg/2ml",
-    "Wirkstoffname": "Esketamin",
-    "Wirkstoffgruppe": "NMDA-Antagonist",
-    "Wirkung": "Analgetisch, dissoziativ, bewusstseinsverändernd"
-  },
-  {
-    "Marktname": "Dipidolor 10mg/ml",
-    "Wirkstoffname": "Piritramid",
-    "Wirkstoffgruppe": "Opioid",
-    "Wirkung": "Stark schmerzlindernd"
-  },
-  {
-    "Marktname": "Morphine 10mg/ml",
-    "Wirkstoffname": "Morphine",
-    "Wirkstoffgruppe": "Opioid",
-    "Wirkung": "Stark schmerzlindernd, sedierend"
-  },
-  {
-    "Marktname": "Novalgine 1g/2ml",
-    "Wirkstoffname": "Metamizol-Natrium",
-    "Wirkstoffgruppe": "Analgetikum / Antipyretikum",
-    "Wirkung": "Schmerz- und Fiebersenkend"
-  },
-  {
-    "Marktname": "Etomidat 20mg/10ml",
-    "Wirkstoffname": "Etomidat",
-    "Wirkstoffgruppe": "Hypnotikum",
-    "Wirkung": "Schnelle Narkoseeinleitung, minimal kardiovaskulär belastend"
-  },
-  {
-    "Marktname": "Midazolam 50mg/10ml",
-    "Wirkstoffname": "Midazolam",
-    "Wirkstoffgruppe": "Benzodiazepin",
-    "Wirkung": "Sedierung, antikonvulsiv, amnestisch"
-  },
-  {
-    "Marktname": "Sufentanil 50mcg/10ml",
-    "Wirkstoffname": "Sufentanil",
-    "Wirkstoffgruppe": "Opioid",
-    "Wirkung": "Extrem stark schmerzlindernd"
-  },
-  {
-    "Marktname": "Dehydrobenzperidol 0,5mg/ml",
-    "Wirkstoffname": "Dehydroben",
-    "Wirkstoffgruppe": "Neuroleptikum",
-    "Wirkung": "Sedierend, antiemetisch, antipsychotisch"
-  },
-  {
-    "Marktname": "Flumazenil 0,5mg/5ml",
-    "Wirkstoffname": "Flumazenil",
-    "Wirkstoffgruppe": "Benzodiazepin-Antagonist",
-    "Wirkung": "Benzodiazepin-Wirkung antagonisieren"
-  },
-  {
-    "Marktname": "Naloxon 0,4mg/ml",
-    "Wirkstoffname": "Naloxon",
-    "Wirkstoffgruppe": "Opioid-Antagonist",
-    "Wirkung": "Opioid-Wirkung antagonisieren"
-  },
-  {
-    "Marktname": "Solu-Medrol 125mg/2ml",
-    "Wirkstoffname": "Methylprednisolon",
-    "Wirkstoffgruppe": "Kortikosteroid",
-    "Wirkung": "Entzündungshemmend, immunosuppressiv"
-  },
-  {
-    "Marktname": "Ventolin 1mg/ml",
-    "Wirkstoffname": "Salbutamol",
-    "Wirkstoffgruppe": "Beta2-Sympathomimetikum",
-    "Wirkung": "Bronchialerweiternd"
-  },
-  {
-    "Marktname": "Alpred 200mg/10ml",
-    "Wirkstoffname": "Theophyllin",
-    "Wirkstoffgruppe": "Bronchodilatator",
-    "Wirkung": "Bronchialerweiternd, Atemantrieb steigern"
-  },
-  {
-    "Marktname": "Exacyl 500mg/5ml",
-    "Wirkstoffname": "Tranexamsäure",
-    "Wirkstoffgruppe": "Antifibrinolytikum",
-    "Wirkung": "Blutungen stoppen"
-  },
-  {
-    "Marktname": "Vesiera 250mg/10ml",
-    "Wirkstoffname": "Esketamin",
-    "Wirkstoffgruppe": "NMDA-Antagonist",
-    "Wirkung": "Analgetisch, dissoziativ"
-  },
-  {
-    "Marktname": "Keppra 500mg/5ml",
-    "Wirkstoffname": "Levetiracetam",
-    "Wirkstoffgruppe": "Antikonvulsivum",
-    "Wirkung": "Krampfanfälle unterbrechen"
-  },
-  {
-    "Marktname": "Lysthenon 2% 5ml",
-    "Wirkstoffname": "Suxamethoniumchlorid",
-    "Wirkstoffgruppe": "Muskelrelaxans",
-    "Wirkung": "Schnelle Muskelerschlaffung für Intubation"
-  },
-  {
-    "Marktname": "Esmeron 50mg/5ml",
-    "Wirkstoffname": "Rocuronium",
-    "Wirkstoffgruppe": "Muskelrelaxans",
-    "Wirkung": "Muskelerschlaffung für Intubation"
-  },
-  {
-    "Marktname": "NaCl 0,9% 20ml",
-    "Wirkstoffname": "Natriumchlorid",
-    "Wirkstoffgruppe": "Infusionslösung",
-    "Wirkung": "Volumenersatz, Elektrolytausgleich"
-  },
-  {
-    "Marktname": "Midazolam 5mg/5ml",
-    "Wirkstoffname": "Midazolam",
-    "Wirkstoffgruppe": "Benzodiazepin",
-    "Wirkung": "Sedierung, antikonvulsiv"
-  },
-  {
-    "Marktname": "Calciumgluconat 10%",
-    "Wirkstoffname": "Calciumgluconat",
-    "Wirkstoffgruppe": "Elektrolyt",
-    "Wirkung": "Kalziumersatz, bei Hypokalzämie oder Hyperkaliämie"
-  },
-  {
-    "Marktname": "NaCl 0,9% 10ml",
-    "Wirkstoffname": "Natriumchlorid",
-    "Wirkstoffgruppe": "Infusionslösung",
-    "Wirkung": "Volumenersatz, Elektrolytausgleich"
-  },
-  {
-    "Marktname": "G-40% 10ml",
-    "Wirkstoffname": "Glukose 40%",
-    "Wirkstoffgruppe": "Kohlenhydrat",
-    "Wirkung": "Schnelle Energiezufuhr, bei Hypoglykämie"
-  },
-  {
-    "Marktname": "Natispray 0,3mg/dose",
-    "Wirkstoffname": "Trimethoprim",
-    "Wirkstoffgruppe": "Antibiotikum",
-    "Wirkung": "Bei bakteriellen Infektionen"
-  },
-  {
-    "Marktname": "Propofol 1% 20ml",
-    "Wirkstoffname": "Propofol",
-    "Wirkstoffgruppe": "Hypnotikum",
-    "Wirkung": "Schnelle Narkoseeinleitung und -aufrechterhaltung"
-  },
-  {
-    "Marktname": "Xylocaine 2% 20ml",
-    "Wirkstoffname": "Lidocain",
-    "Wirkstoffgruppe": "Lokalanästhetikum / Antiarrhythmikum",
-    "Wirkung": "Lokale Betäubung, Arrhythmien behandeln"
-  },
-  {
-    "Marktname": "Ventolin 100mcg Spray",
-    "Wirkstoffname": "Salbutamol",
-    "Wirkstoffgruppe": "Beta2-Sympathomimetikum",
-    "Wirkung": "Bronchialerweiternd"
-  },
-  {
-    "Marktname": "Adenocor 6mg/2ml",
+    "Handelsname": "Adenocor",
     "Wirkstoffname": "Adenosin",
-    "Wirkstoffgruppe": "Antiarrhythmikum",
-    "Wirkung": "Tachykardien unterbrechen"
+    "Wirkung": "Tachykarde Rhythmusstörungen. Bei Adenocor macht Patient eine kurze Nulllinie des Herzens = medikamentöse Kardioversion. Defipatch aufkleben!!!"
   },
   {
-    "Marktname": "Bridion 500mg/5ml",
-    "Wirkstoffname": "Sugammadex",
-    "Wirkstoffgruppe": "Muskelrelaxans-Antagonist",
-    "Wirkung": "Wirkung von Rocuronium umkehren"
+    "Handelsname": "Akrinor",
+    "Wirkstoffname": "Cafedrin+ Theodrenalin",
+    "Wirkung": "Blutdruck ↑"
   },
   {
-    "Marktname": "Thiopental 0,5g",
-    "Wirkstoffname": "Thiopental",
-    "Wirkstoffgruppe": "Barbiturat",
-    "Wirkung": "Schnelle Narkoseeinleitung"
+    "Handelsname": "Anexate",
+    "Wirkstoffname": "Flumazenil",
+    "Wirkung": "Antagonist bei Benzodiazepinüberdosierung (Xanax, Temesta, Seresta, Dormicum)"
+  },
+  {
+    "Handelsname": "Aspegic",
+    "Wirkstoffname": "Lysinacetylsalicylat",
+    "Wirkung": "Antikoagulant : Bei Myokardinfarkt"
+  },
+  {
+    "Handelsname": "Atropine",
+    "Wirkstoffname": "Belladona",
+    "Wirkung": "Hemmt den Parasympathikus : Herzfrequenz ↑. Bei einer Dosis unter 0,5mg wird Patient noch bradykarder. Vorbereitung zur Narkose, Behandlung von Vergiftungen."
+  },
+  {
+    "Handelsname": "Buscopan",
+    "Wirkstoffname": "Butylscopolamin",
+    "Wirkung": "Spasmolytikum, Bei Krämpfen (Magen-Darm, Gallen- und Harnwege, Gebärmutter)"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Calciumglukonat",
+    "Wirkung": "Zur Blutgerinnung bei Polytrauma"
+  },
+  {
+    "Handelsname": "Cordarone",
+    "Wirkstoffname": "Amiodaron",
+    "Wirkung": "Antiarrhythmikum : bei regelmässiger breiter QRS-Komplex - Tachykardie +  bei CPR (wenn schockbarer Rhythmus)"
+  },
+  {
+    "Handelsname": "Depakine",
+    "Wirkstoffname": "Valproinsäure",
+    "Wirkung": "Antiepileptika"
+  },
+  {
+    "Handelsname": "Dipidolor",
+    "Wirkstoffname": "Piritramid",
+    "Wirkung": "Opioid. Bei Schmerzen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Droperidol",
+    "Wirkung": "Neuroleptika. Bei Erbrechen und Übelkeit + antipsychotische Wirkung"
+  },
+  {
+    "Handelsname": "Ebrantil",
+    "Wirkstoffname": "Urapidil",
+    "Wirkung": "Adrenorezeptor-Antagonist: Blutdruck↓ Es kommt zur Blockierung der Alpha-Rezeptoren."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Ephedrine",
+    "Wirkung": "Sympathomimetikum (aktiviert Sympatikus): bei Hypotonie, chronischer Bronchitis, Asthma bronchiale"
+  },
+  {
+    "Handelsname": "Esmeron",
+    "Wirkstoffname": "Rocuroniumbromid",
+    "Wirkung": "Muskelrelaxant bei Intubation. Esmeron wirkt länger als Lysthenon."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Etomidat",
+    "Wirkung": "Anästhetikum zur Einleitung der Narkose"
+  },
+  {
+    "Handelsname": "Euphyllin",
+    "Wirkstoffname": "Theophyllin",
+    "Wirkung": "Bronchodilatator. Bei Asthma und COPD"
+  },
+  {
+    "Handelsname": "Exacyl",
+    "Wirkstoffname": "Tranexamsäure",
+    "Wirkung": "Zur Blutgerinnung bei Polytrauma"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Fentanyl",
+    "Wirkung": "Ist ein Opioid und wird zur Narkose eingesetzt"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Glucose 40%",
+    "Wirkung": "Zucker für Hypoglykämie"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "H2- Blocker",
+    "Wirkung": ""
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Heparin",
+    "Wirkung": "Antikoagulant : Bei Myokardinfarkt"
+  },
+  {
+    "Handelsname": "Isoket / Isoket Spray",
+    "Wirkstoffname": "Isosorbiddinitrat",
+    "Wirkung": "Vasodilatator der Coronararterien: O₂-Versorgung des Myokards↑,  O₂-Verbrauch des Myokards↓ durch Vorlastverringerung"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Ketanest S",
+    "Wirkung": "Anästhetikum. Zur Sedierung und starker Schmerzstillung"
+  },
+  {
+    "Handelsname": "Lanoxin",
+    "Wirkstoffname": "Digitalis",
+    "Wirkung": "Schlagvolumen Herz ↑ bei Herzrhythmusstörungen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Lasix",
+    "Wirkung": "Diuretika: Urinausscheidung↑, Blutdruck↓, da Blut verdickt wird und Ödeme↓"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Levophed",
+    "Wirkung": "Vasokonstriktion: Blutdruck↑"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Lysthenon 2%",
+    "Wirkung": "Muskelrelaxant bei Intubation"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Magnesiumsulfate",
+    "Wirkung": "Bei Torsades de pointe + Asthamkrise. Nebenwirkung: dem Patienten wird extrem warm"
+  },
+  {
+    "Handelsname": "Midazolam",
+    "Wirkstoffname": "Dormicum",
+    "Wirkung": "Benzodiazepin. Immer erst Dormicum IV zur Beruhigung geben, bevor man Ketanest gibt. Sonst kann es vorkommen, dass Patient extreme Alpträume bekommt. Dosierung 15mg/5ml:  zur intra-nasalen Gabe."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Morphine",
+    "Wirkung": "Opioid. Bei starken Schmerzen =  das stärkste natürliche Analgetikum"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Naloxon",
+    "Wirkung": "Antidot bei Opioidvergiftung (Heroin, Fentanyl, Methadon, Morphium, Dipidolor)"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Novalgine",
+    "Wirkung": "Bei Schmerzen und Fieber + zur Entspannung der Muskulatur bei Krämpfen"
+  },
+  {
+    "Handelsname": "Ondansetron",
+    "Wirkstoffname": "Zofran",
+    "Wirkung": "Bei Übelkeit und Erbrechen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Polaramine",
+    "Wirkung": "Antihistaminikum (H1 Blocker) bei Allergien"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Propofol 1%",
+    "Wirkung": "Sedativa"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Rivotril",
+    "Wirkung": "Bei epileptischen Anfällen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Rydene",
+    "Wirkung": "Kalziumkanalblocker: Blutdruck↓"
+  },
+  {
+    "Handelsname": "Seloken",
+    "Wirkstoffname": "Metoprolol",
+    "Wirkung": "Betablocker: bei Hypertonie, Herzrhythmusstörungen, akuter Herzinfarkt, Migräneprophylaxe. Wenn Asthmatiker Betablocker bekommt, werden Betarezeptoren in der Lunge blockiert und es kommt zum Spasmus."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Solu Medrol",
+    "Wirkung": "Kortison. Entzündungshemmend und Unterdrückung der Abwehrmechanismen des Körpers"
+  },
+  {
+    "Handelsname": "Suprarenin",
+    "Wirkstoffname": "Adrenalin",
+    "Wirkung": "Bei Rea: alle 3-5min. da kurze Wirkdauer. Bei anaphylaktischem Schock: IM-Gabe, wenn 2 Körpersysteme betroffen sind. Adrenalin macht tachykard und Hypertonie. Patient fühlt sich sehr schlecht bei IV-Gabe."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Thiopenta",
+    "Wirkung": "Kurznarkose: Status epilepticus, massives Schädelhirntrauma, Schwangere"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Valium",
+    "Wirkung": "Bei Epilepsie und Angszuständen"
+  },
+  {
+    "Handelsname": "Ventolin",
+    "Wirkstoffname": "Salbutamol",
+    "Wirkung": "Bronchodilatator. Bei Asthma und COPD"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Verapramil",
+    "Wirkung": "Antiarrhythmikum : bei regelmässiger schmaler QRS-Komplex -Tachykardie"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Xylocaine 2%",
+    "Wirkung": "Lokalanesthetikum. Kann auch anstelle von Cordarone gegeben werden bei einer Reanimation, wenn nicht verfügbar."
   }
 ]

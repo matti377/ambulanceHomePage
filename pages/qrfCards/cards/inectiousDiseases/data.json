@@ -2,13 +2,12 @@
   {
     "name": "AIDS",
     "aliases": [
-      "HIV (AIDS)",
-      "HIV-Infektion (=AIDS)"
+      "HIV (AIDS)"
     ],
-    "description": "systemische Virusinfektion",
-    "pathogen": "HI-Viren",
+    "description": "",
+    "pathogen": "",
     "transmission": "Blut; Körperflüssigkeiten; Sekrete (allgemein)",
-    "infection_class": "I1",
+    "infection_class": "/",
     "disinfection_class": "D1",
     "notes": "PEP bei Nadelstich. Schutzstufe I1 nur wenn Kontakt mit erregerhaltigem Material möglich ist. Initial keine Infektionsstufe."
   },
@@ -40,12 +39,12 @@
       "Milzbrand",
       "Bacillus anthracis"
     ],
-    "description": "lebensgefährliche Haut- oder Darm-Infektion (bei Lungenmilzbrand siehe hochkont. Infektionskrankheiten)",
+    "description": "Siehe Milzbrand",
     "pathogen": "Bacillus anthracis",
-    "transmission": "Blut; Körperflüssigkeiten; infizierte Tiere; sporenhaltiger Staub; Fleisch",
+    "transmission": "",
     "infection_class": "I3",
     "disinfection_class": "D4",
-    "notes": "Meldung Direction de la Santé"
+    "notes": ""
   },
   {
     "name": "Aspergillose",
@@ -59,11 +58,7 @@
   },
   {
     "name": "Atemwegsinfektion (ausser Tuberkulose)",
-    "aliases": [
-      "Lungenentzündung",
-      "Pneumonie",
-      "RS-Virus-Infektion"
-    ],
+    "aliases": [],
     "description": "Infektion des Atemtraktes",
     "pathogen": "verschiedene Erreger möglich",
     "transmission": "Atemwegssekrete",
@@ -73,21 +68,17 @@
   },
   {
     "name": "Bandwurm",
-    "aliases": [
-      "Echinokokkose"
-    ],
-    "description": "Würmerbefall des Verdauungstraktes",
-    "pathogen": "Echinococcus multilocarus",
-    "transmission": "Stuhl; Tierkot; rohes Fleisch; Fisch",
+    "aliases": [],
+    "pathogen": "",
+    "transmission": "",
     "infection_class": "I1",
     "disinfection_class": "D1",
     "notes": ""
   },
   {
-    "name": "Borelliose (=Lyme Borelliose)",
+    "name": "Borelliose",
     "aliases": [
-      "Lyme-Borreliose",
-      "Borreliose"
+      "Lyme-Borreliose"
     ],
     "description": "systemische Infektionskrankheit",
     "pathogen": "Borellia burgdorferi",
@@ -119,8 +110,11 @@
     "notes": ""
   },
   {
-    "name": "Brucellose (=Morbus bang, Malta-Fieber)",
-    "aliases": [],
+    "name": "Brucellose",
+    "aliases": [
+      "Morbus bang",
+      "Malta-Fieber"
+    ],
     "description": "bakterielle Infektionskrankheit mit undulierendem Fieber",
     "pathogen": "Brucella-Bakterien",
     "transmission": "kontaminierte Lebensmittel; direkter Kontakt zu infizierten Tieren",
