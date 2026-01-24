@@ -61,28 +61,33 @@
             position: relative;
         }
         
-        #searchBox {
-            width: 100%;
-            padding: 14px 20px;
-            font-size: 1.1rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            transition: border-color 0.3s;
-        }
+#searchBox {
+    width: 100%;
+    padding: 14px 20px 14px 45px; /* Add left padding for icon */
+    font-size: 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.3s;
+    background-color: white; /* Ensure white background */
+}
         
         #searchBox:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.2);
         }
+        #searchBox::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
         
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6c757d;
-        }
+.search-icon {
+    position: absolute;
+    left: 15px; /* Changed from right to left */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
         
         .disease-grid {
             display: grid;
@@ -233,74 +238,85 @@
         </footer>
     </div>
 
-    <script>
-        // Load and process JSON data
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('data.json')
-                .then(response => response.json())
-                .then(diseases => {
-                    const diseaseGrid = document.getElementById('diseaseGrid');
-                    const searchBox = document.getElementById('searchBox');
-                    
-                    // Render all diseases initially
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(diseases => {
+            const diseaseGrid = document.getElementById('diseaseGrid');
+            const searchBox = document.getElementById('searchBox');
+            
+            // Render all diseases initially
+            renderDiseases(diseases);
+            
+            // Add search functionality
+            searchBox.addEventListener('input', () => {
+                const searchTerm = searchBox.value.toLowerCase().trim();
+                
+                if (!searchTerm) {
                     renderDiseases(diseases);
+                    return;
+                }
+                
+                const filteredDiseases = diseases.filter(disease => {
+                    // Safely check each field (handle missing/empty values)
+                    const nameMatch = disease.name?.toLowerCase().includes(searchTerm);
+                    const aliasesMatch = disease.aliases?.some(alias => 
+                        alias?.toLowerCase().includes(searchTerm)
+                    );
+                    const descriptionMatch = disease.description?.toLowerCase().includes(searchTerm);
+                    const pathogenMatch = disease.pathogen?.toLowerCase().includes(searchTerm);
+                    const transmissionMatch = disease.transmission?.toLowerCase().includes(searchTerm);
+                    const notesMatch = disease.notes?.toLowerCase().includes(searchTerm);
                     
-                    // Add search functionality
-                    searchBox.addEventListener('input', () => {
-                        const searchTerm = searchBox.value.toLowerCase();
-                        const filteredDiseases = diseases.filter(disease => 
-                            disease.name.toLowerCase().includes(searchTerm) ||
-                            (disease.aliases && disease.aliases.some(alias => alias.toLowerCase().includes(searchTerm))) ||
-                            disease.description.toLowerCase().includes(searchTerm) ||
-                            disease.pathogen.toLowerCase().includes(searchTerm) ||
-                            disease.transmission.toLowerCase().includes(searchTerm) ||
-                            disease.notes.toLowerCase().includes(searchTerm)
-                        );
-                        
-                        renderDiseases(filteredDiseases);
-                    });
-                    
-                    function renderDiseases(diseaseList) {
-                        if (diseaseList.length === 0) {
-                            diseaseGrid.innerHTML = '<div class="no-results">Keine Krankheiten gefunden, die Ihrer Suche entsprechen</div>';
-                            return;
-                        }
-                        
-                        diseaseGrid.innerHTML = diseaseList.map(disease => `
-                            <div class="disease-card">
-                                <div class="card-header">
-                                    <div class="disease-name">${disease.name}</div>
-                                    <div>
-                                        <span class="classification infection-class">Infektion:: ${disease.infection_class}</span>
-                                        <span class="classification disinfection-class">Desinfektion: ${disease.disinfection_class}</span>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    ${disease.description ? `<p>${disease.description}</p>` : ''}
-                                    ${disease.pathogen ? `<span class="pathogen">Pathogen: ${disease.pathogen}</span>` : ''}
-                                    
-                                    <div class="transmission">
-                                        <span class="transmission-label">Übertragung:</span>
-                                        ${disease.transmission}
-                                    </div>
-                                    
-                                    ${disease.notes ? `
-                                        <div class="notes">
-                                            <span class="notes-label">Zusätzliche Informationen:</span>
-                                            ${disease.notes}
-                                        </div>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading disease data:', error);
-                    document.getElementById('diseaseGrid').innerHTML = 
-                        '<div class="no-results">Fehler beim Laden der Krankheitsdaten. Bitte prüfen Sie die data.json Datei.</div>';
+                    return nameMatch || aliasesMatch || descriptionMatch || 
+                           pathogenMatch || transmissionMatch || notesMatch;
                 });
+                
+                renderDiseases(filteredDiseases);
+            });
+            
+            function renderDiseases(diseaseList) {
+                if (diseaseList.length === 0) {
+                    diseaseGrid.innerHTML = '<div class="no-results">Keine Krankheiten gefunden, die Ihrer Suche entsprechen</div>';
+                    return;
+                }
+                
+                diseaseGrid.innerHTML = diseaseList.map(disease => `
+                    <div class="disease-card">
+                        <div class="card-header">
+                            <div class="disease-name">${disease.name || 'Unbekannt'}</div>
+                            <div>
+                                <span class="classification infection-class">Infektion: ${disease.infection_class || 'N/A'}</span>
+                                <span class="classification disinfection-class">Desinfektion: ${disease.disinfection_class || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            ${disease.description ? `<p>${disease.description}</p>` : ''}
+                            ${disease.pathogen ? `<span class="pathogen">Pathogen: ${disease.pathogen}</span>` : ''}
+                            
+                            <div class="transmission">
+                                <span class="transmission-label">Übertragung:</span>
+                                ${disease.transmission || 'Keine Angabe'}
+                            </div>
+                            
+                            ${disease.notes ? `
+                                <div class="notes">
+                                    <span class="notes-label">Zusätzliche Informationen:</span>
+                                    ${disease.notes}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading disease data:', error);
+            document.getElementById('diseaseGrid').innerHTML = 
+                '<div class="no-results">Fehler beim Laden der Krankheitsdaten. Bitte prüfen Sie die data.json Datei.</div>';
         });
-    </script>
+});
+</script>
 </body>
 </html>
