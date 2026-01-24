@@ -2,6 +2,15 @@
 <html lang="fr">
 
 <head>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0057B8">
+
+    <!-- iOS Support -->
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SAMU Toolkit">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚑 Werkzeuge für den Rettungsdienst</title>
@@ -25,6 +34,33 @@
                 Luxemburg</p>
         </header>
 
+        <!-- PWA Install Prompt (only shown if not installed) -->
+        <div id="installBanner" class="hidden" style="
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px auto 30px;
+    max-width: 800px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+">
+            <i class="fas fa-cloud-download-alt" style="font-size: 24px; color: var(--primary);"></i>
+            <div style="flex: 1;">
+                <strong>Installieren Sie das Toolkit</strong><br>
+                <span style="font-size: 0.9rem; opacity: 0.8;">
+                    Fügen Sie diese Seite zum Startbildschirm hinzu für Offline-Zugriff und App-ähnliche Nutzung.
+                </span>
+            </div>
+            <button id="installBtn" class="btn" style="padding: 8px 16px; font-size: 0.95rem;">
+                <i class="fas fa-plus-circle"></i> Installieren
+            </button>
+        </div>
+
+
         <!-- =============== EN INTERVENTION =============== -->
         <section class="category-section">
             <h2 class="category-title">🚑 Im Einsatz</h2>
@@ -42,8 +78,6 @@
                     </div>
                 </div>
 
-
-
                 <!-- Quick reference-->
                 <div class="tool-card">
                     <div class="card-header">
@@ -56,15 +90,15 @@
                     </div>
                 </div>
 
-                <!-- Ai ECG Interpreter-->
+                <!-- Pedi-->
                 <div class="tool-card">
                     <div class="card-header">
-                        <i class="fas fa-heartbeat"></i>
-                        <h2>EKG-Interpreter (KI)</h2>
+                        <i class="fas fa-baby"></i>
+                        <h2>Pädiatrische Referenzwerte</h2>
                     </div>
                     <div class="card-body">
-                        <p>EKGs in Echtzeit mit künstlicher Intelligenz interpretieren</p>
-                        <a href="/pages/ecgInterpreter/index.html" class="btn">Interpreter öffnen</a>
+                        <p>Pädiatrische Referenzwerte für Notfälle (0–15 Jahre)</p>
+                        <a href="/pages/pedi/index.html" class="btn">Referenzwerte anzeigen</a>
                     </div>
                 </div>
 
@@ -93,7 +127,7 @@
                     </div>
                 </div>
 
-                                <!-- Infectious diseases-->
+                <!-- Infectious diseases-->
                 <div class="tool-card">
                     <div class="card-header">
                         <i class="fas fa-virus"></i>
@@ -117,6 +151,18 @@
                     </div>
                 </div>
             </div>
+
+                            <!-- Ai ECG Interpreter-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h2>EKG-Interpreter (KI)</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>EKGs in Echtzeit mit künstlicher Intelligenz interpretieren</p>
+                        <a href="/pages/ecgInterpreter/index.html" class="btn">Interpreter öffnen</a>
+                    </div>
+                </div>
         </section>
 
         <!-- =============== FORMATION =============== -->
@@ -270,6 +316,57 @@
                 const isDark = body.classList.contains('dark-theme');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
             });
+
+
+            // Check if already installed as PWA
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                || window.navigator.standalone === true;
+
+            if (!isStandalone) {
+                // Show banner only if NOT installed
+                document.getElementById('installBanner').classList.remove('hidden');
+
+                let deferredPrompt;
+
+                // Listen for beforeinstallprompt event
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+
+                    // Show install button
+                    const btn = document.getElementById('installBtn');
+                    if (btn) {
+                        btn.style.display = 'inline-block';
+                        document.getElementById('installNote')?.remove(); // Remove fallback note if exists
+                    }
+                });
+
+                // Handle install button click
+                document.getElementById('installBtn')?.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                // Hide banner after successful install
+                                document.getElementById('installBanner').classList.add('hidden');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                });
+
+                // iOS fallback: hide button, keep note
+                if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    document.getElementById('installBtn').textContent = 'Anleitung anzeigen';
+                    document.getElementById('installBtn').onclick = () => {
+                        alert('Tippen Sie auf „Teilen“ → „Zum Startbildschirm hinzufügen“.');
+                    };
+                }
+            } else {
+                // Already installed – hide banner completely
+                document.getElementById('installBanner')?.classList.add('hidden');
+            }
+
         </script>
 </body>
 

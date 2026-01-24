@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👶 Pädiatrische Referenzwerte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .age-selector {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .age-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            text-align: center;
+            margin: 10px auto;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .ref-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: var(--text-dark);
+        }
+
+        .ref-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .unit {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-baby"></i> Pädiatrische Referenzwerte</h1>
+            <p class="shiftplan-subtitle">Pädiatrische Referenzwerte für Notfälle (0–15 Jahre)</p>
+        </header>
+
+        <div class="age-selector">
+            <h2>Alter auswählen</h2>
+            <input type="range" id="ageSlider" min="0" max="15" value="1" class="age-input">
+            <div id="ageDisplay">1 Jahr</div>
+        </div>
+
+        <div id="referenceData" class="reference-grid">
+            <!-- Data will be loaded here -->
+        </div>
+
+        <footer>
+            <p><strong>Hinweis:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu
+                Informationszwecken.
+                Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der
+                Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.
+            </p>
+            <p>© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load JSON data
+        let pediatricData = [];
+        
+        async function loadPediatricData() {
+            try {
+                const response = await fetch('data.json');
+                pediatricData = await response.json();
+                renderData(1); // Default to 1 year
+            } catch (error) {
+                console.error('Fehler beim Laden der PediHelp-Daten:', error);
+                document.getElementById('referenceData').innerHTML = 
+                    '<div class="no-data">Fehler: Daten konnten nicht geladen werden.</div>';
+            }
+        }
+
+        // Render data for selected age
+        function renderData(age) {
+            const container = document.getElementById('referenceData');
+            const data = pediatricData.find(item => item.age === age);
+            
+            if (!data) {
+                container.innerHTML = '<div class="no-data">Keine Daten für dieses Alter verfügbar.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="ref-card">
+                    <h3><i class="fas fa-weight"></i> Idealgewicht</h3>
+                    <div class="value">${data.weight} kg</div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-heartbeat"></i> Pulsfrequenz</h3>
+                    <div class="value">${data.heartRate} <span class="unit">/min</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-tint"></i> Blutvolumen</h3>
+                    <div class="value">${data.bloodVolume} <span class="unit">ml/kg</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-syringe"></i> Blutzucker</h3>
+                    <div class="value">${data.bloodSugar} <span class="unit">mg/dl</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-heart"></i> Blutdruck (systolisch)</h3>
+                    <div class="value">${data.bloodPressure} <span class="unit">mmHg</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-ruler-vertical"></i> Körpergröße</h3>
+                    <div class="value">${data.height} <span class="unit">cm</span></div>
+                </div>
+            `;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPediatricData();
+            
+            const slider = document.getElementById('ageSlider');
+            const display = document.getElementById('ageDisplay');
+            
+            slider.addEventListener('input', () => {
+                const age = parseInt(slider.value);
+                display.textContent = age === 0 ? 'Neugeboren' : `${age} ${age === 1 ? 'Jahr' : 'Jahre'}`;
+                renderData(age);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+[
+  {
+    "age": 0,
+    "weight": 3.5,
+    "heartRate": "120-160",
+    "bloodVolume": 85,
+    "bloodSugar": "60-100",
+    "bloodPressure": "60-80",
+    "height": 50
+  },
+  {
+    "age": 1,
+    "weight": 10,
+    "heartRate": "110-150",
+    "bloodVolume": 80,
+    "bloodSugar": "70-110",
+    "bloodPressure": "80-100",
+    "height": 75
+  },
+  {
+    "age": 2,
+    "weight": 12,
+    "heartRate": "100-140",
+    "bloodVolume": 75,
+    "bloodSugar": "70-110",
+    "bloodPressure": "85-105",
+    "height": 85
+  },
+  {
+    "age": 3,
+    "weight": 14,
+    "heartRate": "90-130",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "90-110",
+    "height": 95
+  },
+  {
+    "age": 4,
+    "weight": 16,
+    "heartRate": "85-120",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "90-110",
+    "height": 100
+  },
+  {
+    "age": 5,
+    "weight": 18,
+    "heartRate": "80-110",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "95-115",
+    "height": 110
+  },
+  {
+    "age": 6,
+    "weight": 20,
+    "heartRate": "75-105",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "95-115",
+    "height": 115
+  },
+  {
+    "age": 7,
+    "weight": 22,
+    "heartRate": "70-100",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "100-120",
+    "height": 120
+  },
+  {
+    "age": 8,
+    "weight": 25,
+    "heartRate": "70-100",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "100-120",
+    "height": 125
+  },
+  {
+    "age": 9,
+    "weight": 28,
+    "heartRate": "70-100",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "100-120",
+    "height": 130
+  },
+  {
+    "age": 10,
+    "weight": 32,
+    "heartRate": "70-100",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "100-120",
+    "height": 135
+  },
+  {
+    "age": 11,
+    "weight": 36,
+    "heartRate": "70-100",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "105-125",
+    "height": 140
+  },
+  {
+    "age": 12,
+    "weight": 40,
+    "heartRate": "65-95",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "105-125",
+    "height": 145
+  },
+  {
+    "age": 13,
+    "weight": 45,
+    "heartRate": "65-95",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "110-130",
+    "height": 150
+  },
+  {
+    "age": 14,
+    "weight": 50,
+    "heartRate": "60-90",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "110-130",
+    "height": 155
+  },
+  {
+    "age": 15,
+    "weight": 55,
+    "heartRate": "60-90",
+    "bloodVolume": 70,
+    "bloodSugar": "70-110",
+    "bloodPressure": "110-130",
+    "height": 160
+  }
+]

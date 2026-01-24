@@ -26,6 +26,10 @@
             --afternoon-shift: #ff9800;
         }
 
+        .hidden {
+            display: none !important;
+        }
+
         .dark-theme {
             --eq1-color: #d35400;
             --eq2-color: #2980b9;
@@ -323,285 +327,309 @@
 
         /* =============== SCHICHTPLAN STYLES =============== */
 
-.shiftplan-header {
-    text-align: center;
-    padding: 2rem 0;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
+        .shiftplan-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
 
-.shiftplan-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-light);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
+        .shiftplan-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-.shiftplan-subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 1rem;
-}
+        .shiftplan-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
 
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-    border-radius: 10px;
-}
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
 
-.date-selector {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-input[type="date"] {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    background: white;
-    color: #333;
-    font-weight: bold;
-}
+        input[type="date"] {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            color: #333;
+            font-weight: bold;
+        }
 
-.btn-shift {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 50px;
-    background: var(--secondary);
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
+        .btn-shift {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50px;
+            background: var(--secondary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-.btn-shift:hover {
-    background: transparent;
-    color: var(--secondary);
-    transform: scale(1.05);
-}
+        .btn-shift:hover {
+            background: transparent;
+            color: var(--secondary);
+            transform: scale(1.05);
+        }
 
-.current-info {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
+        .current-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
 
-.info-card {
-    background: var(--card-bg);
-    padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
-    min-width: 250px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    color: var(--text-dark);
-    transition: transform 0.3s ease;
-}
+        .info-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 250px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+            transition: transform 0.3s ease;
+        }
 
-.info-card:hover {
-    transform: translateY(-5px);
-}
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
 
-.info-card h3 {
-    margin-bottom: 1rem;
-    color: var(--dark);
-    font-size: 1.3rem;
-}
+        .info-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
 
-.team-display {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
+        .team-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
 
-.team-box {
-    padding: 1rem;
-    border-radius: 10px;
-    min-width: 150px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    color: white;
-}
+        .team-box {
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 150px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
 
-.team-box:hover {
-    transform: scale(1.05);
-}
+        .team-box:hover {
+            transform: scale(1.05);
+        }
 
-.eq1 { background-color: var(--eq1-color); }
-.eq2 { background-color: var(--eq2-color); }
-.eq3 { background-color: var(--eq3-color); }
-.eq4 { background-color: var(--eq4-color); }
+        .eq1 {
+            background-color: var(--eq1-color);
+        }
 
-.shift-period {
-        text-align: center;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    font-size: 0.9rem;
-    opacity: 0.85;
-    color: var(--text-light);
-}
+        .eq2 {
+            background-color: var(--eq2-color);
+        }
 
-.shift-period h3 {
-    margin-bottom: 1rem;
-    color: var(--light);
-    text-align: center;
-}
+        .eq3 {
+            background-color: var(--eq3-color);
+        }
 
-.shift-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
+        .eq4 {
+            background-color: var(--eq4-color);
+        }
 
-.shift-box {
-    padding: 1rem;
-    border-radius: 10px;
-    min-width: 200px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
+        .shift-period {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            color: var(--text-light);
+        }
 
-.morning { 
-    background-color: var(--morning-shift); 
-    color: #333; 
-}
-.afternoon { 
-    background-color: var(--afternoon-shift); 
-    color: #333; 
-}
+        .shift-period h3 {
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
 
-.calendar {
-    text-align: center;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    font-size: 0.9rem;
-    opacity: 0.85;
-    color: var(--text-light);
-}
+        .shift-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
-.calendar h3 {
-    margin-bottom: 1rem;
-    color: var(--light);
-    text-align: center;
-}
+        .shift-box {
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 200px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-    margin-top: 1rem;
-}
+        .morning {
+            background-color: var(--morning-shift);
+            color: #333;
+        }
 
-.calendar-day {
-    padding: 0.5rem;
-    border-radius: 5px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    color: var(--text-dark); /* ✅ Use dark text in light mode, light in dark mode */
-}
+        .afternoon {
+            background-color: var(--afternoon-shift);
+            color: #333;
+        }
 
-.calendar-day.today {
-    background: rgba(255, 255, 255, 0.3);
-    border: 2px solid var(--secondary); /* Use red accent instead of white */
-    font-weight: bold;
-}
+        .calendar {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            color: var(--text-light);
+        }
 
-.calendar-day.selected {
-    background: rgba(255, 255, 255, 0.3);
-    border: 2px solid var(--secondary);
-}
+        .calendar h3 {
+            margin-bottom: 1rem;
+            color: var(--light);
+            text-align: center;
+        }
 
-.team-label {
-    font-weight: bold;
-    font-size: 0.9rem;
-    margin-top: 0.3rem;
-    color: var(--text-dark); /* was --text-light */
-}
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 1rem;
+        }
 
-footer.shiftplan-footer {
-    text-align: center;
-    padding: 1.5rem;
-    margin-top: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    font-size: 0.9rem;
-    opacity: 0.85;
-    color: var(--text-light);
-}
+        .calendar-day {
+            padding: 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+            /* ✅ Use dark text in light mode, light in dark mode */
+        }
 
-/* Animations */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
+        .calendar-day.today {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--secondary);
+            /* Use red accent instead of white */
+            font-weight: bold;
+        }
 
-.team-box.pulse {
-    animation: pulse 1s ease-in-out;
-}
+        .calendar-day.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--secondary);
+        }
 
-.loading, .error {
-    text-align: center;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 10px;
-}
+        .team-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            color: var(--text-dark);
+            /* was --text-light */
+        }
 
-.loading {
-    background: rgba(255, 255, 255, 0.1);
-    display: none;
-}
+        footer.shiftplan-footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            color: var(--text-light);
+        }
 
-.error {
-    background: rgba(231, 76, 60, 0.2);
-    color: var(--text-light);
-    display: none;
-}
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .current-info,
-    .team-display,
-    .shift-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .info-card,
-    .shift-box {
-        min-width: auto;
-        width: 100%;
-        max-width: 300px;
-    }
-}
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .team-box.pulse {
+            animation: pulse 1s ease-in-out;
+        }
+
+        .loading,
+        .error {
+            text-align: center;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .loading {
+            background: rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .error {
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--text-light);
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .current-info,
+            .team-display,
+            .shift-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-card,
+            .shift-box {
+                min-width: auto;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
