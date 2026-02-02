@@ -93,6 +93,13 @@
             background: var(--secondary);
         }
 
+        .dark-btn:focus-visible,
+        .btn:focus-visible,
+        .btn-shift:focus-visible {
+            outline: 3px solid var(--secondary);
+            outline-offset: 3px;
+        }
+
         .logo-container {
             display: flex;
             justify-content: center;
@@ -178,7 +185,8 @@
         .card-body p {
             margin-bottom: 20px;
             line-height: 1.6;
-            color: #444;
+            color: var(--text-dark);
+            opacity: 0.9;
         }
 
         .btn {
@@ -193,13 +201,42 @@
             border: 2px solid var(--secondary);
             text-align: center;
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .btn:hover {
             background: transparent;
             color: var(--secondary);
-            transform: scale(1.05);
+            transform: scale(1.03);
+        }
+
+        .btn-compact {
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            width: auto;
+        }
+
+        .install-banner {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px auto 30px;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .install-banner__icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .install-banner__content {
+            flex: 1;
         }
 
         .emergency-btn {
@@ -246,13 +283,6 @@
             border-bottom: 2px solid var(--primary);
             color: var(--text-light);
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-body p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            color: var(--text-dark);
-            opacity: 0.9;
         }
 
         .refs-grid {
@@ -306,23 +336,8 @@
             margin-bottom: 16px;
         }
 
-        /* Make sure .btn works consistently */
-        .btn {
-            display: inline-block;
-            background: var(--secondary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
+        a.btn:focus-visible {
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.25s ease;
-            text-align: center;
-            width: 100%;
-        }
-
-        .btn:hover {
-            background: #c1121f;
         }
 
         /* =============== SCHICHTPLAN STYLES =============== */

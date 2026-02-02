@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="de">
 
 <head>
     <!-- PWA Manifest -->
@@ -13,6 +13,8 @@
     <meta name="apple-mobile-web-app-title" content="SAMU Toolkit">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Ressourcen und Werkzeuge für den Rettungsdienst in Luxemburg: Einsatzinfos, Ausbildung, Referenzwerte und wichtige Links.">
     <title>🚑 Werkzeuge für den Rettungsdienst</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style/style.css">
@@ -21,7 +23,7 @@
 <body>
     <div class="container">
         <header>
-            <button class="dark-btn" id="themeToggle">
+            <button class="dark-btn" id="themeToggle" type="button" aria-label="Theme umschalten">
                 <i class="fas fa-moon"></i>
             </button>
             <div class="logo-container">
@@ -35,27 +37,15 @@
         </header>
 
         <!-- PWA Install Prompt (only shown if not installed) -->
-        <div id="installBanner" class="hidden" style="
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 16px;
-    margin: 20px auto 30px;
-    max-width: 800px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    color: var(--text-dark);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-">
-            <i class="fas fa-cloud-download-alt" style="font-size: 24px; color: var(--primary);"></i>
-            <div style="flex: 1;">
+        <div id="installBanner" class="install-banner hidden">
+            <i class="fas fa-cloud-download-alt install-banner__icon"></i>
+            <div class="install-banner__content">
                 <strong>Installieren Sie das Toolkit</strong><br>
                 <span style="font-size: 0.9rem; opacity: 0.8;">
                     Fügen Sie diese Seite zum Startbildschirm hinzu für eine App-ähnliche Nutzung.
                 </span>
             </div>
-            <button id="installBtn" class="btn" style="padding: 8px 16px; font-size: 0.95rem;">
+            <button id="installBtn" class="btn btn-compact" type="button" aria-label="Toolkit installieren">
                 <i class="fas fa-plus-circle"></i> Installieren
             </button>
         </div>
@@ -110,8 +100,8 @@
                     </div>
                     <div class="card-body">
                         <p>Geoportal CGDIS für Karten und Geodaten</p>
-                        <a href="https://geoportailcgdis.intranet.etat.lu/" target="_blank" class="btn">Geoportal CGDIS
-                            öffnen</a>
+                        <a href="https://geoportailcgdis.intranet.etat.lu/" target="_blank" rel="noopener noreferrer"
+                            class="btn">Geoportal CGDIS öffnen</a>
                     </div>
                 </div>
 
@@ -191,8 +181,8 @@
                     </div>
                     <div class="card-body">
                         <p>Terminvereinbarung für eine Schulungen</p>
-                        <a href="https://inscription.cgdis.lu/mobile/#/login" target="_blank" class="btn">Leveso Mobile
-                            öffnen</a>
+                        <a href="https://inscription.cgdis.lu/mobile/#/login" target="_blank"
+                            rel="noopener noreferrer" class="btn">Leveso Mobile öffnen</a>
                     </div>
                 </div>
 
@@ -246,7 +236,8 @@
                     </div>
                     <div class="card-body">
                         <p>Offizielles Portal des CGDIS zur Dienstverfügbarkeit</p>
-                        <a href="https://portailcgdis.intranet.etat.lu/" target="_blank" class="btn">Portal öffnen</a>
+                        <a href="https://portailcgdis.intranet.etat.lu/" target="_blank" rel="noopener noreferrer"
+                            class="btn">Portal öffnen</a>
                     </div>
                 </div>
 
@@ -258,7 +249,8 @@
                     </div>
                     <div class="card-body">
                         <p>OSCAR-Monitor (nur für Zentren, die ihn besitzen)</p>
-                        <a href="https://osc.systems" class="btn">OSCAR öffnen</a>
+                        <a href="https://osc.systems" target="_blank" rel="noopener noreferrer"
+                            class="btn">OSCAR öffnen</a>
                     </div>
                 </div>
 
@@ -270,7 +262,8 @@
                     </div>
                     <div class="card-body">
                         <p>CGDIS-E-Mails lesen</p>
-                        <a href="https://www.mail.etat.lu" target="_blank" class="btn">E-Mails lesen</a>
+                        <a href="https://www.mail.etat.lu" target="_blank" rel="noopener noreferrer"
+                            class="btn">E-Mails lesen</a>
                     </div>
                 </div>
                 <!-- Buy Rescue Rush -->
@@ -281,24 +274,22 @@
                     </div>
                     <div class="card-body">
                         <p>Rescue Rush, ein Simulationsspiel für Erste Hilfe</p>
-                        <a href="https://rescue-rush.lu/?shop#main-content" target="_blank" class="btn">Rescue Rush
-                            kaufen</a>
+                        <a href="https://rescue-rush.lu/?shop#main-content" target="_blank"
+                            rel="noopener noreferrer" class="btn">Rescue Rush kaufen</a>
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
 
     <footer>
-        <footer>
-            <p><strong>Hinweis:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu
-                Informationszwecken.
-                Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der
-                Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.
-            </p>
-            <p>© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS</p>
-        </footer>
-        </div>
+        <p><strong>Hinweis:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu
+            Informationszwecken.
+            Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der
+            Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.
+        </p>
+        <p>© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS</p>
+    </footer>
 
         <script>
             // Theme toggle
@@ -338,7 +329,6 @@
                     const btn = document.getElementById('installBtn');
                     if (btn) {
                         btn.style.display = 'inline-block';
-                        document.getElementById('installNote')?.remove(); // Remove fallback note if exists
                     }
                 });
 
