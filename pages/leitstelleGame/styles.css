@@ -1,0 +1,380 @@
+:root {
+    --primary: #0057b8;
+    --secondary: #e63946;
+    --dark: #0f1c2e;
+    --light: #ffffff;
+    --panel: rgba(255, 255, 255, 0.92);
+    --shadow: rgba(0, 0, 0, 0.18);
+    --badge-green: #2ecc71;
+    --badge-orange: #f39c12;
+    --badge-red: #e74c3c;
+    --badge-blue: #3498db;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top, #1d3557 0%, #0f1c2e 55%, #08101c 100%);
+    color: var(--light);
+    min-height: 100vh;
+}
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px 50px;
+}
+
+.back-link {
+    color: var(--light);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    opacity: 0.85;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+.hero {
+    background: linear-gradient(120deg, rgba(0, 87, 184, 0.8), rgba(230, 57, 70, 0.85));
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 20px 40px var(--shadow);
+    margin-bottom: 25px;
+}
+
+.hero-content {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hero-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    max-width: 720px;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn.ghost {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--panel);
+    color: #111;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 12px 26px var(--shadow);
+}
+
+.stat-card h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-card span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.panel {
+    background: var(--panel);
+    color: #111;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+}
+
+.panel-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.panel-header h2 {
+    font-size: 1.25rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+    color: var(--primary);
+}
+
+.panel-header p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.panel-body {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+}
+
+.map-panel {
+    gap: 18px;
+}
+
+.map-surface {
+    position: relative;
+    background: #f5f8ff url('./assets/luxembourg-map.svg') center/cover no-repeat;
+    border-radius: 18px;
+    min-height: 220px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.map-markers {
+    position: absolute;
+    inset: 0;
+}
+
+.map-marker {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 12px;
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    min-width: 62px;
+}
+
+.map-marker strong {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 2px;
+    color: #111;
+}
+
+.map-marker.ready {
+    border-color: rgba(46, 204, 113, 0.6);
+}
+
+.map-marker.busy {
+    border-color: rgba(243, 156, 18, 0.8);
+}
+
+.map-legend {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #555;
+    flex-wrap: wrap;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.legend-dot.ready {
+    background: var(--badge-green);
+}
+
+.legend-dot.busy {
+    background: var(--badge-orange);
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.card-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+}
+
+.badge.low {
+    background: var(--badge-blue);
+}
+
+.badge.medium {
+    background: var(--badge-orange);
+}
+
+.badge.high {
+    background: var(--badge-red);
+}
+
+.badge.ready {
+    background: var(--badge-green);
+}
+
+.badge.busy {
+    background: var(--badge-orange);
+}
+
+.badge.station {
+    background: var(--primary);
+}
+
+.card-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.select {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+}
+
+.small-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.small-btn.secondary {
+    background: var(--secondary);
+}
+
+.small-btn:disabled {
+    background: #c2c2c2;
+    cursor: not-allowed;
+}
+
+.log-entry {
+    border-left: 3px solid var(--primary);
+    padding-left: 10px;
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.4;
+}
+
+.log-entry strong {
+    color: #111;
+}
+
+.empty-state {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 1.7rem;
+    }
+
+    .panel {
+        min-height: auto;
+    }
+}
