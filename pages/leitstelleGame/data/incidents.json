@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Wohnungsbrand",
+    "priority": "high",
+    "needs": ["LF", "DLK", "HLF"]
+  },
+  {
+    "title": "Verkehrsunfall mit Verletzten",
+    "priority": "high",
+    "needs": ["Ambulance", "SAMU"]
+  },
+  {
+    "title": "Bewusstlose Person",
+    "priority": "medium",
+    "needs": ["Ambulance", "SAMU"]
+  },
+  {
+    "title": "Brandmeldealarm",
+    "priority": "medium",
+    "needs": ["HLF", "LF"]
+  },
+  {
+    "title": "Keller unter Wasser",
+    "priority": "low",
+    "needs": ["LF"]
+  },
+  {
+    "title": "Ölunfall auf Straße",
+    "priority": "low",
+    "needs": ["LF"]
+  }
+]
