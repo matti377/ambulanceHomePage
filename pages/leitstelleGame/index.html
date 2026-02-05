@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitstelle Dispatch – CGDIS Simulation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="shell">
+        <header class="top-bar">
+            <div class="brand">
+                <div class="brand-icon"><i class="fas fa-tower-cell"></i></div>
+                <div>
+                    <h1>Leitstelle Dispatch</h1>
+                    <p>CGDIS Leitstellen-Simulation</p>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button class="btn" id="newIncident"><i class="fas fa-bell"></i> Neuer Einsatz</button>
+                <button class="btn ghost" id="resetGame"><i class="fas fa-rotate-left"></i> Reset</button>
+                <a class="btn ghost" href="/index.html"><i class="fas fa-arrow-left"></i> Toolkit</a>
+            </div>
+        </header>
+
+        <section class="status-bar">
+            <div class="status-item">
+                <span>Aktive Einsätze</span>
+                <strong id="activeIncidents">0</strong>
+            </div>
+            <div class="status-item">
+                <span>Verfügbare Fahrzeuge</span>
+                <strong id="availableVehicles">0</strong>
+            </div>
+            <div class="status-item">
+                <span>Erledigt</span>
+                <strong id="resolvedIncidents">0</strong>
+            </div>
+            <div class="status-item">
+                <span>Score</span>
+                <strong id="dispatchScore">0</strong>
+            </div>
+            <div class="status-item">
+                <span>Uhrzeit</span>
+                <strong id="clock">00:00</strong>
+            </div>
+        </section>
+
+        <main class="grid-layout">
+            <section class="panel map-panel" aria-labelledby="map-title">
+                <header>
+                    <h2 id="map-title"><i class="fas fa-map"></i> Einsatzkarte</h2>
+                    <div class="map-controls">
+                        <button class="icon-btn" type="button" aria-label="Zoomen"><i class="fas fa-plus"></i></button>
+                        <button class="icon-btn" type="button" aria-label="Herauszoomen"><i
+                                class="fas fa-minus"></i></button>
+                        <button class="icon-btn" type="button" aria-label="Standort"><i
+                                class="fas fa-location-crosshairs"></i></button>
+                    </div>
+                </header>
+                <div id="map_canvas" class="map-surface" aria-hidden="true"></div>
+                <footer class="map-footer">
+                    <div class="legend">
+                        <span><span class="legend-dot ready"></span> Bereit</span>
+                        <span><span class="legend-dot busy"></span> Unterwegs</span>
+                        <span><span class="legend-dot alarm"></span> Alarmiert</span>
+                    </div>
+                    <span class="map-note">Status 0–8 (0 = frei, 8 = Einsatz)</span>
+                </footer>
+            </section>
+
+            <section class="panel roster-panel" aria-labelledby="roster-title">
+                <header>
+                    <h2 id="roster-title"><i class="fas fa-truck-medical"></i> Fahrzeugübersicht</h2>
+                    <select id="vehicleSort" class="select">
+                        <option value="name">Name</option>
+                        <option value="status">Status</option>
+                        <option value="station">Standort</option>
+                    </select>
+                </header>
+                <div id="fleetList" class="scroll-list"></div>
+            </section>
+
+            <section class="panel incident-panel" aria-labelledby="incident-title">
+                <header>
+                    <h2 id="incident-title"><i class="fas fa-triangle-exclamation"></i> Einsatzliste</h2>
+                </header>
+                <div id="incidentList" class="scroll-list"></div>
+            </section>
+
+            <section class="panel log-panel" aria-labelledby="log-title">
+                <header>
+                    <h2 id="log-title"><i class="fas fa-clipboard-list"></i> Einsatzprotokoll</h2>
+                </header>
+                <div class="log-tabs">
+                    <button class="tab active" type="button" data-tab="calls">Anrufe</button>
+                    <button class="tab" type="button" data-tab="log">Log</button>
+                </div>
+                <div id="callList" class="scroll-list"></div>
+                <div id="logList" class="scroll-list hidden"></div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="incidentModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <header>
+                <h3 id="modal-title">Neuen Einsatz erstellen</h3>
+                <button class="icon-btn" id="closeModal" type="button" aria-label="Schließen"><i
+                        class="fas fa-xmark"></i></button>
+            </header>
+            <form id="incidentForm">
+                <label>
+                    Einsatzort
+                    <input id="incidentLocation" type="text" placeholder="Straße / Ort" required>
+                </label>
+                <label>
+                    Stichwort
+                    <select id="incidentAAO" class="select" required></select>
+                </label>
+                <label>
+                    Anrufer
+                    <select id="incidentCaller" class="select">
+                        <option>Erw. Fremdanrufer</option>
+                        <option>Polizei</option>
+                        <option>Feuerwehr</option>
+                        <option>Rettungsdienst</option>
+                    </select>
+                </label>
+                <label>
+                    Zusatzinfo
+                    <textarea id="incidentNotes" rows="3"
+                        placeholder="Zusätzliche Informationen"></textarea>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" id="incidentSignal"> Signalfahrt
+                </label>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Einsatz erstellen</button>
+                    <button type="button" class="btn ghost" id="cancelModal">Abbrechen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

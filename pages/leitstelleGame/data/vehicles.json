@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ambu-1",
+    "name": "Ambulance Alpha",
+    "type": "Ambulance",
+    "station": "CSP Luxembourg",
+    "status": "ready",
+    "statusLevel": 0,
+    "position": { "lat": 49.6116, "lng": 6.1319 }
+  },
+  {
+    "id": "ambu-2",
+    "name": "Ambulance Bravo",
+    "type": "Ambulance",
+    "station": "CIS Esch",
+    "status": "ready",
+    "statusLevel": 1,
+    "position": { "lat": 49.495, "lng": 5.9806 }
+  },
+  {
+    "id": "hlf-1",
+    "name": "SAMU HLF 1",
+    "type": "HLF",
+    "station": "CSP Luxembourg",
+    "status": "ready",
+    "statusLevel": 0,
+    "position": { "lat": 49.6129, "lng": 6.1296 }
+  },
+  {
+    "id": "lf-1",
+    "name": "LF 2/1",
+    "type": "LF",
+    "station": "CIS Diekirch",
+    "status": "ready",
+    "statusLevel": 2,
+    "position": { "lat": 49.8566, "lng": 6.0983 }
+  },
+  {
+    "id": "dlk-1",
+    "name": "DLK 1/1",
+    "type": "DLK",
+    "station": "CSP Luxembourg",
+    "status": "ready",
+    "statusLevel": 0,
+    "position": { "lat": 49.6102, "lng": 6.1333 }
+  },
+  {
+    "id": "samu-1",
+    "name": "SAMU Médecin",
+    "type": "SAMU",
+    "station": "CHL",
+    "status": "ready",
+    "statusLevel": 1,
+    "position": { "lat": 49.6108, "lng": 6.1232 }
+  },
+  {
+    "id": "vsav-1",
+    "name": "VIA 3",
+    "type": "VIA",
+    "station": "CIS Grevenmacher",
+    "status": "ready",
+    "statusLevel": 2,
+    "position": { "lat": 49.6779, "lng": 6.4416 }
+  }
+]
