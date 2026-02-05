@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitstelle Dispatch – CGDIS Simulation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page">
+        <header class="hero">
+            <a class="back-link" href="/index.html"><i class="fas fa-arrow-left"></i> Zurück zum Toolkit</a>
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-tower-cell"></i>
+                </div>
+                <div>
+                    <h1>Leitstelle Dispatch Game</h1>
+                    <p>Koordiniere Ambulancen, SAMU HLF, LF, DLK und mehr – im CGDIS-Stil. Spiele mobil oder am
+                        Desktop, dein Fortschritt bleibt lokal gespeichert.</p>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <button class="btn" id="newIncident"><i class="fas fa-bell"></i> Neue Meldung</button>
+                <button class="btn ghost" id="resetGame"><i class="fas fa-rotate-left"></i> Neustart</button>
+            </div>
+        </header>
+
+        <section class="stats-grid" aria-label="Einsatzstatistik">
+            <div class="stat-card">
+                <h3>Aktive Einsätze</h3>
+                <p id="activeIncidents">0</p>
+                <span>Offene Lagen</span>
+            </div>
+            <div class="stat-card">
+                <h3>Fahrzeuge verfügbar</h3>
+                <p id="availableVehicles">0</p>
+                <span>Bereit für Einsatz</span>
+            </div>
+            <div class="stat-card">
+                <h3>Gelöste Einsätze</h3>
+                <p id="resolvedIncidents">0</p>
+                <span>Erledigt in der Schicht</span>
+            </div>
+            <div class="stat-card">
+                <h3>Leitstellen-Score</h3>
+                <p id="dispatchScore">0</p>
+                <span>CGDIS Koordination</span>
+            </div>
+        </section>
+
+        <main class="main-grid">
+            <section class="panel" aria-labelledby="incident-title">
+                <div class="panel-header">
+                    <h2 id="incident-title"><i class="fas fa-triangle-exclamation"></i> Aktuelle Meldungen</h2>
+                    <p>Verteile Fahrzeuge nach Priorität und Entfernung.</p>
+                </div>
+                <div id="incidentList" class="panel-body"></div>
+            </section>
+
+            <section class="panel" aria-labelledby="fleet-title">
+                <div class="panel-header">
+                    <h2 id="fleet-title"><i class="fas fa-truck-medical"></i> CGDIS Flotte</h2>
+                    <p>Überblick über Einsatzbereitschaft und Standorte.</p>
+                </div>
+                <div id="fleetList" class="panel-body"></div>
+            </section>
+
+            <section class="panel" aria-labelledby="dispatch-title">
+                <div class="panel-header">
+                    <h2 id="dispatch-title"><i class="fas fa-route"></i> Laufende Disposition</h2>
+                    <p>Behalte deine aktiven Einsätze und Rückmeldungen im Blick.</p>
+                </div>
+                <div id="dispatchList" class="panel-body"></div>
+            </section>
+
+            <section class="panel" aria-labelledby="log-title">
+                <div class="panel-header">
+                    <h2 id="log-title"><i class="fas fa-clipboard-list"></i> Leitstellen-Log</h2>
+                    <p>Chronik deiner Schicht. Wird in deinem Browser gespeichert.</p>
+                </div>
+                <div id="logList" class="panel-body log"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
