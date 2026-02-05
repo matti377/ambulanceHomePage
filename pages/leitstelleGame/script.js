@@ -10,8 +10,6 @@ const defaultState = () => ({
             type: 'Ambulance',
             station: 'CSP Luxembourg',
             status: 'ready',
-            statusLevel: 0,
-            position: { x: 62, y: 52 },
         },
         {
             id: 'ambu-2',
@@ -19,8 +17,6 @@ const defaultState = () => ({
             type: 'Ambulance',
             station: 'CIS Esch',
             status: 'ready',
-            statusLevel: 1,
-            position: { x: 46, y: 70 },
         },
         {
             id: 'hlf-1',
@@ -28,8 +24,6 @@ const defaultState = () => ({
             type: 'HLF',
             station: 'CSP Luxembourg',
             status: 'ready',
-            statusLevel: 0,
-            position: { x: 60, y: 50 },
         },
         {
             id: 'lf-1',
@@ -37,8 +31,6 @@ const defaultState = () => ({
             type: 'LF',
             station: 'CIS Diekirch',
             status: 'ready',
-            statusLevel: 2,
-            position: { x: 70, y: 30 },
         },
         {
             id: 'dlk-1',
@@ -46,8 +38,6 @@ const defaultState = () => ({
             type: 'DLK',
             station: 'CSP Luxembourg',
             status: 'ready',
-            statusLevel: 0,
-            position: { x: 63, y: 49 },
         },
         {
             id: 'samu-1',
@@ -55,8 +45,6 @@ const defaultState = () => ({
             type: 'SAMU',
             station: 'CHL',
             status: 'ready',
-            statusLevel: 1,
-            position: { x: 61, y: 53 },
         },
         {
             id: 'vsav-1',
@@ -64,8 +52,6 @@ const defaultState = () => ({
             type: 'VIA',
             station: 'CIS Grevenmacher',
             status: 'ready',
-            statusLevel: 2,
-            position: { x: 82, y: 52 },
         },
     ],
     incidents: [],
@@ -108,39 +94,6 @@ const incidentTemplates = [
     },
 ];
 
-const aaoCatalog = [
-    {
-        code: 'F1',
-        name: 'Brand klein',
-        units: ['LF'],
-    },
-    {
-        code: 'F2',
-        name: 'Brand Wohnung',
-        units: ['LF', 'DLK', 'HLF'],
-    },
-    {
-        code: 'VU1',
-        name: 'Verkehrsunfall',
-        units: ['Ambulance', 'SAMU'],
-    },
-    {
-        code: 'VU2',
-        name: 'VU eingeklemmt',
-        units: ['Ambulance', 'SAMU', 'HLF'],
-    },
-    {
-        code: 'RD1',
-        name: 'Rettungsdienst',
-        units: ['Ambulance'],
-    },
-    {
-        code: 'RD2',
-        name: 'RD + Notarzt',
-        units: ['Ambulance', 'SAMU'],
-    },
-];
-
 const locations = [
     'Luxembourg Ville',
     'Esch-sur-Alzette',
@@ -158,7 +111,6 @@ const incidentList = document.getElementById('incidentList');
 const fleetList = document.getElementById('fleetList');
 const dispatchList = document.getElementById('dispatchList');
 const logList = document.getElementById('logList');
-const mapList = document.getElementById('mapList');
 
 const activeIncidents = document.getElementById('activeIncidents');
 const availableVehicles = document.getElementById('availableVehicles');
@@ -191,15 +143,9 @@ function loadState() {
     }
     try {
         const parsed = JSON.parse(raw);
-        const defaults = defaultState();
-        const vehicles = defaults.vehicles.map((vehicle) => {
-            const stored = parsed.vehicles?.find((item) => item.id === vehicle.id);
-            return stored ? { ...vehicle, ...stored } : vehicle;
-        });
         return {
-            ...defaults,
+            ...defaultState(),
             ...parsed,
-            vehicles,
         };
     } catch (error) {
         return defaultState();
@@ -213,15 +159,13 @@ function saveState() {
 function addIncident() {
     const template = incidentTemplates[Math.floor(Math.random() * incidentTemplates.length)];
     const location = locations[Math.floor(Math.random() * locations.length)];
-    const defaultAAO = aaoCatalog[Math.floor(Math.random() * aaoCatalog.length)];
     const id = `incident-${Date.now()}`;
     state.incidents.push({
         id,
         title: template.title,
         location,
         priority: template.priority,
-        needs: defaultAAO.units,
-        aao: defaultAAO.code,
+        needs: template.needs,
         status: 'open',
         reportedAt: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
     });
@@ -238,7 +182,6 @@ function dispatchVehicle(incidentId, vehicleId) {
     }
 
     vehicle.status = 'busy';
-    vehicle.statusLevel = 8;
     incident.status = 'assigned';
 
     state.dispatches.push({
@@ -266,7 +209,6 @@ function resolveDispatch(dispatchId) {
 
     if (vehicle) {
         vehicle.status = 'ready';
-        vehicle.statusLevel = Math.floor(Math.random() * 3);
     }
     if (incident) {
         incident.status = 'resolved';
@@ -303,7 +245,6 @@ function renderIncidents() {
             <div class="card-meta">
                 Ort: ${incident.location}<br>
                 Gemeldet: ${incident.reportedAt}<br>
-                Stichwort: ${incident.aao ?? 'Auswählen'}<br>
                 Bedarf: ${incident.needs.join(', ')}
             </div>
         `;
@@ -311,43 +252,16 @@ function renderIncidents() {
         const actions = document.createElement('div');
         actions.className = 'card-actions';
 
-        const vehicleSelect = document.createElement('select');
-        vehicleSelect.className = 'select';
-        vehicleSelect.innerHTML = '<option value="">Fahrzeug wählen</option>';
+        const select = document.createElement('select');
+        select.className = 'select';
+        select.innerHTML = '<option value="">Fahrzeug wählen</option>';
 
         const available = state.vehicles.filter((vehicle) => vehicle.status === 'ready');
         available.forEach((vehicle) => {
             const option = document.createElement('option');
             option.value = vehicle.id;
             option.textContent = `${vehicle.name} (${vehicle.type})`;
-            vehicleSelect.appendChild(option);
-        });
-        vehicleSelect.disabled = incident.status === 'assigned';
-
-        const aaoSelect = document.createElement('select');
-        aaoSelect.className = 'select';
-        aaoSelect.innerHTML = '<option value="">AAO-Stichwort wählen</option>';
-        aaoCatalog.forEach((entry) => {
-            const option = document.createElement('option');
-            option.value = entry.code;
-            option.textContent = `${entry.code} · ${entry.name}`;
-            if (incident.aao === entry.code) {
-                option.selected = true;
-            }
-            aaoSelect.appendChild(option);
-        });
-        aaoSelect.disabled = incident.status === 'assigned';
-
-        aaoSelect.addEventListener('change', () => {
-            const selected = aaoCatalog.find((entry) => entry.code === aaoSelect.value);
-            if (!selected) {
-                return;
-            }
-            incident.aao = selected.code;
-            incident.needs = selected.units;
-            state.log.unshift(`AAO ${selected.code} (${selected.name}) für ${incident.title} gesetzt.`);
-            saveState();
-            render();
+            select.appendChild(option);
         });
 
         const button = document.createElement('button');
@@ -356,15 +270,14 @@ function renderIncidents() {
         button.disabled = available.length === 0 || incident.status === 'assigned';
 
         button.addEventListener('click', () => {
-            if (!vehicleSelect.value) {
+            if (!select.value) {
                 return;
             }
-            dispatchVehicle(incident.id, vehicleSelect.value);
+            dispatchVehicle(incident.id, select.value);
             render();
         });
 
-        actions.appendChild(aaoSelect);
-        actions.appendChild(vehicleSelect);
+        actions.appendChild(select);
         actions.appendChild(button);
 
         card.appendChild(actions);
@@ -387,28 +300,11 @@ function renderFleet() {
             </div>
             <div class="card-meta">
                 Typ: ${vehicle.type}<br>
-                Station: ${vehicle.station}<br>
-                Status: ${vehicle.statusLevel}/8
+                Station: ${vehicle.station}
             </div>
         `;
 
         fleetList.appendChild(card);
-    });
-}
-
-function renderMap() {
-    mapList.innerHTML = '';
-
-    state.vehicles.forEach((vehicle) => {
-        const marker = document.createElement('div');
-        marker.className = `map-marker ${vehicle.status}`;
-        marker.style.left = `${vehicle.position.x}%`;
-        marker.style.top = `${vehicle.position.y}%`;
-        marker.innerHTML = `
-            <span>${vehicle.type}</span>
-            <strong>${vehicle.statusLevel}/8</strong>
-        `;
-        mapList.appendChild(marker);
     });
 }
 
@@ -482,7 +378,6 @@ function render() {
     renderFleet();
     renderDispatches();
     renderLog();
-    renderMap();
     saveState();
 }
 
