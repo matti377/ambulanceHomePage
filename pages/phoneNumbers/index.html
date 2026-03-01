@@ -255,6 +255,73 @@
         <p>© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS</p>
     </footer>
     </div>
+
+    <script src="/style/i18n.js"></script>
+    <script>
+        ToolkitI18n.applyTranslations({
+            titleKey: 'page.title',
+            text: {
+                '.shiftplan-header h1': 'header.title',
+                '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                'section:nth-of-type(1) .category-title': 'section.dispatch',
+                'section:nth-of-type(2) .category-title': 'section.clinics',
+                'section:nth-of-type(3) .category-title': 'section.care',
+                'footer p:first-child': 'footer.notice',
+                'footer p:last-child': 'footer.copy'
+            },
+            textAll: [
+                { selector: '.emergency-btn', key: 'buttons.call' }
+            ],
+            translations: {
+                de: {
+                    'page.title': '📞 Wichtige Telefonnummer',
+                    'header.title': 'Wichtige Telefonnummer',
+                    'header.subtitle': 'Wichtige Telefonnummern im Rettungsdienst',
+                    'section.dispatch': 'Leitstelle',
+                    'section.clinics': 'Kliniken',
+                    'section.care': 'Seelsorge',
+                    'buttons.call': 'Anrufen',
+                    'footer.notice': 'Hinweis: Diese Website und die bereitgestellten Dokumente dienen nur zu Informationszwecken. Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS'
+                },
+                en: {
+                    'page.title': '📞 Important Phone Numbers',
+                    'header.title': 'Important Phone Numbers',
+                    'header.subtitle': 'Important emergency service phone numbers',
+                    'section.dispatch': 'Dispatch',
+                    'section.clinics': 'Clinics',
+                    'section.care': 'Pastoral and support',
+                    'buttons.call': 'Call',
+                    'footer.notice': 'Note: This website and the provided documents are for informational purposes only. The author assumes no responsibility for errors, omissions, or consequences resulting from the use of this information. Always consult official CGDIS protocols.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Not affiliated with CGDIS'
+                },
+                fr: {
+                    'page.title': '📞 Numéros importants',
+                    'header.title': 'Numéros de téléphone importants',
+                    'header.subtitle': 'Numéros de téléphone importants pour les secours',
+                    'section.dispatch': 'CSU',
+                    'section.clinics': 'Cliniques',
+                    'section.care': 'Soutien psychologique',
+                    'buttons.call': 'Appeler',
+                    'footer.notice': 'Remarque: Ce site et les documents fournis sont uniquement a titre informatif. L\'auteur n\'assume aucune responsabilité pour les erreurs, omissions ou conséquences liées à l\'utilisation de ces informations. Veuillez consulter les protocoles officiels du CGDIS.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Sans lien avec le CGDIS'
+                },
+                lb: {
+                    'page.title': '📞 Wichteg Telefonsnummeren',
+                    'header.title': 'Wichteg Telefonsnummeren',
+                    'header.subtitle': 'Wichteg Nummeren am Rettungsdéngscht',
+                    'section.dispatch': 'CSU',
+                    'section.clinics': 'Klinicken',
+                    'section.care': 'Psychologesch Ënnerstëtzung',
+                    'buttons.call': 'Uruffen',
+                    'footer.notice': 'Hiweis: Dës Websäit an d Dokumenter déngen nëmmen Informatiounszwecker. Den Auteur iwwerhëlt keng Verantwortung fir Feeler, Konsequenzen duerch d Notzung vun dësen Informatiounen. Consultéiert ëmmer déi offiziell CGDIS-Protokoller.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Lëtzebuerg | Net mam CGDIS verbonnen'
+
+
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

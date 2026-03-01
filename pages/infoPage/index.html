@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,6 +74,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="shiftplan-header">
@@ -196,7 +198,8 @@
                     <h2>Calcul de distances</h2>
                 </div>
                 <div class="card-body">
-                    <a href="http://www.act.public.lu/fr/espace-pro/carte-distances/index.html" target="_blank" class="btn-link">Öffnen</a>
+                    <a href="http://www.act.public.lu/fr/espace-pro/carte-distances/index.html" target="_blank"
+                        class="btn-link">Öffnen</a>
                 </div>
             </div>
             <div class="link-card">
@@ -286,7 +289,8 @@
                     <h2>Sharepoint INFS</h2>
                 </div>
                 <div class="card-body">
-                    <a href="https://govbs.msp.etat.lu/bs/cgdis/INFS?FollowSite=1&SiteName=Institut%20National%20de%20Formation%20des%20Secours" target="_blank" class="btn-link">Öffnen</a>
+                    <a href="https://govbs.msp.etat.lu/bs/cgdis/INFS?FollowSite=1&SiteName=Institut%20National%20de%20Formation%20des%20Secours"
+                        target="_blank" class="btn-link">Öffnen</a>
                 </div>
             </div>
             <div class="link-card">
@@ -350,5 +354,58 @@
             <p>© 2026 Ambulance Toolkit Luxembourg | Nicht offiziell vom CGDIS betrieben</p>
         </footer>
     </div>
+
+    <script src="/style/i18n.js"></script>
+    <script>
+        ToolkitI18n.applyTranslations({
+            titleKey: 'page.title',
+            text: {
+                '.shiftplan-header h1': 'header.title',
+                '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                '.shiftplan-footer p:first-child': 'footer.note',
+                '.shiftplan-footer p:last-child': 'footer.copy'
+            },
+            textAll: [
+                { selector: '.btn-link', key: 'buttons.open' }
+            ],
+            translations: {
+                de: {
+                    'page.title': '🔗 Interne Links - Ambulance Toolkit',
+                    'header.title': 'Interne & Externe Links',
+                    'header.subtitle': 'Schnellzugriff auf wichtige CGDIS- und Regierungsressourcen',
+                    'buttons.open': 'Öffnen',
+                    'footer.note': 'Diese Seite dient als zentraler Zugangspunkt zu internen CGDIS- und Regierungsressourcen.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Nicht offiziell vom CGDIS betrieben'
+                },
+                en: {
+                    'page.title': '🔗 Internal Links - Ambulance Toolkit',
+                    'header.title': 'Internal & External Links',
+                    'header.subtitle': 'Quick access to key CGDIS and government resources',
+                    'buttons.open': 'Open',
+                    'footer.note': 'This page serves as a central access point for internal CGDIS and government resources.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Not officially operated by CGDIS'
+                },
+                fr: {
+                    'page.title': '🔗 Liens internes - Ambulance Toolkit',
+                    'header.title': 'Liens internes et externes',
+                    'header.subtitle': 'Acces rapide aux ressources importantes du CGDIS et du gouvernement',
+                    'buttons.open': 'Ouvrir',
+                    'footer.note': 'Cette page sert de point d\'accès central aux ressources internes du CGDIS et du gouvernement.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Non exploite officiellement par le CGDIS'
+                },
+                lb: {
+                    'page.title': '🔗 Intern Linken - Ambulance Toolkit',
+                    'header.title': 'Intern & Extern Linken',
+                    'header.subtitle': 'Schnellen Zougang op wichteg CGDIS- a Regierungsressourcen',
+                    'buttons.open': 'Opmaachen',
+                    'footer.note': 'Dës Säit ass en zentralen Zougangspunkt fir intern CGDIS- a Regierungsressourcen.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Lëtzebuerg | Net offiziell vum CGDIS bedriwwen'
+
+
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

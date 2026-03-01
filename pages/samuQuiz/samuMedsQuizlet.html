@@ -304,119 +304,231 @@
         </div>
     </div>
 
-<script>
-    let medications = [];
-    let currentMedications = [];
-    let selectedFrontFields = ['Marktname']; // Default front field
-    let selectedBackFields = ['Wirkstoffgruppe', 'Wirkung']; // Default back fields
-    let currentCardIndex = 0;
+    <script src="/style/i18n.js"></script>
+    <script>
+        let i18nT = (key) => key;
 
-    // DOM Elements
-    const frontFieldsContainer = document.getElementById('front-fields');
-    const backFieldsContainer = document.getElementById('back-fields');
-    const cardCountInput = document.getElementById('card-count');
-    const applyBtn = document.getElementById('apply-btn');
-    const flashcard = document.getElementById('flashcard');
-    const frontContent = document.getElementById('front-content');
-    const backContent = document.getElementById('back-content');
-    const currentCardEl = document.getElementById('current-card');
-    const totalCardsEl = document.getElementById('total-cards');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+        let medications = [];
+        let currentMedications = [];
+        let selectedFrontFields = ['Marktname']; // Default front field
+        let selectedBackFields = ['Wirkstoffgruppe', 'Wirkung']; // Default back fields
+        let currentCardIndex = 0;
 
-    // Initialize checkboxes AFTER data is loaded
-    function initCheckboxes(fields) {
-        frontFieldsContainer.innerHTML = '';
-        backFieldsContainer.innerHTML = '';
+        // DOM Elements
+        const frontFieldsContainer = document.getElementById('front-fields');
+        const backFieldsContainer = document.getElementById('back-fields');
+        const cardCountInput = document.getElementById('card-count');
+        const applyBtn = document.getElementById('apply-btn');
+        const flashcard = document.getElementById('flashcard');
+        const frontContent = document.getElementById('front-content');
+        const backContent = document.getElementById('back-content');
+        const currentCardEl = document.getElementById('current-card');
+        const totalCardsEl = document.getElementById('total-cards');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
 
-        fields.forEach(field => {
-            // Front
-            const frontItem = document.createElement('div');
-            frontItem.className = 'checkbox-item';
-            frontItem.innerHTML = `
+        // Initialize checkboxes AFTER data is loaded
+        function initCheckboxes(fields) {
+            frontFieldsContainer.innerHTML = '';
+            backFieldsContainer.innerHTML = '';
+
+            fields.forEach(field => {
+                // Front
+                const frontItem = document.createElement('div');
+                frontItem.className = 'checkbox-item';
+                frontItem.innerHTML = `
                 <input type="checkbox" id="front-${field}" value="${field}" ${selectedFrontFields.includes(field) ? 'checked' : ''}>
                 <label for="front-${field}">${field}</label>
             `;
-            frontFieldsContainer.appendChild(frontItem);
+                frontFieldsContainer.appendChild(frontItem);
 
-            // Back
-            const backItem = document.createElement('div');
-            backItem.className = 'checkbox-item';
-            backItem.innerHTML = `
+                // Back
+                const backItem = document.createElement('div');
+                backItem.className = 'checkbox-item';
+                backItem.innerHTML = `
                 <input type="checkbox" id="back-${field}" value="${field}" ${selectedBackFields.includes(field) ? 'checked' : ''}>
                 <label for="back-${field}">${field}</label>
             `;
-            backFieldsContainer.appendChild(backItem);
+                backFieldsContainer.appendChild(backItem);
+            });
+        }
+
+        function updateCard() {
+            if (currentMedications.length === 0) return;
+
+            const med = currentMedications[currentCardIndex];
+            frontContent.innerHTML = selectedFrontFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
+            backContent.innerHTML = selectedBackFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
+
+            currentCardEl.textContent = currentCardIndex + 1;
+            flashcard.classList.remove('flipped');
+        }
+
+        function applySettings() {
+            selectedFrontFields = Array.from(document.querySelectorAll('#front-fields input:checked')).map(cb => cb.value);
+            selectedBackFields = Array.from(document.querySelectorAll('#back-fields input:checked')).map(cb => cb.value);
+
+            if (selectedFrontFields.length === 0 || selectedBackFields.length === 0) {
+                alert(i18nT('alerts.selectFields'));
+                return;
+            }
+
+            const cardCount = cardCountInput.value ? parseInt(cardCountInput.value) : medications.length;
+            const validCount = Math.min(Math.max(1, cardCount), medications.length);
+            currentMedications = medications.slice(0, validCount);
+            totalCardsEl.textContent = currentMedications.length;
+            currentCardIndex = 0;
+            updateCard();
+        }
+
+        function navigate(direction) {
+            if (direction === 'prev' && currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCard();
+            } else if (direction === 'next' && currentCardIndex < currentMedications.length - 1) {
+                currentCardIndex++;
+                updateCard();
+            }
+        }
+
+        async function loadMedications() {
+            try {
+                const response = await fetch('samu_medications.json');
+                if (!response.ok) throw new Error(i18nT('errors.jsonNotFound'));
+                medications = await response.json();
+
+                if (medications.length === 0) throw new Error(i18nT('errors.noMeds'));
+
+                const fields = Object.keys(medications[0]);
+                initCheckboxes(fields);
+
+                currentMedications = [...medications];
+                totalCardsEl.textContent = medications.length;
+                updateCard();
+
+                // Set up event listeners only after UI is ready
+                flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
+                applyBtn.addEventListener('click', applySettings);
+                prevBtn.addEventListener('click', () => navigate('prev'));
+                nextBtn.addEventListener('click', () => navigate('next'));
+            } catch (error) {
+                console.error('Fehler:', error);
+                alert(`${i18nT('errors.loadTitle')}\n${error.message}\n\n${i18nT('errors.loadHint')}`);
+            }
+        }
+
+        // Start everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    'header h1': 'header.title',
+                    'header .subtitle': 'header.subtitle',
+                    '.panel:first-of-type .panel-title': 'panels.settings',
+                    '.panel:last-of-type .panel-title': 'panels.card',
+                    'label[for="card-count"]': 'labels.count',
+                    '.form-group:nth-of-type(2) > label': 'labels.front',
+                    '.form-group:nth-of-type(3) > label': 'labels.back',
+                    '#apply-btn': 'buttons.generate',
+                    '.instructions p': 'instructions.text',
+                    '#prev-btn': 'buttons.prev',
+                    '#next-btn': 'buttons.next'
+                },
+                attrs: [
+                    { selector: '#card-count', attr: 'placeholder', key: 'labels.countPlaceholder' }
+                ],
+                translations: {
+                    de: {
+                        'page.title': 'SAMU Medikamenten-Trainer | Luxemburg',
+                        'header.title': 'SAMU Medikamenten-Trainer',
+                        'header.subtitle': 'Lernen Sie die wichtigsten Medikamente für den Rettungsdienst in Luxemburg - interaktiv und effizient!',
+                        'panels.settings': 'Einstellungen',
+                        'panels.card': 'Lernkarte',
+                        'labels.count': 'Anzahl Karten generieren:',
+                        'labels.countPlaceholder': 'Alle Karten verwenden',
+                        'labels.front': 'Vorderseite der Karte:',
+                        'labels.back': 'Rückseite der Karte:',
+                        'buttons.generate': 'Karten generieren',
+                        'buttons.prev': '← Zurück',
+                        'buttons.next': 'Weiter →',
+                        'instructions.text': 'So funktioniert\'s: Wählen Sie mehrere Felder für Vorder- und Rückseite. Geben Sie eine Zahl ein, um nur eine Teilmenge der Karten zu laden (leer = alle Karten).',
+                        'alerts.selectFields': 'Bitte wählen Sie mindestens ein Feld für Vorder- und Rückseite aus!',
+                        'errors.jsonNotFound': 'JSON-Datei nicht gefunden',
+                        'errors.noMeds': 'Keine Medikamente in der JSON-Datei',
+                        'errors.loadTitle': 'Fehler beim Laden der Medikamentendaten:',
+                        'errors.loadHint': 'Stellen Sie sicher, dass "samu_medications.json" im selben Ordner existiert.'
+                    },
+                    en: {
+                        'page.title': 'SAMU Medication Trainer | Luxembourg',
+                        'header.title': 'SAMU Medication Trainer',
+                        'header.subtitle': 'Learn the most important emergency medications in Luxembourg - interactive and efficient!',
+                        'panels.settings': 'Settings',
+                        'panels.card': 'Flashcard',
+                        'labels.count': 'Number of cards to generate:',
+                        'labels.countPlaceholder': 'Use all cards',
+                        'labels.front': 'Front side of card:',
+                        'labels.back': 'Back side of card:',
+                        'buttons.generate': 'Generate cards',
+                        'buttons.prev': '← Previous',
+                        'buttons.next': 'Next →',
+                        'instructions.text': 'How it works: Select multiple fields for front and back. Enter a number to load only a subset of cards (empty = all cards).',
+                        'alerts.selectFields': 'Please select at least one field for front and back side!',
+                        'errors.jsonNotFound': 'JSON file not found',
+                        'errors.noMeds': 'No medications in JSON file',
+                        'errors.loadTitle': 'Error loading medication data:',
+                        'errors.loadHint': 'Make sure "samu_medications.json" exists in the same folder.'
+                    },
+                    fr: {
+                        'page.title': 'Entraineur Médicaments SAMU | Luxembourg',
+                        'header.title': 'Entraineur Médicaments SAMU',
+                        'header.subtitle': 'Apprenez les médicaments essentiels pour les secours au Luxembourg - interactif et efficace!',
+                        'panels.settings': 'Paramètres',
+                        'panels.card': 'Carte d\'apprentissage',
+                        'labels.count': 'Nombre de cartes a générer:',
+                        'labels.countPlaceholder': 'Utiliser toutes les cartes',
+                        'labels.front': 'Recto de la carte:',
+                        'labels.back': 'Verso de la carte:',
+                        'buttons.generate': 'Générer les cartes',
+                        'buttons.prev': '← Précédent',
+                        'buttons.next': 'Suivant →',
+                        'instructions.text': 'Mode d emploi: Sélectionnez plusieurs champs pour le recto et le verso. Entrez un nombre pour ne charger qu un sous-ensemble (vide = toutes les cartes).',
+                        'alerts.selectFields': 'Veuillez sélectionner au moins un champ pour le recto et le verso.',
+                        'errors.jsonNotFound': 'Fichier JSON introuvable',
+                        'errors.noMeds': 'Aucun médicament dans le fichier JSON',
+                        'errors.loadTitle': 'Erreur lors du chargement des médicaments:',
+                        'errors.loadHint': 'Assurez-vous que "samu_medications.json" existe dans le meme dossier.'
+                    },
+                    lb: {
+                        'page.title': 'SAMU Medikamenter-Trainer | Lëtzebuerg',
+                        'header.title': 'SAMU Medikamenter-Trainer',
+                        'header.subtitle': 'Léier déi wichtegst Medikamenter fir de Rettungsdëngscht zu Lëtzebuerg - interaktiv an effizient!',
+                        'panels.settings': 'Astellungen',
+                        'panels.card': 'Léierkaart',
+                        'labels.count': 'Unzuel Kaarte generéieren:',
+                        'labels.countPlaceholder': 'All Kaarte benotzen',
+                        'labels.front': 'Virsäit vun der Kaart:',
+                        'labels.back': 'Récksäit vun der Kaart:',
+                        'buttons.generate': 'Kaarte generéieren',
+                        'buttons.prev': '← Zeréck',
+                        'buttons.next': 'Weider →',
+                        'instructions.text': 'Esou geet et: Wielt méi Felder fir Vir- a Récksäit. Gitt eng Zuel an, fir nëmmen en Deel vun de Kaarten ze lueden (eidel = all Kaarten).',
+                        'alerts.selectFields': 'Wielt w.e.g. op d mannst ee Feld fir Vir- a Récksäit aus!',
+                        'errors.jsonNotFound': 'JSON-Datei net fonnt',
+                        'errors.noMeds': 'Keng Medikamenter an der JSON-Datei',
+                        'errors.loadTitle': 'Feeler beim Luede vun de Medikamenter:',
+                        'errors.loadHint': 'Stell sécher, datt "samu_medications.json" am selwechten Dossier ass.'
+
+
+                    }
+                },
+                onApplied: ({ t }) => {
+                    i18nT = t;
+                }
+            });
+
+            loadMedications();
         });
-    }
-
-    function updateCard() {
-        if (currentMedications.length === 0) return;
-
-        const med = currentMedications[currentCardIndex];
-        frontContent.innerHTML = selectedFrontFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
-        backContent.innerHTML = selectedBackFields.map(f => med[f] ? `<div><strong>${f}:</strong> ${med[f]}</div>` : '').join('') || '<em>Keine Felder ausgewählt</em>';
-
-        currentCardEl.textContent = currentCardIndex + 1;
-        flashcard.classList.remove('flipped');
-    }
-
-    function applySettings() {
-        selectedFrontFields = Array.from(document.querySelectorAll('#front-fields input:checked')).map(cb => cb.value);
-        selectedBackFields = Array.from(document.querySelectorAll('#back-fields input:checked')).map(cb => cb.value);
-
-        if (selectedFrontFields.length === 0 || selectedBackFields.length === 0) {
-            alert('Bitte wählen Sie mindestens ein Feld für Vorder- und Rückseite aus!');
-            return;
-        }
-
-        const cardCount = cardCountInput.value ? parseInt(cardCountInput.value) : medications.length;
-        const validCount = Math.min(Math.max(1, cardCount), medications.length);
-        currentMedications = medications.slice(0, validCount);
-        totalCardsEl.textContent = currentMedications.length;
-        currentCardIndex = 0;
-        updateCard();
-    }
-
-    function navigate(direction) {
-        if (direction === 'prev' && currentCardIndex > 0) {
-            currentCardIndex--;
-            updateCard();
-        } else if (direction === 'next' && currentCardIndex < currentMedications.length - 1) {
-            currentCardIndex++;
-            updateCard();
-        }
-    }
-
-    async function loadMedications() {
-        try {
-            const response = await fetch('samu_medications.json');
-            if (!response.ok) throw new Error('JSON-Datei nicht gefunden');
-            medications = await response.json();
-            
-            if (medications.length === 0) throw new Error('Keine Medikamente in der JSON-Datei');
-
-            const fields = Object.keys(medications[0]);
-            initCheckboxes(fields);
-            
-            currentMedications = [...medications];
-            totalCardsEl.textContent = medications.length;
-            updateCard();
-
-            // Set up event listeners only after UI is ready
-            flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
-            applyBtn.addEventListener('click', applySettings);
-            prevBtn.addEventListener('click', () => navigate('prev'));
-            nextBtn.addEventListener('click', () => navigate('next'));
-        } catch (error) {
-            console.error('Fehler:', error);
-            alert('Fehler beim Laden der Medikamentendaten:\n' + error.message + '\n\nStellen Sie sicher, dass "samu_medications.json" im selben Ordner existiert.');
-        }
-    }
-
-    // Start everything when page loads
-    document.addEventListener('DOMContentLoaded', loadMedications);
-</script>
+    </script>
 </body>
 
 </html>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🚑 Schnellreferenzen - Ambulance Toolkit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="/style/style.css" />
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -28,7 +30,7 @@
                 <div class="card-content">
                     <h2>EKG / Rhythmen</h2>
                     <p>Interpretation von EKG-Aufzeichnungen, häufige Probleme.</p>
-                    <span class="btn">PDF ansehen</span>
+                    <span class="btn btn-label-pdf">PDF ansehen</span>
                 </div>
             </a>
 
@@ -40,19 +42,7 @@
                 <div class="card-content">
                     <h2>Häufige Medikamente</h2>
                     <p>Häufige Medikamente bei Patienten.</p>
-                    <span class="btn">PDF ansehen</span>
-                </div>
-            </a>
-
-            <!-- Maladies infectieuses -->
-            <a href="/pages/inectiousDiseases/index.html" class="ref-card">
-                <div class="card-icon" style="background: #264653;">
-                    <i class="fas fa-virus"></i>
-                </div>
-                <div class="card-content">
-                    <h2>Infektionskrankheiten</h2>
-                    <p>Schutzprotokolle.</p>
-                    <span class="btn">Liste konsultieren</span>
+                    <span class="btn btn-label-pdf">PDF ansehen</span>
                 </div>
             </a>
 
@@ -64,7 +54,7 @@
                 <div class="card-content">
                     <h2>Infektions und Desinfektionsstufen</h2>
                     <p></p>
-                    <span class="btn">PDF ansehen</span>
+                    <span class="btn btn-label-pdf">PDF ansehen</span>
                 </div>
             </a>
 
@@ -76,7 +66,7 @@
                 <div class="card-content">
                     <h2>ABCDE Shema</h2>
                     <p></p>
-                    <span class="btn">PDF ansehen</span>
+                    <span class="btn btn-label-pdf">PDF ansehen</span>
                 </div>
             </a>
 
@@ -88,7 +78,7 @@
                 <div class="card-content">
                     <h2>Bilan SAP</h2>
                     <p>Bilan SAP Kriterien</p>
-                    <span class="btn">PDF ansehen</span>
+                    <span class="btn btn-label-pdf">PDF ansehen</span>
                 </div>
             </a>
 
@@ -100,27 +90,93 @@
                 <div class="card-content">
                     <h2>Geburtshilfliche Notfälle</h2>
                     <p>Unerwartete Entbindung, Blutungen, Präeklampsie.</p>
-                    <span class="btn">In Entwicklung</span>
+                    <span class="btn btn-label-dev">In Entwicklung</span>
                 </div>
             </a>
 
             <!-- Protocoles CGDIS -->
-            <a href="#"  class="ref-card">
+            <a href="#" class="ref-card">
                 <div class="card-icon" style="background: #0d5c33;">
                     <i class="fas fa-file-contract"></i>
                 </div>
                 <div class="card-content">
                     <h2>Offizielle Protokolle</h2>
                     <p>Schlaganfall-Prozedur, pädiatrische Notfälle und suizidale Gedanken.</p>
-                    <span class="btn">In Entwicklung</span>
+                    <span class="btn btn-label-dev">In Entwicklung</span>
                 </div>
             </a>
         </div>
 
         <footer>
-            <p><strong>Warnung:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu Informationszwecken. Der Autor kann nicht für Fehler, Auslassungen oder Folgen haftbar gemacht werden, die sich aus der Nutzung dieser Informationen ergeben. Immer die aktuellen offiziellen Protokolle des CGDIS konsultieren.</p>
+            <p><strong>Warnung:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu
+                Informationszwecken. Der Autor kann nicht für Fehler, Auslassungen oder Folgen haftbar gemacht werden,
+                die sich aus der Nutzung dieser Informationen ergeben. Immer die aktuellen offiziellen Protokolle des
+                CGDIS konsultieren.</p>
             <p>© 2026 Ambulance Toolkit Luxembourg | Nicht angeschlossen an CGDIS</p>
         </footer>
     </div>
+
+    <script src="/style/i18n.js"></script>
+    <script>
+        ToolkitI18n.applyTranslations({
+            titleKey: 'page.title',
+            text: {
+                'header h1': 'header.title',
+                'header .subtitle': 'header.subtitle',
+                'footer p:first-child': 'footer.notice',
+                'footer p:last-child': 'footer.copy'
+            },
+            textAll: [
+                { selector: '.btn-label-pdf', key: 'buttons.pdf' },
+                { selector: '.btn-label-list', key: 'buttons.list' },
+                { selector: '.btn-label-dev', key: 'buttons.dev' }
+            ],
+            translations: {
+                de: {
+                    'page.title': '🚑 Schnellreferenzen - Ambulance Toolkit',
+                    'header.title': 'Schnellreferenzen',
+                    'header.subtitle': 'Wesentliche Dokumente nach Thema sortiert für schnelle Konsultation vor Ort',
+                    'buttons.pdf': 'PDF ansehen',
+                    'buttons.list': 'Liste konsultieren',
+                    'buttons.dev': 'In Entwicklung',
+                    'footer.notice': 'Warnung: Diese Website und die bereitgestellten Dokumente dienen nur zu Informationszwecken. Der Autor kann nicht für Fehler, Auslassungen oder Folgen haftbar gemacht werden, die sich aus der Nutzung dieser Informationen ergeben. Immer die aktuellen offiziellen Protokolle des CGDIS konsultieren.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Nicht angeschlossen an CGDIS'
+                },
+                en: {
+                    'page.title': '🚑 Quick References - Ambulance Toolkit',
+                    'header.title': 'Quick References',
+                    'header.subtitle': 'Essential documents sorted by topic for fast on-scene consultation',
+                    'buttons.pdf': 'View PDF',
+                    'buttons.list': 'View list',
+                    'buttons.dev': 'In development',
+                    'footer.notice': 'Warning: This website and the provided documents are for informational purposes only. The author cannot be held liable for errors, omissions, or consequences resulting from the use of this information. Always consult the latest official CGDIS protocols.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Not affiliated with CGDIS'
+                },
+                fr: {
+                    'page.title': '🚑 Références rapides - Ambulance Toolkit',
+                    'header.title': 'Références rapides',
+                    'header.subtitle': 'Documents essentiels classes par thème pour une consultation rapide sur intervention',
+                    'buttons.pdf': 'Voir le PDF',
+                    'buttons.list': 'Voir la liste',
+                    'buttons.dev': 'En développement',
+                    'footer.notice': 'Avertissement: Ce site web et les documents fournis sont uniquement a titre informatif. L\'auteur ne peut etre tenu responsable des erreurs, omissions ou conséquences liées a l\'utilisation de ces informations. Consultez toujours les protocoles officiels CGDIS les plus récents.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Non affilie au CGDIS'
+                },
+                lb: {
+                    'page.title': '🚑 Schnellreferenzen - Ambulance Toolkit',
+                    'header.title': 'Schnellreferenzen',
+                    'header.subtitle': 'Wichteg Dokumenter no Thema sortéiert fir séier Consultatioun am Asaz',
+                    'buttons.pdf': 'PDF kucken',
+                    'buttons.list': 'Lëscht weisen',
+                    'buttons.dev': 'An Entwécklung',
+                    'footer.notice': 'Warnung: Dës Websäit an d Dokumenter sinn nëmme fir Informatiounszwecker. Den Auteur haft net fir Feeler oder Konsequenzen duerch d Notzung vun dëser Informatioun. Kuckt ëmmer déi aktuell offiziell CGDIS-Protokoller.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Lëtzebuerg | Net mam CGDIS verbonnen'
+
+
+                }
+            }
+        });
+    </script>
 </body>
+
 </html>

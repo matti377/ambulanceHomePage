@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +39,7 @@
             background: var(--card-bg);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             color: var(--text-dark);
         }
 
@@ -68,6 +69,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="shiftplan-header">
@@ -95,10 +97,22 @@
         </footer>
     </div>
 
+    <script src="/style/i18n.js"></script>
     <script>
         // Load JSON data
         let pediatricData = [];
-        
+        let i18nT = (key) => key;
+
+        function formatAgeLabel(age) {
+            if (age === 0) {
+                return i18nT('age.newborn');
+            }
+            if (age === 1) {
+                return `1 ${i18nT('age.yearSingular')}`;
+            }
+            return `${age} ${i18nT('age.yearPlural')}`;
+        }
+
         async function loadPediatricData() {
             try {
                 const response = await fetch('data.json');
@@ -106,8 +120,8 @@
                 renderData(1); // Default to 1 year
             } catch (error) {
                 console.error('Fehler beim Laden der PediHelp-Daten:', error);
-                document.getElementById('referenceData').innerHTML = 
-                    '<div class="no-data">Fehler: Daten konnten nicht geladen werden.</div>';
+                document.getElementById('referenceData').innerHTML =
+                    `<div class="no-data">${i18nT('errors.loadData')}</div>`;
             }
         }
 
@@ -115,35 +129,35 @@
         function renderData(age) {
             const container = document.getElementById('referenceData');
             const data = pediatricData.find(item => item.age === age);
-            
+
             if (!data) {
-                container.innerHTML = '<div class="no-data">Keine Daten für dieses Alter verfügbar.</div>';
+                container.innerHTML = `<div class="no-data">${i18nT('errors.noDataForAge')}</div>`;
                 return;
             }
 
             container.innerHTML = `
                 <div class="ref-card">
-                    <h3><i class="fas fa-weight"></i> Idealgewicht</h3>
+                    <h3><i class="fas fa-weight"></i> ${i18nT('labels.weight')}</h3>
                     <div class="value">${data.weight} kg</div>
                 </div>
                 <div class="ref-card">
-                    <h3><i class="fas fa-heartbeat"></i> Pulsfrequenz</h3>
+                    <h3><i class="fas fa-heartbeat"></i> ${i18nT('labels.heartRate')}</h3>
                     <div class="value">${data.heartRate} <span class="unit">/min</span></div>
                 </div>
                 <div class="ref-card">
-                    <h3><i class="fas fa-tint"></i> Blutvolumen</h3>
+                    <h3><i class="fas fa-tint"></i> ${i18nT('labels.bloodVolume')}</h3>
                     <div class="value">${data.bloodVolume} <span class="unit">ml/kg</span></div>
                 </div>
                 <div class="ref-card">
-                    <h3><i class="fas fa-syringe"></i> Blutzucker</h3>
+                    <h3><i class="fas fa-syringe"></i> ${i18nT('labels.bloodSugar')}</h3>
                     <div class="value">${data.bloodSugar} <span class="unit">mg/dl</span></div>
                 </div>
                 <div class="ref-card">
-                    <h3><i class="fas fa-heart"></i> Blutdruck (systolisch)</h3>
+                    <h3><i class="fas fa-heart"></i> ${i18nT('labels.bloodPressure')}</h3>
                     <div class="value">${data.bloodPressure} <span class="unit">mmHg</span></div>
                 </div>
                 <div class="ref-card">
-                    <h3><i class="fas fa-ruler-vertical"></i> Körpergröße</h3>
+                    <h3><i class="fas fa-ruler-vertical"></i> ${i18nT('labels.height')}</h3>
                     <div class="value">${data.height} <span class="unit">cm</span></div>
                 </div>
             `;
@@ -151,17 +165,113 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    '.shiftplan-header h1': 'header.title',
+                    '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                    '.age-selector h2': 'controls.selectAge',
+                    'footer p:first-child': 'footer.notice',
+                    'footer p:last-child': 'footer.copy'
+                },
+                translations: {
+                    de: {
+                        'page.title': '👶 Pädiatrische Referenzwerte',
+                        'header.title': '👶 Pädiatrische Referenzwerte',
+                        'header.subtitle': 'Pädiatrische Referenzwerte für Notfälle (0-15 Jahre)',
+                        'controls.selectAge': 'Alter auswählen',
+                        'age.newborn': 'Neugeboren',
+                        'age.yearSingular': 'Jahr',
+                        'age.yearPlural': 'Jahre',
+                        'labels.weight': 'Idealgewicht',
+                        'labels.heartRate': 'Pulsfrequenz',
+                        'labels.bloodVolume': 'Blutvolumen',
+                        'labels.bloodSugar': 'Blutzucker',
+                        'labels.bloodPressure': 'Blutdruck (systolisch)',
+                        'labels.height': 'Körpergröße',
+                        'errors.loadData': 'Fehler: Daten konnten nicht geladen werden.',
+                        'errors.noDataForAge': 'Keine Daten für dieses Alter verfügbar.',
+                        'footer.notice': 'Hinweis: Diese Website und die bereitgestellten Dokumente dienen nur zu Informationszwecken. Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.',
+                        'footer.copy': '© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS'
+                    },
+                    en: {
+                        'page.title': '👶 Pediatric Reference Values',
+                        'header.title': '👶 Pediatric Reference Values',
+                        'header.subtitle': 'Pediatric emergency reference values (0-15 years)',
+                        'controls.selectAge': 'Select age',
+                        'age.newborn': 'Newborn',
+                        'age.yearSingular': 'year',
+                        'age.yearPlural': 'years',
+                        'labels.weight': 'Ideal weight',
+                        'labels.heartRate': 'Heart rate',
+                        'labels.bloodVolume': 'Blood volume',
+                        'labels.bloodSugar': 'Blood sugar',
+                        'labels.bloodPressure': 'Blood pressure (systolic)',
+                        'labels.height': 'Body height',
+                        'errors.loadData': 'Error: Data could not be loaded.',
+                        'errors.noDataForAge': 'No data available for this age.',
+                        'footer.notice': 'Note: This website and the provided documents are for informational purposes only. The author assumes no responsibility for errors, omissions, or consequences resulting from the use of this information. Always consult official CGDIS protocols.',
+                        'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Not affiliated with CGDIS'
+                    },
+                    fr: {
+                        'page.title': '👶 Valeurs pédiatriques de référence',
+                        'header.title': '👶 Valeurs pédiatriques de référence',
+                        'header.subtitle': 'Valeurs pédiatriques d\'urgence (0-15 ans)',
+                        'controls.selectAge': 'Choisir l\'âge',
+                        'age.newborn': 'Nouveau-né',
+                        'age.yearSingular': 'an',
+                        'age.yearPlural': 'ans',
+                        'labels.weight': 'Poids idéal',
+                        'labels.heartRate': 'Fréquence cardiaque',
+                        'labels.bloodVolume': 'Volume sanguin',
+                        'labels.bloodSugar': 'Glycémie',
+                        'labels.bloodPressure': 'Pression artérielle (systolique)',
+                        'labels.height': 'Taille',
+                        'errors.loadData': 'Erreur: impossible de charger les données.',
+                        'errors.noDataForAge': 'Aucune donnee disponible pour cet age.',
+                        'footer.notice': 'Remarque: Ce site et les documents fournis sont uniquement a titre informatif. L\'auteur n\'assume aucune responsabilité pour les erreurs, omissions ou conséquences liées à l\'utilisation de ces informations. Veuillez consulter les protocoles officiels du CGDIS.',
+                        'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Sans lien avec le CGDIS'
+                    },
+                    lb: {
+                        'page.title': '👶 Pediatresch Referenzwäerter',
+                        'header.title': '👶 Pediatresch Referenzwäerter',
+                        'header.subtitle': 'Pediatresch Referenzwäerter fir Noutfäll (0-15 Joer)',
+                        'controls.selectAge': 'Alter auswielen',
+                        'age.newborn': 'Neigebueren',
+                        'age.yearSingular': 'Joer',
+                        'age.yearPlural': 'Joer',
+                        'labels.weight': 'Idealgewiicht',
+                        'labels.heartRate': 'Bols',
+                        'labels.bloodVolume': 'Bluttvolumen',
+                        'labels.bloodSugar': 'Bluttzocker',
+                        'labels.bloodPressure': 'Bluttdrock (systolesch)',
+                        'labels.height': 'Kierpergréisst',
+                        'errors.loadData': 'Feeler: Donnéeë konnten net geluede ginn.',
+                        'errors.noDataForAge': 'Keng Donnéeë fir dësen Alter verfügbar.',
+                        'footer.notice': 'Hiweis: Dës Websäit an d Dokumenter déngen nëmmen Informatiounszwecker. Den Auteur iwwerhëlt keng Verantwortung fir Feeler oder Konsequenzen duerch d Notzung vun dësen Informatiounen. Consultéiert ëmmer déi offiziell CGDIS-Protokoller.',
+                        'footer.copy': '© 2026 Ambulance Toolkit Lëtzebuerg | Net mam CGDIS verbonnen'
+
+
+                    }
+                },
+                onApplied: ({ t }) => {
+                    i18nT = t;
+                }
+            });
+
             loadPediatricData();
-            
+
             const slider = document.getElementById('ageSlider');
             const display = document.getElementById('ageDisplay');
-            
+            display.textContent = formatAgeLabel(parseInt(slider.value, 10));
+
             slider.addEventListener('input', () => {
                 const age = parseInt(slider.value);
-                display.textContent = age === 0 ? 'Neugeboren' : `${age} ${age === 1 ? 'Jahr' : 'Jahre'}`;
+                display.textContent = formatAgeLabel(age);
                 renderData(age);
             });
         });
     </script>
 </body>
+
 </html>

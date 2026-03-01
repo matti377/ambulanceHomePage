@@ -172,7 +172,104 @@
     </a>
   </footer>
 
+  <script src="/style/i18n.js"></script>
   <script>
+    window.hospI18n = { t: (key) => key };
+    const t = (key) => window.hospI18n.t(key);
+
+    ToolkitI18n.applyTranslations({
+      titleKey: 'page.title',
+      text: {
+        'header h1': 'header.title',
+        'header .subtitle': 'header.subtitle',
+        'label[for="select-date"]': 'controls.dateLabel',
+        'label[for="select-hour"]': 'controls.hourLabel',
+        '.card.centre h2': 'region.centre',
+        '.card.nord h2': 'region.north',
+        '.card.sud h2': 'region.south'
+      },
+      translations: {
+        de: {
+          'page.title': '🏥 Bereitschaftskrankenhäuser – Luxemburg',
+          'header.title': '🏥 Bereitschaftskrankenhäuser – Luxemburg',
+          'header.subtitle': 'Notdienst 24/7 – Regionen Nord, Süd, Zentrum',
+          'controls.dateLabel': 'Bereitschaft anzeigen für:',
+          'controls.hourLabel': 'Uhrzeit:',
+          'region.centre': 'Region Zentrum',
+          'region.north': 'Region Nord',
+          'region.south': 'Region Süd',
+          'time.current': 'Aktuelle Uhrzeit (Luxemburg)',
+          'centre.smallGuardNote': 'Die kleine Bereitschaft nimmt nach 15:00 keine Aufnahmen mehr an.',
+          'errors.load': 'Fehler beim Laden',
+          'footer.source': 'Quelle: Automatischer Algorithmus – Kann Fehler enthalten!',
+          'footer.update': 'Automatische Aktualisierung jede Minute',
+          'footer.download': '📥 Diese Seite für Offline-Nutzung herunterladen'
+        },
+        en: {
+          'page.title': '🏥 On-call Hospitals – Luxembourg',
+          'header.title': '🏥 On-call Hospitals – Luxembourg',
+          'header.subtitle': '24/7 emergency service – North, South, Center regions',
+          'controls.dateLabel': 'Show duty for:',
+          'controls.hourLabel': 'Time:',
+          'region.centre': 'Center Region',
+          'region.north': 'North Region',
+          'region.south': 'South Region',
+          'time.current': 'Current time (Luxembourg)',
+          'centre.smallGuardNote': 'Small duty no longer accepts admissions after 15:00.',
+          'errors.load': 'Loading error',
+          'footer.source': 'Source: Automatic algorithm – May contain errors!',
+          'footer.update': 'Auto-refresh every minute',
+          'footer.download': '📥 Download this page for offline use'
+        },
+        fr: {
+          'page.title': '🏥 Hôpitaux de garde – Luxembourg',
+          'header.title': '🏥 Hôpitaux de garde – Luxembourg',
+          'header.subtitle': 'Service d urgence 24/7 – Regions Nord, Sud, Centre',
+          'controls.dateLabel': 'Voir la garde pour le :',
+          'controls.hourLabel': 'Heure :',
+          'region.centre': 'Région Centre',
+          'region.north': 'Région Nord',
+          'region.south': 'Région Sud',
+          'time.current': 'Heure actuelle (Luxembourg)',
+          'centre.smallGuardNote': 'La Petite Garde n assure plus les admissions après 15h00.',
+          'errors.load': 'Erreur de chargement',
+          'footer.source': 'Source: Algorithme automatique – Peut contenir des erreurs!',
+          'footer.update': 'Mise à jour automatique chaque minute',
+          'footer.download': '📥 Télécharger cette page pour l utiliser hors ligne'
+        },
+        lb: {
+          'page.title': '🏥 Hôpital de garde – Lëtzebuerg',
+          'header.title': '🏥 Hôpital de garde – Lëtzebuerg',
+          'header.subtitle': 'Noutdéngscht 24/7 – Regiounen Nord, Süd, Zentrum',
+          'controls.dateLabel': 'Bereetschaft weise fir den:',
+          'controls.hourLabel': 'Auerzäit:',
+          'region.centre': 'Regioun Zentrum',
+          'region.north': 'Regioun Norden',
+          'region.south': 'Regioun Süden',
+          'time.current': 'Aktuell Zäit (Lëtzebuerg)',
+          'centre.smallGuardNote': 'Déi kleng Garde hëlt no 15:00 keng Opname méi un.',
+          'errors.load': 'Feeler beim Luede',
+          'footer.source': 'Quell: Automateschen Algorithmus – Kann Feeler maachen!',
+          'footer.update': 'Automatesch Aktualiséierung all Minutt',
+          'footer.download': '📥 Dës Säit fir Offline-Benotzung eroflueden'
+        }
+      },
+      onApplied: ({ t }) => {
+        window.hospI18n.t = t;
+        const footer = document.querySelector('footer');
+        if (footer) {
+          footer.innerHTML = `
+            ${t('footer.source')}<br>
+            ${t('footer.update')}<br>
+            <a href="#" id="download-link"
+              style="color: #0033a0; text-decoration: underline; margin-top: 8px; display: inline-block;">
+              ${t('footer.download')}
+            </a>
+          `;
+        }
+      }
+    });
+
     // Hospital names
     const NORD = "Centre Hospitalier du Nord (Ettelbruck)";
     const SUD = "Centre Hospitalier Emile Mayrisch (Esch-sur-Alzette)";
@@ -248,53 +345,53 @@
       if (diffAlt < 0) return CHL;
       return (diffAlt % 2 === 0) ? CHL : HK;
     }
-// Reusable function to display hospitals for any Date object
-function displayForDateTime(selectedDate) {
-  const dayOfWeek = selectedDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
-  const hours = selectedDate.getHours();
+    // Reusable function to display hospitals for any Date object
+    function displayForDateTime(selectedDate) {
+      const dayOfWeek = selectedDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+      const hours = selectedDate.getHours();
 
-  const nord = NORD;
-  const sud = SUD;
+      const nord = NORD;
+      const sud = SUD;
 
-  // Weekend: Saturday (6) or Sunday (0)
-  if (dayOfWeek === 6 || dayOfWeek === 0) {
-    // Find Saturday of this weekend
-    const sat = new Date(selectedDate);
-    if (dayOfWeek === 0) { // Sunday → go back 1 day
-      sat.setDate(sat.getDate() - 1);
+      // Weekend: Saturday (6) or Sunday (0)
+      if (dayOfWeek === 6 || dayOfWeek === 0) {
+        // Find Saturday of this weekend
+        const sat = new Date(selectedDate);
+        if (dayOfWeek === 0) { // Sunday → go back 1 day
+          sat.setDate(sat.getDate() - 1);
+        }
+        const refSat = new Date(2026, 0, 3); // Jan 3, 2026 = CHL
+        const diffDays = Math.floor((sat - refSat) / (1000 * 60 * 60 * 24));
+        const weeksSince = Math.floor(diffDays / 7);
+        const hospital = (weeksSince % 2 === 0) ? CHL : HK;
+        document.getElementById('nord').textContent = nord;
+        document.getElementById('sud').textContent = sud;
+        document.getElementById('centre').textContent = hospital;
+        document.getElementById('centre-note').textContent = "";
+        return;
+      }
+
+      // Weekday day shift: Mon–Fri, 7:00–16:59
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        // Grande Garde = hospital on duty TONIGHT (same calendar day night)
+        const grandeGarde = getNightHospital(selectedDate);
+        const petiteGarde = (grandeGarde === HK) ? CHL : HK;
+        document.getElementById('nord').textContent = nord;
+        document.getElementById('sud').textContent = sud;
+        document.getElementById('centre').innerHTML =
+          `Grande Garde : ${grandeGarde}<br>Petite Garde : ${petiteGarde}`;
+        document.getElementById('centre-note').textContent =
+          t('centre.smallGuardNote');
+        return;
+      }
+
+      // Night or outside hours
+      const hospital = getNightHospital(selectedDate);
+      document.getElementById('nord').textContent = nord;
+      document.getElementById('sud').textContent = sud;
+      document.getElementById('centre').textContent = hospital;
+      document.getElementById('centre-note').textContent = "";
     }
-    const refSat = new Date(2026, 0, 3); // Jan 3, 2026 = CHL
-    const diffDays = Math.floor((sat - refSat) / (1000 * 60 * 60 * 24));
-    const weeksSince = Math.floor(diffDays / 7);
-    const hospital = (weeksSince % 2 === 0) ? CHL : HK;
-    document.getElementById('nord').textContent = nord;
-    document.getElementById('sud').textContent = sud;
-    document.getElementById('centre').textContent = hospital;
-    document.getElementById('centre-note').textContent = "";
-    return;
-  }
-
-  // Weekday day shift: Mon–Fri, 7:00–16:59
-  if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
-    // Grande Garde = hospital on duty TONIGHT (same calendar day night)
-    const grandeGarde = getNightHospital(selectedDate);
-    const petiteGarde = (grandeGarde === HK) ? CHL : HK;
-    document.getElementById('nord').textContent = nord;
-    document.getElementById('sud').textContent = sud;
-    document.getElementById('centre').innerHTML = 
-      `Grande Garde : ${grandeGarde}<br>Petite Garde : ${petiteGarde}`;
-    document.getElementById('centre-note').textContent = 
-      "La Petite Garde n'assure plus les admissions après 15h00.";
-    return;
-  }
-
-  // Night or outside hours
-  const hospital = getNightHospital(selectedDate);
-  document.getElementById('nord').textContent = nord;
-  document.getElementById('sud').textContent = sud;
-  document.getElementById('centre').textContent = hospital;
-  document.getElementById('centre-note').textContent = "";
-}
     function getHospitalOnDuty(luxDate) {
       const d = luxDate;
       const dayOfWeek = d.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
@@ -325,7 +422,7 @@ function displayForDateTime(selectedDate) {
         const grandeGarde = getNightHospital(d);
         const petiteGarde = (grandeGarde === HK) ? CHL : HK;
         const centreDisplay = `Grande Garde : ${grandeGarde}<br>Petite Garde : ${petiteGarde}`;
-        const note = "La Petite Garde n'assure plus les admissions après 15h00.";
+        const note = t('centre.smallGuardNote');
         return { nord, sud, centre: centreDisplay, note };
       }
 
@@ -334,29 +431,29 @@ function displayForDateTime(selectedDate) {
       return { nord, sud, centre: hospital, note: "" };
     }
 
-function updateDisplay() {
-  try {
-    // Get current time as string in Luxembourg (e.g., "11/01/2026 à 14:30")
-    const luxStr = luxembourgTime();
-    const luxDate = parseLuxDate(luxStr);
-    document.getElementById('current-time').textContent = `Heure actuelle (Luxembourg) : ${luxStr}`;
+    function updateDisplay() {
+      try {
+        // Get current time as string in Luxembourg (e.g., "11/01/2026 à 14:30")
+        const luxStr = luxembourgTime();
+        const luxDate = parseLuxDate(luxStr);
+        document.getElementById('current-time').textContent = `${t('time.current')} : ${luxStr}`;
 
-    // 👇 NEW: Set date/time pickers to Luxembourg time correctly
-    const luxYear = luxDate.getFullYear();
-    const luxMonth = String(luxDate.getMonth() + 1).padStart(2, '0');
-    const luxDay = String(luxDate.getDate()).padStart(2, '0');
-    const luxHour = String(luxDate.getHours()).padStart(2, '0');
-    const luxMinute = String(luxDate.getMinutes()).padStart(2, '0');
+        // 👇 NEW: Set date/time pickers to Luxembourg time correctly
+        const luxYear = luxDate.getFullYear();
+        const luxMonth = String(luxDate.getMonth() + 1).padStart(2, '0');
+        const luxDay = String(luxDate.getDate()).padStart(2, '0');
+        const luxHour = String(luxDate.getHours()).padStart(2, '0');
+        const luxMinute = String(luxDate.getMinutes()).padStart(2, '0');
 
-    document.getElementById('select-date').value = `${luxYear}-${luxMonth}-${luxDay}`;
-    document.getElementById('select-hour').value = `${luxHour}:${luxMinute}`;
+        document.getElementById('select-date').value = `${luxYear}-${luxMonth}-${luxDay}`;
+        document.getElementById('select-hour').value = `${luxHour}:${luxMinute}`;
 
-    displayForDateTime(luxDate);
-  } catch (e) {
-    console.error("Erreur :", e);
-    document.getElementById('current-time').textContent = "Erreur de chargement";
-  }
-}
+        displayForDateTime(luxDate);
+      } catch (e) {
+        console.error("Erreur :", e);
+        document.getElementById('current-time').textContent = t('errors.load');
+      }
+    }
     // Download current page as HTML file
     function downloadSelf() {
       const htmlContent = document.documentElement.outerHTML;

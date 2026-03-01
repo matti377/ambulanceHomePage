@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="/style/style.css">
     <style>
         .current-info,
-.team-display {
-    display: none !important;
-}
-        </style>
+        .team-display {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -51,7 +51,7 @@
             <div class="team-box eq2" id="afternoonTeam">EQ2</div>
             <div class="team-box eq3" id="nextMorningTeam">EQ3</div>
             <div class="team-box eq4" id="nextAfternoonTeam">EQ4</div>
-        </div> 
+        </div>
 
         <div class="shift-period">
             <h3>📌 Heutige Schichtverteilung</h3>
@@ -97,7 +97,11 @@
         </footer>
     </div>
 
+    <script src="/style/i18n.js"></script>
     <script>
+        let i18nT = (key) => key;
+        let i18nLocale = 'de-DE';
+
         // Define the 4-day cycles based on the pattern in the PDF (starting Jan 1, 2025)
         const morningCycle = ['EQ3', 'EQ4', 'EQ2', 'EQ1'];  // Jan 1, 2, 3, 4 morning
         const afternoonCycle = ['EQ1', 'EQ3', 'EQ4', 'EQ2']; // Jan 1, 2, 3, 4 afternoon
@@ -133,12 +137,12 @@
         // Function to format date for display
         function formatDate(date) {
             const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('de-DE', options);
+            return date.toLocaleDateString(i18nLocale, options);
         }
 
         // Function to format time for display
         function formatTime(date) {
-            return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+            return date.toLocaleTimeString(i18nLocale, { hour: '2-digit', minute: '2-digit' });
         }
 
         // Function to get next shift date
@@ -175,7 +179,7 @@
                 // Determine current shift
                 const currentShiftType = getCurrentShift();
                 document.getElementById('currentShift').textContent =
-                    currentShiftType === 'morning' ? 'Tagschicht' : 'Nachtschicht';
+                    currentShiftType === 'morning' ? i18nT('shift.day') : i18nT('shift.night');
 
                 // Update shift period boxes
                 document.getElementById('morningShiftTeam').textContent = teams.morning;
@@ -211,7 +215,7 @@
             } catch (error) {
                 console.error('Error updating UI:', error);
                 document.getElementById('error').style.display = 'block';
-                document.getElementById('error').textContent = 'Fehler beim Berechnen des Schichtplans: ' + error.message;
+                document.getElementById('error').textContent = `${i18nT('errors.calc')}: ${error.message}`;
                 document.getElementById('loading').style.display = 'none';
             }
         }
@@ -278,6 +282,142 @@
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    '.shiftplan-header h1': 'header.title',
+                    '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                    'label[for="dateInput"]': 'controls.dateLabel',
+                    '#todayBtn': 'controls.today',
+                    '#nextShiftBtn': 'controls.nextShift',
+                    '.shift-period:nth-of-type(1) h3': 'sections.todaySplit',
+                    '.shift-period:nth-of-type(1) .shift-box.morning h4': 'sections.dayShift',
+                    '.shift-period:nth-of-type(1) .shift-box.afternoon h4': 'sections.nightShift',
+                    '.shift-period:nth-of-type(2) h3': 'sections.nextShift',
+                    '.shift-period:nth-of-type(2) .shift-box.morning h4': 'sections.nextDayShift',
+                    '.shift-period:nth-of-type(2) .shift-box.afternoon h4': 'sections.nextNightShift',
+                    '.calendar h3': 'sections.month',
+                    '#loading': 'status.loading',
+                    '#error': 'status.error',
+                    '.shiftplan-footer p:last-child': 'footer.note',
+                    '.current-info .info-card:nth-child(1) h3': 'info.currentDate',
+                    '.current-info .info-card:nth-child(2) h3': 'info.currentTime',
+                    '.current-info .info-card:nth-child(3) h3': 'info.currentShift'
+                },
+                translations: {
+                    de: {
+                        'page.title': 'CIS LUX Schichtplan',
+                        'header.title': 'CIS LUX Schichtplan',
+                        'header.subtitle': 'Aktuelle Teams & Schichten',
+                        'controls.dateLabel': 'Datum auswählen:',
+                        'controls.today': 'Heute',
+                        'controls.nextShift': 'Nächste Schicht',
+                        'info.currentDate': '📅 Aktuelles Datum',
+                        'info.currentTime': '🕒 Aktuelle Zeit',
+                        'info.currentShift': '🔄 Aktuelle Schicht',
+                        'sections.todaySplit': '📌 Heutige Schichtverteilung',
+                        'sections.dayShift': 'Tagschicht (8:00 - 20:00)',
+                        'sections.nightShift': 'Nachtschicht (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Nächste Schicht',
+                        'sections.nextDayShift': 'Nächste Tagschicht',
+                        'sections.nextNightShift': 'Nächste Nachtschicht',
+                        'sections.month': '🗓️ Monatsübersicht',
+                        'status.loading': 'Daten werden geladen...',
+                        'status.error': 'Fehler beim Laden der Daten.',
+                        'footer.updatePrefix': 'CIS LUX Schichtplan • Aktualisiert am',
+                        'footer.note': 'Die Teams wechseln alle 12 Stunden um 8:00 Uhr morgens und abends.',
+                        'shift.day': 'Tagschicht',
+                        'shift.night': 'Nachtschicht',
+                        'errors.calc': 'Fehler beim Berechnen des Schichtplans'
+                    },
+                    en: {
+                        'page.title': 'CIS LUX Shift Plan',
+                        'header.title': 'CIS LUX Shift Plan',
+                        'header.subtitle': 'Current teams and shifts',
+                        'controls.dateLabel': 'Select date:',
+                        'controls.today': 'Today',
+                        'controls.nextShift': 'Next shift',
+                        'info.currentDate': '📅 Current date',
+                        'info.currentTime': '🕒 Current time',
+                        'info.currentShift': '🔄 Current shift',
+                        'sections.todaySplit': '📌 Today shift split',
+                        'sections.dayShift': 'Day shift (8:00 - 20:00)',
+                        'sections.nightShift': 'Night shift (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Next shift',
+                        'sections.nextDayShift': 'Next day shift',
+                        'sections.nextNightShift': 'Next night shift',
+                        'sections.month': '🗓️ Monthly overview',
+                        'status.loading': 'Loading data...',
+                        'status.error': 'Error loading data.',
+                        'footer.updatePrefix': 'CIS LUX Shift Plan • Updated at',
+                        'footer.note': 'Teams rotate every 12 hours at 8:00 in the morning and evening.',
+                        'shift.day': 'Day shift',
+                        'shift.night': 'Night shift',
+                        'errors.calc': 'Error calculating shift plan'
+                    },
+                    fr: {
+                        'page.title': 'Planning des équipes CIS LUX',
+                        'header.title': 'Planning des équipes CIS LUX',
+                        'header.subtitle': 'Equipes et rotations actuelles',
+                        'controls.dateLabel': 'Choisir la date:',
+                        'controls.today': 'Aujourd hui',
+                        'controls.nextShift': 'Prochaine rotation',
+                        'info.currentDate': '📅 Date actuelle',
+                        'info.currentTime': '🕒 Heure actuelle',
+                        'info.currentShift': '🔄 Rotation actuelle',
+                        'sections.todaySplit': '📌 Répartition de la garde du jour',
+                        'sections.dayShift': 'Garde de jour (8:00 - 20:00)',
+                        'sections.nightShift': 'Garde de nuit (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Prochaine rotation',
+                        'sections.nextDayShift': 'Prochaine garde de jour',
+                        'sections.nextNightShift': 'Prochaine garde de nuit',
+                        'sections.month': '🗓️ Vue mensuelle',
+                        'status.loading': 'Chargement des données...',
+                        'status.error': 'Erreur de chargement des données.',
+                        'footer.updatePrefix': 'Planning CIS LUX • Mis à jour à',
+                        'footer.note': 'Les équipes tournent toutes les 12 heures à 8:00 le matin et le soir.',
+                        'shift.day': 'Garde de jour',
+                        'shift.night': 'Garde de nuit',
+                        'errors.calc': 'Erreur lors du calcul du planning'
+                    },
+                    lb: {
+                        'page.title': 'CIS LUX Déngschtplang',
+                        'header.title': 'CIS LUX Déngschtplang',
+                        'header.subtitle': 'Aktuell Equippen a Schichten',
+                        'controls.dateLabel': 'Datum auswielen:',
+                        'controls.today': 'Haut',
+                        'controls.nextShift': 'Nächst Schicht',
+                        'info.currentDate': '📅 Aktuellt Datum',
+                        'info.currentTime': '🕒 Aktuell Zäit',
+                        'info.currentShift': '🔄 Aktuell Schicht',
+                        'sections.todaySplit': '📌 Schichtverdeelung vun haut',
+                        'sections.dayShift': 'Dagschicht (8:00 - 20:00)',
+                        'sections.nightShift': 'Nuetsschicht (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Nächst Schicht',
+                        'sections.nextDayShift': 'Nächst Dagschicht',
+                        'sections.nextNightShift': 'Nächst Nuetsschicht',
+                        'sections.month': '🗓️ Mountsiwwersiicht',
+                        'status.loading': 'Donnéeë gi gelueden...',
+                        'status.error': 'Feeler beim Luede vun den Donnéeën.',
+                        'footer.updatePrefix': 'CIS LUX Déngschtplang • Aktualiséiert um',
+                        'footer.note': 'D Equippe wiesselen all 12 Stonnen um 8:00 moies an owes.',
+                        'shift.day': 'Dagschicht',
+                        'shift.night': 'Nuetsschicht',
+                        'errors.calc': 'Feeler beim Berechne vum Déngschtplang'
+
+
+                    }
+                },
+                onApplied: ({ language, t }) => {
+                    i18nT = t;
+                    i18nLocale = language === 'fr' ? 'fr-FR' : language === 'en' ? 'en-GB' : language === 'lb' ? 'de-LU' : 'de-DE';
+                    const footerFirst = document.querySelector('.shiftplan-footer p:first-child');
+                    if (footerFirst) {
+                        footerFirst.innerHTML = `${t('footer.updatePrefix')} <span id="updateTime">${t('status.loading')}</span>`;
+                    }
+                }
+            });
+
             // Set default date to today
             const today = new Date();
             document.getElementById('dateInput').value = today.toISOString().split('T')[0];

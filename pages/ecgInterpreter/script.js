@@ -9,6 +9,7 @@ const analyzeBtn = document.getElementById('analyzeBtn');
 const loadingIndicator = document.getElementById('loadingIndicator');
 const resultsSection = document.getElementById('resultsSection');
 const analysisResult = document.getElementById('analysisResult');
+const t = (key) => (window.ecgI18n && typeof window.ecgI18n.t === 'function' ? window.ecgI18n.t(key) : key);
 
 // Load saved API key
 function loadApiKey() {
@@ -58,10 +59,10 @@ saveApiKeyBtn.addEventListener('click', () => {
     const key = apiKeyInput.value.trim();
     if (key && key.startsWith('sk-')) {
         localStorage.setItem('openai_api_key', key);
-        alert('API-Schlüssel gespeichert!');
+        alert(t('alerts.apiSaved'));
         analyzeBtn.disabled = false;
     } else {
-        alert('Bitte geben Sie einen gültigen OpenAI API-Schlüssel ein (beginnt mit "sk-")');
+        alert(t('alerts.apiInvalid'));
     }
 });
 
@@ -70,7 +71,7 @@ clearApiKeyBtn.addEventListener('click', () => {
     localStorage.removeItem('openai_api_key');
     apiKeyInput.value = '';
     analyzeBtn.disabled = true;
-    alert('API-Schlüssel gelöscht.');
+    alert(t('alerts.apiCleared'));
 });
 
 // Handle image upload
@@ -82,7 +83,7 @@ ecgImageInput.addEventListener('change', (e) => {
     if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
         if (!file.type.match('image.*')) {
-            alert('Bitte laden Sie ein Bild hoch (JPEG, PNG, etc.)');
+            alert(t('alerts.imageOnly'));
             return;
         }
 
@@ -124,12 +125,12 @@ uploadArea.addEventListener('drop', (e) => {
 analyzeBtn.addEventListener('click', async () => {
     const apiKey = localStorage.getItem('openai_api_key');
     if (!apiKey) {
-        alert('Bitte zuerst einen API-Schlüssel speichern!');
+        alert(t('alerts.saveKeyFirst'));
         return;
     }
 
     if (!ecgImagePreview.src) {
-        alert('Bitte laden Sie zuerst ein EKG-Bild hoch!');
+        alert(t('alerts.uploadFirst'));
         return;
     }
 
@@ -190,7 +191,7 @@ analyzeBtn.addEventListener('click', async () => {
 
         if (!openaiResponse.ok) {
             const error = await openaiResponse.json();
-            throw new Error(error.error?.message || 'API-Anfrage fehlgeschlagen');
+            throw new Error(error.error?.message || t('errors.apiRequestFailed'));
         }
 
         const data = await openaiResponse.json();
@@ -203,7 +204,7 @@ analyzeBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error('Analysis error:', error);
-        analysisResult.innerHTML = `<strong>Fehler:</strong> ${error.message || 'Unbekannter Fehler'}`;
+        analysisResult.innerHTML = `<strong>${t('errors.label')}:</strong> ${error.message || t('errors.unknown')}`;
         resultsSection.classList.remove('hidden');
     } finally {
         loadingIndicator.style.display = 'none';

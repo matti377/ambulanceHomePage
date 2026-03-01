@@ -144,7 +144,8 @@
         <div class="api-key-section">
             <h3><i class="fas fa-key"></i> OpenAI API-Schlüssel</h3>
             <p>Geben Sie Ihren OpenAI API-Schlüssel ein (wird lokal gespeichert):</p>
-            <p>OpenAI API-Schlüssel erhält man <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">hier</a>.</p>
+            <p>OpenAI API-Schlüssel erhält man <a href="https://platform.openai.com/settings/organization/api-keys"
+                    target="_blank">hier</a>.</p>
             <input type="password" id="apiKeyInput" class="api-key-input" placeholder="sk-...">
             <button id="saveApiKeyBtn" class="btn-shift">Schlüssel speichern</button>
             <button id="clearApiKeyBtn" class="btn-shift"
@@ -190,6 +191,162 @@
         </footer>
     </div>
 
+    <script src="/style/i18n.js"></script>
+    <script>
+        window.ecgI18n = {
+            t: (key) => key
+        };
+
+        ToolkitI18n.applyTranslations({
+            titleKey: 'page.title',
+            text: {
+                '.shiftplan-header h1': 'header.title',
+                '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                '.api-key-section h3': 'api.title',
+                '.api-key-section p:nth-of-type(1)': 'api.desc',
+                '.upload-area h3': 'upload.title',
+                '.upload-area p': 'upload.desc',
+                '#resultsSection h3': 'result.title',
+                '.shiftplan-footer p:first-child': 'footer.note',
+                '.shiftplan-footer p:last-child': 'footer.copy'
+            },
+            attrs: [
+                { selector: '#apiKeyInput', attr: 'placeholder', key: 'api.placeholder' }
+            ],
+            translations: {
+                de: {
+                    'page.title': 'AI ECG Interpreter',
+                    'header.title': 'AI ECG Interpreter',
+                    'header.subtitle': 'Analysieren Sie 12-Kanal-EKGs mit KI',
+                    'api.title': 'OpenAI API-Schlüssel',
+                    'api.desc': 'Geben Sie Ihren OpenAI API-Schlüssel ein (wird lokal gespeichert):',
+                    'api.linkPrefix': 'OpenAI API-Schlüssel erhält man',
+                    'api.linkCta': 'hier',
+                    'api.placeholder': 'sk-...',
+                    'buttons.save': 'Schlüssel speichern',
+                    'buttons.clear': 'Löschen',
+                    'buttons.analyze': 'Mit KI analysieren',
+                    'upload.title': 'EKG hochladen',
+                    'upload.desc': 'Ziehen Sie ein Bild Ihres 12-Kanal-EKGs hierher oder klicken Sie zum Auswählen',
+                    'loading': 'Analyse läuft... (kann 10-30 Sekunden dauern)',
+                    'result.title': 'KI-Analyseergebnis',
+                    'alerts.apiSaved': 'API-Schlüssel gespeichert!',
+                    'alerts.apiInvalid': 'Bitte geben Sie einen gültigen OpenAI API-Schlüssel ein (beginnt mit "sk-").',
+                    'alerts.apiCleared': 'API-Schlüssel gelöscht.',
+                    'alerts.imageOnly': 'Bitte laden Sie ein Bild hoch (JPEG, PNG, etc.).',
+                    'alerts.saveKeyFirst': 'Bitte zuerst einen API-Schlüssel speichern!',
+                    'alerts.uploadFirst': 'Bitte laden Sie zuerst ein EKG-Bild hoch!',
+                    'errors.apiRequestFailed': 'API-Anfrage fehlgeschlagen',
+                    'errors.label': 'Fehler',
+                    'errors.unknown': 'Unbekannter Fehler',
+                    'footer.note': 'Hinweis: Diese KI ist ein unterstützendes Werkzeug. Immer klinisches Urteil einholen!',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Nicht für diagnostische Zwecke zugelassen'
+                },
+                en: {
+                    'page.title': 'AI ECG Interpreter',
+                    'header.title': 'AI ECG Interpreter',
+                    'header.subtitle': 'Analyze 12-lead ECGs with AI',
+                    'api.title': 'OpenAI API key',
+                    'api.desc': 'Enter your OpenAI API key (saved locally):',
+                    'api.linkPrefix': 'You can create an OpenAI API key',
+                    'api.linkCta': 'here',
+                    'api.placeholder': 'sk-...',
+                    'buttons.save': 'Save key',
+                    'buttons.clear': 'Clear',
+                    'buttons.analyze': 'Analyze with AI',
+                    'upload.title': 'Upload ECG',
+                    'upload.desc': 'Drag a 12-lead ECG image here or click to select',
+                    'loading': 'Analysis in progress... (can take 10-30 seconds)',
+                    'result.title': 'AI analysis result',
+                    'alerts.apiSaved': 'API key saved!',
+                    'alerts.apiInvalid': 'Please enter a valid OpenAI API key (starts with "sk-").',
+                    'alerts.apiCleared': 'API key cleared.',
+                    'alerts.imageOnly': 'Please upload an image file (JPEG, PNG, etc.).',
+                    'alerts.saveKeyFirst': 'Please save an API key first!',
+                    'alerts.uploadFirst': 'Please upload an ECG image first!',
+                    'errors.apiRequestFailed': 'API request failed',
+                    'errors.label': 'Error',
+                    'errors.unknown': 'Unknown error',
+                    'footer.note': 'Note: This AI is a supporting tool. Always apply clinical judgment.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Not approved for diagnostic purposes'
+                },
+                fr: {
+                    'page.title': 'Interpreteur ECG IA',
+                    'header.title': 'Interpreteur ECG IA',
+                    'header.subtitle': 'Analysez des ECG 12 dérivés avec l\'IA',
+                    'api.title': 'Clé API OpenAI',
+                    'api.desc': 'Entrez votre clé API OpenAI (stockée localement):',
+                    'api.linkPrefix': 'Vous pouvez obtenir une clé API OpenAI',
+                    'api.linkCta': 'ici',
+                    'api.placeholder': 'sk-...',
+                    'buttons.save': 'Enrégistrer la clé',
+                    'buttons.clear': 'Supprimer',
+                    'buttons.analyze': 'Analyser avec l\'IA',
+                    'upload.title': 'Téléverser un ECG',
+                    'upload.desc': 'Glissez une image ECG 12 dérivés ici ou cliquez pour sélectionner',
+                    'loading': 'Analyse en cours... (peut durer 10-30 secondes)',
+                    'result.title': 'Resultat de l\'analyse IA',
+                    'alerts.apiSaved': 'Clé API enregistrée!',
+                    'alerts.apiInvalid': 'Veuillez entrer une clé API OpenAI valide (commence par "sk-").',
+                    'alerts.apiCleared': 'Clé API supprimée.',
+                    'alerts.imageOnly': 'Veuillez téléverser une image (JPEG, PNG, etc.).',
+                    'alerts.saveKeyFirst': 'Veuillez d\'abord enrégistrer une clé API.',
+                    'alerts.uploadFirst': 'Veuillez d\'abord téléverser une image ECG.',
+                    'errors.apiRequestFailed': 'Echec de la requète API',
+                    'errors.label': 'Erreur',
+                    'errors.unknown': 'Erreur inconnue',
+                    'footer.note': 'Remarque: Cette IA est un outil d\'aide. Utilisez toujours votre jugement clinique.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Non autorise a des fins diagnostiques'
+                },
+                lb: {
+                    'page.title': 'AI ECG Interpret',
+                    'header.title': 'AI ECG Interpret',
+                    'header.subtitle': 'Analyséier 12-Kanal-EKGen mat KI',
+                    'api.title': 'OpenAI API-Schlëssel',
+                    'api.desc': 'Gitt Ären OpenAI API-Schlëssel an (lokal gespäichert):',
+                    'api.linkPrefix': 'OpenAI API-Schlëssele kritt een',
+                    'api.linkCta': 'hei',
+                    'api.placeholder': 'sk-...',
+                    'buttons.save': 'Schlëssel späicheren',
+                    'buttons.clear': 'Läschen',
+                    'buttons.analyze': 'Mat KI analyséieren',
+                    'upload.title': 'EKG eroplueden',
+                    'upload.desc': 'Zitt en 12-Kanal-EKG-Bild heihinner oder klickt fir auszewielen',
+                    'loading': 'Analyse leeft... (kann 10-30 Sekonnen daueren)',
+                    'result.title': 'KI-Resultat',
+                    'alerts.apiSaved': 'API-Schlëssel gespäichert!',
+                    'alerts.apiInvalid': 'Gitt w.e.g. e valabelen OpenAI API-Schlëssel an (fänkt mat "sk-" un).',
+                    'alerts.apiCleared': 'API-Schlëssel geläscht.',
+                    'alerts.imageOnly': 'Lued w.e.g. e Bild erop (JPEG, PNG, asw.).',
+                    'alerts.saveKeyFirst': 'Späicher w.e.g. als éischt en API-Schlëssel!',
+                    'alerts.uploadFirst': 'Lued w.e.g. als éischt en EKG-Bild erop!',
+                    'errors.apiRequestFailed': 'API-Ufro feelgeschloen',
+                    'errors.label': 'Feeler',
+                    'errors.unknown': 'Onbekannte Feeler',
+                    'footer.note': 'Hiweis: Dës KI ass en Hëllefsinstrument. Klinesch Erfarung ëmmer benotzen.',
+                    'footer.copy': '© 2026 Ambulance Toolkit Luxembourg | Net fir diagnostesch Zwecker zougelooss'
+
+
+                }
+            },
+            onApplied: ({ t }) => {
+                window.ecgI18n.t = t;
+                const saveBtn = document.getElementById('saveApiKeyBtn');
+                const clearBtn = document.getElementById('clearApiKeyBtn');
+                const analyzeBtn = document.getElementById('analyzeBtn');
+                const loadingText = document.querySelector('#loadingIndicator p');
+                const keyLinkText = document.querySelector('.api-key-section p:nth-of-type(2)');
+
+                if (saveBtn) saveBtn.textContent = t('buttons.save');
+                if (clearBtn) clearBtn.textContent = t('buttons.clear');
+                if (analyzeBtn) analyzeBtn.innerHTML = `<i class="fas fa-brain"></i> ${t('buttons.analyze')}`;
+                if (loadingText) loadingText.textContent = t('loading');
+                if (keyLinkText) {
+                    keyLinkText.innerHTML = `${t('api.linkPrefix')} <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank">${t('api.linkCta')}</a>.`;
+                }
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 
