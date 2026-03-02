@@ -2,6 +2,16 @@
 <html lang="de">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0057B8">
@@ -178,8 +188,8 @@
                     </div>
                     <div class="card-body">
                         <p data-i18n="cards.samuMeds.desc">Namen und Wirkung der SAMU-Medikamente lernen</p>
-                        <a href="pages/samuQuiz/samuMedsQuizlet.html" class="btn"
-                            data-i18n="cards.samuMeds.action">Quiz starten</a>
+                        <a href="pages/samuQuiz/samuMedsQuizlet.html" class="btn" data-i18n="cards.samuMeds.action">Quiz
+                            starten</a>
                     </div>
                 </div>
 
@@ -295,17 +305,20 @@
         </section>
     </div>
 
-    <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true"
+        aria-labelledby="settingsTitle">
         <div id="settingsBackdrop" class="settings-modal__backdrop"></div>
         <div class="settings-modal__panel">
             <div class="settings-modal__header">
                 <h2 id="settingsTitle" class="settings-modal__title" data-i18n="settings.title">Einstellungen</h2>
-                <button id="settingsClose" class="settings-modal__close" type="button" aria-label="Einstellungen schließen"
-                    data-i18n-attr="aria-label" data-i18n-attr-key="settings.closeAria">&times;</button>
+                <button id="settingsClose" class="settings-modal__close" type="button"
+                    aria-label="Einstellungen schließen" data-i18n-attr="aria-label"
+                    data-i18n-attr-key="settings.closeAria">&times;</button>
             </div>
             <div class="settings-list">
                 <div class="settings-item">
-                    <label class="settings-item__label" for="languageSelect" data-i18n="settings.language">Sprache</label>
+                    <label class="settings-item__label" for="languageSelect"
+                        data-i18n="settings.language">Sprache</label>
                     <select id="languageSelect">
                         <option value="de">Deutsch</option>
                         <option value="en">English</option>
@@ -314,11 +327,13 @@
                     </select>
                 </div>
                 <div class="settings-item">
-                    <label class="settings-item__label" for="darkModeInput" data-i18n="settings.darkMode">Dunkelmodus</label>
+                    <label class="settings-item__label" for="darkModeInput"
+                        data-i18n="settings.darkMode">Dunkelmodus</label>
                     <input id="darkModeInput" class="settings-switch" type="checkbox">
                 </div>
                 <div class="settings-item">
-                    <label class="settings-item__label" for="betaFeaturesInput" data-i18n="settings.betaFeatures">Beta-Funktionen</label>
+                    <label class="settings-item__label" for="betaFeaturesInput"
+                        data-i18n="settings.betaFeatures">Beta-Funktionen</label>
                     <input id="betaFeaturesInput" class="settings-switch" type="checkbox">
                 </div>
             </div>
@@ -334,7 +349,8 @@
                     </select>
                 </div>
                 <div class="settings-item settings-item--stack">
-                    <label class="settings-item__label" for="feedbackMessage" data-i18n="feedback.messageLabel">Nachricht</label>
+                    <label class="settings-item__label" for="feedbackMessage"
+                        data-i18n="feedback.messageLabel">Nachricht</label>
                     <textarea id="feedbackMessage" class="feedback-textarea" rows="4" maxlength="800"
                         placeholder="Kurzes Feedback..." data-i18n-attr="placeholder"
                         data-i18n-attr-key="feedback.messagePlaceholder"></textarea>
@@ -343,7 +359,8 @@
                     data-i18n="feedback.send">Per E-Mail senden</button>
             </div>
             <div class="settings-modal__actions">
-                <button id="settingsDone" type="button" class="btn btn-compact" data-i18n="settings.close">Schließen</button>
+                <button id="settingsDone" type="button" class="btn btn-compact"
+                    data-i18n="settings.close">Schließen</button>
             </div>
         </div>
     </div>
