@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Klinische Rechner fuer Rettungsdienst: O2-Laufzeit, GCS, NEXUS-Checkliste, qSOFA-Score und NEWS2.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="/pages/calculators/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_LU">
+    <meta property="og:title" content="Klinische Rechner | Ambulance Toolkit Luxembourg">
+    <meta property="og:description" content="O2-Laufzeit, GCS, NEXUS, qSOFA und NEWS2 schnell berechnen.">
+    <title>Klinische Rechner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .seo-breadcrumb {
+            margin: 0 0 20px;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .seo-breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .shiftplan-header h1 {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+                .breadcrumb-current {
+            color: #fff;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .calc-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: var(--text-dark);
+        }
+
+        .calc-card h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .calc-card p {
+            margin-bottom: 14px;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .field {
+            margin-bottom: 12px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background: #fff;
+        }
+
+        .inline-check {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .inline-check input {
+            margin-top: 3px;
+            transform: scale(1.1);
+        }
+
+        .result-box {
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .result-main {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .result-sub {
+            margin-top: 4px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .status-good {
+            color: #1b873f;
+            font-weight: 700;
+        }
+
+        .status-alert {
+            color: #b53a2d;
+            font-weight: 700;
+        }
+
+        .muted {
+            color: var(--text-dark);
+            font-size: 0.92rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Ambulance Toolkit</a> / <span class="breadcrumb-current">Klinische Rechner</span>
+        </nav>
+
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-calculator"></i> Klinische Rechner</h1>
+            <p class="shiftplan-subtitle">O2-Laufzeit, GCS, NEXUS-Checkliste, qSOFA und NEWS2 in einem Tool</p>
+        </header>
+
+        <div class="calc-grid">
+            <section class="calc-card" aria-labelledby="o2Title">
+                <h2 id="o2Title"><i class="fas fa-wind"></i> O2-Laufzeit</h2>
+                <p id="o2Desc">Berechne, wie lange eine Sauerstoffquelle bei einem bestimmten Flow ausreicht.</p>
+
+                <div class="field">
+                    <label for="o2Mode">Berechnungsmodus</label>
+                    <select id="o2Mode">
+                        <option value="cylinder">Flasche (Druck x Flaschengroesse)</option>
+                        <option value="liters">Direkt verfuegbare O2-Liter</option>
+                    </select>
+                </div>
+
+                <div id="o2CylinderFields">
+                    <div class="field">
+                        <label for="o2Pressure">Druck (bar)</label>
+                        <input id="o2Pressure" type="number" min="0" step="1" placeholder="z.B. 200">
+                    </div>
+                    <div class="field">
+                        <label for="o2Bottle">Flaschengroesse (L)</label>
+                        <input id="o2Bottle" type="number" min="0" step="0.1" placeholder="z.B. 2 oder 5">
+                    </div>
+                </div>
+
+                <div id="o2LitersField" class="field hidden">
+                    <label for="o2Liters">Verfuegbare O2-Liter (L)</label>
+                    <input id="o2Liters" type="number" min="0" step="1" placeholder="z.B. 1000">
+                </div>
+
+                <div class="field">
+                    <label for="o2Flow">Flow (L/min)</label>
+                    <input id="o2Flow" type="number" min="0" step="0.1" placeholder="z.B. 10">
+                </div>
+
+                <div class="result-box">
+                    <div id="o2ResultMain" class="result-main">-</div>
+                    <div id="o2ResultSub" class="result-sub">Bitte Werte eingeben.</div>
+                </div>
+            </section>
+
+            <section class="calc-card" aria-labelledby="gcsTitle">
+                <h2 id="gcsTitle"><i class="fas fa-brain"></i> GCS</h2>
+                <p id="gcsDesc">Glasgow Coma Scale mit Augenoeffnung, verbaler und motorischer Antwort berechnen.</p>
+
+                <div class="field">
+                    <label for="gcsEye" id="gcsEyeLabel">Augenoeffnung (E)</label>
+                    <select id="gcsEye">
+                        <option value="">Bitte auswaehlen</option>
+                        <option value="4">4 - spontan</option>
+                        <option value="3">3 - auf Ansprache</option>
+                        <option value="2">2 - auf Schmerzreiz</option>
+                        <option value="1">1 - keine</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="gcsVerbal" id="gcsVerbalLabel">Verbale Antwort (V)</label>
+                    <select id="gcsVerbal">
+                        <option value="">Bitte auswaehlen</option>
+                        <option value="5">5 - orientiert</option>
+                        <option value="4">4 - verwirrt</option>
+                        <option value="3">3 - inadäquate Worte</option>
+                        <option value="2">2 - unverständliche Laute</option>
+                        <option value="1">1 - keine</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="gcsMotor" id="gcsMotorLabel">Motorische Antwort (M)</label>
+                    <select id="gcsMotor">
+                        <option value="">Bitte auswaehlen</option>
+                        <option value="6">6 - befolgt Aufforderungen</option>
+                        <option value="5">5 - gezielte Schmerzabwehr</option>
+                        <option value="4">4 - ungezielte Schmerzabwehr</option>
+                        <option value="3">3 - Beugesynergismen</option>
+                        <option value="2">2 - Strecksynergismen</option>
+                        <option value="1">1 - keine</option>
+                    </select>
+                </div>
+
+                <div class="result-box">
+                    <div id="gcsScore" class="result-main">GCS: -</div>
+                    <div id="gcsInterpretation" class="result-sub">Bitte alle drei Komponenten auswaehlen.</div>
+                    <div id="gcsBreakdown" class="muted">E - / V - / M -</div>
+                </div>
+            </section>
+
+            <section class="calc-card" aria-labelledby="nexusTitle">
+                <h2 id="nexusTitle"><i class="fas fa-user-shield"></i> NEXUS HWS</h2>
+                <p id="nexusDesc">Wenn mindestens ein Kriterium mit "Ja" vorliegt, ist Immobilisierung/Bildgebung indiziert.</p>
+
+                <label class="inline-check"><input id="nexus1" type="checkbox"> <span id="nexusLabel1">Druckschmerz ueber der Mittellinie der HWS</span></label>
+                <label class="inline-check"><input id="nexus2" type="checkbox"> <span id="nexusLabel2">Fokales neurologisches Defizit</span></label>
+                <label class="inline-check"><input id="nexus3" type="checkbox"> <span id="nexusLabel3">Verminderte Vigilanz (GCS &lt; 15)</span></label>
+                <label class="inline-check"><input id="nexus4" type="checkbox"> <span id="nexusLabel4">Hinweis auf Intoxikation</span></label>
+                <label class="inline-check"><input id="nexus5" type="checkbox"> <span id="nexusLabel5">Ablenkende, schwere Verletzung</span></label>
+
+                <div class="result-box">
+                    <div id="nexusResult" class="result-main">-</div>
+                    <div id="nexusSub" class="result-sub">-</div>
+                </div>
+            </section>
+
+            <section class="calc-card" aria-labelledby="qsofaTitle">
+                <h2 id="qsofaTitle"><i class="fas fa-notes-medical"></i> qSOFA</h2>
+                <p id="qsofaDesc">Screening bei vermuteter Infektion (Erwachsene). Ein Score von 2 oder mehr bedeutet hohes Risiko.</p>
+
+                <div class="field">
+                    <label for="qsofaRr">Atemfrequenz (Atemzuege/min)</label>
+                    <input id="qsofaRr" type="number" min="0" step="1" placeholder="z.B. 24">
+                </div>
+                <div class="field">
+                    <label for="qsofaGcs">GCS</label>
+                    <input id="qsofaGcs" type="number" min="3" max="15" step="1" placeholder="z.B. 14">
+                </div>
+                <div class="field">
+                    <label for="qsofaSbp">Systolischer Blutdruck (mmHg)</label>
+                    <input id="qsofaSbp" type="number" min="0" step="1" placeholder="z.B. 95">
+                </div>
+
+                <div class="result-box">
+                    <div id="qsofaScore" class="result-main">qSOFA: 0 / 3</div>
+                    <div id="qsofaRisk" class="result-sub">-</div>
+                    <div id="qsofaNote" class="muted">qSOFA ist kein Sepsis-Nachweis, sondern ein Risikomarker.</div>
+                </div>
+            </section>
+
+            <section class="calc-card" aria-labelledby="news2Title">
+                <h2 id="news2Title"><i class="fas fa-stethoscope"></i> NEWS2</h2>
+                <p id="news2Desc">NEWS2 aus Atemfrequenz, SpO2, Blutdruck, Puls, Bewusstsein, Temperatur und Zusatzsauerstoff berechnen.</p>
+
+                <div class="field">
+                    <label for="news2RespRate">Atemfrequenz (Atemzuege/min)</label>
+                    <input id="news2RespRate" type="number" min="0" step="1" placeholder="z.B. 22">
+                </div>
+
+                <div class="field">
+                    <label for="news2Spo2Scale">SpO2-Skala</label>
+                    <select id="news2Spo2Scale">
+                        <option value="1">Skala 1</option>
+                        <option value="2">Skala 2 (Hyperkapnie/COPD)</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="news2Spo2">SpO2 (%)</label>
+                    <input id="news2Spo2" type="number" min="0" max="100" step="1" placeholder="z.B. 94">
+                </div>
+
+                <label class="inline-check"><input id="news2Oxygen" type="checkbox"> <span id="news2OxygenLabel">Zusätzlicher Sauerstoff</span></label>
+
+                <div class="field">
+                    <label for="news2Sbp">Systolischer Blutdruck (mmHg)</label>
+                    <input id="news2Sbp" type="number" min="0" step="1" placeholder="z.B. 105">
+                </div>
+
+                <div class="field">
+                    <label for="news2Pulse">Pulsrate (/min)</label>
+                    <input id="news2Pulse" type="number" min="0" step="1" placeholder="z.B. 95">
+                </div>
+
+                <div class="field">
+                    <label for="news2Consciousness">Bewusstsein (ACVPU)</label>
+                    <select id="news2Consciousness">
+                        <option value="alert">Alert</option>
+                        <option value="confusion">Confusion</option>
+                        <option value="voice">Voice</option>
+                        <option value="pain">Pain</option>
+                        <option value="unresponsive">Unresponsive</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="news2Temp">Temperatur (°C)</label>
+                    <input id="news2Temp" type="number" min="25" step="0.1" placeholder="z.B. 38.5">
+                </div>
+
+                <div class="result-box">
+                    <div id="news2Score" class="result-main">NEWS2: -</div>
+                    <div id="news2Risk" class="result-sub">Bitte alle Werte eingeben.</div>
+                    <div id="news2Breakdown" class="muted">RR - | SpO2 - | O2 - | SBP - | Puls - | ACVPU - | Temp -</div>
+                    <div id="news2ScaleNote" class="muted">Skala 2 ist nur fuer Patienten mit Ziel-SpO2 88-92 % gedacht.</div>
+                </div>
+            </section>
+        </div>
+
+        <footer data-footer-profile="default" data-footer-first="footer p:first-child" data-footer-last="footer p:last-child">
+            <p></p>
+            <p></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        let i18nT = (key) => key;
+
+        function parseNumber(id) {
+            const value = parseFloat(document.getElementById(id).value);
+            return Number.isFinite(value) ? value : null;
+        }
+
+        function formatDuration(minutes) {
+            const mins = Math.max(0, Math.floor(minutes));
+            const hours = Math.floor(mins / 60);
+            const rest = mins % 60;
+            if (hours > 0) {
+                return `${hours}h ${rest}min`;
+            }
+            return `${rest} min`;
+        }
+
+        function setO2ModeVisibility() {
+            const mode = document.getElementById('o2Mode').value;
+            document.getElementById('o2CylinderFields').classList.toggle('hidden', mode !== 'cylinder');
+            document.getElementById('o2LitersField').classList.toggle('hidden', mode !== 'liters');
+        }
+
+        function calculateO2() {
+            const mode = document.getElementById('o2Mode').value;
+            const flow = parseNumber('o2Flow');
+
+            const resultMain = document.getElementById('o2ResultMain');
+            const resultSub = document.getElementById('o2ResultSub');
+
+            if (!flow || flow <= 0) {
+                resultMain.textContent = '-';
+                resultSub.textContent = i18nT('o2.validation.flow');
+                return;
+            }
+
+            let availableLiters = null;
+
+            if (mode === 'cylinder') {
+                const pressure = parseNumber('o2Pressure');
+                const bottle = parseNumber('o2Bottle');
+                if (!pressure || pressure <= 0 || !bottle || bottle <= 0) {
+                    resultMain.textContent = '-';
+                    resultSub.textContent = i18nT('o2.validation.cylinder');
+                    return;
+                }
+                availableLiters = pressure * bottle;
+            } else {
+                const liters = parseNumber('o2Liters');
+                if (!liters || liters <= 0) {
+                    resultMain.textContent = '-';
+                    resultSub.textContent = i18nT('o2.validation.liters');
+                    return;
+                }
+                availableLiters = liters;
+            }
+
+            const minutes = availableLiters / flow;
+            resultMain.textContent = formatDuration(minutes);
+            resultSub.textContent = `${i18nT('o2.result.available')}: ${Math.round(availableLiters)} L | ${i18nT('o2.result.flow')}: ${flow} L/min`;
+        }
+
+        function evaluateNexus() {
+            const checks = ['nexus1', 'nexus2', 'nexus3', 'nexus4', 'nexus5'];
+            const anyYes = checks.some((id) => document.getElementById(id).checked);
+            const result = document.getElementById('nexusResult');
+            const sub = document.getElementById('nexusSub');
+
+            if (anyYes) {
+                result.textContent = i18nT('nexus.result.indicated');
+                result.className = 'result-main status-alert';
+                sub.textContent = i18nT('nexus.result.stifneckYes');
+            } else {
+                result.textContent = i18nT('nexus.result.notIndicated');
+                result.className = 'result-main status-good';
+                sub.textContent = i18nT('nexus.result.stifneckNo');
+            }
+        }
+
+        function calculateQsofa() {
+            const rr = parseNumber('qsofaRr');
+            const gcs = parseNumber('qsofaGcs');
+            const sbp = parseNumber('qsofaSbp');
+
+            let score = 0;
+            if (rr !== null && rr >= 22) {
+                score += 1;
+            }
+            if (gcs !== null && gcs < 15) {
+                score += 1;
+            }
+            if (sbp !== null && sbp <= 100) {
+                score += 1;
+            }
+
+            const scoreEl = document.getElementById('qsofaScore');
+            const riskEl = document.getElementById('qsofaRisk');
+
+            scoreEl.textContent = `${i18nT('qsofa.result.score')}: ${score} / 3`;
+            if (score >= 2) {
+                riskEl.textContent = i18nT('qsofa.result.highRisk');
+                riskEl.className = 'result-sub status-alert';
+            } else {
+                riskEl.textContent = i18nT('qsofa.result.lowerRisk');
+                riskEl.className = 'result-sub status-good';
+            }
+        }
+
+        function calculateGcs() {
+            const eye = parseNumber('gcsEye');
+            const verbal = parseNumber('gcsVerbal');
+            const motor = parseNumber('gcsMotor');
+
+            const scoreEl = document.getElementById('gcsScore');
+            const interpretationEl = document.getElementById('gcsInterpretation');
+            const breakdownEl = document.getElementById('gcsBreakdown');
+
+            breakdownEl.textContent = `E ${eye ?? '-'} / V ${verbal ?? '-'} / M ${motor ?? '-'}`;
+
+            if (eye === null || verbal === null || motor === null) {
+                scoreEl.textContent = 'GCS: -';
+                interpretationEl.textContent = i18nT('gcs.validation.complete');
+                interpretationEl.className = 'result-sub';
+                return;
+            }
+
+            const total = eye + verbal + motor;
+            scoreEl.textContent = `GCS: ${total} / 15`;
+
+            let interpretationKey = 'gcs.result.mild';
+            let interpretationClass = 'result-sub status-good';
+
+            if (total <= 8) {
+                interpretationKey = 'gcs.result.severe';
+                interpretationClass = 'result-sub status-alert';
+            } else if (total <= 12) {
+                interpretationKey = 'gcs.result.moderate';
+                interpretationClass = 'result-sub status-alert';
+            }
+
+            interpretationEl.textContent = i18nT(interpretationKey);
+            interpretationEl.className = interpretationClass;
+        }
+
+        function scoreNews2RespRate(value) {
+            if (value <= 8) {
+                return 3;
+            }
+            if (value <= 11) {
+                return 1;
+            }
+            if (value <= 20) {
+                return 0;
+            }
+            if (value <= 24) {
+                return 2;
+            }
+            return 3;
+        }
+
+        function scoreNews2Spo2(scale, spo2, supplementalOxygen) {
+            if (scale === '2') {
+                if (spo2 <= 83) {
+                    return 3;
+                }
+                if (spo2 <= 85) {
+                    return 2;
+                }
+                if (spo2 <= 87) {
+                    return 1;
+                }
+                if (spo2 <= 92) {
+                    return 0;
+                }
+                if (spo2 <= 94) {
+                    return supplementalOxygen ? 1 : 0;
+                }
+                if (spo2 <= 96) {
+                    return supplementalOxygen ? 2 : 0;
+                }
+                return supplementalOxygen ? 3 : 0;
+            }
+
+            if (spo2 <= 91) {
+                return 3;
+            }
+            if (spo2 <= 93) {
+                return 2;
+            }
+            if (spo2 <= 95) {
+                return 1;
+            }
+            return 0;
+        }
+
+        function scoreNews2Sbp(value) {
+            if (value <= 90) {
+                return 3;
+            }
+            if (value <= 100) {
+                return 2;
+            }
+            if (value <= 110) {
+                return 1;
+            }
+            if (value <= 219) {
+                return 0;
+            }
+            return 3;
+        }
+
+        function scoreNews2Pulse(value) {
+            if (value <= 40) {
+                return 3;
+            }
+            if (value <= 50) {
+                return 1;
+            }
+            if (value <= 90) {
+                return 0;
+            }
+            if (value <= 110) {
+                return 1;
+            }
+            if (value <= 130) {
+                return 2;
+            }
+            return 3;
+        }
+
+        function scoreNews2Consciousness(value) {
+            return value === 'alert' ? 0 : 3;
+        }
+
+        function scoreNews2Temperature(value) {
+            if (value <= 35.0) {
+                return 3;
+            }
+            if (value <= 36.0) {
+                return 1;
+            }
+            if (value <= 38.0) {
+                return 0;
+            }
+            if (value <= 39.0) {
+                return 1;
+            }
+            return 2;
+        }
+
+        function calculateNews2() {
+            const rr = parseNumber('news2RespRate');
+            const scale = document.getElementById('news2Spo2Scale').value;
+            const spo2 = parseNumber('news2Spo2');
+            const supplementalOxygen = document.getElementById('news2Oxygen').checked;
+            const sbp = parseNumber('news2Sbp');
+            const pulse = parseNumber('news2Pulse');
+            const consciousness = document.getElementById('news2Consciousness').value;
+            const temp = parseNumber('news2Temp');
+
+            const scoreEl = document.getElementById('news2Score');
+            const riskEl = document.getElementById('news2Risk');
+            const breakdownEl = document.getElementById('news2Breakdown');
+
+            const rrText = rr === null ? '-' : scoreNews2RespRate(rr);
+            const spo2Text = spo2 === null ? '-' : scoreNews2Spo2(scale, spo2, supplementalOxygen);
+            const oxygenText = supplementalOxygen ? 2 : 0;
+            const sbpText = sbp === null ? '-' : scoreNews2Sbp(sbp);
+            const pulseText = pulse === null ? '-' : scoreNews2Pulse(pulse);
+            const consciousnessText = consciousness ? scoreNews2Consciousness(consciousness) : '-';
+            const tempText = temp === null ? '-' : scoreNews2Temperature(temp);
+
+            breakdownEl.textContent = `RR ${rrText} | SpO2 ${spo2Text} | O2 ${oxygenText} | SBP ${sbpText} | Puls ${pulseText} | ACVPU ${consciousnessText} | Temp ${tempText}`;
+
+            if (rr === null || spo2 === null || sbp === null || pulse === null || temp === null) {
+                scoreEl.textContent = 'NEWS2: -';
+                riskEl.textContent = i18nT('news2.validation.complete');
+                riskEl.className = 'result-sub';
+                return;
+            }
+
+            const total = rrText + spo2Text + oxygenText + sbpText + pulseText + consciousnessText + tempText;
+            scoreEl.textContent = `NEWS2: ${total} / 20`;
+            riskEl.textContent = `${i18nT('news2.result.total')}: ${total}`;
+            riskEl.className = 'result-sub';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    '.breadcrumb-current': 'breadcrumb.current',
+                    '.shiftplan-header h1': 'header.title',
+                    '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                    '#o2Title': 'o2.title',
+                    '#o2Desc': 'o2.desc',
+                    'label[for="o2Mode"]': 'o2.mode',
+                    '#o2Mode option[value="cylinder"]': 'o2.mode.cylinder',
+                    '#o2Mode option[value="liters"]': 'o2.mode.liters',
+                    'label[for="o2Pressure"]': 'o2.pressure',
+                    'label[for="o2Bottle"]': 'o2.bottle',
+                    'label[for="o2Liters"]': 'o2.liters',
+                    'label[for="o2Flow"]': 'o2.flow',
+                    '#gcsTitle': 'gcs.title',
+                    '#gcsDesc': 'gcs.desc',
+                    '#gcsEyeLabel': 'gcs.eye',
+                    '#gcsVerbalLabel': 'gcs.verbal',
+                    '#gcsMotorLabel': 'gcs.motor',
+                    '#gcsEye option[value=""]': 'gcs.select',
+                    '#gcsEye option[value="4"]': 'gcs.eye.4',
+                    '#gcsEye option[value="3"]': 'gcs.eye.3',
+                    '#gcsEye option[value="2"]': 'gcs.eye.2',
+                    '#gcsEye option[value="1"]': 'gcs.eye.1',
+                    '#gcsVerbal option[value=""]': 'gcs.select',
+                    '#gcsVerbal option[value="5"]': 'gcs.verbal.5',
+                    '#gcsVerbal option[value="4"]': 'gcs.verbal.4',
+                    '#gcsVerbal option[value="3"]': 'gcs.verbal.3',
+                    '#gcsVerbal option[value="2"]': 'gcs.verbal.2',
+                    '#gcsVerbal option[value="1"]': 'gcs.verbal.1',
+                    '#gcsMotor option[value=""]': 'gcs.select',
+                    '#gcsMotor option[value="6"]': 'gcs.motor.6',
+                    '#gcsMotor option[value="5"]': 'gcs.motor.5',
+                    '#gcsMotor option[value="4"]': 'gcs.motor.4',
+                    '#gcsMotor option[value="3"]': 'gcs.motor.3',
+                    '#gcsMotor option[value="2"]': 'gcs.motor.2',
+                    '#gcsMotor option[value="1"]': 'gcs.motor.1',
+                    '#nexusTitle': 'nexus.title',
+                    '#nexusDesc': 'nexus.desc',
+                    '#nexusLabel1': 'nexus.c1',
+                    '#nexusLabel2': 'nexus.c2',
+                    '#nexusLabel3': 'nexus.c3',
+                    '#nexusLabel4': 'nexus.c4',
+                    '#nexusLabel5': 'nexus.c5',
+                    '#qsofaTitle': 'qsofa.title',
+                    '#qsofaDesc': 'qsofa.desc',
+                    'label[for="qsofaRr"]': 'qsofa.rr',
+                    'label[for="qsofaGcs"]': 'qsofa.gcs',
+                    'label[for="qsofaSbp"]': 'qsofa.sbp',
+                    '#qsofaNote': 'qsofa.note',
+                    '#news2Title': 'news2.title',
+                    '#news2Desc': 'news2.desc',
+                    'label[for="news2RespRate"]': 'news2.rr',
+                    'label[for="news2Spo2Scale"]': 'news2.spo2Scale',
+                    '#news2Spo2Scale option[value="1"]': 'news2.spo2Scale.1',
+                    '#news2Spo2Scale option[value="2"]': 'news2.spo2Scale.2',
+                    'label[for="news2Spo2"]': 'news2.spo2',
+                    '#news2OxygenLabel': 'news2.oxygen',
+                    'label[for="news2Sbp"]': 'news2.sbp',
+                    'label[for="news2Pulse"]': 'news2.pulse',
+                    'label[for="news2Consciousness"]': 'news2.consciousness',
+                    '#news2Consciousness option[value="alert"]': 'news2.acvpu.alert',
+                    '#news2Consciousness option[value="confusion"]': 'news2.acvpu.confusion',
+                    '#news2Consciousness option[value="voice"]': 'news2.acvpu.voice',
+                    '#news2Consciousness option[value="pain"]': 'news2.acvpu.pain',
+                    '#news2Consciousness option[value="unresponsive"]': 'news2.acvpu.unresponsive',
+                    'label[for="news2Temp"]': 'news2.temp',
+                    '#news2ScaleNote': 'news2.scaleNote',
+                },
+                translations: {
+                    de: {
+                        'page.title': 'Klinische Rechner',
+                        'breadcrumb.current': 'Klinische Rechner',
+                        'header.title': 'Klinische Rechner',
+                        'header.subtitle': 'O2-Laufzeit, GCS, NEXUS-Checkliste, qSOFA und NEWS2',
+                        'o2.title': 'O2-Laufzeit',
+                        'o2.desc': 'Berechne, wie lange eine Sauerstoffquelle bei einem bestimmten Flow ausreicht.',
+                        'o2.mode': 'Berechnungsmodus',
+                        'o2.mode.cylinder': 'Flasche (Druck x Flaschengroesse)',
+                        'o2.mode.liters': 'Direkt verfügbare O2-Liter',
+                        'o2.pressure': 'Druck (bar)',
+                        'o2.bottle': 'Flaschengröße (L)',
+                        'o2.liters': 'Verfügbare O2-Liter (L)',
+                        'o2.flow': 'Flow (L/min)',
+                        'o2.validation.flow': 'Bitte gültigen Flow eingeben.',
+                        'o2.validation.cylinder': 'Bitte Druck und Flaschengröße eingeben.',
+                        'o2.validation.liters': 'Bitte verfügbare O2-Liter eingeben.',
+                        'o2.result.available': 'Verfügbar',
+                        'o2.result.flow': 'Flow',
+                        'gcs.title': 'GCS',
+                        'gcs.desc': 'Glasgow Coma Scale mit Augenöffnung, verbaler und motorischer Antwort berechnen.',
+                        'gcs.eye': 'Augenöffnung (E)',
+                        'gcs.verbal': 'Verbale Antwort (V)',
+                        'gcs.motor': 'Motorische Antwort (M)',
+                        'gcs.select': 'Bitte auswählen',
+                        'gcs.eye.4': '4 - spontan',
+                        'gcs.eye.3': '3 - auf Ansprache',
+                        'gcs.eye.2': '2 - auf Schmerzreiz',
+                        'gcs.eye.1': '1 - keine',
+                        'gcs.verbal.5': '5 - orientiert',
+                        'gcs.verbal.4': '4 - verwirrt',
+                        'gcs.verbal.3': '3 - inadäquate Worte',
+                        'gcs.verbal.2': '2 - unverständliche Laute',
+                        'gcs.verbal.1': '1 - keine',
+                        'gcs.motor.6': '6 - befolgt Aufforderungen',
+                        'gcs.motor.5': '5 - gezielte Schmerzabwehr',
+                        'gcs.motor.4': '4 - ungezielte Schmerzabwehr',
+                        'gcs.motor.3': '3 - Beugesynergismen',
+                        'gcs.motor.2': '2 - Strecksynergismen',
+                        'gcs.motor.1': '1 - keine',
+                        'gcs.validation.complete': 'Bitte alle drei Komponenten auswählen.',
+                        'gcs.result.mild': 'Leichte oder keine Bewusstseinsstörung (13-15)',
+                        'gcs.result.moderate': 'Mäßige Bewusstseinsstörung (9-12)',
+                        'gcs.result.severe': 'Schwere Bewusstseinsstörung / Koma (<= 8)',
+                        'nexus.title': 'NEXUS Kriterien',
+                        'nexus.desc': 'Wenn mindestens ein Kriterium mit "Ja" vorliegt, ist Immobilisierung/Bildgebung indiziert.',
+                        'nexus.c1': 'Druckschmerz ueber der Mittellinie der HWS',
+                        'nexus.c2': 'Fokales neurologisches Defizit',
+                        'nexus.c3': 'Verminderte Vigilanz (GCS < 15)',
+                        'nexus.c4': 'Hinweis auf Intoxikation',
+                        'nexus.c5': 'Ablenkende, schwere Verletzung',
+                        'nexus.result.indicated': 'NEXUS positiv: Indikation gegeben',
+                        'nexus.result.notIndicated': 'NEXUS negativ: Keine Indikation nach NEXUS',
+                        'nexus.result.stifneckYes': 'Stifneck/Immobilisierung erwägen.',
+                        'nexus.result.stifneckNo': 'Stifneck nach NEXUS nicht erforderlich.',
+                        'qsofa.title': 'qSOFA',
+                        'qsofa.desc': 'Screening bei vermuteter Infektion (Erwachsene). Ein Score von 2 oder mehr bedeutet hohes Risiko.',
+                        'qsofa.rr': 'Atemfrequenz (Atemzuege/min)',
+                        'qsofa.gcs': 'GCS',
+                        'qsofa.sbp': 'Systolischer Blutdruck (mmHg)',
+                        'qsofa.note': 'qSOFA ist kein Sepsis-Nachweis, sondern ein Risikomarker.',
+                        'qsofa.result.score': 'qSOFA',
+                        'qsofa.result.highRisk': 'Hohes Risiko (>= 2 Punkte)',
+                        'qsofa.result.lowerRisk': 'Niedrigeres Risiko (< 2 Punkte)',
+                        'news2.title': 'NEWS2',
+                        'news2.desc': 'NEWS2 aus Atemfrequenz, SpO2, Blutdruck, Puls, Bewusstsein, Temperatur und Zusatzsauerstoff berechnen.',
+                        'news2.rr': 'Atemfrequenz (Atemzuege/min)',
+                        'news2.spo2Scale': 'SpO2-Skala',
+                        'news2.spo2Scale.1': 'Skala 1',
+                        'news2.spo2Scale.2': 'Skala 2 (Hyperkapnie/COPD)',
+                        'news2.spo2': 'SpO2 (%)',
+                        'news2.oxygen': 'Zusätzlicher Sauerstoff',
+                        'news2.sbp': 'Systolischer Blutdruck (mmHg)',
+                        'news2.pulse': 'Pulsrate (/min)',
+                        'news2.consciousness': 'Bewusstsein (ACVPU)',
+                        'news2.acvpu.alert': 'Alert',
+                        'news2.acvpu.confusion': 'Confusion',
+                        'news2.acvpu.voice': 'Voice',
+                        'news2.acvpu.pain': 'Pain',
+                        'news2.acvpu.unresponsive': 'Unresponsive',
+                        'news2.temp': 'Temperatur (°C)',
+                        'news2.scaleNote': 'Skala 2 ist nur fuer Patienten mit Ziel-SpO2 88-92 % gedacht.',
+                        'news2.validation.complete': 'Bitte alle NEWS2-Werte eingeben.',
+                        'news2.result.total': 'Gesamtscore',
+                    },
+                    en: {
+                        'page.title': 'Clinical Calculators',
+                        'breadcrumb.current': 'Clinical Calculators',
+                        'header.title': 'Clinical Calculators',
+                        'header.subtitle': 'O2 duration, GCS, NEXUS checklist, qSOFA, and NEWS2',
+                        'o2.title': 'O2 Duration',
+                        'o2.desc': 'Estimate how long an oxygen source will last at a given flow.',
+                        'o2.mode': 'Calculation mode',
+                        'o2.mode.cylinder': 'Cylinder (pressure x bottle size)',
+                        'o2.mode.liters': 'Direct available O2 liters',
+                        'o2.pressure': 'Pressure (bar)',
+                        'o2.bottle': 'Bottle size (L)',
+                        'o2.liters': 'Available O2 liters (L)',
+                        'o2.flow': 'Flow (L/min)',
+                        'o2.validation.flow': 'Please enter a valid flow.',
+                        'o2.validation.cylinder': 'Please enter pressure and bottle size.',
+                        'o2.validation.liters': 'Please enter available O2 liters.',
+                        'o2.result.available': 'Available',
+                        'o2.result.flow': 'Flow',
+                        'gcs.title': 'GCS',
+                        'gcs.desc': 'Calculate the Glasgow Coma Scale using eye, verbal, and motor response.',
+                        'gcs.eye': 'Eye opening (E)',
+                        'gcs.verbal': 'Verbal response (V)',
+                        'gcs.motor': 'Motor response (M)',
+                        'gcs.select': 'Please select',
+                        'gcs.eye.4': '4 - spontaneous',
+                        'gcs.eye.3': '3 - to speech',
+                        'gcs.eye.2': '2 - to pain',
+                        'gcs.eye.1': '1 - none',
+                        'gcs.verbal.5': '5 - oriented',
+                        'gcs.verbal.4': '4 - confused',
+                        'gcs.verbal.3': '3 - inappropriate words',
+                        'gcs.verbal.2': '2 - incomprehensible sounds',
+                        'gcs.verbal.1': '1 - none',
+                        'gcs.motor.6': '6 - obeys commands',
+                        'gcs.motor.5': '5 - localizes pain',
+                        'gcs.motor.4': '4 - withdraws from pain',
+                        'gcs.motor.3': '3 - flexion to pain',
+                        'gcs.motor.2': '2 - extension to pain',
+                        'gcs.motor.1': '1 - none',
+                        'gcs.validation.complete': 'Please select all three components.',
+                        'gcs.result.mild': 'Mild or no impaired consciousness (13-15)',
+                        'gcs.result.moderate': 'Moderate impaired consciousness (9-12)',
+                        'gcs.result.severe': 'Severe impaired consciousness / coma (<= 8)',
+                        'nexus.title': 'NEXUS C-spine',
+                        'nexus.desc': 'If any criterion is "yes", immobilization/imaging is indicated.',
+                        'nexus.c1': 'Midline cervical tenderness',
+                        'nexus.c2': 'Focal neurologic deficit',
+                        'nexus.c3': 'Altered alertness (GCS < 15)',
+                        'nexus.c4': 'Evidence of intoxication',
+                        'nexus.c5': 'Painful distracting injury',
+                        'nexus.result.indicated': 'NEXUS positive: indication present',
+                        'nexus.result.notIndicated': 'NEXUS negative: no indication by NEXUS',
+                        'nexus.result.stifneckYes': 'Consider stifneck/immobilization.',
+                        'nexus.result.stifneckNo': 'No stifneck needed by NEXUS.',
+                        'qsofa.title': 'qSOFA',
+                        'qsofa.desc': 'Screening for suspected infection (adults). A score of 2 or more means high risk.',
+                        'qsofa.rr': 'Respiratory rate (breaths/min)',
+                        'qsofa.gcs': 'GCS',
+                        'qsofa.sbp': 'Systolic blood pressure (mmHg)',
+                        'qsofa.note': 'qSOFA is not diagnostic for sepsis; it is a risk marker.',
+                        'qsofa.result.score': 'qSOFA',
+                        'qsofa.result.highRisk': 'High risk (>= 2 points)',
+                        'qsofa.result.lowerRisk': 'Lower risk (< 2 points)',
+                        'news2.title': 'NEWS2',
+                        'news2.desc': 'Calculate NEWS2 from respiratory rate, SpO2, blood pressure, pulse, consciousness, temperature, and supplemental oxygen.',
+                        'news2.rr': 'Respiratory rate (breaths/min)',
+                        'news2.spo2Scale': 'SpO2 scale',
+                        'news2.spo2Scale.1': 'Scale 1',
+                        'news2.spo2Scale.2': 'Scale 2 (hypercapnia/COPD)',
+                        'news2.spo2': 'SpO2 (%)',
+                        'news2.oxygen': 'Supplemental oxygen',
+                        'news2.sbp': 'Systolic blood pressure (mmHg)',
+                        'news2.pulse': 'Pulse rate (/min)',
+                        'news2.consciousness': 'Consciousness (ACVPU)',
+                        'news2.acvpu.alert': 'Alert',
+                        'news2.acvpu.confusion': 'Confusion',
+                        'news2.acvpu.voice': 'Voice',
+                        'news2.acvpu.pain': 'Pain',
+                        'news2.acvpu.unresponsive': 'Unresponsive',
+                        'news2.temp': 'Temperature (°C)',
+                        'news2.scaleNote': 'Scale 2 is intended only for patients with a target SpO2 of 88-92%.',
+                        'news2.validation.complete': 'Please enter all NEWS2 values.',
+                        'news2.result.total': 'Total score',
+                    },
+                    fr: {
+                        'page.title': 'Calculateurs cliniques',
+                        'breadcrumb.current': 'Calculateurs cliniques',
+                        'header.title': 'Calculateurs cliniques',
+                        'header.subtitle': 'Autonomie O2, GCS, checklist NEXUS, qSOFA et NEWS2',
+                        'o2.title': 'Autonomie O2',
+                        'o2.desc': 'Estimez combien de temps une source d\'oxygène dure selon le débit.',
+                        'o2.mode': 'Mode de calcul',
+                        'o2.mode.cylinder': 'Bouteille (pression x volume)',
+                        'o2.mode.liters': 'Litres O2 disponibles directement',
+                        'o2.pressure': 'Pression (bar)',
+                        'o2.bottle': 'Volume bouteille (L)',
+                        'o2.liters': 'Litres O2 disponibles (L)',
+                        'o2.flow': 'Débit (L/min)',
+                        'o2.validation.flow': 'Veuillez saisir un débit valide.',
+                        'o2.validation.cylinder': 'Veuillez saisir pression et volume de bouteille.',
+                        'o2.validation.liters': 'Veuillez saisir les litres O2 disponibles.',
+                        'o2.result.available': 'Disponible',
+                        'o2.result.flow': 'Débit',
+                        'gcs.title': 'GCS',
+                        'gcs.desc': 'Calculez le score de Glasgow avec ouverture des yeux, réponse verbale et motrice.',
+                        'gcs.eye': 'Ouverture des yeux (E)',
+                        'gcs.verbal': 'Réponse verbale (V)',
+                        'gcs.motor': 'Réponse motrice (M)',
+                        'gcs.select': 'Veuillez sélectionner',
+                        'gcs.eye.4': '4 - spontanée',
+                        'gcs.eye.3': '3 - à la parole',
+                        'gcs.eye.2': '2 - à la douleur',
+                        'gcs.eye.1': '1 - aucune',
+                        'gcs.verbal.5': '5 - orientée',
+                        'gcs.verbal.4': '4 - confuse',
+                        'gcs.verbal.3': '3 - mots inadaptés',
+                        'gcs.verbal.2': '2 - sons incompréhensibles',
+                        'gcs.verbal.1': '1 - aucune',
+                        'gcs.motor.6': '6 - obéit aux ordres',
+                        'gcs.motor.5': '5 - localise la douleur',
+                        'gcs.motor.4': '4 - retrait à la douleur',
+                        'gcs.motor.3': '3 - flexion à la douleur',
+                        'gcs.motor.2': '2 - extension à la douleur',
+                        'gcs.motor.1': '1 - aucune',
+                        'gcs.validation.complete': 'Veuillez sélectionner les trois composantes.',
+                        'gcs.result.mild': 'Trouble léger ou absent de la conscience (13-15)',
+                        'gcs.result.moderate': 'Trouble modéré de la conscience (9-12)',
+                        'gcs.result.severe': 'Trouble sévère de la conscience / coma (<= 8)',
+                        'nexus.title': 'Critères NEXUS',
+                        'nexus.desc': 'Si au moins un critere est "oui", immobilisation/imagerie indiquée.',
+                        'nexus.c1': 'Douleur médiane cervicale',
+                        'nexus.c2': 'Déficit neurologique focal',
+                        'nexus.c3': 'Vigilance réduite (GCS < 15)',
+                        'nexus.c4': 'Suspicion d\'intoxication',
+                        'nexus.c5': 'Autre lésion grave distractive',
+                        'nexus.result.indicated': 'NEXUS positif: indication présente',
+                        'nexus.result.notIndicated': 'NEXUS negatif: pas d\'indication selon NEXUS',
+                        'nexus.result.stifneckYes': 'Envisager stifneck/immobilisation.',
+                        'nexus.result.stifneckNo': 'Pas de stifneck requis selon NEXUS.',
+                        'qsofa.title': 'qSOFA',
+                        'qsofa.desc': 'Dépistage si infection suspectée (adultes). Score >= 2 = haut risque.',
+                        'qsofa.rr': 'Fréquence respiratoire (resp/min)',
+                        'qsofa.gcs': 'GCS',
+                        'qsofa.sbp': 'Pression systolique (mmHg)',
+                        'qsofa.note': 'Le qSOFA ne pose pas le diagnostic de sepsis; c\'est un marqueur de risque.',
+                        'qsofa.result.score': 'qSOFA',
+                        'qsofa.result.highRisk': 'Haut risque (>= 2 points)',
+                        'qsofa.result.lowerRisk': 'Risque plus faible (< 2 points)',
+                        'news2.title': 'NEWS2',
+                        'news2.desc': 'Calculez le NEWS2 a partir de la frequence respiratoire, SpO2, pression arterielle, pouls, conscience, temperature et oxygene supplementaire.',
+                        'news2.rr': 'Fréquence respiratoire (resp/min)',
+                        'news2.spo2Scale': 'Échelle SpO2',
+                        'news2.spo2Scale.1': 'Échelle 1',
+                        'news2.spo2Scale.2': 'Échelle 2 (hypercapnie/COPD)',
+                        'news2.spo2': 'SpO2 (%)',
+                        'news2.oxygen': 'Oxygène supplémentaire',
+                        'news2.sbp': 'Pression systolique (mmHg)',
+                        'news2.pulse': 'Pouls (/min)',
+                        'news2.consciousness': 'Conscience (ACVPU)',
+                        'news2.acvpu.alert': 'Alert',
+                        'news2.acvpu.confusion': 'Confusion',
+                        'news2.acvpu.voice': 'Voice',
+                        'news2.acvpu.pain': 'Pain',
+                        'news2.acvpu.unresponsive': 'Unresponsive',
+                        'news2.temp': 'Température (°C)',
+                        'news2.scaleNote': 'L\'échelle 2 est destinée uniquement aux patients avec une SpO2 cible de 88-92 %.',
+                        'news2.validation.complete': 'Veuillez saisir toutes les valeurs NEWS2.',
+                        'news2.result.total': 'Score total',
+                    },
+                    lb: {
+                        'page.title': 'Klinesch Rechner',
+                        'breadcrumb.current': 'Klinesch Rechner',
+                        'header.title': 'Klinesch Rechner',
+                        'header.subtitle': 'O2-Lafzait, GCS, NEXUS-Checklëscht, qSOFA a NEWS2',
+                        'o2.title': 'O2-Lafzait',
+                        'o2.desc': 'Berechent, wei laang eng Sauerstoffquell bei engem bestemmte Flow hällt.',
+                        'o2.mode': 'Berechnungsmodus',
+                        'o2.mode.cylinder': 'Fläsch (Drock x Fläschgréisst)',
+                        'o2.mode.liters': 'Direkt disponibel O2-Liter',
+                        'o2.pressure': 'Drock (bar)',
+                        'o2.bottle': 'Fläschgréisst (L)',
+                        'o2.liters': 'Disponibel O2-Liter (L)',
+                        'o2.flow': 'Flow (L/min)',
+                        'o2.validation.flow': 'Gitt w.e.g. e gültege Flow an.',
+                        'o2.validation.cylinder': 'Gitt w.e.g. Drock a Fläschgréisst an.',
+                        'o2.validation.liters': 'Gitt w.e.g. disponibel O2-Liter an.',
+                        'o2.result.available': 'Disponibel',
+                        'o2.result.flow': 'Flow',
+                        'gcs.title': 'GCS',
+                        'gcs.desc': 'Berechent d\'Glasgow Coma Scale',
+                        'gcs.eye': 'Aen opmaachen (E)',
+                        'gcs.verbal': 'Verbal Reaktioun (V)',
+                        'gcs.motor': 'Motoresch Reaktioun (M)',
+                        'gcs.select': 'W.e.g. auswielen',
+                        'gcs.eye.4': '4 - spontan',
+                        'gcs.eye.3': '3 - op Usprooch',
+                        'gcs.eye.2': '2 - op Schmerzreiz',
+                        'gcs.eye.1': '1 - keng',
+                        'gcs.verbal.5': '5 - orientéiert',
+                        'gcs.verbal.4': '4 - duercherneen',
+                        'gcs.verbal.3': '3 - onpassend Wierder',
+                        'gcs.verbal.2': '2 - onverständlech Téin',
+                        'gcs.verbal.1': '1 - keng',
+                        'gcs.motor.6': '6 - befollegt Uerder',
+                        'gcs.motor.5': '5 - lokaliséiert Schmerz',
+                        'gcs.motor.4': '4 - zitt bei Schmerz zréck',
+                        'gcs.motor.3': '3 - Beugebewegung op Schmerz',
+                        'gcs.motor.2': '2 - Streckbewegung op Schmerz',
+                        'gcs.motor.1': '1 - keng',
+                        'gcs.validation.complete': 'W.e.g. all dräi Komponente auswielen.',
+                        'gcs.result.mild': 'Liicht oder keng Bewosstséinsstéierung (13-15)',
+                        'gcs.result.moderate': 'Mëttelméisseg Bewosstséinsstéierung (9-12)',
+                        'gcs.result.severe': 'Schwéier Bewosstséinsstéierung / Koma (<= 8)',
+                        'nexus.title': 'NEXUS Kritärien',
+                        'nexus.desc': 'Wann op mannst ee Kritär "jo" ass, ass Immobilisatioun indizéiert.',
+                        'nexus.c1': 'Drockschmerz iwwert der Mëttlinn vun der HWS',
+                        'nexus.c2': 'Fokalt neurologescht Defizit',
+                        'nexus.c3': 'Reduzéiert Vigilanz (GCS < 15)',
+                        'nexus.c4': 'Hiweis op Intoxikatioun',
+                        'nexus.c5': 'Ooflenkend, schwéier Verletzung',
+                        'nexus.result.indicated': 'NEXUS positiv: Indikatioun do',
+                        'nexus.result.notIndicated': 'NEXUS negativ: keng Indikatioun nom NEXUS',
+                        'nexus.result.stifneckYes': 'Stifneck/Immobilisatioun erwägen.',
+                        'nexus.result.stifneckNo': 'Kee Stifneck nom NEXUS noutwendeg.',
+                        'qsofa.title': 'qSOFA',
+                        'qsofa.desc': 'Screening bei verdächtegter Infektioun (Erwuessener). Score >= 2 = héije Risiko.',
+                        'qsofa.rr': 'Otemfrequenz (Otemzich/min)',
+                        'qsofa.gcs': 'GCS',
+                        'qsofa.sbp': 'Systolesche Bluttdrock (mmHg)',
+                        'qsofa.note': 'qSOFA ass keng Sepsis-Diagnos, mee e Risikomarker.',
+                        'qsofa.result.score': 'qSOFA',
+                        'qsofa.result.highRisk': 'Héije Risiko (>= 2 Punkten)',
+                        'qsofa.result.lowerRisk': 'Méi niddrege Risiko (< 2 Punkten)',
+                        'news2.title': 'NEWS2',
+                        'news2.desc': 'Berechent NEWS2 mat Otemfrequenz, SpO2, Bluttdrock, Puls, Bewosstsinn, Temperatur an zousätzlechem Sauerstoff.',
+                        'news2.rr': 'Otemfrequenz (Otemzich/min)',
+                        'news2.spo2Scale': 'SpO2-Skala',
+                        'news2.spo2Scale.1': 'Skala 1',
+                        'news2.spo2Scale.2': 'Skala 2 (Hyperkapnie/COPD)',
+                        'news2.spo2': 'SpO2 (%)',
+                        'news2.oxygen': 'Zousätzleche Sauerstoff',
+                        'news2.sbp': 'Systolesche Bluttdrock (mmHg)',
+                        'news2.pulse': 'Pulsrate (/min)',
+                        'news2.consciousness': 'Bewosstsinn (ACVPU)',
+                        'news2.acvpu.alert': 'Alert',
+                        'news2.acvpu.confusion': 'Confusion',
+                        'news2.acvpu.voice': 'Voice',
+                        'news2.acvpu.pain': 'Pain',
+                        'news2.acvpu.unresponsive': 'Unresponsive',
+                        'news2.temp': 'Temperatur (°C)',
+                        'news2.scaleNote': 'Skala 2 ass just fir Patienten mat enger Ziel-SpO2 vun 88-92 % geduecht.',
+                        'news2.validation.complete': 'Gitt w.e.g. all NEWS2-Wäerter an.',
+                        'news2.result.total': 'Gesamtscore',
+                    }
+                },
+                onApplied: ({ t }) => {
+                    i18nT = t;
+                    calculateO2();
+                    calculateGcs();
+                    evaluateNexus();
+                    calculateQsofa();
+                    calculateNews2();
+                }
+            });
+
+            document.getElementById('o2Mode').addEventListener('change', () => {
+                setO2ModeVisibility();
+                calculateO2();
+            });
+
+            ['o2Pressure', 'o2Bottle', 'o2Liters', 'o2Flow'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', calculateO2);
+            });
+
+            ['gcsEye', 'gcsVerbal', 'gcsMotor'].forEach((id) => {
+                document.getElementById(id).addEventListener('change', calculateGcs);
+            });
+
+            ['nexus1', 'nexus2', 'nexus3', 'nexus4', 'nexus5'].forEach((id) => {
+                document.getElementById(id).addEventListener('change', evaluateNexus);
+            });
+
+            ['qsofaRr', 'qsofaGcs', 'qsofaSbp'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', calculateQsofa);
+            });
+
+            ['news2RespRate', 'news2Spo2', 'news2Sbp', 'news2Pulse', 'news2Temp'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', calculateNews2);
+            });
+
+            ['news2Spo2Scale', 'news2Consciousness'].forEach((id) => {
+                document.getElementById(id).addEventListener('change', calculateNews2);
+            });
+
+            document.getElementById('news2Oxygen').addEventListener('change', calculateNews2);
+
+            setO2ModeVisibility();
+            calculateO2();
+            calculateGcs();
+            evaluateNexus();
+            calculateQsofa();
+            calculateNews2();
+        });
+    </script>
+</body>
+
+</html>

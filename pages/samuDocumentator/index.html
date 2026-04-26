@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Digitalisierte 2-seitige SAMU-Rapportvorlage mit Checkboxen, Verlaufsfeld, Verletzungsschema, PDF-Export und Teilen.">
+    <title>SAMU Rapport Digital</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#184b93">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="stylesheet" href="/style/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --report-blue: #234d92;
+            --report-blue-soft: #eef3fb;
+            --report-border: #335b9d;
+            --report-text: #173054;
+            --report-line: #c9d5ea;
+            --paper-shadow: 0 20px 55px rgba(17, 47, 90, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top right, rgba(35, 77, 146, 0.18), transparent 24rem),
+                linear-gradient(180deg, #eef4fb 0%, #f5f8fc 42%, #e8eff8 100%);
+            color: var(--report-text);
+            font-family: "Arial", sans-serif;
+        }
+
+        .shell {
+            max-width: 1580px;
+            margin: 0 auto;
+            padding: 20px 20px 120px;
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(520px, 0.95fr);
+            gap: 16px;
+            padding: 16px 18px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(35, 77, 146, 0.16);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow: var(--paper-shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .toolbar-info {
+            display: grid;
+            gap: 4px;
+        }
+
+        .toolbar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--report-blue);
+        }
+
+        .toolbar-subtitle,
+        .save-state {
+            color: #5e6e85;
+            line-height: 1.4;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            align-content: start;
+        }
+
+        .btn {
+            min-height: 44px;
+            padding: 10px 14px;
+            border: 1px solid rgba(35, 77, 146, 0.18);
+            border-radius: 12px;
+            background: #fff;
+            color: var(--report-blue);
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .toolbar-actions .btn {
+            flex: 0 0 auto;
+            min-width: 140px;
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--report-blue), #3465b1);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .print-root {
+            display: grid;
+            gap: 20px;
+        }
+
+        .report-page {
+            width: min(100%, 245mm);
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 6.5mm;
+            background: #fff;
+            border: 1.5px solid var(--report-border);
+            box-shadow: var(--paper-shadow);
+            display: grid;
+            gap: 4px;
+            page-break-after: always;
+        }
+
+        .report-page:last-child {
+            page-break-after: auto;
+        }
+
+        .page-row {
+            display: grid;
+            gap: 4px;
+        }
+
+        .page-top {
+            grid-template-columns: 1.1fr 1.15fr 0.95fr;
+            align-items: start;
+        }
+
+        .page-bottom {
+            grid-template-columns: 1.02fr 1.08fr;
+            align-items: start;
+        }
+
+        .page-two {
+            grid-template-columns: 0.95fr 1.05fr;
+            align-items: start;
+        }
+
+        .page-two-lower {
+            grid-template-columns: 0.95fr 1.05fr;
+            align-items: start;
+        }
+
+        .box {
+            border: 1.2px solid var(--report-border);
+            display: grid;
+            gap: 4px;
+            align-content: start;
+            min-width: 0;
+        }
+
+        .box-title {
+            padding: 3px 5px;
+            border-bottom: 1.2px solid var(--report-border);
+            background: var(--report-blue-soft);
+            color: #153562;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .box-body {
+            display: grid;
+            gap: 5px;
+            padding: 5px;
+            min-width: 0;
+        }
+
+        .box-subtitle {
+            font-size: 11px;
+            font-weight: 700;
+            color: #16345f;
+        }
+
+        .line-grid {
+            display: grid;
+            gap: 4px 6px;
+        }
+
+        .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        .field,
+        .tiny-field {
+            display: grid;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .field label,
+        .tiny-field label,
+        .label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #18355f;
+        }
+
+        .line-input,
+        .small-input,
+        .tiny-input,
+        .line-textarea,
+        select.line-select {
+            width: 100%;
+            border: 0;
+            border-bottom: 1px solid var(--report-border);
+            border-radius: 0;
+            padding: 2px 1px;
+            background: transparent;
+            color: var(--report-text);
+            font: inherit;
+            font-size: 11px;
+            min-height: 22px;
+        }
+
+        .small-input {
+            min-height: 20px;
+            text-align: center;
+        }
+
+        .tiny-input {
+            min-height: 18px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .line-textarea {
+            min-height: 58px;
+            resize: none;
+            line-height: 1.45;
+            background-image: linear-gradient(to bottom, transparent calc(1.45em - 1px), var(--report-line) calc(1.45em - 1px));
+            background-size: 100% 1.45em;
+            padding-top: 0;
+        }
+
+        .line-textarea.tall {
+            min-height: 108px;
+        }
+
+        .line-textarea.medium {
+            min-height: 78px;
+        }
+
+        .digit-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 3px;
+        }
+
+        .checkbox-list,
+        .tick-grid,
+        .inline-ticks,
+        .injury-table {
+            display: grid;
+            gap: 4px;
+        }
+
+        .tick-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .tick-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .tick-grid.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        .tick,
+        .inline-tick {
+            display: grid;
+            grid-template-columns: 12px minmax(0, 1fr);
+            align-items: start;
+            column-gap: 5px;
+            min-width: 0;
+            color: var(--report-text);
+            font-size: 10px;
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        .inline-ticks {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 6px 12px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 12px;
+            height: 12px;
+            margin: 0;
+            accent-color: #d06a44;
+            flex: 0 0 auto;
+        }
+
+        .tick input,
+        .inline-tick input,
+        .tick .export-check,
+        .inline-tick .export-check {
+            margin-top: 1px;
+        }
+
+        .section-line {
+            border-top: 1px solid var(--report-border);
+            margin-top: 2px;
+            padding-top: 4px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            gap: 4px 6px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .metric {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 4px;
+            align-items: end;
+            min-width: 0;
+        }
+
+        .metric .digit-row {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .metric.wide {
+            grid-column: span 2;
+        }
+
+        .matrix {
+            display: grid;
+            gap: 2px;
+        }
+
+        .matrix-row {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(4, 18px);
+            gap: 3px;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        .mini-note {
+            font-size: 9px;
+            color: #5e6e85;
+        }
+
+        .split {
+            display: grid;
+            gap: 4px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .split-3 {
+            display: grid;
+            gap: 4px;
+            grid-template-columns: 1.1fr 1fr 1fr;
+        }
+
+        .narrow {
+            max-width: 56px;
+        }
+
+        .injury-layout {
+            display: grid;
+            gap: 6px;
+            grid-template-columns: 1.15fr 0.55fr;
+        }
+
+        .injury-table {
+            gap: 3px;
+        }
+
+        .injury-row,
+        .injury-head {
+            display: grid;
+            grid-template-columns: 1.2fr repeat(5, 18px);
+            gap: 3px;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        .injury-head {
+            font-weight: 700;
+            color: #193761;
+        }
+
+        .figure-box {
+            border: 1px solid var(--report-border);
+            min-height: 180px;
+            display: grid;
+            align-items: center;
+            justify-items: center;
+            padding: 4px;
+        }
+
+        .figure-box svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .verlauf-box {
+            display: grid;
+            gap: 4px;
+        }
+
+        .verlauf-grid {
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 4px;
+            align-items: stretch;
+        }
+
+        .legend {
+            display: grid;
+            gap: 3px;
+            align-content: start;
+            font-size: 9px;
+            color: #1f3963;
+        }
+
+        .trend-surface {
+            position: relative;
+            min-height: 280px;
+            border: 1px solid var(--report-border);
+            background:
+                repeating-linear-gradient(to right, rgba(214, 86, 76, 0.26) 0 1px, transparent 1px 24px),
+                repeating-linear-gradient(to bottom, rgba(214, 86, 76, 0.24) 0 1px, transparent 1px 16px),
+                #fff;
+        }
+
+        .trend-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            cursor: crosshair;
+        }
+
+        .med-table,
+        .result-table {
+            display: grid;
+            gap: 3px;
+        }
+
+        .med-row,
+        .result-row {
+            display: grid;
+            gap: 4px;
+        }
+
+        .med-row {
+            grid-template-columns: 1.35fr 0.65fr;
+        }
+
+        .transfer-grid {
+            display: grid;
+            gap: 4px;
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .two-col-note {
+            display: grid;
+            gap: 4px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .signature-line {
+            min-height: 28px;
+        }
+
+        .small-stack {
+            display: grid;
+            gap: 3px;
+        }
+
+        @media screen and (max-width: 1100px) {
+            .shell {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .toolbar {
+                position: static;
+            }
+
+            .toolbar {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .btn,
+            .toolbar-actions .btn {
+                flex: 1 1 180px;
+                min-width: 0;
+            }
+        }
+
+        @media screen and (max-width: 820px) {
+            .report-page {
+                width: 100%;
+                min-height: auto;
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .page-row,
+            .page-top,
+            .page-bottom,
+            .page-two,
+            .page-two-lower,
+            .transfer-grid,
+            .injury-layout,
+            .split,
+            .split-3,
+            .metrics-grid,
+            .tick-grid.cols-2,
+            .tick-grid.cols-3,
+            .tick-grid.cols-4,
+            .line-grid.cols-2,
+            .line-grid.cols-3,
+            .line-grid.cols-4,
+            .two-col-note,
+            .med-row {
+                grid-template-columns: 1fr;
+            }
+
+            .verlauf-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .legend {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                font-size: 10px;
+            }
+
+            .trend-surface {
+                min-height: 220px;
+            }
+
+            .inline-ticks {
+                grid-auto-flow: row;
+                gap: 6px;
+            }
+
+            .injury-head,
+            .injury-row,
+            .matrix-row {
+                grid-template-columns: 1.4fr repeat(5, 18px);
+                overflow-x: auto;
+            }
+
+            .box-title {
+                font-size: 13px;
+            }
+
+            .box-subtitle {
+                font-size: 12px;
+            }
+
+            .field label,
+            .tiny-field label,
+            .label,
+            .tick,
+            .inline-tick {
+                font-size: 11px;
+            }
+
+            .line-input,
+            .small-input,
+            .tiny-input,
+            .line-textarea,
+            select.line-select {
+                min-height: 28px;
+                font-size: 12px;
+            }
+
+            .small-input,
+            .tiny-input {
+                text-align: left;
+            }
+
+            .narrow {
+                max-width: none;
+            }
+        }
+
+        .print-root.pdf-mode .page-top {
+            grid-template-columns: 1.1fr 1.15fr 0.95fr;
+        }
+
+        .print-root.pdf-mode .report-page {
+            width: 210mm;
+            min-height: 297mm;
+            height: 297mm;
+            padding: 5mm;
+            box-shadow: none;
+            margin: 0 auto;
+            gap: 2px;
+            overflow: hidden;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .print-root.pdf-mode .box {
+            gap: 2px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .print-root.pdf-mode .box-title {
+            font-size: 10px;
+            padding: 2px 4px;
+        }
+
+        .print-root.pdf-mode .box-body {
+            gap: 3px;
+            padding: 4px;
+        }
+
+        .print-root.pdf-mode .box-subtitle {
+            font-size: 9px;
+        }
+
+        .print-root.pdf-mode .field label,
+        .print-root.pdf-mode .tiny-field label,
+        .print-root.pdf-mode .label,
+        .print-root.pdf-mode .tick,
+        .print-root.pdf-mode .inline-tick,
+        .print-root.pdf-mode .mini-note,
+        .print-root.pdf-mode .legend {
+            font-size: 8px;
+            line-height: 1.05;
+        }
+
+        .print-root.pdf-mode .tick,
+        .print-root.pdf-mode .inline-tick {
+            grid-template-columns: 10px minmax(0, 1fr);
+            column-gap: 4px;
+            align-items: start;
+            overflow-wrap: anywhere;
+        }
+
+        .print-root.pdf-mode .line-input,
+        .print-root.pdf-mode .small-input,
+        .print-root.pdf-mode .tiny-input,
+        .print-root.pdf-mode .line-textarea,
+        .print-root.pdf-mode select.line-select,
+        .print-root.pdf-mode .export-value,
+        .print-root.pdf-mode .export-value.block {
+            min-height: 16px;
+            font-size: 8.5px;
+            line-height: 1.05;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        .print-root.pdf-mode .line-textarea {
+            background-size: 100% 1.15em;
+        }
+
+        .print-root.pdf-mode .line-textarea.tall {
+            min-height: 72px;
+        }
+
+        .print-root.pdf-mode .line-textarea.medium {
+            min-height: 52px;
+        }
+
+        .print-root.pdf-mode .section-line {
+            margin-top: 1px;
+            padding-top: 2px;
+        }
+
+        .print-root.pdf-mode .metrics-grid,
+        .print-root.pdf-mode .line-grid,
+        .print-root.pdf-mode .tick-grid,
+        .print-root.pdf-mode .inline-ticks,
+        .print-root.pdf-mode .split,
+        .print-root.pdf-mode .split-3,
+        .print-root.pdf-mode .transfer-grid,
+        .print-root.pdf-mode .injury-layout,
+        .print-root.pdf-mode .med-table,
+        .print-root.pdf-mode .med-row,
+        .print-root.pdf-mode .verlauf-box,
+        .print-root.pdf-mode .verlauf-grid,
+        .print-root.pdf-mode .page-row {
+            gap: 2px 4px;
+        }
+
+        .print-root.pdf-mode .trend-surface {
+            min-height: 210px;
+        }
+
+        .print-root.pdf-mode .figure-box {
+            min-height: 138px;
+            padding: 2px;
+        }
+
+        .print-root.pdf-mode .page-bottom,
+        .print-root.pdf-mode .page-two,
+        .print-root.pdf-mode .page-two-lower,
+        .print-root.pdf-mode .transfer-grid,
+        .print-root.pdf-mode .injury-layout,
+        .print-root.pdf-mode .split,
+        .print-root.pdf-mode .split-3,
+        .print-root.pdf-mode .two-col-note,
+        .print-root.pdf-mode .med-row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .page-bottom {
+            grid-template-columns: 1.02fr 1.08fr;
+        }
+
+        .print-root.pdf-mode .page-two,
+        .print-root.pdf-mode .page-two-lower,
+        .print-root.pdf-mode .transfer-grid {
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .print-root.pdf-mode .injury-layout {
+            grid-template-columns: 1.15fr 0.55fr;
+        }
+
+        .print-root.pdf-mode .split-3 {
+            grid-template-columns: 1.1fr 1fr 1fr;
+        }
+
+        .print-root.pdf-mode .metrics-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .tick-grid.cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .tick-grid.cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .tick-grid.cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .line-grid.cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .line-grid.cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .line-grid.cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .print-root.pdf-mode .inline-ticks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px 8px;
+        }
+
+        .export-host {
+            position: fixed;
+            left: -99999px;
+            top: 0;
+            width: 210mm;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .export-host .print-root.export-mode {
+            width: 210mm;
+            transform: none;
+            display: block;
+        }
+
+        .export-host .print-root.export-mode.report-print-compact {
+            width: 210mm;
+        }
+
+        .export-host .report-page {
+            width: 210mm;
+            min-height: 297mm;
+            height: auto;
+            padding: 6.5mm;
+            display: grid;
+            gap: 4px;
+            box-shadow: none;
+            margin: 0;
+            border: 1.2px solid var(--report-border);
+            overflow: visible;
+            page-break-after: always;
+            break-after: page;
+        }
+
+        .export-host .report-page:last-child {
+            page-break-after: auto;
+            break-after: auto;
+        }
+
+        .export-host .print-root.report-print-compact .report-page {
+            min-height: 297mm;
+            padding: 5mm;
+            gap: 2px;
+        }
+
+        .export-host .print-root.report-print-compact .box {
+            gap: 2px;
+        }
+
+        .export-host .print-root.report-print-compact .box-title {
+            font-size: 10px;
+            padding: 2px 4px;
+        }
+
+        .export-host .print-root.report-print-compact .box-body {
+            gap: 3px;
+            padding: 4px;
+        }
+
+        .export-host .print-root.report-print-compact .box-subtitle {
+            font-size: 9px;
+        }
+
+        .export-host .print-root.report-print-compact .field label,
+        .export-host .print-root.report-print-compact .tiny-field label,
+        .export-host .print-root.report-print-compact .label,
+        .export-host .print-root.report-print-compact .tick,
+        .export-host .print-root.report-print-compact .inline-tick,
+        .export-host .print-root.report-print-compact .mini-note,
+        .export-host .print-root.report-print-compact .legend {
+            font-size: 8px;
+            line-height: 1.05;
+        }
+
+        .export-host .print-root.report-print-compact .tick,
+        .export-host .print-root.report-print-compact .inline-tick {
+            grid-template-columns: 10px minmax(0, 1fr);
+            column-gap: 4px;
+        }
+
+        .export-host .print-root.report-print-compact .line-input,
+        .export-host .print-root.report-print-compact .small-input,
+        .export-host .print-root.report-print-compact .tiny-input,
+        .export-host .print-root.report-print-compact .line-textarea,
+        .export-host .print-root.report-print-compact select.line-select,
+        .export-host .print-root.report-print-compact .export-value,
+        .export-host .print-root.report-print-compact .export-value.block {
+            min-height: 16px;
+            font-size: 8.5px;
+            line-height: 1.05;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        .export-host .print-root.report-print-compact .line-textarea {
+            background-size: 100% 1.15em;
+        }
+
+        .export-host .print-root.report-print-compact .line-textarea.tall {
+            min-height: 72px;
+        }
+
+        .export-host .print-root.report-print-compact .line-textarea.medium {
+            min-height: 52px;
+        }
+
+        .export-host .print-root.report-print-compact .section-line {
+            margin-top: 1px;
+            padding-top: 2px;
+        }
+
+        .export-host .print-root.report-print-compact .metrics-grid,
+        .export-host .print-root.report-print-compact .line-grid,
+        .export-host .print-root.report-print-compact .tick-grid,
+        .export-host .print-root.report-print-compact .inline-ticks,
+        .export-host .print-root.report-print-compact .split,
+        .export-host .print-root.report-print-compact .split-3,
+        .export-host .print-root.report-print-compact .transfer-grid,
+        .export-host .print-root.report-print-compact .injury-layout,
+        .export-host .print-root.report-print-compact .med-table,
+        .export-host .print-root.report-print-compact .med-row,
+        .export-host .print-root.report-print-compact .verlauf-box,
+        .export-host .print-root.report-print-compact .verlauf-grid,
+        .export-host .print-root.report-print-compact .page-row {
+            gap: 2px 4px;
+        }
+
+        .export-host .print-root.report-print-compact .trend-surface {
+            min-height: 210px;
+        }
+
+        .export-host .print-root.report-print-compact .figure-box {
+            min-height: 138px;
+            padding: 2px;
+        }
+
+        .export-host .print-root.report-print-compact .page-top {
+            grid-template-columns: 1.1fr 1.15fr 0.95fr;
+        }
+
+        .export-host .print-root.report-print-compact .page-bottom {
+            grid-template-columns: 1.02fr 1.08fr;
+        }
+
+        .export-host .print-root.report-print-compact .page-two,
+        .export-host .print-root.report-print-compact .page-two-lower,
+        .export-host .print-root.report-print-compact .transfer-grid {
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .export-host .print-root.report-print-compact .injury-layout {
+            grid-template-columns: 1.15fr 0.55fr;
+        }
+
+        .export-host .print-root.report-print-compact .split {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .split-3 {
+            grid-template-columns: 1.1fr 1fr 1fr;
+        }
+
+        .export-host .print-root.report-print-compact .metrics-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .tick-grid.cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .tick-grid.cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .tick-grid.cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .line-grid.cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .line-grid.cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .line-grid.cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .export-host .print-root.report-print-compact .inline-ticks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px 8px;
+        }
+
+        .export-value,
+        .export-check {
+            display: inline-flex;
+            align-items: center;
+            min-height: 18px;
+            color: var(--report-text);
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .export-value.block {
+            display: block;
+            width: 100%;
+            min-height: 22px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .export-check {
+            width: 12px;
+            justify-content: center;
+            font-weight: 700;
+            color: #c05737;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            .toolbar {
+                display: none !important;
+            }
+
+            .shell {
+                max-width: none;
+                padding: 0;
+            }
+
+            .report-page {
+                width: 210mm;
+                min-height: 297mm;
+                box-shadow: none;
+                margin: 0;
+                border: 1.2px solid var(--report-border);
+                overflow: visible;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <div class="toolbar">
+            <div class="toolbar-info">
+                <div class="toolbar-title">SAMU Rapport Digital</div>
+                <div class="toolbar-subtitle">2-seitige digitale Reproduktion mit echten Formularfeldern, Checkboxen, Koerperschema und PDF-Export.</div>
+                <div class="save-state" id="saveState">Autosave aktiv</div>
+            </div>
+            <div class="toolbar-actions">
+                <button type="button" class="btn" id="clearCanvasBtn">Verlauf loeschen</button>
+                <button type="button" class="btn" id="resetBtn">Formular leeren</button>
+                <button type="button" class="btn" id="printBtn">Drucken</button>
+                <button type="button" class="btn primary" id="exportBtn">PDF exportieren</button>
+                <button type="button" class="btn primary" id="shareBtn">PDF senden</button>
+            </div>
+        </div>
+
+        <form id="reportForm">
+            <div class="print-root" id="printRoot">
+                <section class="report-page">
+                    <div class="page-row page-top">
+                        <section class="box">
+                            <div class="box-title">1. Patienteninformation und einsatzrelevante Daten</div>
+                            <div class="box-body">
+                                <div class="box-subtitle">Einsatzmittel</div>
+                                <div class="line-grid cols-2">
+                                    <div class="field">
+                                        <label>Interventionsnummer</label>
+                                        <input class="line-input" name="intervention_number">
+                                    </div>
+                                    <div class="field">
+                                        <label>Funkname</label>
+                                        <input class="line-input" name="radio_name">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Einsatzmittel</label>
+                                    <input class="line-input" name="vehicle_name">
+                                </div>
+                                <div class="inline-ticks">
+                                    <label class="inline-tick"><input type="checkbox" name="vehicle_type" value="SAMU">SAMU</label>
+                                    <label class="inline-tick"><input type="checkbox" name="vehicle_type" value="RTH">RTH</label>
+                                </div>
+
+                                <div class="section-line box-subtitle">Einsatzkraefte</div>
+                                <div class="line-grid">
+                                    <div class="field">
+                                        <label>Matrikel / Medecin SAMU</label>
+                                        <input class="line-input" name="crew_doctor">
+                                    </div>
+                                    <div class="field">
+                                        <label>Matrikel / Infirmier SAMU</label>
+                                        <input class="line-input" name="crew_nurse">
+                                    </div>
+                                    <div class="field">
+                                        <label>Matrikel / Fahrer, Andere</label>
+                                        <input class="line-input" name="crew_other">
+                                    </div>
+                                </div>
+
+                                <div class="section-line box-subtitle">Einsatzart</div>
+                                <div class="tick-grid cols-2">
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="SAMU-Einsatz">SAMU-Einsatz</label>
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="Transport SAMU">Transport SAMU</label>
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="Fehlalarm">Fehlalarm</label>
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="Uebung">Uebung</label>
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="Abbestellt">Abbestellt</label>
+                                    <label class="tick"><input type="checkbox" name="mission_type" value="Bereitstellung">Bereitstellung</label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="box">
+                            <div class="box-title">Einsatzstelle und Transportziel</div>
+                            <div class="box-body">
+                                <div class="field">
+                                    <label>Einsatzstelle</label>
+                                    <textarea class="line-textarea" name="scene_location"></textarea>
+                                </div>
+                                <div class="field">
+                                    <label>Stock, Et</label>
+                                    <input class="line-input" name="scene_floor">
+                                </div>
+                                <div class="field">
+                                    <label>Transportziel</label>
+                                    <input class="line-input" name="transport_destination">
+                                </div>
+
+                                <div class="section-line box-subtitle">Patient</div>
+                                <div class="field">
+                                    <label>Matrikelnummer</label>
+                                    <input class="line-input" name="patient_matricule">
+                                </div>
+                                <div class="field">
+                                    <label>Name</label>
+                                    <input class="line-input" name="patient_name">
+                                </div>
+                                <div class="field">
+                                    <label>Adresse</label>
+                                    <input class="line-input" name="patient_address">
+                                </div>
+                                <div class="split">
+                                    <div class="small-stack">
+                                        <div class="label">Geschlecht</div>
+                                        <div class="inline-ticks">
+                                            <label class="inline-tick"><input type="radio" name="sex" value="f">f</label>
+                                            <label class="inline-tick"><input type="radio" name="sex" value="m">m</label>
+                                            <label class="inline-tick"><input type="radio" name="sex" value="x">x</label>
+                                        </div>
+                                    </div>
+                                    <div class="small-stack">
+                                        <div class="label">Patientenangaben Kontrolle notwendig?</div>
+                                        <div class="inline-ticks">
+                                            <label class="inline-tick"><input type="radio" name="identity_check" value="ja">ja</label>
+                                            <label class="inline-tick"><input type="radio" name="identity_check" value="nein">nein</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="box">
+                            <div class="box-title">Einsatzzeiten</div>
+                            <div class="box-body">
+                                <div class="line-grid">
+                                    <div class="field"><label>Alarmierung</label><input class="small-input" name="time_alarm"></div>
+                                    <div class="field"><label>Einsatzanfang</label><input class="small-input" name="time_start"></div>
+                                    <div class="field"><label>Ankunft Einsatzort</label><input class="small-input" name="time_arrival_scene"></div>
+                                    <div class="field"><label>Abfahrt Zielklinik</label><input class="small-input" name="time_depart_clinic"></div>
+                                    <div class="field"><label>Ankunft Zielklinik</label><input class="small-input" name="time_arrival_clinic"></div>
+                                    <div class="field"><label>Einsatzende</label><input class="small-input" name="time_end"></div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <section class="box">
+                        <div class="box-title">2. Notfallgeschehen / Anamnese / Erstbefund</div>
+                        <div class="box-body">
+                            <textarea class="line-textarea tall" name="event_story"></textarea>
+                            <div class="split-3">
+                                <div class="field">
+                                    <label>Symptombeginn</label>
+                                    <input class="line-input" name="symptom_start">
+                                </div>
+                                <div class="small-stack">
+                                    <div class="label">CPR</div>
+                                    <div class="inline-ticks">
+                                        <label class="inline-tick"><input type="radio" name="cpr" value="ja">ja</label>
+                                        <label class="inline-tick"><input type="radio" name="cpr" value="nein">nein</label>
+                                        <label class="inline-tick"><input type="radio" name="cpr" value="unklar">unklar</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Zeitpunkt</label>
+                                    <input class="line-input" name="event_time">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="page-row page-bottom">
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">3. Erstbefund | 3.1 Neurologie</div>
+                                <div class="box-body">
+                                    <div class="split">
+                                        <div class="small-stack">
+                                            <div class="label">GCS</div>
+                                            <div class="field"><label>Augen /4</label><input class="small-input narrow" name="gcs_eyes"></div>
+                                            <div class="field"><label>Sprache /5</label><input class="small-input narrow" name="gcs_verbal"></div>
+                                            <div class="field"><label>Motorik /6</label><input class="small-input narrow" name="gcs_motor"></div>
+                                            <div class="field"><label>Summe /15</label><input class="small-input narrow" name="gcs_sum"></div>
+                                        </div>
+                                        <div class="small-stack">
+                                            <div class="label">Pupillenweite</div>
+                                            <div class="matrix">
+                                                <div class="matrix-row"><span>eng</span><input type="checkbox" name="pupil_re" value="eng"><input type="checkbox" name="pupil_li" value="eng"><span></span><span></span></div>
+                                                <div class="matrix-row"><span>mittel</span><input type="checkbox" name="pupil_re" value="mittel"><input type="checkbox" name="pupil_li" value="mittel"><span></span><span></span></div>
+                                                <div class="matrix-row"><span>weit</span><input type="checkbox" name="pupil_re" value="weit"><input type="checkbox" name="pupil_li" value="weit"><span></span><span></span></div>
+                                                <div class="matrix-row"><span>entrundet</span><input type="checkbox" name="pupil_re" value="entrundet"><input type="checkbox" name="pupil_li" value="entrundet"><span></span><span></span></div>
+                                                <div class="matrix-row"><span>nicht beurteilbar</span><input type="checkbox" name="pupil_re" value="nb"><input type="checkbox" name="pupil_li" value="nb"><span></span><span></span></div>
+                                                <div class="matrix-row"><span>keine Lichtreaktion</span><input type="checkbox" name="pupil_re" value="keine_reaktion"><input type="checkbox" name="pupil_li" value="keine_reaktion"><span></span><span></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="split">
+                                        <div class="small-stack">
+                                            <div class="label">Bewusstseinslage</div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="consciousness" value="wach_orientiert">Wach / orientiert</label>
+                                                <label class="tick"><input type="checkbox" name="consciousness" value="somnolent">Somnolent</label>
+                                                <label class="tick"><input type="checkbox" name="consciousness" value="komatoes">Komatoes</label>
+                                                <label class="tick"><input type="checkbox" name="consciousness" value="sediert">Sediert / narkotisiert</label>
+                                            </div>
+                                        </div>
+                                        <div class="small-stack">
+                                            <div class="label">Neurologische Auffaelligkeiten</div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="fokalneurologie">Fokalneurologie</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="sprachstoerung">Sprachstoerung</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="sehstoerung">Sehstoerung</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="babinski">Babinski-Zeichen</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="meningismus">Meningismus</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="demenz">Demenz</label>
+                                                <label class="tick"><input type="checkbox" name="neuro_flags" value="sonstige">Sonstige</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="small-stack">
+                                        <div class="label">Extremitaetenbewegung</div>
+                                        <div class="mini-note">3 normal, 2 leicht vermindert, 1 stark vermindert, 0 keine</div>
+                                        <div class="matrix">
+                                            <div class="matrix-row"><span>Arm re</span><input type="radio" name="arm_re" value="3"><input type="radio" name="arm_re" value="2"><input type="radio" name="arm_re" value="1"><input type="radio" name="arm_re" value="0"></div>
+                                            <div class="matrix-row"><span>Arm li</span><input type="radio" name="arm_li" value="3"><input type="radio" name="arm_li" value="2"><input type="radio" name="arm_li" value="1"><input type="radio" name="arm_li" value="0"></div>
+                                            <div class="matrix-row"><span>Bein re</span><input type="radio" name="leg_re" value="3"><input type="radio" name="leg_re" value="2"><input type="radio" name="leg_re" value="1"><input type="radio" name="leg_re" value="0"></div>
+                                            <div class="matrix-row"><span>Bein li</span><input type="radio" name="leg_li" value="3"><input type="radio" name="leg_li" value="2"><input type="radio" name="leg_li" value="1"><input type="radio" name="leg_li" value="0"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="split">
+                                <section class="box">
+                                    <div class="box-title">4. Erstdiagnose</div>
+                                    <div class="box-body">
+                                        <div class="box-subtitle">ZNS</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="diag_zns" value="tia_apoplex">TIA/Apoplex/Gehirnblutung</label>
+                                            <label class="tick"><input type="checkbox" name="diag_zns" value="krampfanfall">Krampfanfall</label>
+                                            <label class="tick"><input type="checkbox" name="diag_zns" value="status_epilepticus">Status epilepticus</label>
+                                            <label class="tick"><input type="checkbox" name="diag_zns" value="meningitis">Meningitis/Encephalitis</label>
+                                            <label class="tick"><input type="checkbox" name="diag_zns" value="sonstige">sonstige</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Herz-Kreislauf</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="nstemi">NSTEMI-Angor</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="stemi">STEMI</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="rhythm">Rhythmusstoerung</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="le">Lungenembolie</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="loe">Lungenoedem</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="crisis">Hypertensive Entgleisung/Krise</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="syncope">Synkope</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="arrest">Kreislaufstillstand</label>
+                                            <label class="tick"><input type="checkbox" name="diag_cardio" value="pm_icd">PM/ICD Fehlfunktion</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Atmung</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="diag_resp" value="asthma">Asthmakrise</label>
+                                            <label class="tick"><input type="checkbox" name="diag_resp" value="status_asthmaticus">Status asthmaticus</label>
+                                            <label class="tick"><input type="checkbox" name="diag_resp" value="copd">exacerbierte COPD</label>
+                                            <label class="tick"><input type="checkbox" name="diag_resp" value="pneumonia">Pneumonie/Bronchitis</label>
+                                            <label class="tick"><input type="checkbox" name="diag_resp" value="stridor">Stridor</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Stoffwechsel</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="diag_meta" value="glucose">Blutzuckerentgleisung</label>
+                                            <label class="tick"><input type="checkbox" name="diag_meta" value="electrolytes">Elektrolyte/Dehydrierung</label>
+                                            <label class="tick"><input type="checkbox" name="diag_meta" value="other">sonstige</label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section class="box">
+                                    <div class="box-title">4.1 Erkrankung</div>
+                                    <div class="box-body">
+                                        <div class="box-subtitle">Psychiatrie</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="disease_psy" value="psychosis">Psychose/Depression/Manie</label>
+                                            <label class="tick"><input type="checkbox" name="disease_psy" value="agitation">Erregungszustand</label>
+                                            <label class="tick"><input type="checkbox" name="disease_psy" value="intox">Intoxikation</label>
+                                            <label class="tick"><input type="checkbox" name="disease_psy" value="withdrawal">Entzug</label>
+                                            <label class="tick"><input type="checkbox" name="disease_psy" value="suicide">Suizidversuch</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Abdomen</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="disease_abd" value="acute">akutes Abdomen</label>
+                                            <label class="tick"><input type="checkbox" name="disease_abd" value="bleeding">gastrointest. Blutung</label>
+                                            <label class="tick"><input type="checkbox" name="disease_abd" value="other">sonstige</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Gynaekologie / Geburtshilfe</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="disease_gyn" value="birth">Geburt</label>
+                                            <label class="tick"><input type="checkbox" name="disease_gyn" value="bleeding">vagin. Blutung</label>
+                                            <label class="tick"><input type="checkbox" name="disease_gyn" value="eclampsia">Praeeklampsie/Eklampsie</label>
+                                            <label class="tick"><input type="checkbox" name="disease_gyn" value="pregnancy_week">Schwangerschaftswoche</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Paediatrie</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="disease_ped" value="fieberkrampf">Fieberkrampf</label>
+                                            <label class="tick"><input type="checkbox" name="disease_ped" value="sids">SIDS/ALTE</label>
+                                            <label class="tick"><input type="checkbox" name="disease_ped" value="croup">Pseudokrupp/Epiglottitis</label>
+                                        </div>
+                                        <div class="section-line box-subtitle">Sonstiges</div>
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="disease_misc" value="allergy">Allergie/Anaphylaxie</label>
+                                            <label class="tick"><input type="checkbox" name="disease_misc" value="heat">Hitzschlag</label>
+                                            <label class="tick"><input type="checkbox" name="disease_misc" value="hypothermia">Hypothermie</label>
+                                            <label class="tick"><input type="checkbox" name="disease_misc" value="infection">Infektion</label>
+                                            <label class="tick"><input type="checkbox" name="disease_misc" value="palliative">palliat. Situation</label>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">3.2 Messwerte</div>
+                                <div class="box-body">
+                                    <div class="metrics-grid">
+                                        <div class="metric"><span class="label">RR</span><div class="digit-row"><input class="tiny-input" name="rr_1"><input class="tiny-input" name="rr_2"><input class="tiny-input" name="rr_3"></div></div>
+                                        <div class="metric"><span class="label">Puls</span><div class="digit-row"><input class="tiny-input" name="pulse_1"><input class="tiny-input" name="pulse_2"><input class="tiny-input" name="pulse_3"></div></div>
+                                        <div class="metric"><span class="label">Temp</span><div class="digit-row"><input class="tiny-input" name="temp_1"><input class="tiny-input" name="temp_2"><input class="tiny-input" name="temp_3"></div></div>
+                                        <div class="metric"><span class="label">BZ</span><div class="digit-row"><input class="tiny-input" name="bz_1"><input class="tiny-input" name="bz_2"><input class="tiny-input" name="bz_3"></div></div>
+                                        <div class="metric"><span class="label">AF</span><div class="digit-row"><input class="tiny-input" name="af_1"><input class="tiny-input" name="af_2"><input class="tiny-input" name="af_3"></div></div>
+                                        <div class="metric"><span class="label">SpO2</span><div class="digit-row"><input class="tiny-input" name="spo2_1"><input class="tiny-input" name="spo2_2"><input class="tiny-input" name="spo2_3"></div></div>
+                                        <div class="metric"><span class="label">Schmerz</span><div class="digit-row"><input class="tiny-input" name="pain_1"><input class="tiny-input" name="pain_2"><input class="tiny-input" name="pain_3"></div></div>
+                                        <div class="metric"><span class="label">etCO2</span><div class="digit-row"><input class="tiny-input" name="etco2_1"><input class="tiny-input" name="etco2_2"><input class="tiny-input" name="etco2_3"></div></div>
+                                        <div class="metric"><span class="label">CO-Hb%</span><div class="digit-row"><input class="tiny-input" name="cohb_1"><input class="tiny-input" name="cohb_2"><input class="tiny-input" name="cohb_3"></div></div>
+                                    </div>
+                                    <div class="inline-ticks">
+                                        <label class="inline-tick"><input type="checkbox" name="pulse_regular" value="ja">regelmaessig</label>
+                                        <label class="inline-tick"><input type="radio" name="oxygen_support" value="mit_o2">mit O2</label>
+                                        <label class="inline-tick"><input type="radio" name="oxygen_support" value="ohne_o2">ohne O2</label>
+                                        <label class="inline-tick"><input type="radio" name="rekap" value="lt_2">&lt;= 2 Sek</label>
+                                        <label class="inline-tick"><input type="radio" name="rekap" value="gt_2">&gt; 2 Sek</label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="box">
+                                <div class="box-title">3.3 EKG</div>
+                                <div class="box-body tick-grid cols-2">
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="sinus">Sinusrhythmus</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="vf">Kammerflimmern/Flattern</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="absolute">Absolute Arrhythmie</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="pea">Elektromechanische Dissoziation</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="avblock1">AV-Block I</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="asystolie">Asystolie</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="avblock2">AV-Block II</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="pacemaker">Schrittmacher</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="avblock3">AV-Block III</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="infarct">Infarkt-EKG</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="brady">Bradykardie</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="narrow">Schmale QRS-Tachykardie</label>
+                                    <label class="tick"><input type="checkbox" name="ekg_1" value="wide">Breite QRS-Tachykardie</label>
+                                </div>
+                                <div class="inline-ticks">
+                                    <label class="inline-tick"><input type="checkbox" name="ekg_extra" value="ventrikulaer">ventrikulaer</label>
+                                    <label class="inline-tick"><input type="checkbox" name="ekg_extra" value="monotop">monotop</label>
+                                    <label class="inline-tick"><input type="checkbox" name="ekg_extra" value="polytop">polytop</label>
+                                    <label class="inline-tick"><input type="checkbox" name="ekg_extra" value="salven">Salven</label>
+                                </div>
+                            </section>
+
+                            <section class="box">
+                                <div class="box-title">3.4 Atmung | 3.5 psychischer Zustand</div>
+                                <div class="box-body">
+                                    <div class="tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="unauffaellig">unauffaellig</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="nicht_untersucht">nicht untersucht</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="cheyne">Cheyne-Stokes/Biot-Atmung</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="dyspnoe">Dyspnoe</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="apnoe">Apnoe</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="ronchi">Ronchi</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="zyanose">Zyanose</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="spastik">Spastik</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="schnappatmung">Schnappatmung</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="rassel">Rasselgeraeusche</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="stridor">Stridor</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="hypervent">Hyperventilation</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="obstruction">Atemwegsverlegung</label>
+                                        <label class="tick"><input type="checkbox" name="breathing_flags" value="intub">Beatmung/Intub.</label>
+                                    </div>
+                                    <div class="section-line tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="unauffaellig">unauffaellig</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="keine">keine</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="aggressiv">aggressiv</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="depressiv">depressiv</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="wahnhaft">wahnhaft</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="verwirrt">verwirrt</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="verlangsamt">verlangsamt</label>
+                                        <label class="tick"><input type="checkbox" name="psych_flags" value="euphorisch">euphorisch</label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="box">
+                                <div class="box-title">4.2 Verletzungen</div>
+                                <div class="box-body">
+                                    <div class="injury-layout">
+                                        <div class="injury-table">
+                                            <div class="injury-head"><span></span><span>offen</span><span>geschl.</span><span>leicht</span><span>mittel</span><span>schwer</span></div>
+                                            <div class="injury-row"><span>Schaedel-Hirn</span><input type="checkbox" name="injury_head" value="offen"><input type="checkbox" name="injury_head" value="geschlossen"><input type="checkbox" name="injury_head" value="leicht"><input type="checkbox" name="injury_head" value="mittel"><input type="checkbox" name="injury_head" value="schwer"></div>
+                                            <div class="injury-row"><span>Gesicht</span><input type="checkbox" name="injury_face" value="offen"><input type="checkbox" name="injury_face" value="geschlossen"><input type="checkbox" name="injury_face" value="leicht"><input type="checkbox" name="injury_face" value="mittel"><input type="checkbox" name="injury_face" value="schwer"></div>
+                                            <div class="injury-row"><span>HWS</span><input type="checkbox" name="injury_hws" value="offen"><input type="checkbox" name="injury_hws" value="geschlossen"><input type="checkbox" name="injury_hws" value="leicht"><input type="checkbox" name="injury_hws" value="mittel"><input type="checkbox" name="injury_hws" value="schwer"></div>
+                                            <div class="injury-row"><span>Thorax</span><input type="checkbox" name="injury_thorax" value="offen"><input type="checkbox" name="injury_thorax" value="geschlossen"><input type="checkbox" name="injury_thorax" value="leicht"><input type="checkbox" name="injury_thorax" value="mittel"><input type="checkbox" name="injury_thorax" value="schwer"></div>
+                                            <div class="injury-row"><span>Abdomen</span><input type="checkbox" name="injury_abdomen" value="offen"><input type="checkbox" name="injury_abdomen" value="geschlossen"><input type="checkbox" name="injury_abdomen" value="leicht"><input type="checkbox" name="injury_abdomen" value="mittel"><input type="checkbox" name="injury_abdomen" value="schwer"></div>
+                                            <div class="injury-row"><span>BWS/LWS</span><input type="checkbox" name="injury_back" value="offen"><input type="checkbox" name="injury_back" value="geschlossen"><input type="checkbox" name="injury_back" value="leicht"><input type="checkbox" name="injury_back" value="mittel"><input type="checkbox" name="injury_back" value="schwer"></div>
+                                            <div class="injury-row"><span>Becken</span><input type="checkbox" name="injury_pelvis" value="offen"><input type="checkbox" name="injury_pelvis" value="geschlossen"><input type="checkbox" name="injury_pelvis" value="leicht"><input type="checkbox" name="injury_pelvis" value="mittel"><input type="checkbox" name="injury_pelvis" value="schwer"></div>
+                                            <div class="injury-row"><span>Obere Extremitaeten</span><input type="checkbox" name="injury_upper" value="offen"><input type="checkbox" name="injury_upper" value="geschlossen"><input type="checkbox" name="injury_upper" value="leicht"><input type="checkbox" name="injury_upper" value="mittel"><input type="checkbox" name="injury_upper" value="schwer"></div>
+                                            <div class="injury-row"><span>Untere Extremitaeten</span><input type="checkbox" name="injury_lower" value="offen"><input type="checkbox" name="injury_lower" value="geschlossen"><input type="checkbox" name="injury_lower" value="leicht"><input type="checkbox" name="injury_lower" value="mittel"><input type="checkbox" name="injury_lower" value="schwer"></div>
+                                            <div class="injury-row"><span>Weichteile</span><input type="checkbox" name="injury_soft" value="offen"><input type="checkbox" name="injury_soft" value="geschlossen"><input type="checkbox" name="injury_soft" value="leicht"><input type="checkbox" name="injury_soft" value="mittel"><input type="checkbox" name="injury_soft" value="schwer"></div>
+                                        </div>
+                                        <div class="figure-box" aria-label="Verletzungsschema">
+                                            <svg viewBox="0 0 120 220" role="img" aria-label="Koerperschema">
+                                                <circle cx="60" cy="20" r="16" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="56" cy="17" r="1.8" fill="#335b9d"/>
+                                                <circle cx="64" cy="17" r="1.8" fill="#335b9d"/>
+                                                <path d="M54 25 Q60 30 66 25" fill="none" stroke="#335b9d" stroke-width="1.8"/>
+                                                <rect x="38" y="42" width="44" height="52" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <rect x="45" y="94" width="30" height="12" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="38" y1="52" x2="20" y2="80" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="82" y1="52" x2="100" y2="80" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="20" y1="80" x2="24" y2="124" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="100" y1="80" x2="96" y2="124" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="52" y1="106" x2="34" y2="154" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="68" y1="106" x2="86" y2="154" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="34" y1="154" x2="34" y2="198" stroke="#335b9d" stroke-width="2"/>
+                                                <line x1="86" y1="154" x2="86" y2="198" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="20" cy="80" r="7" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="100" cy="80" r="7" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="24" cy="124" r="7" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="96" cy="124" r="7" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="34" cy="154" r="8" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <circle cx="86" cy="154" r="8" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <rect x="26" y="198" width="16" height="14" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                                <rect x="78" y="198" width="16" height="14" fill="none" stroke="#335b9d" stroke-width="2"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <div class="split">
+                                        <div class="small-stack">
+                                            <div class="label">Verbrennung / Verbruehung</div>
+                                            <div class="line-grid cols-2">
+                                                <div class="field"><label>Grad</label><input class="small-input" name="burn_grade_1"></div>
+                                                <div class="field"><label>%</label><input class="small-input" name="burn_percent_1"></div>
+                                                <div class="field"><label>Grad</label><input class="small-input" name="burn_grade_2"></div>
+                                                <div class="field"><label>%</label><input class="small-input" name="burn_percent_2"></div>
+                                            </div>
+                                            <div class="tick-grid cols-2">
+                                                <label class="tick"><input type="checkbox" name="special_trauma" value="inhalation">Inhalationstrauma</label>
+                                                <label class="tick"><input type="checkbox" name="special_trauma" value="polytrauma">Polytrauma</label>
+                                                <label class="tick"><input type="checkbox" name="special_trauma" value="drowning">Ertrinken/Near-drowning</label>
+                                                <label class="tick"><input type="checkbox" name="special_trauma" value="electrical">Elektrounfall</label>
+                                                <label class="tick"><input type="checkbox" name="special_trauma" value="other">andere</label>
+                                            </div>
+                                        </div>
+                                        <div class="small-stack">
+                                            <div class="label">Unfallmechanismus</div>
+                                            <div class="tick-grid cols-2">
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="stumpf">stumpf</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="penetrierend">penetrierend</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="sturz">Sturz</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="sturz_3m">&gt; 3m Hoehe</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="stich">Stichverletzung</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="schuss">Schussverletzung</label>
+                                                <label class="tick"><input type="checkbox" name="mechanism" value="explosion">Explosionsverletzung</label>
+                                            </div>
+                                            <div class="label">Verkehr</div>
+                                            <div class="tick-grid cols-2">
+                                                <label class="tick"><input type="checkbox" name="traffic" value="fussgaenger">Fussgaenger</label>
+                                                <label class="tick"><input type="checkbox" name="traffic" value="motorrad">Motorradfahrer</label>
+                                                <label class="tick"><input type="checkbox" name="traffic" value="fahrrad">Fahrradfahrer</label>
+                                                <label class="tick"><input type="checkbox" name="traffic" value="pkw_lkw">PKW/LKW-Insasse</label>
+                                                <label class="tick"><input type="checkbox" name="traffic" value="eingeklemmt">Eingeklemmt</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>ERSTDIAGNOSE (Notarzt)</label>
+                                        <input class="line-input" name="primary_diagnosis">
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="report-page">
+                    <div class="page-row page-two">
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">5. Verlauf</div>
+                                <div class="box-body verlauf-box">
+                                    <div class="verlauf-grid">
+                                        <div class="legend">
+                                            <span>Puls</span>
+                                            <span>RR</span>
+                                            <span>Defibrill.</span>
+                                            <span>Intub./GCS</span>
+                                            <span>CPR</span>
+                                            <span>Beatmung</span>
+                                            <span>Transport</span>
+                                        </div>
+                                        <div class="trend-surface">
+                                            <canvas id="trendCanvas" class="trend-canvas"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label>Verlaufsbeschreibung</label>
+                                        <textarea class="line-textarea medium" name="course_description"></textarea>
+                                    </div>
+                                    <div class="box-subtitle">5.3 Medikamente</div>
+                                    <div class="med-table">
+                                        <div class="med-row"><input class="line-input" name="med_1" placeholder="Medikament"><input class="line-input" name="med_dose_1" placeholder="Dosis"></div>
+                                        <div class="med-row"><input class="line-input" name="med_2" placeholder="Medikament"><input class="line-input" name="med_dose_2" placeholder="Dosis"></div>
+                                        <div class="med-row"><input class="line-input" name="med_3" placeholder="Medikament"><input class="line-input" name="med_dose_3" placeholder="Dosis"></div>
+                                        <div class="med-row"><input class="line-input" name="med_4" placeholder="Medikament"><input class="line-input" name="med_dose_4" placeholder="Dosis"></div>
+                                        <div class="med-row"><input class="line-input" name="med_5" placeholder="Medikament"><input class="line-input" name="med_dose_5" placeholder="Dosis"></div>
+                                    </div>
+                                    <div class="tick-grid cols-4">
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="keine">keine Medikamente</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="analgetika">Analgetika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="antiepileptika">Antiepileptika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="kortikosteroide">Kortikosteroide</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="antiarrhythmika">Antiarrhythmika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="antihypertensiva">Antihypertensiva</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="bronchodilatantien">Bronchodilatantien</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="muskelrelaxantien">Muskelrelaxantien</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="antiemetics">Antiemetika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="antidota">Antidota</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="diuretika">Diuretika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="narkotika">Narkotika</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="glucose">Glukose</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="sedativa">Sedativa</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="kristalloide">Kristalloide</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="kolloide">Kolloide</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="puffer">Pufferloesung</label>
+                                        <label class="tick"><input type="checkbox" name="med_groups" value="sonstige">Sonstige</label>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">6. Massnahmen</div>
+                                <div class="box-body">
+                                    <div class="box-subtitle">6.1 Atmung</div>
+                                    <div class="tick-grid cols-2">
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="freimachen">Atemweg freimachen/freihalten</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="tracheostoma">Tracheostoma</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="absaugung">Absaugung</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="aerosol">Aerosol</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="o2">Sauerstoffgabe</label>
+                                        <div class="field"><label>O2 l/min</label><input class="small-input" name="oxygen_lpm"></div>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="sga">Supraglott. Atemwegshilfe (SGA)</label>
+                                        <div class="field"><label>Groesse cm/OZR</label><input class="small-input" name="sga_size"></div>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="sap">durch SAP gesetzt</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="intubation">Intubation</label>
+                                        <label class="tick"><input type="checkbox" name="intub_route" value="oral">oral</label>
+                                        <label class="tick"><input type="checkbox" name="intub_route" value="nasal">nasal</label>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="erschwert">Intubation erschwert</label>
+                                        <div class="field"><label>Cormack / Gr.</label><input class="line-input" name="cormack_grade"></div>
+                                        <label class="tick"><input type="checkbox" name="measure_airway" value="chir">chir. Atemweg</label>
+                                    </div>
+
+                                    <div class="section-line box-subtitle">6.2 Beatmung</div>
+                                    <div class="tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="cpap">CPAP/NIV</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="manuel">Manuell</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="maske">Maske</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="maschinell">Maschinell</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="pcv">PCV</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="cmv">CMV</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="sonstige">Sonstige</label>
+                                        <label class="tick"><input type="checkbox" name="ventilation" value="tracheostoma">Tracheostoma</label>
+                                    </div>
+                                    <div class="split">
+                                        <div class="field"><label>Thoraxdrainage Lage / Ch.</label><input class="line-input" name="chest_tube"></div>
+                                        <div class="line-grid cols-2">
+                                            <div class="field"><label>FiO2</label><input class="small-input" name="vent_fio2"></div>
+                                            <div class="field"><label>RR</label><input class="small-input" name="vent_rr"></div>
+                                            <div class="field"><label>AMV</label><input class="small-input" name="vent_amv"></div>
+                                            <div class="field"><label>Pinsp</label><input class="small-input" name="vent_pinsp"></div>
+                                            <div class="field"><label>TV</label><input class="small-input" name="vent_tv"></div>
+                                            <div class="field"><label>Peep</label><input class="small-input" name="vent_peep"></div>
+                                        </div>
+                                    </div>
+                                    <div class="field"><label>Bem.</label><input class="line-input" name="vent_note"></div>
+
+                                    <div class="section-line box-subtitle">6.3 Herz/Kreislauf</div>
+                                    <div class="split">
+                                        <div class="checkbox-list">
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="venous_1">venoeser Zugang</label>
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="venous_2">venoeser Zugang</label>
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="arterial">arterieller Kath</label>
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="io">intraossaerer Zugang</label>
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="nasal">intranasale Applikation</label>
+                                            <label class="tick"><input type="checkbox" name="circulation_steps" value="syringe">Spritzenpumpen</label>
+                                        </div>
+                                        <div class="line-grid">
+                                            <div class="split"><div class="field"><label>Ort</label><input class="line-input" name="access_site_1"></div><div class="field"><label>Groesse</label><input class="line-input" name="access_size_1"></div></div>
+                                            <div class="split"><div class="field"><label>Ort</label><input class="line-input" name="access_site_2"></div><div class="field"><label>Groesse</label><input class="line-input" name="access_size_2"></div></div>
+                                            <div class="split"><div class="field"><label>Ort</label><input class="line-input" name="access_site_3"></div><div class="field"><label>Groesse</label><input class="line-input" name="access_size_3"></div></div>
+                                            <div class="field"><label>Bem.</label><input class="line-input" name="access_note"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-line box-subtitle">CPR</div>
+                                    <div class="tick-grid cols-2">
+                                        <label class="tick"><input type="checkbox" name="cpr_steps" value="thorax">Thoraxkompression</label>
+                                        <label class="tick"><input type="checkbox" name="cpr_steps" value="defi">Defibrillation / Kardioversion</label>
+                                        <label class="tick"><input type="checkbox" name="cpr_steps" value="lucas">LUCAS</label>
+                                        <label class="tick"><input type="checkbox" name="cpr_steps" value="external_pacer">Externer Schrittmacher</label>
+                                    </div>
+                                    <div class="split">
+                                        <div class="field"><label>ROSC stabil (Zeit)</label><input class="line-input" name="rosc_time"></div>
+                                        <div class="split">
+                                            <div class="field"><label>1ste Defi</label><input class="small-input" name="first_shock"></div>
+                                            <div class="field"><label>Anzahl</label><input class="small-input" name="shock_count"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-line box-subtitle">6.4 Weitere Massnahmen</div>
+                                    <div class="tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="analgosedierung">Analgosedierung</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="anaesthesie">Anaesthesie</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="blutentnahme">Blutentnahme</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="verband">Verband / Wundversorgung</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="haemostatika">Haemostatika</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="waermeerhalt">Waermeerhalt</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="druckverband">Druckverband</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="oral">oral</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="tourniquet">Tourniquet</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="magensonde">Magensonde</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="entbindung">Entbindung</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="nasal">nasal</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="spineboard">Spineboard/Schaufeltrage</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="ked">KED</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="th">TH</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="hws">HWS Stuetzkragen</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="vacuum">Vakuummatratze</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="beckenschlinge">Beckenschlinge</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="schienung">Extremitaetenschienung</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="reponierung">Reponierung</label>
+                                        <label class="tick"><input type="checkbox" name="more_measures" value="lagerung">Lagerung</label>
+                                    </div>
+
+                                    <div class="section-line box-subtitle">6.5 Monitoring</div>
+                                    <div class="tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="monitor">EKG-Monitoring</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="rr_man">man. Messung RR</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="12ekg">12-Kanal-EKG</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="rr_osc">oszillometr. Messung RR</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="pulsox">Pulsoxymetrie</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="temperature">Temperatur</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="capno">Kapnographie</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="sono">Sonographie</label>
+                                        <label class="tick"><input type="checkbox" name="monitoring" value="co">CO</label>
+                                        <div class="field"><label>Andere</label><input class="line-input" name="monitoring_other"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="page-row page-two-lower">
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">7. Uebergabe</div>
+                                <div class="box-body">
+                                    <div class="transfer-grid">
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">7.1 Zustand</div>
+                                            <div class="tick-grid cols-2">
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="verbessert">verbessert</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="gleich">gleich</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="verschlechtert">verschlechtert</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="orientiert">orientiert</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="getruebt">getruebt</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="narkotisiert">narkotisiert/sediert</label>
+                                                <label class="tick"><input type="checkbox" name="handover_state" value="bewusstlos">bewusstlos</label>
+                                            </div>
+                                            <div class="split">
+                                                <div class="field"><label>Zeitpunkt</label><input class="small-input" name="handover_time"></div>
+                                                <div class="field"><label>Glasgow-Coma-Scale</label><input class="small-input" name="handover_gcs"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">7.2 Messwerte</div>
+                                            <div class="metrics-grid">
+                                                <div class="metric"><span class="label">RR</span><div class="digit-row"><input class="tiny-input" name="handover_rr_1"><input class="tiny-input" name="handover_rr_2"><input class="tiny-input" name="handover_rr_3"></div></div>
+                                                <div class="metric"><span class="label">Puls</span><div class="digit-row"><input class="tiny-input" name="handover_pulse_1"><input class="tiny-input" name="handover_pulse_2"><input class="tiny-input" name="handover_pulse_3"></div></div>
+                                                <div class="metric"><span class="label">Temp</span><div class="digit-row"><input class="tiny-input" name="handover_temp_1"><input class="tiny-input" name="handover_temp_2"><input class="tiny-input" name="handover_temp_3"></div></div>
+                                                <div class="metric"><span class="label">BZ</span><div class="digit-row"><input class="tiny-input" name="handover_bz_1"><input class="tiny-input" name="handover_bz_2"><input class="tiny-input" name="handover_bz_3"></div></div>
+                                                <div class="metric"><span class="label">AF</span><div class="digit-row"><input class="tiny-input" name="handover_af_1"><input class="tiny-input" name="handover_af_2"><input class="tiny-input" name="handover_af_3"></div></div>
+                                                <div class="metric"><span class="label">SpO2</span><div class="digit-row"><input class="tiny-input" name="handover_spo2_1"><input class="tiny-input" name="handover_spo2_2"><input class="tiny-input" name="handover_spo2_3"></div></div>
+                                                <div class="metric"><span class="label">Schmerz</span><div class="digit-row"><input class="tiny-input" name="handover_pain_1"><input class="tiny-input" name="handover_pain_2"><input class="tiny-input" name="handover_pain_3"></div></div>
+                                                <div class="metric"><span class="label">etCO2</span><div class="digit-row"><input class="tiny-input" name="handover_etco2_1"><input class="tiny-input" name="handover_etco2_2"><input class="tiny-input" name="handover_etco2_3"></div></div>
+                                                <div class="metric"><span class="label">CO-Hb%</span><div class="digit-row"><input class="tiny-input" name="handover_cohb_1"><input class="tiny-input" name="handover_cohb_2"><input class="tiny-input" name="handover_cohb_3"></div></div>
+                                            </div>
+                                            <div class="inline-ticks">
+                                                <label class="inline-tick"><input type="checkbox" name="handover_regular" value="ja">regelmaessig</label>
+                                                <label class="inline-tick"><input type="radio" name="handover_o2" value="mit_o2">mit O2</label>
+                                                <label class="inline-tick"><input type="radio" name="handover_o2" value="ohne_o2">ohne O2</label>
+                                                <label class="inline-tick"><input type="radio" name="handover_rekap" value="lt_2">&lt;= 2 Sek</label>
+                                                <label class="inline-tick"><input type="radio" name="handover_rekap" value="gt_2">&gt; 2 Sek</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="box">
+                                <div class="box-title">8. Ergebnis</div>
+                                <div class="box-body">
+                                    <div class="split">
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">8.1 Einsatzbeschreibung</div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="transport_kh">Transport ins KH</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="sekundaer">Sekundaereinsatz</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="kein_patient">kein Patient vorgefunden</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="refused">Patient lehnt Transport ab</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="untersuchung">Untersuchung/Behandlung</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="anderes_rm">Uebergabe an anderes Rettungsmittel</label>
+                                            </div>
+                                            <div class="field">
+                                                <label>Art</label>
+                                                <input class="line-input" name="result_kind">
+                                            </div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="reanimation_success">Reanimation primaer erfolgreich</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="reanimation_unsuccessful">Reanimation primaer erfolglos</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="death_transport">Tod waehrend des Transportes</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="todesfeststellung">Todesfeststellung</label>
+                                            </div>
+                                            <div class="split">
+                                                <div class="field"><label>Zeitpunkt</label><input class="small-input" name="death_time"></div>
+                                                <div class="field"><label>&nbsp;</label><input class="line-input" name="result_time_note"></div>
+                                            </div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="police">Information an Polizei</label>
+                                                <label class="tick"><input type="checkbox" name="result_desc" value="result_other">Sonstiges</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">8.3 Notfallkategorie</div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="checkbox" name="category" value="kein_notfall">kein Notfall</label>
+                                                <label class="tick"><input type="checkbox" name="category" value="na_indication">Notarztindikation</label>
+                                                <label class="tick"><input type="checkbox" name="category" value="acute_illness">akute Erkrankung</label>
+                                                <label class="tick"><input type="checkbox" name="category" value="poisoning">Vergiftung</label>
+                                                <label class="tick"><input type="checkbox" name="category" value="injury">Verletzung</label>
+                                            </div>
+                                            <div class="inline-ticks">
+                                                <label class="inline-tick"><input type="radio" name="na_yes_no" value="ja">ja</label>
+                                                <label class="inline-tick"><input type="radio" name="na_yes_no" value="nein">nein</label>
+                                            </div>
+                                            <div class="section-line box-subtitle">Unfall</div>
+                                            <div class="tick-grid cols-2">
+                                                <label class="tick"><input type="checkbox" name="accident_context" value="verkehr">Verkehr</label>
+                                                <label class="tick"><input type="checkbox" name="accident_context" value="sport">Sportunfall</label>
+                                                <label class="tick"><input type="checkbox" name="accident_context" value="arbeit">Arbeit</label>
+                                                <label class="tick"><input type="checkbox" name="accident_context" value="home">haeuslicher Unfall</label>
+                                                <label class="tick"><input type="checkbox" name="accident_context" value="other">Sonstige</label>
+                                            </div>
+
+                                            <div class="section-line box-subtitle">8.4 NACA-Score</div>
+                                            <div class="checkbox-list">
+                                                <label class="tick"><input type="radio" name="naca_score" value="I">I - geringfuegige Stoerung</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="II">II - ambulante Abklaerung</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="III">III - stationaere Behandlung</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="IV">IV - akute Lebensgefahr</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="V">V - nicht auszuschliessen</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="VI">VI - akute Lebensgefahr</label>
+                                                <label class="tick"><input type="radio" name="naca_score" value="VII">VII - Reanimation / Tod</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="split">
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">8.2 Ersthelfermassnahmen (Laien)</div>
+                                            <div class="inline-ticks">
+                                                <label class="inline-tick"><input type="radio" name="bystander_help" value="suffizient">suffizient</label>
+                                                <label class="inline-tick"><input type="radio" name="bystander_help" value="insuffizient">insuffizient</label>
+                                                <label class="inline-tick"><input type="radio" name="bystander_help" value="keine">keine</label>
+                                            </div>
+                                            <div class="inline-ticks">
+                                                <label class="inline-tick"><input type="radio" name="aed_used" value="ja">AED ja</label>
+                                                <label class="inline-tick"><input type="radio" name="aed_used" value="nein">AED nein</label>
+                                            </div>
+                                        </div>
+                                        <div class="small-stack">
+                                            <div class="box-subtitle">8.5 Zielklinik / Patientenuebergabe</div>
+                                            <div class="tick-grid cols-3">
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="station">Allgemeinstation</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="maternity">Maternite</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="stroke">Stroke Unit</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="er">Notaufnahme</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="cathlab">Herzkatheterlabor</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="op">OP</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="shockroom">Schockraum</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="none">keine Angaben</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="intensive">Intensivstation</label>
+                                                <label class="tick"><input type="checkbox" name="handover_target" value="praxis">Arztpraxis</label>
+                                            </div>
+                                            <div class="split">
+                                                <div class="field"><label>Anmeldung Zielklinik</label><input class="small-input" name="clinic_registration_time"></div>
+                                                <div class="field"><label>bei</label><input class="line-input" name="clinic_registration_person"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="page-row">
+                            <section class="box">
+                                <div class="box-title">7.3 EKG | 7.4 Atmung</div>
+                                <div class="box-body">
+                                    <div class="split">
+                                        <div class="tick-grid cols-2">
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="sinus">Sinusrhythmus</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="vf">Kammerflimmern/Flattern</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="absolute">Absolute Arrhythmie</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="pea">Elektromechanische Dissoziation</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="avblock1">AV-Block I</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="asystolie">Asystolie</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="avblock2">AV-Block II</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="pacemaker">Schrittmacher</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="avblock3">AV-Block III</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="infarct">Infarkt-EKG</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="brady">Bradykardie</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="narrow">Schmale QRS-Tachykardie</label>
+                                            <label class="tick"><input type="checkbox" name="ekg_handover" value="wide">Breite QRS-Tachykardie</label>
+                                        </div>
+                                        <div class="tick-grid cols-2">
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="unauffaellig">unauffaellig</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="nicht_untersucht">nicht untersucht</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="cheyne">Cheyne-Stokes/Biot-Atmung</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="dyspnoe">Dyspnoe</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="apnoe">Apnoe</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="ronchi">Ronchi</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="zyanose">Zyanose</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="spastik">Spastik</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="schnappatmung">Schnappatmung</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="rassel">Rasselgeraeusche</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="stridor">Stridor</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="hypervent">Hyperventilation</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="obstruction">Atemwegsverlegung</label>
+                                            <label class="tick"><input type="checkbox" name="breathing_handover" value="intub">Beatmung/Intub.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="box">
+                                <div class="box-title">9. Bemerkungen</div>
+                                <div class="box-body">
+                                    <div class="tick-grid cols-3">
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="cns">Chipkarte (CNS)</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="ekg">EKG</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="lab">Laborergebnisse</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="med_list">Medikamentenliste</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="prothesen">Prothesen</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="wertsachen">Wertsachen</label>
+                                        <label class="tick"><input type="checkbox" name="remarks_items" value="other">Sonstige</label>
+                                    </div>
+                                    <div class="field">
+                                        <label>Telefon Angehoerige</label>
+                                        <input class="line-input" name="family_phone">
+                                    </div>
+                                    <div class="field">
+                                        <label>Bemerkungen (z.B. Allergien, Hausarzt, Angehoerige, Wertsachen)</label>
+                                        <textarea class="line-textarea medium" name="remarks_text"></textarea>
+                                    </div>
+                                    <div class="two-col-note">
+                                        <div class="field">
+                                            <label>Unterschrift + Stempel Notarzt</label>
+                                            <input class="line-input signature-line" name="signature_doctor">
+                                        </div>
+                                        <div class="field">
+                                            <label>Unterschrift Einsatzteam</label>
+                                            <input class="line-input signature-line" name="signature_team">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const STORAGE_KEY = 'samuDocumentator.exact.v2';
+            const CANVAS_KEY = 'samuDocumentator.exact.v2.canvas';
+            const form = document.getElementById('reportForm');
+            const saveState = document.getElementById('saveState');
+            const printRoot = document.getElementById('printRoot');
+            const trendCanvas = document.getElementById('trendCanvas');
+            const clearCanvasBtn = document.getElementById('clearCanvasBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const printBtn = document.getElementById('printBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const actionButtons = [clearCanvasBtn, exportBtn, shareBtn, printBtn, resetBtn];
+            let saveTimer = null;
+            let drawing = false;
+            let lastPoint = null;
+            let canvasSnapshot = '';
+
+            function serializeForm() {
+                const data = {};
+                const elements = Array.from(form.elements).filter((element) => element.name);
+
+                elements.forEach((element) => {
+                    if (element.type === 'checkbox') {
+                        if (!Array.isArray(data[element.name])) {
+                            data[element.name] = [];
+                        }
+                        if (element.checked) {
+                            data[element.name].push(element.value || 'on');
+                        }
+                        return;
+                    }
+
+                    if (element.type === 'radio') {
+                        if (!(element.name in data)) {
+                            data[element.name] = '';
+                        }
+                        if (element.checked) {
+                            data[element.name] = element.value;
+                        }
+                        return;
+                    }
+
+                    data[element.name] = element.value;
+                });
+
+                return data;
+            }
+
+            function restoreForm(data) {
+                if (!data || typeof data !== 'object') {
+                    return;
+                }
+
+                const elements = Array.from(form.elements).filter((element) => element.name);
+                elements.forEach((element) => {
+                    const value = data[element.name];
+
+                    if (element.type === 'checkbox') {
+                        element.checked = Array.isArray(value) && value.includes(element.value || 'on');
+                        return;
+                    }
+
+                    if (element.type === 'radio') {
+                        element.checked = value === element.value;
+                        return;
+                    }
+
+                    if (typeof value === 'string') {
+                        element.value = value;
+                    }
+                });
+            }
+
+            function saveForm() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeForm()));
+                    if (canvasSnapshot) {
+                        localStorage.setItem(CANVAS_KEY, canvasSnapshot);
+                    }
+                    saveState.textContent = 'Gespeichert';
+                } catch (error) {
+                    console.error(error);
+                    saveState.textContent = 'Speichern fehlgeschlagen';
+                }
+            }
+
+            function scheduleSave() {
+                clearTimeout(saveTimer);
+                saveState.textContent = 'Speichert...';
+                saveTimer = setTimeout(saveForm, 350);
+            }
+
+            function resizeCanvas() {
+                const ratio = window.devicePixelRatio || 1;
+                const rect = trendCanvas.getBoundingClientRect();
+                const width = Math.max(1, Math.floor(rect.width * ratio));
+                const height = Math.max(1, Math.floor(rect.height * ratio));
+                const existing = canvasSnapshot;
+
+                if (trendCanvas.width === width && trendCanvas.height === height) {
+                    return;
+                }
+
+                trendCanvas.width = width;
+                trendCanvas.height = height;
+                const ctx = trendCanvas.getContext('2d');
+                ctx.scale(ratio, ratio);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#204b92';
+                ctx.lineWidth = 2;
+
+                if (existing) {
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.clearRect(0, 0, rect.width, rect.height);
+                        ctx.drawImage(img, 0, 0, rect.width, rect.height);
+                    };
+                    img.src = existing;
+                }
+            }
+
+            function canvasPoint(event) {
+                const rect = trendCanvas.getBoundingClientRect();
+                return {
+                    x: event.clientX - rect.left,
+                    y: event.clientY - rect.top
+                };
+            }
+
+            function persistCanvas() {
+                canvasSnapshot = trendCanvas.toDataURL('image/png');
+                scheduleSave();
+            }
+
+            function startDraw(event) {
+                drawing = true;
+                lastPoint = canvasPoint(event);
+            }
+
+            function moveDraw(event) {
+                if (!drawing) {
+                    return;
+                }
+
+                const ctx = trendCanvas.getContext('2d');
+                const point = canvasPoint(event);
+                ctx.beginPath();
+                ctx.moveTo(lastPoint.x, lastPoint.y);
+                ctx.lineTo(point.x, point.y);
+                ctx.stroke();
+                lastPoint = point;
+            }
+
+            function stopDraw() {
+                if (!drawing) {
+                    return;
+                }
+                drawing = false;
+                lastPoint = null;
+                persistCanvas();
+            }
+
+            function clearCanvas() {
+                const ctx = trendCanvas.getContext('2d');
+                ctx.clearRect(0, 0, trendCanvas.width, trendCanvas.height);
+                canvasSnapshot = '';
+                localStorage.removeItem(CANVAS_KEY);
+                scheduleSave();
+            }
+
+            function withExportState(task) {
+                return Promise.resolve(task()).catch((error) => {
+                    console.error(error);
+                    saveState.textContent = 'PDF fehlgeschlagen';
+                });
+            }
+
+            function setActionButtonsDisabled(disabled) {
+                actionButtons.forEach((button) => {
+                    button.disabled = disabled;
+                    button.style.opacity = disabled ? '0.65' : '';
+                    button.style.pointerEvents = disabled ? 'none' : '';
+                });
+            }
+
+            async function withPdfLayout(task) {
+                printRoot.classList.add('pdf-mode');
+                resizeCanvas();
+                await new Promise((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(resolve)));
+                try {
+                    return await task();
+                } finally {
+                    printRoot.classList.remove('pdf-mode');
+                    resizeCanvas();
+                }
+            }
+
+            function escapeHtml(value) {
+                return String(value || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function buildExportNode() {
+                const source = printRoot.cloneNode(true);
+                source.classList.remove('pdf-mode');
+
+                source.querySelectorAll('input, textarea, select, canvas').forEach((element) => {
+                    if (element.tagName === 'CANVAS') {
+                        const image = document.createElement('img');
+                        image.src = canvasSnapshot || trendCanvas.toDataURL('image/png');
+                        image.style.width = '100%';
+                        image.style.height = '100%';
+                        image.style.objectFit = 'contain';
+                        image.style.display = 'block';
+                        element.replaceWith(image);
+                        return;
+                    }
+
+                    if (element.type === 'checkbox' || element.type === 'radio') {
+                        const mark = document.createElement('span');
+                        mark.className = 'export-check';
+                        mark.textContent = element.checked ? 'X' : '';
+                        element.replaceWith(mark);
+                        return;
+                    }
+
+                    const value = element.tagName === 'SELECT'
+                        ? (element.selectedOptions[0] ? element.selectedOptions[0].textContent : '')
+                        : element.value;
+
+                    const replacement = document.createElement(element.tagName === 'TEXTAREA' ? 'div' : 'span');
+                    replacement.className = `export-value${element.tagName === 'TEXTAREA' ? ' block' : ''}`;
+                    replacement.innerHTML = escapeHtml(value).replace(/\n/g, '<br>');
+                    element.replaceWith(replacement);
+                });
+
+                const exportRoot = document.createElement('div');
+                exportRoot.className = 'print-root export-mode report-print-compact';
+
+                const exportPages = Array.from(source.children).filter((child) => child.classList && child.classList.contains('report-page'));
+
+                function makeExportPage(nodes) {
+                    const page = document.createElement('section');
+                    page.className = 'report-page';
+                    nodes.filter(Boolean).forEach((node) => page.appendChild(node));
+                    return page;
+                }
+
+                if (exportPages.length >= 2) {
+                    const firstPage = exportPages[0];
+                    const secondPage = exportPages[1];
+
+                    exportRoot.appendChild(makeExportPage([
+                        firstPage.querySelector(':scope > .page-top')?.cloneNode(true),
+                        firstPage.querySelector(':scope > .box')?.cloneNode(true)
+                    ]));
+
+                    exportRoot.appendChild(makeExportPage([
+                        firstPage.querySelector(':scope > .page-bottom')?.cloneNode(true)
+                    ]));
+
+                    exportRoot.appendChild(makeExportPage([
+                        secondPage.querySelector(':scope > .page-two')?.cloneNode(true)
+                    ]));
+
+                    exportRoot.appendChild(makeExportPage([
+                        secondPage.querySelector(':scope > .page-two-lower')?.cloneNode(true)
+                    ]));
+                } else {
+                    exportRoot.appendChild(source);
+                }
+
+                const host = document.createElement('div');
+                host.className = 'export-host';
+                host.appendChild(exportRoot);
+                return host;
+            }
+
+            function pdfWorker(sourceNode) {
+                return html2pdf().set({
+                    filename: 'samu-rapport-digital.pdf',
+                    margin: [0, 0, 0, 0],
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 1.5, useCORS: true, backgroundColor: '#ffffff', logging: false },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    pagebreak: { mode: ['css', 'legacy'] }
+                }).from(sourceNode);
+            }
+
+            function openPrintExportWindow() {
+                const host = buildExportNode();
+                const printWindow = window.open('', '_blank');
+
+                if (!printWindow) {
+                    throw new Error('Print window blocked');
+                }
+
+                const styleText = Array.from(document.querySelectorAll('style'))
+                    .map((style) => style.textContent)
+                    .join('\n');
+
+                const printScript = [
+                    "window.addEventListener('load', function () {",
+                    "  setTimeout(function () {",
+                    "    window.focus();",
+                    "    window.print();",
+                    "  }, 250);",
+                    "});"
+                ].join('\n');
+
+                const html = [
+                    '<!DOCTYPE html>',
+                    '<html lang="de">',
+                    '<head>',
+                    '    <meta charset="UTF-8">',
+                    '    <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+                    '    <title>SAMU Rapport PDF</title>',
+                    '    <style>',
+                    styleText,
+                    '        body { background: #fff !important; margin: 0; }',
+                    '        .export-host { position: static !important; left: auto !important; top: auto !important; width: auto !important; }',
+                    '        .toolbar { display: none !important; }',
+                    '        .shell { max-width: none !important; padding: 0 !important; }',
+                    '        .print-root { gap: 0 !important; }',
+                    '        .report-page { width: 210mm !important; min-height: 297mm !important; box-shadow: none !important; margin: 0 auto !important; overflow: visible !important; }',
+                    '    </style>',
+                    '</head>',
+                    '<body>',
+                    host.innerHTML,
+                    '<script>',
+                    printScript,
+                    '<\/script>',
+                    '</body>',
+                    '</html>'
+                ].join('\n');
+
+                printWindow.document.open();
+                printWindow.document.write(html);
+                printWindow.document.close();
+                saveState.textContent = 'Druckdialog geoeffnet';
+            }
+
+            async function exportPdf() {
+                saveState.textContent = 'PDF wird vorbereitet...';
+                setActionButtonsDisabled(true);
+                await withExportState(async () => {
+                    await withPdfLayout(async () => {
+                        openPrintExportWindow();
+                    });
+                }).finally(() => {
+                    setActionButtonsDisabled(false);
+                });
+            }
+
+            async function sharePdf() {
+                saveState.textContent = 'PDF wird vorbereitet...';
+                setActionButtonsDisabled(true);
+                await withExportState(async () => {
+                    await withPdfLayout(async () => {
+                        const host = buildExportNode();
+                        document.body.appendChild(host);
+                        try {
+                            const worker = pdfWorker(host).toPdf();
+                            const blob = await worker.outputPdf('blob');
+                            const file = new File([blob], 'samu-rapport-digital.pdf', { type: 'application/pdf' });
+
+                            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                                await navigator.share({
+                                    files: [file],
+                                    title: 'SAMU Rapport Digital'
+                                });
+                                saveState.textContent = 'PDF gesendet';
+                                return;
+                            }
+
+                            const url = URL.createObjectURL(file);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = file.name;
+                            link.click();
+                            setTimeout(() => URL.revokeObjectURL(url), 1000);
+                            saveState.textContent = 'PDF heruntergeladen';
+                        } finally {
+                            host.remove();
+                        }
+                    });
+                }).finally(() => {
+                    setActionButtonsDisabled(false);
+                });
+            }
+
+            function resetForm() {
+                clearTimeout(saveTimer);
+                form.reset();
+                clearCanvas();
+                localStorage.removeItem(STORAGE_KEY);
+                saveState.textContent = 'Formular geleert';
+            }
+
+            form.addEventListener('input', scheduleSave);
+            form.addEventListener('change', scheduleSave);
+
+            trendCanvas.addEventListener('pointerdown', startDraw);
+            trendCanvas.addEventListener('pointermove', moveDraw);
+            trendCanvas.addEventListener('pointerup', stopDraw);
+            trendCanvas.addEventListener('pointerleave', stopDraw);
+            trendCanvas.addEventListener('pointercancel', stopDraw);
+
+            clearCanvasBtn.addEventListener('click', clearCanvas);
+            exportBtn.addEventListener('click', exportPdf);
+            shareBtn.addEventListener('click', sharePdf);
+            printBtn.addEventListener('click', () => window.print());
+            resetBtn.addEventListener('click', resetForm);
+
+            window.addEventListener('resize', resizeCanvas);
+
+            const savedForm = localStorage.getItem(STORAGE_KEY);
+            if (savedForm) {
+                try {
+                    restoreForm(JSON.parse(savedForm));
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            canvasSnapshot = localStorage.getItem(CANVAS_KEY) || '';
+            resizeCanvas();
+        }());
+    </script>
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Paediatrische Referenzwerte fuer den Rettungsdienst mit Notfallwerten, Dosierungen und Altersgruppen fuer Kinder von 0 bis 15 Jahren.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="/pages/pedi/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_LU">
+    <meta property="og:title" content="Paediatrische Referenzwerte | Ambulance Toolkit Luxembourg">
+    <meta property="og:description" content="Paediatrische Referenzwerte fuer den Rettungsdienst mit Notfallwerten, Dosierungen und Altersgruppen fuer Kinder von 0 bis 15 Jahren.">
+    <title>👶 Pädiatrische Referenzwerte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .seo-breadcrumb {
+            margin: 0 0 20px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .seo-breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .shiftplan-header h1 {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+
+        .age-selector {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .age-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            text-align: center;
+            margin: 10px auto;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .ref-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: var(--text-dark);
+        }
+
+        .ref-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .unit {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.7;
+        }
+
+        .action-button-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .apgar-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .apgar-section h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .apgar-section p {
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .apgar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .apgar-field label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .apgar-field select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text-dark);
+        }
+
+        .apgar-result {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .apgar-score {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+
+        .apgar-note {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .apgar-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .apgar-history {
+            margin-top: 8px;
+        }
+
+        .apgar-history h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .apgar-history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .apgar-history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .apgar-history-meta {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .apgar-delete-btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 8px 10px;
+            cursor: pointer;
+            background: #c62828;
+            color: #fff;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .apgar-empty {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .shiftplan-header h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Ambulance Toolkit</a> / <span class="breadcrumb-current">Paediatrische Referenzwerte</span>
+        </nav>
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-baby"></i> Pädiatrische Referenzwerte</h1>
+            <p class="shiftplan-subtitle">Pädiatrische Referenzwerte für Notfälle (0–15 Jahre)</p>
+        </header>
+
+                <div class="action-button-container">
+            <a class="btn btn-compact divi-link" href="divi/2023-08-divi-kindernotfallkarte.pdf" target="_blank" rel="noopener noreferrer">
+                DIVI-Notfallkarte (Kindernotfall) öffnen
+            </a>
+            <a class="btn btn-compact apgar-link" href="#apgar-calculator">
+                APGAR-Score-Rechner öffnen
+            </a>
+        </div>
+
+        <div class="age-selector">
+            <h2>Alter auswählen</h2>
+            <input type="range" id="ageSlider" min="0" max="0" value="0" class="age-input">
+            <div id="ageDisplay"></div>
+        </div>
+
+        <div id="referenceData" class="reference-grid">
+            <!-- Data will be loaded here -->
+        </div>
+
+        <section id="apgar-calculator" class="apgar-section">
+            <h2><i class="fas fa-stethoscope"></i> APGAR-Score-Rechner</h2>
+
+            <div class="apgar-grid">
+                <div class="apgar-field">
+                    <label for="apgarMinute">Zeitpunkt</label>
+                    <select id="apgarMinute">
+                        <option value="1">1 Minute</option>
+                        <option value="5">5 Minuten</option>
+                        <option value="10">10 Minuten</option>
+                    </select>
+                </div>
+                <div class="apgar-field">
+                    <label for="apgarAppearance">Aussehen (Hautfarbe)</label>
+                    <select id="apgarAppearance">
+                        <option value="0">0 - Blau oder blass</option>
+                        <option value="1">1 - Rumpf rosa, Extremitäten bläulich</option>
+                        <option value="2">2 - Komplett rosa</option>
+                    </select>
+                </div>
+                <div class="apgar-field">
+                    <label for="apgarPulse">Herzfrequenz</label>
+                    <select id="apgarPulse">
+                        <option value="0">0 - Fehlend</option>
+                        <option value="1">1 - Unter 100 Schläge/min</option>
+                        <option value="2">2 - Mindestens 100 Schläge/min</option>
+                    </select>
+                </div>
+                <div class="apgar-field">
+                    <label for="apgarGrimace">Grimassieren</label>
+                    <select id="apgarGrimace">
+                        <option value="0">0 - Keine Reaktion</option>
+                        <option value="1">1 - Verziehen des Gesichts</option>
+                        <option value="2">2 - Schreien oder Niesen</option>
+                    </select>
+                </div>
+                <div class="apgar-field">
+                    <label for="apgarActivity">Aktivität</label>
+                    <select id="apgarActivity">
+                        <option value="0">0 - Schlaff</option>
+                        <option value="1">1 - Leichte Beugung</option>
+                        <option value="2">2 - Aktive Bewegung</option>
+                    </select>
+                </div>
+                <div class="apgar-field">
+                    <label for="apgarRespiration">Atmung</label>
+                    <select id="apgarRespiration">
+                        <option value="0">0 - Fehlend</option>
+                        <option value="1">1 - Schwach oder unregelmäßig</option>
+                        <option value="2">2 - Kräftiges Schreien</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="apgar-result">
+                <div id="apgarScore" class="apgar-score">APGAR (1 Minute): 0/10</div>
+            </div>
+
+            <div class="apgar-actions">
+                <button id="saveApgarBtn" type="button" class="btn btn-compact">APGAR speichern</button>
+            </div>
+
+            <div class="apgar-history">
+                <h3>Gespeicherte APGAR-Werte</h3>
+                <ul id="apgarHistoryList" class="apgar-history-list"></ul>
+                <p id="apgarHistoryEmpty" class="apgar-empty">Noch keine gespeicherten APGAR-Werte.</p>
+            </div>
+        </section>
+
+        <footer data-footer-profile="default" data-footer-first="footer p:first-child" data-footer-last="footer p:last-child">
+            <p></p>
+            <p></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        let pediatricData = [];
+        let i18nT = (key) => key;
+        const APGAR_STORAGE_KEY = 'pediApgarStates';
+
+        function formatAgeLabel(item) {
+            const range = String(item.range);
+            const normalizedRange = range.toLowerCase();
+            if (item.age === 0 && range === '0') {
+                return i18nT('age.newborn');
+            }
+            if (normalizedRange.includes('month')) {
+                const months = parseInt(range, 10);
+                if (!Number.isNaN(months)) {
+                    return `${months} ${i18nT(months === 1 ? 'age.monthSingular' : 'age.monthPlural')}`;
+                }
+                return range;
+            }
+            if (range === '1') {
+                return `1 ${i18nT('age.yearSingular')}`;
+            }
+            return `${range} ${i18nT('age.yearPlural')}`;
+        }
+
+        function configureAgeSlider() {
+            const slider = document.getElementById('ageSlider');
+            slider.min = '0';
+            slider.max = String(Math.max(pediatricData.length - 1, 0));
+            slider.value = '0';
+        }
+
+        async function loadPediatricData() {
+            try {
+                const response = await fetch('data.json');
+                pediatricData = await response.json();
+                configureAgeSlider();
+                renderData(0);
+            } catch (error) {
+                console.error('Fehler beim Laden der PediHelp-Daten:', error);
+                document.getElementById('referenceData').innerHTML =
+                    `<div class="no-data">${i18nT('errors.loadData')}</div>`;
+            }
+        }
+
+        function renderData(index) {
+            const container = document.getElementById('referenceData');
+            const data = pediatricData[index];
+            const ageDisplay = document.getElementById('ageDisplay');
+
+            if (!data) {
+                ageDisplay.textContent = '';
+                container.innerHTML = `<div class="no-data">${i18nT('errors.noDataForAge')}</div>`;
+                return;
+            }
+
+            ageDisplay.textContent = formatAgeLabel(data);
+
+            container.innerHTML = `
+                <div class="ref-card">
+                    <h3><i class="fas fa-weight"></i> ${i18nT('labels.weight')}</h3>
+                    <div class="value">${data.weight} kg</div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-lungs"></i> ${i18nT('labels.respirationRate')}</h3>
+                    <div class="value">${data.respirationRate} <span class="unit">/min</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-heartbeat"></i> ${i18nT('labels.heartRate')}</h3>
+                    <div class="value">${data.heartRate} <span class="unit">/min</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-heart"></i> ${i18nT('labels.bloodPressureSyst')}</h3>
+                    <div class="value">${data.bloodPressureSyst} <span class="unit">mmHg</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-wave-square"></i> ${i18nT('labels.map')}</h3>
+                    <div class="value">${data.MAP} <span class="unit">mmHg</span></div>
+                </div>
+                <div class="ref-card">
+                    <h3><i class="fas fa-triangle-exclamation"></i> ${i18nT('labels.minMap')}</h3>
+                    <div class="value">${data.minMAP} <span class="unit">mmHg</span></div>
+                </div>
+            `;
+        }
+
+        function formatApgarMinute(minute) {
+            return `${minute} ${i18nT(minute === '1' ? 'apgar.minuteSingular' : 'apgar.minutePlural')}`;
+        }
+
+        function formatApgarHeadline(minute, score) {
+            return `${i18nT('apgar.scoreLabel')} (${formatApgarMinute(minute)}): ${score}/10`;
+        }
+
+        function getCurrentApgarScore() {
+            const minute = document.getElementById('apgarMinute').value;
+            const fields = ['apgarAppearance', 'apgarPulse', 'apgarGrimace', 'apgarActivity', 'apgarRespiration'];
+            const score = fields.reduce((sum, fieldId) => {
+                const value = parseInt(document.getElementById(fieldId).value, 10);
+                return sum + (Number.isNaN(value) ? 0 : value);
+            }, 0);
+            return { minute, score };
+        }
+
+        function updateApgarScore() {
+            const { minute, score } = getCurrentApgarScore();
+            document.getElementById('apgarScore').textContent = formatApgarHeadline(minute, score);
+        }
+
+        function loadApgarStates() {
+            try {
+                const raw = localStorage.getItem(APGAR_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                console.error('Fehler beim Laden gespeicherter APGAR-Werte:', error);
+                return [];
+            }
+        }
+
+        function saveApgarStates(states) {
+            try {
+                localStorage.setItem(APGAR_STORAGE_KEY, JSON.stringify(states));
+                return true;
+            } catch (error) {
+                console.error('Fehler beim Speichern der APGAR-Werte:', error);
+                return false;
+            }
+        }
+
+        function formatSavedTimestamp(iso) {
+            const dt = new Date(iso);
+            if (Number.isNaN(dt.getTime())) {
+                return iso;
+            }
+            return dt.toLocaleString();
+        }
+
+        function renderApgarHistory() {
+            const list = document.getElementById('apgarHistoryList');
+            const empty = document.getElementById('apgarHistoryEmpty');
+            const states = loadApgarStates().sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+
+            list.innerHTML = '';
+            if (!states.length) {
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            states.forEach((state) => {
+                const item = document.createElement('li');
+                item.className = 'apgar-history-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${formatApgarHeadline(state.minute, state.score)}</strong>
+                        <div class="apgar-history-meta">${formatSavedTimestamp(state.savedAt)}</div>
+                    </div>
+                    <button type="button" class="apgar-delete-btn" data-apgar-delete-id="${state.id}" aria-label="${i18nT('apgar.deleteAria')}">${i18nT('apgar.delete')}</button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function saveCurrentApgarState() {
+            const { minute, score } = getCurrentApgarScore();
+            const states = loadApgarStates();
+            states.push({
+                id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+                savedAt: new Date().toISOString(),
+                minute,
+                score
+            });
+            if (saveApgarStates(states)) {
+                renderApgarHistory();
+            } else {
+                alert(i18nT('apgar.saveError'));
+            }
+        }
+
+        function deleteApgarState(id) {
+            const next = loadApgarStates().filter((entry) => entry.id !== id);
+            if (saveApgarStates(next)) {
+                renderApgarHistory();
+            } else {
+                alert(i18nT('apgar.saveError'));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    '.breadcrumb-current': 'breadcrumb.current',
+                    '.shiftplan-header h1': 'header.title',
+                    '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                    '.age-selector h2': 'controls.selectAge',
+                    '.divi-link': 'controls.openDiviCard',
+                    '.apgar-link': 'controls.openApgar',
+                    '#apgar-calculator h2': 'apgar.title',
+                    '#apgarIntro': 'apgar.intro',
+                    'label[for="apgarMinute"]': 'apgar.labels.minute',
+                    '#apgarMinute option[value="1"]': 'apgar.options.minute1',
+                    '#apgarMinute option[value="5"]': 'apgar.options.minute5',
+                    '#apgarMinute option[value="10"]': 'apgar.options.minute10',
+                    'label[for="apgarAppearance"]': 'apgar.labels.appearance',
+                    '#apgarAppearance option[value="0"]': 'apgar.options.appearance0',
+                    '#apgarAppearance option[value="1"]': 'apgar.options.appearance1',
+                    '#apgarAppearance option[value="2"]': 'apgar.options.appearance2',
+                    'label[for="apgarPulse"]': 'apgar.labels.pulse',
+                    '#apgarPulse option[value="0"]': 'apgar.options.pulse0',
+                    '#apgarPulse option[value="1"]': 'apgar.options.pulse1',
+                    '#apgarPulse option[value="2"]': 'apgar.options.pulse2',
+                    'label[for="apgarGrimace"]': 'apgar.labels.grimace',
+                    '#apgarGrimace option[value="0"]': 'apgar.options.grimace0',
+                    '#apgarGrimace option[value="1"]': 'apgar.options.grimace1',
+                    '#apgarGrimace option[value="2"]': 'apgar.options.grimace2',
+                    'label[for="apgarActivity"]': 'apgar.labels.activity',
+                    '#apgarActivity option[value="0"]': 'apgar.options.activity0',
+                    '#apgarActivity option[value="1"]': 'apgar.options.activity1',
+                    '#apgarActivity option[value="2"]': 'apgar.options.activity2',
+                    'label[for="apgarRespiration"]': 'apgar.labels.respiration',
+                    '#apgarRespiration option[value="0"]': 'apgar.options.respiration0',
+                    '#apgarRespiration option[value="1"]': 'apgar.options.respiration1',
+                    '#apgarRespiration option[value="2"]': 'apgar.options.respiration2',
+                    '#saveApgarBtn': 'apgar.save',
+                    '.apgar-history h3': 'apgar.historyTitle',
+                    '#apgarHistoryEmpty': 'apgar.historyEmpty',
+                    '#apgarNote': 'apgar.note',
+                },
+                translations: {
+                    de: {
+                        'page.title': '👶 Pädiatrische Referenzwerte',
+                        'breadcrumb.current': 'Pädiatrische Referenzwerte',
+                        'header.title': '👶 Pädiatrische Referenzwerte',
+                        'header.subtitle': 'Pädiatrische Referenzwerte für Notfälle (0-15 Jahre)',
+                        'controls.selectAge': 'Alter auswählen',
+                        'controls.openDiviCard': 'DIVI-Notfallkarte (Kindernotfall) öffnen',
+                        'controls.openApgar': 'APGAR-Score Rechner öffnen',
+                        'apgar.title': 'APGAR-Score Rechner',
+                        'apgar.labels.minute': 'Zeitpunkt',
+                        'apgar.options.minute1': '1 Minute',
+                        'apgar.options.minute5': '5 Minuten',
+                        'apgar.options.minute10': '10 Minuten',
+                        'apgar.labels.appearance': 'Aussehen (Hautfarbe)',
+                        'apgar.options.appearance0': '0 - Blau oder blass',
+                        'apgar.options.appearance1': '1 - Rumpf rosa, Extremitäten bläulich',
+                        'apgar.options.appearance2': '2 - Komplett rosa',
+                        'apgar.labels.pulse': 'Herzfrequenz',
+                        'apgar.options.pulse0': '0 - Fehlend',
+                        'apgar.options.pulse1': '1 - Unter 100 Schläge/min',
+                        'apgar.options.pulse2': '2 - Mindestens 100 Schläge/min',
+                        'apgar.labels.grimace': 'Grimassieren',
+                        'apgar.options.grimace0': '0 - Keine Reaktion',
+                        'apgar.options.grimace1': '1 - Verziehen des Gesichts',
+                        'apgar.options.grimace2': '2 - Schreien oder Niesen',
+                        'apgar.labels.activity': 'Aktivität',
+                        'apgar.options.activity0': '0 - Schlaff',
+                        'apgar.options.activity1': '1 - Leichte Beugung',
+                        'apgar.options.activity2': '2 - Aktive Bewegung',
+                        'apgar.labels.respiration': 'Atmung',
+                        'apgar.options.respiration0': '0 - Fehlend',
+                        'apgar.options.respiration1': '1 - Schwach oder unregelmäßig',
+                        'apgar.options.respiration2': '2 - Kräftiges Schreien',
+                        'apgar.scoreLabel': 'APGAR',
+                        'apgar.minuteSingular': 'Minute',
+                        'apgar.minutePlural': 'Minuten',
+                        'apgar.save': 'APGAR speichern',
+                        'apgar.historyTitle': 'Gespeicherte APGAR-Werte',
+                        'apgar.historyEmpty': 'Noch keine gespeicherten APGAR-Werte.',
+                        'apgar.delete': 'Löschen',
+                        'apgar.deleteAria': 'APGAR-Eintrag löschen',
+                        'apgar.saveError': 'APGAR konnte nicht gespeichert werden. Bitte Browser-Speicher prüfen.',
+                        'age.newborn': 'Neugeboren',
+                        'age.monthSingular': 'Monat',
+                        'age.monthPlural': 'Monate',
+                        'age.yearSingular': 'Jahr',
+                        'age.yearPlural': 'Jahre',
+                        'labels.weight': 'Idealgewicht',
+                        'labels.respirationRate': 'Atemfrequenz',
+                        'labels.heartRate': 'Pulsfrequenz',
+                        'labels.bloodPressureSyst': 'Blutdruck (systolisch)',
+                        'labels.map': 'Mittlerer Arterieller Druck (MAP)',
+                        'labels.minMap': 'Minimaler MAP',
+                        'errors.loadData': 'Fehler: Daten konnten nicht geladen werden.',
+                        'errors.noDataForAge': 'Keine Daten für dieses Alter verfügbar.',
+                    },
+                    en: {
+                        'page.title': '👶 Pediatric Reference Values',
+                        'breadcrumb.current': 'Pediatric Reference Values',
+                        'header.title': '👶 Pediatric Reference Values',
+                        'header.subtitle': 'Pediatric emergency reference values (0-15 years)',
+                        'controls.selectAge': 'Select age',
+                        'controls.openDiviCard': 'Open DIVI pediatric emergency card',
+                        'controls.openApgar': 'Open APGAR score calculator',
+                        'apgar.title': 'APGAR Score Calculator',
+                        'apgar.labels.minute': 'Timepoint',
+                        'apgar.options.minute1': '1 minute',
+                        'apgar.options.minute5': '5 minutes',
+                        'apgar.options.minute10': '10 minutes',
+                        'apgar.labels.appearance': 'Appearance (skin color)',
+                        'apgar.options.appearance0': '0 - Blue or pale',
+                        'apgar.options.appearance1': '1 - Pink trunk, bluish extremities',
+                        'apgar.options.appearance2': '2 - Completely pink',
+                        'apgar.labels.pulse': 'Pulse',
+                        'apgar.options.pulse0': '0 - Absent',
+                        'apgar.options.pulse1': '1 - Under 100 beats/min',
+                        'apgar.options.pulse2': '2 - At least 100 beats/min',
+                        'apgar.labels.grimace': 'Grimace',
+                        'apgar.options.grimace0': '0 - No response',
+                        'apgar.options.grimace1': '1 - Facial grimace',
+                        'apgar.options.grimace2': '2 - Crying or sneezing',
+                        'apgar.labels.activity': 'Activity',
+                        'apgar.options.activity0': '0 - Limp',
+                        'apgar.options.activity1': '1 - Slight flexion',
+                        'apgar.options.activity2': '2 - Active movement',
+                        'apgar.labels.respiration': 'Respiration',
+                        'apgar.options.respiration0': '0 - Absent',
+                        'apgar.options.respiration1': '1 - Weak or irregular',
+                        'apgar.options.respiration2': '2 - Strong cry',
+                        'apgar.scoreLabel': 'APGAR',
+                        'apgar.minuteSingular': 'minute',
+                        'apgar.minutePlural': 'minutes',
+                        'apgar.save': 'Save APGAR',
+                        'apgar.historyTitle': 'Saved APGAR entries',
+                        'apgar.historyEmpty': 'No APGAR entries saved yet.',
+                        'apgar.delete': 'Delete',
+                        'apgar.deleteAria': 'Delete APGAR entry',
+                        'apgar.saveError': 'APGAR could not be saved. Please check browser storage settings.',
+                        'age.newborn': 'Newborn',
+                        'age.monthSingular': 'month',
+                        'age.monthPlural': 'months',
+                        'age.yearSingular': 'year',
+                        'age.yearPlural': 'years',
+                        'labels.weight': 'Ideal weight',
+                        'labels.respirationRate': 'Respiratory rate',
+                        'labels.heartRate': 'Heart rate',
+                        'labels.bloodPressureSyst': 'Blood pressure (systolic)',
+                        'labels.map': 'Mean Arterial Pressure (MAP)',
+                        'labels.minMap': 'Minimum MAP',
+                        'errors.loadData': 'Error: Data could not be loaded.',
+                        'errors.noDataForAge': 'No data available for this age.',
+                    },
+                    fr: {
+                        'page.title': '👶 Valeurs pédiatriques de référence',
+                        'breadcrumb.current': 'Valeurs pédiatriques de référence',
+                        'header.title': '👶 Valeurs pédiatriques de référence',
+                        'header.subtitle': 'Valeurs pédiatriques d\'urgence (0-15 ans)',
+                        'controls.selectAge': 'Choisir l\'âge',
+                        'controls.openDiviCard': 'Ouvrir la carte d\'urgence pédiatrique DIVI',
+                        'controls.openApgar': 'Ouvrir le calculateur APGAR',
+                        'apgar.title': 'Calculateur du score APGAR',
+                        'apgar.labels.minute': 'Moment',
+                        'apgar.options.minute1': '1 minute',
+                        'apgar.options.minute5': '5 minutes',
+                        'apgar.options.minute10': '10 minutes',
+                        'apgar.labels.appearance': 'Apparence (couleur de peau)',
+                        'apgar.options.appearance0': '0 - Bleu ou pâle',
+                        'apgar.options.appearance1': '1 - Tronc rose, extrémités bleutées',
+                        'apgar.options.appearance2': '2 - Complètement rose',
+                        'apgar.labels.pulse': 'Fréquence cardiaque',
+                        'apgar.options.pulse0': '0 - Absente',
+                        'apgar.options.pulse1': '1 - Inférieure à 100 battements/min',
+                        'apgar.options.pulse2': '2 - Au moins 100 battements/min',
+                        'apgar.labels.grimace': 'Réactivité',
+                        'apgar.options.grimace0': '0 - Aucune réaction',
+                        'apgar.options.grimace1': '1 - Grimace',
+                        'apgar.options.grimace2': '2 - Cris ou éternuement',
+                        'apgar.labels.activity': 'Tonus',
+                        'apgar.options.activity0': '0 - Flasque',
+                        'apgar.options.activity1': '1 - Légère flexion',
+                        'apgar.options.activity2': '2 - Mouvements actifs',
+                        'apgar.labels.respiration': 'Respiration',
+                        'apgar.options.respiration0': '0 - Absente',
+                        'apgar.options.respiration1': '1 - Faible ou irrégulière',
+                        'apgar.options.respiration2': '2 - Cri vigoureux',
+                        'apgar.scoreLabel': 'APGAR',
+                        'apgar.minuteSingular': 'minute',
+                        'apgar.minutePlural': 'minutes',
+                        'apgar.save': 'Enregistrer APGAR',
+                        'apgar.historyTitle': 'Scores APGAR enregistrés',
+                        'apgar.historyEmpty': 'Aucun score APGAR enregistré.',
+                        'apgar.delete': 'Supprimer',
+                        'apgar.deleteAria': 'Supprimer l\'entrée APGAR',
+                        'apgar.saveError': 'Impossible d\'enregistrer APGAR. Veuillez vérifier le stockage du navigateur.',
+                        'age.newborn': 'Nouveau-né',
+                        'age.monthSingular': 'mois',
+                        'age.monthPlural': 'mois',
+                        'age.yearSingular': 'an',
+                        'age.yearPlural': 'ans',
+                        'labels.weight': 'Poids idéal',
+                        'labels.respirationRate': 'Fréquence respiratoire',
+                        'labels.heartRate': 'Fréquence cardiaque',
+                        'labels.bloodPressureSyst': 'Pression artérielle (systolique)',
+                        'labels.map': 'Pression Artérielle Moyenne (PAM)',
+                        'labels.minMap': 'PAM minimale',
+                        'errors.loadData': 'Erreur: impossible de charger les données.',
+                        'errors.noDataForAge': 'Aucune donnee disponible pour cet age.',
+                    },
+                    lb: {
+                        'page.title': '👶 Pediatresch Referenzwäerter',
+                        'breadcrumb.current': 'Pediatresch Referenzwäerter',
+                        'header.title': '👶 Pediatresch Referenzwäerter',
+                        'header.subtitle': 'Pediatresch Referenzwäerter fir Noutfäll (0-15 Joer)',
+                        'controls.selectAge': 'Alter auswielen',
+                        'controls.openDiviCard': 'DIVI-Notfallkaart (Kanner) opmaachen',
+                        'controls.openApgar': 'APGAR-Score-Rechner opmaachen',
+                        'apgar.title': 'APGAR-Score Rechner',
+                        'apgar.labels.minute': 'Zäitpunkt',
+                        'apgar.options.minute1': '1 Minutt',
+                        'apgar.options.minute5': '5 Minutten',
+                        'apgar.options.minute10': '10 Minutten',
+                        'apgar.labels.appearance': 'Ausgesinn (Hautfaarf)',
+                        'apgar.options.appearance0': '0 - Blo oder blatzeg',
+                        'apgar.options.appearance1': '1 - Rosaen Kierper, blo Extremitéiten',
+                        'apgar.options.appearance2': '2 - Komplett rosa',
+                        'apgar.labels.pulse': 'Häerzfrequenz',
+                        'apgar.options.pulse0': '0 - Keng',
+                        'apgar.options.pulse1': '1 - Ënner 100 Schléi/min',
+                        'apgar.options.pulse2': '2 - Op mannst 100 Schléi/min',
+                        'apgar.labels.grimace': 'Reaktioun',
+                        'apgar.options.grimace0': '0 - Keng Reaktioun',
+                        'apgar.options.grimace1': '1 - Grimasséieren',
+                        'apgar.options.grimace2': '2 - Kräischen',
+                        'apgar.labels.activity': 'Aktivitéit',
+                        'apgar.options.activity0': '0 - Schlaff',
+                        'apgar.options.activity1': '1 - Liicht Beweegung',
+                        'apgar.options.activity2': '2 - Aktiv Beweegung',
+                        'apgar.labels.respiration': 'Otem',
+                        'apgar.options.respiration0': '0 - Feelend',
+                        'apgar.options.respiration1': '1 - Schwaach oder onreegelméisseg',
+                        'apgar.options.respiration2': '2 - Staark / Normal',
+                        'apgar.scoreLabel': 'APGAR',
+                        'apgar.minuteSingular': 'Minutt',
+                        'apgar.minutePlural': 'Minutten',
+                        'apgar.save': 'APGAR späicheren',
+                        'apgar.historyTitle': 'Gespäichert APGAR-Wäerter',
+                        'apgar.historyEmpty': 'Nach keng APGAR-Wäerter gespäichert.',
+                        'apgar.delete': 'Läschen',
+                        'apgar.deleteAria': 'APGAR-Score läschen',
+                        'apgar.saveError': 'APGAR konnt net gespäichert ginn. Kuckt w.e.g. Browser-Späicherastellungen.',
+                        'age.newborn': 'Neigebueren',
+                        'age.monthSingular': 'Mount',
+                        'age.monthPlural': 'Méint',
+                        'age.yearSingular': 'Joer',
+                        'age.yearPlural': 'Joer',
+                        'labels.weight': 'Idealgewiicht',
+                        'labels.respirationRate': 'Otemfrequenz',
+                        'labels.heartRate': 'Bols',
+                        'labels.bloodPressureSyst': 'Bluttdrock (systolesch)',
+                        'labels.map': 'Mëttlere Arteriellen Drock (MAP)',
+                        'labels.minMap': 'Minimalen MAP',
+                        'errors.loadData': 'Feeler: Donnéeë konnten net geluede ginn.',
+                        'errors.noDataForAge': 'Keng Donnéeë fir dësen Alter verfügbar.',
+                    }
+                },
+                onApplied: ({ t }) => {
+                    i18nT = t;
+                    renderData(parseInt(document.getElementById('ageSlider').value, 10));
+                    updateApgarScore();
+                    renderApgarHistory();
+                }
+            });
+
+            loadPediatricData();
+
+            const slider = document.getElementById('ageSlider');
+            slider.addEventListener('input', () => {
+                renderData(parseInt(slider.value, 10));
+            });
+
+            ['apgarMinute', 'apgarAppearance', 'apgarPulse', 'apgarGrimace', 'apgarActivity', 'apgarRespiration']
+                .forEach((id) => {
+                    document.getElementById(id).addEventListener('change', updateApgarScore);
+                });
+
+            document.getElementById('saveApgarBtn').addEventListener('click', saveCurrentApgarState);
+            document.getElementById('apgarHistoryList').addEventListener('click', (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) {
+                    return;
+                }
+                const deleteId = target.getAttribute('data-apgar-delete-id');
+                if (deleteId) {
+                    deleteApgarState(deleteId);
+                }
+            });
+
+            updateApgarScore();
+            renderApgarHistory();
+        });
+    </script>
+</body>
+
+</html>

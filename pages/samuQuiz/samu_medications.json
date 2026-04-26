@@ -1,0 +1,227 @@
+[
+  {
+    "Handelsname": "Adenocor",
+    "Wirkstoffname": "Adenosin",
+    "Wirkung": "Tachykarde Rhythmusstörungen. Bei Adenocor macht Patient eine kurze Nulllinie des Herzens = medikamentöse Kardioversion. Defipatch aufkleben!!!"
+  },
+  {
+    "Handelsname": "Akrinor",
+    "Wirkstoffname": "Cafedrin+ Theodrenalin",
+    "Wirkung": "Blutdruck ↑"
+  },
+  {
+    "Handelsname": "Anexate",
+    "Wirkstoffname": "Flumazenil",
+    "Wirkung": "Antagonist bei Benzodiazepinüberdosierung (Xanax, Temesta, Seresta, Dormicum)"
+  },
+  {
+    "Handelsname": "Aspegic",
+    "Wirkstoffname": "Lysinacetylsalicylat",
+    "Wirkung": "Antikoagulant : Bei Myokardinfarkt"
+  },
+  {
+    "Handelsname": "Atropine",
+    "Wirkstoffname": "Belladona",
+    "Wirkung": "Hemmt den Parasympathikus : Herzfrequenz ↑. Bei einer Dosis unter 0,5mg wird Patient noch bradykarder. Vorbereitung zur Narkose, Behandlung von Vergiftungen."
+  },
+  {
+    "Handelsname": "Buscopan",
+    "Wirkstoffname": "Butylscopolamin",
+    "Wirkung": "Spasmolytikum, Bei Krämpfen (Magen-Darm, Gallen- und Harnwege, Gebärmutter)"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Calciumglukonat",
+    "Wirkung": "Zur Blutgerinnung bei Polytrauma"
+  },
+  {
+    "Handelsname": "Cordarone",
+    "Wirkstoffname": "Amiodaron",
+    "Wirkung": "Antiarrhythmikum : bei regelmässiger breiter QRS-Komplex - Tachykardie +  bei CPR (wenn schockbarer Rhythmus)"
+  },
+  {
+    "Handelsname": "Depakine",
+    "Wirkstoffname": "Valproinsäure",
+    "Wirkung": "Antiepileptika"
+  },
+  {
+    "Handelsname": "Dipidolor",
+    "Wirkstoffname": "Piritramid",
+    "Wirkung": "Opioid. Bei Schmerzen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Droperidol",
+    "Wirkung": "Neuroleptika. Bei Erbrechen und Übelkeit + antipsychotische Wirkung"
+  },
+  {
+    "Handelsname": "Ebrantil",
+    "Wirkstoffname": "Urapidil",
+    "Wirkung": "Adrenorezeptor-Antagonist: Blutdruck↓ Es kommt zur Blockierung der Alpha-Rezeptoren."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Ephedrine",
+    "Wirkung": "Sympathomimetikum (aktiviert Sympatikus): bei Hypotonie, chronischer Bronchitis, Asthma bronchiale"
+  },
+  {
+    "Handelsname": "Esmeron",
+    "Wirkstoffname": "Rocuroniumbromid",
+    "Wirkung": "Muskelrelaxant bei Intubation. Esmeron wirkt länger als Lysthenon."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Etomidat",
+    "Wirkung": "Anästhetikum zur Einleitung der Narkose"
+  },
+  {
+    "Handelsname": "Euphyllin",
+    "Wirkstoffname": "Theophyllin",
+    "Wirkung": "Bronchodilatator. Bei Asthma und COPD"
+  },
+  {
+    "Handelsname": "Exacyl",
+    "Wirkstoffname": "Tranexamsäure",
+    "Wirkung": "Zur Blutgerinnung bei Polytrauma"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Fentanyl",
+    "Wirkung": "Ist ein Opioid und wird zur Narkose eingesetzt"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Glucose 40%",
+    "Wirkung": "Zucker für Hypoglykämie"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "H2- Blocker",
+    "Wirkung": ""
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Heparin",
+    "Wirkung": "Antikoagulant : Bei Myokardinfarkt"
+  },
+  {
+    "Handelsname": "Isoket / Isoket Spray",
+    "Wirkstoffname": "Isosorbiddinitrat",
+    "Wirkung": "Vasodilatator der Coronararterien: O₂-Versorgung des Myokards↑,  O₂-Verbrauch des Myokards↓ durch Vorlastverringerung"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Ketanest S",
+    "Wirkung": "Anästhetikum. Zur Sedierung und starker Schmerzstillung"
+  },
+  {
+    "Handelsname": "Lanoxin",
+    "Wirkstoffname": "Digitalis",
+    "Wirkung": "Schlagvolumen Herz ↑ bei Herzrhythmusstörungen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Lasix",
+    "Wirkung": "Diuretika: Urinausscheidung↑, Blutdruck↓, da Blut verdickt wird und Ödeme↓"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Levophed",
+    "Wirkung": "Vasokonstriktion: Blutdruck↑"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Lysthenon 2%",
+    "Wirkung": "Muskelrelaxant bei Intubation"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Magnesiumsulfate",
+    "Wirkung": "Bei Torsades de pointe + Asthamkrise. Nebenwirkung: dem Patienten wird extrem warm"
+  },
+  {
+    "Handelsname": "Midazolam",
+    "Wirkstoffname": "Dormicum",
+    "Wirkung": "Benzodiazepin. Immer erst Dormicum IV zur Beruhigung geben, bevor man Ketanest gibt. Sonst kann es vorkommen, dass Patient extreme Alpträume bekommt. Dosierung 15mg/5ml:  zur intra-nasalen Gabe."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Morphine",
+    "Wirkung": "Opioid. Bei starken Schmerzen =  das stärkste natürliche Analgetikum"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Naloxon",
+    "Wirkung": "Antidot bei Opioidvergiftung (Heroin, Fentanyl, Methadon, Morphium, Dipidolor)"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Novalgine",
+    "Wirkung": "Bei Schmerzen und Fieber + zur Entspannung der Muskulatur bei Krämpfen"
+  },
+  {
+    "Handelsname": "Ondansetron",
+    "Wirkstoffname": "Zofran",
+    "Wirkung": "Bei Übelkeit und Erbrechen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Polaramine",
+    "Wirkung": "Antihistaminikum (H1 Blocker) bei Allergien"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Propofol 1%",
+    "Wirkung": "Sedativa"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Rivotril",
+    "Wirkung": "Bei epileptischen Anfällen"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Rydene",
+    "Wirkung": "Kalziumkanalblocker: Blutdruck↓"
+  },
+  {
+    "Handelsname": "Seloken",
+    "Wirkstoffname": "Metoprolol",
+    "Wirkung": "Betablocker: bei Hypertonie, Herzrhythmusstörungen, akuter Herzinfarkt, Migräneprophylaxe. Wenn Asthmatiker Betablocker bekommt, werden Betarezeptoren in der Lunge blockiert und es kommt zum Spasmus."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Solu Medrol",
+    "Wirkung": "Kortison. Entzündungshemmend und Unterdrückung der Abwehrmechanismen des Körpers"
+  },
+  {
+    "Handelsname": "Suprarenin",
+    "Wirkstoffname": "Adrenalin",
+    "Wirkung": "Bei Rea: alle 3-5min. da kurze Wirkdauer. Bei anaphylaktischem Schock: IM-Gabe, wenn 2 Körpersysteme betroffen sind. Adrenalin macht tachykard und Hypertonie. Patient fühlt sich sehr schlecht bei IV-Gabe."
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Thiopenta",
+    "Wirkung": "Kurznarkose: Status epilepticus, massives Schädelhirntrauma, Schwangere"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Valium",
+    "Wirkung": "Bei Epilepsie und Angszuständen"
+  },
+  {
+    "Handelsname": "Ventolin",
+    "Wirkstoffname": "Salbutamol",
+    "Wirkung": "Bronchodilatator. Bei Asthma und COPD"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Verapramil",
+    "Wirkung": "Antiarrhythmikum : bei regelmässiger schmaler QRS-Komplex -Tachykardie"
+  },
+  {
+    "Handelsname": "",
+    "Wirkstoffname": "Xylocaine 2%",
+    "Wirkung": "Lokalanesthetikum. Kann auch anstelle von Cordarone gegeben werden bei einer Reanimation, wenn nicht verfügbar."
+  }
+]

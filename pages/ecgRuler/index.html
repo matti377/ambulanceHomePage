@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>EKG Licht-Lineal 25 mm/s</title>
+    <style>
+        :root {
+            --page-bg: #ffffff;
+            --ink: #050505;
+            --ink-soft: rgba(0, 0, 0, 0.72);
+            --panel-bg: rgba(255, 255, 255, 0.88);
+            --panel-border: rgba(0, 0, 0, 0.12);
+            --shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+            --scale: 1;
+            --small-box: 1mm;
+            --large-box: 5mm;
+            --surface-gutter: 16mm;
+            --surface-max-width: 175mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--page-bg);
+            color: var(--ink);
+            overscroll-behavior: none;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .controls {
+            position: fixed;
+            top: max(10px, env(safe-area-inset-top));
+            left: 50%;
+            z-index: 20;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: min(94vw, 820px);
+            padding: 10px 12px;
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            background: var(--panel-bg);
+            box-shadow: var(--shadow);
+            transform: translateX(-50%);
+            backdrop-filter: blur(8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .controls button,
+        .controls input,
+        .controls select {
+            font: inherit;
+        }
+
+        .controls button,
+        .preset-control select {
+            border: 1px solid rgba(0, 0, 0, 0.18);
+            background: #fff;
+            color: var(--ink);
+            padding: 9px 12px;
+            border-radius: 999px;
+        }
+
+        .controls button {
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: #f3f3f3;
+        }
+
+        .show-controls-btn {
+            position: fixed;
+            top: max(10px, env(safe-area-inset-top));
+            right: 10px;
+            z-index: 25;
+            display: none;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--ink);
+            padding: 9px 14px;
+            border-radius: 999px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+        }
+
+        .show-controls-btn:hover {
+            background: #f3f3f3;
+        }
+
+        .scale-control,
+        .preset-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            background: #fff;
+        }
+
+        .preset-control {
+            max-width: min(100%, 370px);
+        }
+
+        .preset-control select {
+            max-width: 230px;
+        }
+
+        .scale-control label,
+        .preset-control label,
+        .status-pill,
+        .helper-line {
+            font-size: 0.92rem;
+        }
+
+        .scale-control input[type="range"] {
+            width: min(180px, 32vw);
+        }
+
+        .status-pill {
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .helper-line {
+            width: 100%;
+            text-align: center;
+            color: var(--ink-soft);
+        }
+
+        .workspace {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 110px 8mm 10mm;
+            background: #fff;
+            transition: padding 0.2s ease;
+        }
+
+        .measurement-surface {
+            width: fit-content;
+            max-width: calc((100vw - var(--surface-gutter)) / var(--scale));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4mm;
+            transform: scale(var(--scale));
+            transform-origin: center center;
+        }
+
+        .calibration-check {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2mm;
+        }
+
+        .calibration-bar {
+            width: 5mm;
+            height: 5mm;
+            background: var(--ink);
+            border-radius: 0.4mm;
+        }
+
+        .qrs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, max-content);
+            align-items: end;
+            justify-content: center;
+            gap: 3mm 3.5mm;
+        }
+
+        .qrs-sample {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1.4mm;
+            min-width: 0;
+        }
+
+        .qrs-block {
+            height: 10mm;
+            background: var(--ink);
+            border-radius: 0.4mm;
+        }
+
+        .qrs-block.w60 {
+            width: 1.5mm;
+        }
+
+        .qrs-block.w80 {
+            width: 2mm;
+        }
+
+        .qrs-block.w100 {
+            width: 2.5mm;
+        }
+
+        .qrs-block.w120 {
+            width: 3mm;
+        }
+
+        .qrs-block.w140 {
+            width: 3.5mm;
+        }
+
+        .qrs-block.w160 {
+            width: 4mm;
+        }
+
+        .qrs-block.w180 {
+            width: 4.5mm;
+        }
+
+        .qrs-block.w200 {
+            width: 5mm;
+        }
+
+        .qrs-label {
+            font-size: clamp(9px, 1.2vw, 13px);
+            color: var(--ink-soft);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        body.controls-hidden .controls {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -10px);
+        }
+
+        body.controls-hidden .show-controls-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.controls-hidden .workspace {
+            padding-top: 16mm;
+        }
+
+        .controls:hover,
+        .controls:focus-within {
+            opacity: 1;
+        }
+
+        @media (max-width: 720px) {
+            :root {
+                --surface-gutter: 10mm;
+            }
+
+            .workspace {
+                padding-top: 150px;
+            }
+
+            .qrs-grid {
+                gap: 2.4mm 2.6mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls" id="controls">
+        <button id="hideControlsBtn" type="button">Hide Settings</button>
+        <div class="preset-control">
+            <label for="devicePreset">Preset</label>
+            <select id="devicePreset">
+                <option value="">Manual</option>
+                <option value="iphone-oled-modern">iPhone 12/13/14/15/16 and Pro</option>
+                <option value="iphone-lcd-legacy">iPhone XR / 11 / SE</option>
+                <option value="pixel-standard">Pixel 6 / 7 / 8 / 9</option>
+                <option value="pixel-a-series">Pixel 6a / 7a / 8a</option>
+                <option value="pixel-pro">Pixel 8 Pro / 9 Pro XL</option>
+                <option value="pixel-highdensity-pro">Pixel 6 Pro / 7 Pro</option>
+            </select>
+        </div>
+        <div class="scale-control">
+            <label for="scaleRange">Scale</label>
+            <input id="scaleRange" type="range" min="0.8" max="2.2" step="0.001" value="1">
+            <strong id="scaleValue">100.0%</strong>
+        </div>
+        <div class="status-pill" id="presetStatus">Choose a preset for a better starting scale</div>
+        <div class="helper-line">Set your phone brightness to maximum, place the ECG paper over the screen, check the 0.5 cm bar, then compare the QRS width samples.</div>
+    </div>
+    <button id="showControlsBtn" class="show-controls-btn" type="button">Settings</button>
+
+    <main class="workspace" aria-label="EKG Licht-Lineal">
+        <section class="measurement-surface" id="measurementSurface" aria-label="QRS Referenzbreiten">
+            <div class="calibration-check" aria-label="Skalierung pruefen">
+                <div class="calibration-bar"></div>
+                <span class="qrs-label">One big case on the paper</span>
+            </div>
+            <div class="qrs-grid">
+                <div class="qrs-sample">
+                    <div class="qrs-block w60"></div>
+                    <span class="qrs-label">60</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w80"></div>
+                    <span class="qrs-label">80</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w100"></div>
+                    <span class="qrs-label">100</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w120"></div>
+                    <span class="qrs-label">120</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w140"></div>
+                    <span class="qrs-label">140</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w160"></div>
+                    <span class="qrs-label">160</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w180"></div>
+                    <span class="qrs-label">180</span>
+                </div>
+                <div class="qrs-sample">
+                    <div class="qrs-block w200"></div>
+                    <span class="qrs-label">200</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const root = document.documentElement;
+        const scaleRange = document.getElementById('scaleRange');
+        const scaleValue = document.getElementById('scaleValue');
+        const devicePreset = document.getElementById('devicePreset');
+        const hideControlsBtn = document.getElementById('hideControlsBtn');
+        const showControlsBtn = document.getElementById('showControlsBtn');
+        const presetStatus = document.getElementById('presetStatus');
+        const storedScale = localStorage.getItem('ecg-ruler-scale');
+        const storedPreset = localStorage.getItem('ecg-ruler-preset');
+        const DEVICE_PRESETS = {
+            'iphone-oled-modern': {
+                label: 'iPhone 12/13/14/15/16 and Pro',
+                ppi: 460
+            },
+            'iphone-lcd-legacy': {
+                label: 'iPhone XR / 11 / SE',
+                ppi: 326
+            },
+            'pixel-standard': {
+                label: 'Pixel 6 / 7 / 8 / 9',
+                ppi: 425
+            },
+            'pixel-a-series': {
+                label: 'Pixel 6a / 7a / 8a',
+                ppi: 429
+            },
+            'pixel-pro': {
+                label: 'Pixel 8 Pro / 9 Pro XL',
+                ppi: 488
+            },
+            'pixel-highdensity-pro': {
+                label: 'Pixel 6 Pro / 7 Pro',
+                ppi: 512
+            }
+        };
+        if (storedPreset && DEVICE_PRESETS[storedPreset]) {
+            devicePreset.value = storedPreset;
+        }
+
+        if (storedScale) {
+            scaleRange.value = storedScale;
+        }
+
+        function updateScale(value) {
+            const numericValue = Number(value);
+            root.style.setProperty('--scale', numericValue.toFixed(3));
+            scaleValue.textContent = `${(numericValue * 100).toFixed(1)}%`;
+            localStorage.setItem('ecg-ruler-scale', numericValue.toFixed(3));
+        }
+
+        function clampScale(value) {
+            const min = Number(scaleRange.min);
+            const max = Number(scaleRange.max);
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function scaleFromPpi(ppi) {
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            return clampScale(ppi / (96 * devicePixelRatio));
+        }
+
+        function applyPreset(presetKey) {
+            if (!presetKey || !DEVICE_PRESETS[presetKey]) {
+                localStorage.removeItem('ecg-ruler-preset');
+                presetStatus.textContent = 'Manual scale mode active';
+                return;
+            }
+
+            const preset = DEVICE_PRESETS[presetKey];
+            const estimatedScale = scaleFromPpi(preset.ppi);
+            scaleRange.value = estimatedScale.toFixed(3);
+            updateScale(scaleRange.value);
+            localStorage.setItem('ecg-ruler-preset', presetKey);
+            presetStatus.textContent = `Preset applied: ${preset.label}. Confirm with the 50 mm bar.`;
+        }
+
+        function setControlsHidden(hidden) {
+            document.body.classList.toggle('controls-hidden', hidden);
+        }
+
+        function preventZoom(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }
+
+        scaleRange.addEventListener('input', (event) => {
+            updateScale(event.target.value);
+        });
+
+        devicePreset.addEventListener('change', (event) => {
+            applyPreset(event.target.value);
+        });
+
+        hideControlsBtn.addEventListener('click', () => {
+            setControlsHidden(true);
+        });
+
+        showControlsBtn.addEventListener('click', () => {
+            setControlsHidden(false);
+        });
+
+        document.addEventListener('wheel', preventZoom, { passive: false });
+
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach((eventName) => {
+            document.addEventListener(eventName, (event) => event.preventDefault(), { passive: false });
+        });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (event) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        updateScale(scaleRange.value);
+        applyPreset(devicePreset.value);
+    </script>
+</body>
+
+</html>

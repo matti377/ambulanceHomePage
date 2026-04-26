@@ -1,0 +1,45 @@
+[
+  {
+    "id": "resqly-launch-2026-04",
+    "eyebrow": {
+      "de": "Neu",
+      "en": "New",
+      "fr": "Nouveau",
+      "lb": "Nei"
+    },
+    "title": {
+      "de": "ResQly ist jetzt im App Store verfügbar",
+      "en": "ResQly is now available on the App Store",
+      "fr": "ResQly est maintenant disponible sur l'App Store",
+      "lb": "ResQly ass elo am App Store disponibel"
+    },
+    "body": {
+      "de": "Die neue ResQly App ist jetzt für iPhone verfügbar. Auf der Infoseite findest du den App Store Link, Android Play Store coming soon und den direkten APK Download.",
+      "en": "The new ResQly app is now available for iPhone. The info page includes the App Store link, Android Play Store coming soon, and a direct APK download option.",
+      "fr": "La nouvelle application ResQly est maintenant disponible pour iPhone. La page d'information contient le lien App Store, Android Play Store coming soon et l'option de télécharger l'APK.",
+      "lb": "Déi nei ResQly App ass elo fir iPhone disponibel. Op der Infosäit fënns du den App Store Link, Android Play Store coming soon an den direkten APK Download."
+    },
+    "actions": [
+      {
+        "href": "/pages/resqly/index.html",
+        "variant": "button",
+        "label": {
+          "de": "ResQly ansehen",
+          "en": "View ResQly",
+          "fr": "Voir ResQly",
+          "lb": "ResQly kucken"
+        }
+      },
+      {
+        "href": "https://apps.apple.com/lu/app/resqly/id6762149473",
+        "variant": "link",
+        "label": {
+          "de": "Zum App Store",
+          "en": "Open App Store",
+          "fr": "Ouvrir l'App Store",
+          "lb": "App Store opmaachen"
+        }
+      }
+    ]
+  }
+]

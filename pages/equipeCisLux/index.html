@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS LUX Schichtplan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .current-info,
+        .team-display {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="shiftplan-header">
+            <h1>CIS LUX Schichtplan</h1>
+            <p class="shiftplan-subtitle">Aktuelle Teams & Schichten</p>
+        </header>
+
+        <div class="controls">
+            <div class="date-selector">
+                <label for="dateInput">Datum auswählen:</label>
+                <input type="date" id="dateInput" value="">
+            </div>
+            <button id="todayBtn" class="btn-shift">Heute</button>
+            <button id="nextShiftBtn" class="btn-shift">Nächste Schicht</button>
+        </div>
+
+        <div class="current-info">
+            <div class="info-card">
+                <h3>📅 Aktuelles Datum</h3>
+                <div id="currentDate">Laden...</div>
+            </div>
+            <div class="info-card">
+                <h3>🕒 Aktuelle Zeit</h3>
+                <div id="currentTime">Laden...</div>
+            </div>
+            <div class="info-card">
+                <h3>🔄 Aktuelle Schicht</h3>
+                <div id="currentShift">Laden...</div>
+            </div>
+        </div>
+
+        <div class="team-display">
+            <div class="team-box eq1" id="morningTeam">EQ1</div>
+            <div class="team-box eq2" id="afternoonTeam">EQ2</div>
+            <div class="team-box eq3" id="nextMorningTeam">EQ3</div>
+            <div class="team-box eq4" id="nextAfternoonTeam">EQ4</div>
+        </div>
+
+        <div class="shift-period">
+            <h3>📌 Heutige Schichtverteilung</h3>
+            <div class="shift-container">
+                <div class="shift-box morning">
+                    <h4>Tagschicht (8:00 - 20:00)</h4>
+                    <div id="morningShiftTeam">EQ1</div>
+                </div>
+                <div class="shift-box afternoon">
+                    <h4>Nachtschicht (20:00 - 8:00)</h4>
+                    <div id="afternoonShiftTeam">EQ2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shift-period">
+            <h3>➡️ Nächste Schicht</h3>
+            <div class="shift-container">
+                <div class="shift-box morning">
+                    <h4>Nächste Tagschicht</h4>
+                    <div id="nextMorningShiftTeam">EQ3</div>
+                </div>
+                <div class="shift-box afternoon">
+                    <h4>Nächste Nachtschicht</h4>
+                    <div id="nextAfternoonShiftTeam">EQ4</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="calendar">
+            <h3>🗓️ Monatsübersicht</h3>
+            <div id="calendarGrid" class="calendar-grid">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="loading" id="loading">Daten werden geladen...</div>
+        <div class="error" id="error">Fehler beim Laden der Daten.</div>
+
+        <footer class="shiftplan-footer" data-footer-profile="default" data-footer-first=".shiftplan-footer p:first-child" data-footer-last=".shiftplan-footer p:last-child">
+            <p></p>
+            <p></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        let i18nT = (key) => key;
+        let i18nLocale = 'de-DE';
+
+        // Define the 4-day cycles based on the pattern in the PDF (starting Jan 1, 2025)
+        const morningCycle = ['EQ3', 'EQ4', 'EQ2', 'EQ1'];  // Jan 1, 2, 3, 4 morning
+        const afternoonCycle = ['EQ1', 'EQ3', 'EQ4', 'EQ2']; // Jan 1, 2, 3, 4 afternoon
+
+        // Function to get team for a given date
+        function getTeamsForDate(dateStr) {
+            const date = new Date(dateStr);
+            const start = new Date('2025-01-01');
+            const diffTime = Math.abs(date - start);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Days since Jan 1, 2025
+
+            // Adjust for 0-based index (Jan 1 is day 0)
+            const dayIndex = diffDays % 4;
+
+            return {
+                morning: morningCycle[dayIndex],
+                afternoon: afternoonCycle[dayIndex]
+            };
+        }
+
+        // Function to get current shift based on time
+        function getCurrentShift() {
+            const now = new Date();
+            const hour = now.getHours();
+
+            if (hour >= 8 && hour < 20) {
+                return 'morning';
+            } else {
+                return 'afternoon';
+            }
+        }
+
+        // Function to format date for display
+        function formatDate(date) {
+            const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString(i18nLocale, options);
+        }
+
+        // Function to format time for display
+        function formatTime(date) {
+            return date.toLocaleTimeString(i18nLocale, { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Function to get next shift date
+        function getNextShiftDate(currentDate) {
+            const now = new Date(currentDate);
+            const hour = now.getHours();
+
+            if (hour >= 8 && hour < 20) {
+                // Currently morning shift, next is afternoon same day
+                return new Date(now.setHours(20, 0, 0, 0));
+            } else {
+                // Currently afternoon shift, next is morning next day
+                return new Date(now.setDate(now.getDate() + 1));
+            }
+        }
+
+        // Function to update UI
+        function updateUI(selectedDate = null) {
+            try {
+                let date = selectedDate ? new Date(selectedDate) : new Date();
+
+                // Format date for display
+                document.getElementById('currentDate').textContent = formatDate(date);
+                document.getElementById('currentTime').textContent = formatTime(new Date());
+                // Get teams for selected date
+                const teams = getTeamsForDate(date.toISOString().split('T')[0]);
+
+                // Update team boxes
+                document.getElementById('morningTeam').textContent = teams.morning;
+                document.getElementById('afternoonTeam').textContent = teams.afternoon;
+
+                // Determine current shift
+                const currentShiftType = getCurrentShift();
+                document.getElementById('currentShift').textContent =
+                    currentShiftType === 'morning' ? i18nT('shift.day') : i18nT('shift.night');
+
+                // Update shift period boxes
+                document.getElementById('morningShiftTeam').textContent = teams.morning;
+                document.getElementById('afternoonShiftTeam').textContent = teams.afternoon;
+
+                // Calculate next shift
+                const nextDay = new Date(date);
+                nextDay.setDate(nextDay.getDate() + 1);
+                const nextTeams = getTeamsForDate(nextDay.toISOString().split('T')[0]);
+
+                document.getElementById('nextMorningShiftTeam').textContent = nextTeams.morning;
+                document.getElementById('nextAfternoonShiftTeam').textContent = nextTeams.afternoon;
+
+                // Highlight current team
+                const currentTeamBox = currentShiftType === 'morning' ?
+                    document.getElementById('morningTeam') : document.getElementById('afternoonTeam');
+
+                // Remove pulse from all team boxes
+                document.querySelectorAll('.team-box').forEach(box => {
+                    box.classList.remove('pulse');
+                });
+
+                // Add pulse to current team
+                currentTeamBox.classList.add('pulse');
+
+                // Generate calendar for current month
+                generateCalendar(date);
+
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'none';
+
+            } catch (error) {
+                console.error('Error updating UI:', error);
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = `${i18nT('errors.calc')}: ${error.message}`;
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Function to generate calendar for a month
+        function generateCalendar(date) {
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            const year = date.getFullYear();
+            const month = date.getMonth();
+
+            // Get first day of month
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+
+            // Get day of week for first day (0 = Sunday, 6 = Saturday)
+            const firstDayOfWeek = firstDay.getDay();
+
+            // Create calendar days
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                emptyDay.textContent = '';
+                calendarGrid.appendChild(emptyDay);
+            }
+
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const teams = getTeamsForDate(dateStr);
+
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.innerHTML = `<strong>${day}</strong><br><span class="team-label">${teams.morning}/${teams.afternoon}</span>`;
+
+                // Mark today
+                const today = new Date();
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                    dayElement.classList.add('today');
+                }
+
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('todayBtn').addEventListener('click', () => {
+            document.getElementById('dateInput').value = '';
+            updateUI();
+        });
+
+        document.getElementById('nextShiftBtn').addEventListener('click', () => {
+            const currentDate = document.getElementById('dateInput').value || new Date().toISOString().split('T')[0];
+            const nextShiftDate = getNextShiftDate(new Date(currentDate));
+            document.getElementById('dateInput').value = nextShiftDate.toISOString().split('T')[0];
+            updateUI(nextShiftDate.toISOString().split('T')[0]);
+        });
+
+        document.getElementById('dateInput').addEventListener('change', (e) => {
+            if (e.target.value) {
+                updateUI(e.target.value);
+            }
+        });
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                text: {
+                    '.shiftplan-header h1': 'header.title',
+                    '.shiftplan-header .shiftplan-subtitle': 'header.subtitle',
+                    'label[for="dateInput"]': 'controls.dateLabel',
+                    '#todayBtn': 'controls.today',
+                    '#nextShiftBtn': 'controls.nextShift',
+                    '.shift-period:nth-of-type(1) h3': 'sections.todaySplit',
+                    '.shift-period:nth-of-type(1) .shift-box.morning h4': 'sections.dayShift',
+                    '.shift-period:nth-of-type(1) .shift-box.afternoon h4': 'sections.nightShift',
+                    '.shift-period:nth-of-type(2) h3': 'sections.nextShift',
+                    '.shift-period:nth-of-type(2) .shift-box.morning h4': 'sections.nextDayShift',
+                    '.shift-period:nth-of-type(2) .shift-box.afternoon h4': 'sections.nextNightShift',
+                    '.calendar h3': 'sections.month',
+                    '#loading': 'status.loading',
+                    '#error': 'status.error',
+                    '.current-info .info-card:nth-child(1) h3': 'info.currentDate',
+                    '.current-info .info-card:nth-child(2) h3': 'info.currentTime',
+                    '.current-info .info-card:nth-child(3) h3': 'info.currentShift'
+                },
+                translations: {
+                    de: {
+                        'page.title': 'CIS LUX Schichtplan',
+                        'header.title': 'CIS LUX Schichtplan',
+                        'header.subtitle': 'Aktuelle Teams & Schichten',
+                        'controls.dateLabel': 'Datum auswählen:',
+                        'controls.today': 'Heute',
+                        'controls.nextShift': 'Nächste Schicht',
+                        'info.currentDate': '📅 Aktuelles Datum',
+                        'info.currentTime': '🕒 Aktuelle Zeit',
+                        'info.currentShift': '🔄 Aktuelle Schicht',
+                        'sections.todaySplit': '📌 Heutige Schichtverteilung',
+                        'sections.dayShift': 'Tagschicht (8:00 - 20:00)',
+                        'sections.nightShift': 'Nachtschicht (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Nächste Schicht',
+                        'sections.nextDayShift': 'Nächste Tagschicht',
+                        'sections.nextNightShift': 'Nächste Nachtschicht',
+                        'sections.month': '🗓️ Monatsübersicht',
+                        'status.loading': 'Daten werden geladen...',
+                        'status.error': 'Fehler beim Laden der Daten.',
+                        'shift.day': 'Tagschicht',
+                        'shift.night': 'Nachtschicht',
+                        'errors.calc': 'Fehler beim Berechnen des Schichtplans'
+                    },
+                    en: {
+                        'page.title': 'CIS LUX Shift Plan',
+                        'header.title': 'CIS LUX Shift Plan',
+                        'header.subtitle': 'Current teams and shifts',
+                        'controls.dateLabel': 'Select date:',
+                        'controls.today': 'Today',
+                        'controls.nextShift': 'Next shift',
+                        'info.currentDate': '📅 Current date',
+                        'info.currentTime': '🕒 Current time',
+                        'info.currentShift': '🔄 Current shift',
+                        'sections.todaySplit': '📌 Today shift split',
+                        'sections.dayShift': 'Day shift (8:00 - 20:00)',
+                        'sections.nightShift': 'Night shift (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Next shift',
+                        'sections.nextDayShift': 'Next day shift',
+                        'sections.nextNightShift': 'Next night shift',
+                        'sections.month': '🗓️ Monthly overview',
+                        'status.loading': 'Loading data...',
+                        'status.error': 'Error loading data.',
+                        'shift.day': 'Day shift',
+                        'shift.night': 'Night shift',
+                        'errors.calc': 'Error calculating shift plan'
+                    },
+                    fr: {
+                        'page.title': 'Planning des équipes CIS LUX',
+                        'header.title': 'Planning des équipes CIS LUX',
+                        'header.subtitle': 'Equipes et rotations actuelles',
+                        'controls.dateLabel': 'Choisir la date:',
+                        'controls.today': 'Aujourd hui',
+                        'controls.nextShift': 'Prochaine rotation',
+                        'info.currentDate': '📅 Date actuelle',
+                        'info.currentTime': '🕒 Heure actuelle',
+                        'info.currentShift': '🔄 Rotation actuelle',
+                        'sections.todaySplit': '📌 Répartition de la garde du jour',
+                        'sections.dayShift': 'Garde de jour (8:00 - 20:00)',
+                        'sections.nightShift': 'Garde de nuit (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Prochaine rotation',
+                        'sections.nextDayShift': 'Prochaine garde de jour',
+                        'sections.nextNightShift': 'Prochaine garde de nuit',
+                        'sections.month': '🗓️ Vue mensuelle',
+                        'status.loading': 'Chargement des données...',
+                        'status.error': 'Erreur de chargement des données.',
+                        'shift.day': 'Garde de jour',
+                        'shift.night': 'Garde de nuit',
+                        'errors.calc': 'Erreur lors du calcul du planning'
+                    },
+                    lb: {
+                        'page.title': 'CIS LUX Déngschtplang',
+                        'header.title': 'CIS LUX Déngschtplang',
+                        'header.subtitle': 'Aktuell Equippen a Schichten',
+                        'controls.dateLabel': 'Datum auswielen:',
+                        'controls.today': 'Haut',
+                        'controls.nextShift': 'Nächst Schicht',
+                        'info.currentDate': '📅 Aktuellt Datum',
+                        'info.currentTime': '🕒 Aktuell Zäit',
+                        'info.currentShift': '🔄 Aktuell Schicht',
+                        'sections.todaySplit': '📌 Schichtverdeelung vun haut',
+                        'sections.dayShift': 'Dagschicht (8:00 - 20:00)',
+                        'sections.nightShift': 'Nuetsschicht (20:00 - 8:00)',
+                        'sections.nextShift': '➡️ Nächst Schicht',
+                        'sections.nextDayShift': 'Nächst Dagschicht',
+                        'sections.nextNightShift': 'Nächst Nuetsschicht',
+                        'sections.month': '🗓️ Mountsiwwersiicht',
+                        'status.loading': 'Donnéeë gi gelueden...',
+                        'status.error': 'Feeler beim Luede vun den Donnéeën.',
+                        'shift.day': 'Dagschicht',
+                        'shift.night': 'Nuetsschicht',
+                        'errors.calc': 'Feeler beim Berechne vum Déngschtplang'
+
+
+                    }
+                },
+                onApplied: ({ language, t }) => {
+                    i18nT = t;
+                    i18nLocale = language === 'fr' ? 'fr-FR' : language === 'en' ? 'en-GB' : language === 'lb' ? 'de-LU' : 'de-DE';
+                }
+            });
+
+            // Set default date to today
+            const today = new Date();
+            document.getElementById('dateInput').value = today.toISOString().split('T')[0];
+
+            // Start updating time every second
+            setInterval(() => {
+                document.getElementById('currentTime').textContent = formatTime(new Date());
+            }, 1000);
+
+            // Initial update
+            updateUI();
+        });
+    </script>
+</body>
+
+</html>

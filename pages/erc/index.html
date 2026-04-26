@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERC Guidelines</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .hero {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .hero .logo {
+            margin: 0 auto 16px;
+        }
+
+        .hero-note,
+        .intro-card,
+        .erc-card {
+            background: var(--card-bg);
+            color: var(--text-dark);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+        }
+
+        .hero-note {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        .intro-card {
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .intro-card h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .intro-card p {
+            line-height: 1.7;
+        }
+
+        .doc-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .doc-links .btn {
+            width: auto;
+            min-width: 210px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .erc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+            margin-bottom: 32px;
+        }
+
+        .erc-card {
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .erc-card__head {
+            color: #fff;
+            padding: 20px;
+        }
+
+        .erc-card__head h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+        }
+
+        .erc-card__tag {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .erc-card__body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .erc-card__body p,
+        .erc-card__body li {
+            line-height: 1.6;
+        }
+
+        .erc-card__body ul {
+            padding-left: 20px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .erc-card__actions {
+            margin-top: auto;
+        }
+
+        .erc-card__actions .btn {
+            width: auto;
+        }
+
+        .theme-als { background: linear-gradient(135deg, #0057b8, #1d3557); }
+        .theme-causes { background: linear-gradient(135deg, #5f0f40, #9a031e); }
+        .theme-potassium { background: linear-gradient(135deg, #ef476f, #d62828); }
+        .theme-temp { background: linear-gradient(135deg, #118ab2, #fb8500); }
+        .theme-trauma { background: linear-gradient(135deg, #6b705c, #bc4749); }
+
+        @media (max-width: 700px) {
+            body { padding: 16px; }
+            .doc-links .btn,
+            .erc-card__actions .btn { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="hero">
+            <div class="logo">
+                <i class="fas fa-heart-pulse"></i>
+            </div>
+            <h1 id="pageTitle"></h1>
+            <p id="pageSubtitle" class="subtitle"></p>
+            <div id="heroNote" class="hero-note"></div>
+        </header>
+
+        <section class="intro-card">
+            <h2 id="introTitle"></h2>
+            <p id="introText"></p>
+            <div class="doc-links">
+                <a id="alsDoc" class="btn btn-compact" target="_blank" rel="noopener noreferrer"></a>
+                <a id="siteDoc" class="btn btn-compact" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+        </section>
+
+        <nav id="navLinks" class="nav-links" aria-label="ERC quick navigation"></nav>
+
+        <main id="cardGrid" class="erc-grid"></main>
+
+        <footer data-footer-profile="default" data-footer-first="#footerNotice" data-footer-last="#footerCopy">
+            <p id="footerNotice"></p>
+            <p id="footerCopy"></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        const DOC_URLS = {
+            als: 'https://erc.edu/media/vedoa2ga/gl2025-05-als-e.pdf',
+            special: 'https://erc.edu/media/wwufbysp/gl2025-06-spec-circ-e.pdf',
+            site: 'https://erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english'
+        };
+
+        const CARD_META = {
+            als: { icon: 'fas fa-heartbeat', theme: 'theme-als', source: 'als' },
+            causes: { icon: 'fas fa-list-check', theme: 'theme-causes', source: 'special' },
+            hyperk: { icon: 'fas fa-bolt', theme: 'theme-potassium', source: 'special' },
+            temp: { icon: 'fas fa-temperature-half', theme: 'theme-temp', source: 'special' },
+            trauma: { icon: 'fas fa-triangle-exclamation', theme: 'theme-trauma', source: 'special' }
+        };
+
+        const CONTENT = {
+            de: {
+                title: 'ERC Reanimationsschemata',
+                subtitle: 'Kompakte ERC-Algorithmen für ALS und spezielle Reanimationssituationen im Einsatz.',
+                note: 'Basis: ERC Guidelines 2025, veröffentlicht am 22. Oktober 2025.',
+                introTitle: 'Schnellzugriff vor Ort',
+                introText: 'Diese Seite fasst die wichtigsten ERC-Abläufe für erwachsene Reanimation zusammen. Sie ersetzt keine lokalen SOPs und keine offiziellen CGDIS-Protokolle.',
+                buttons: { als: 'ALS-Kapitel öffnen', special: 'Spezialkapitel öffnen', site: 'ERC-Webseite öffnen', more: 'Mehr' },
+                cards: [
+                    { id: 'als', tag: 'ERC 2025 ALS', title: 'ALS-Algorithmus', text: 'Standardablauf für erwachsene Reanimation.', bullets: ['Kreislaufstillstand erkennen, Hilfe rufen, CPR sofort starten, Defibrillator anschließen.', 'Alle 2 Minuten Rhythmuscheck: schockbar (VF/pVT) oder nicht schockbar (PEA/Asystolie).', 'Schockbar: 1 Schock, dann 2 Minuten CPR. Nach 3 Schocks Adrenalin 1 mg + Amiodaron 300 mg, nach 5 Schocks weitere 150 mg.', 'Nicht schockbar: Adrenalin 1 mg so früh wie möglich und dann alle 3-5 Minuten.', 'Immer parallel: hochwertige Kompressionen, minimale Pausen, reversible Ursachen behandeln.'] },
+                    { id: 'causes', tag: '4 Hs / 4 Ts', title: 'Reversible Ursachen', text: 'Merkliste für jede Reanimationsrunde.', bullets: ['Hypoxie: Airway, Oxygenierung und Ventilation prüfen.', 'Hypovolämie: Blutung oder Schock erkennen und Volumen/Blutprodukte erwägen.', 'Metabolik/Temperatur: Hypo- oder Hyperkaliämie, andere Entgleisungen und Hypothermie suchen.', 'Thorax/Herz: Tamponade, Spannungspneumothorax, koronare oder pulmonale Thrombose bedenken.', 'Toxine: Vergiftung oder Medikamentenfehler früh gezielt behandeln.'] },
+                    { id: 'hyperk', tag: 'Spezialumstand', title: 'Hyperkaliämie', text: 'ERC-Schema für schwere Hyperkaliämie und hyperkaliämischen Arrest.', bullets: ['Verdacht bei Nierenversagen, Dialyse, ECG-Veränderungen, Bradyarrhythmie oder Arrest.', '10 mL Calciumchlorid 10 % IV bei schwerer Hyperkaliämie mit ECG-Veränderungen.', '10 IE Insulin + 25 g Glukose IV sowie Salbutamol 10-20 mg vernebelt.', 'Im Arrest: Calciumchlorid 10 mL 10 % plus 50 mmol Natriumbikarbonat getrennt oder mit Flush dazwischen.', 'Dialyse und weitere kaliumsenkende Therapie früh erwägen; Glukose eng kontrollieren.'] },
+                    { id: 'temp', tag: 'Spezialumstand', title: 'Hypo- / Hyperthermie', text: 'Wichtige ERC-Punkte für kalte und heiße Rea-Szenarien.', bullets: ['Hypothermie: Kerntemperatur messen, kontinuierliche CPR, bis zu 3 Schocks bei VF/pVT, weitere erst über 30 °C.', 'Hypothermie: unter 30 °C Adrenalin und andere CPR-Medikamente grundsätzlich zurückhalten; ab 30 °C Intervalle verdoppeln.', 'Hypothermie: wenn möglich direkt in ein Zentrum mit VA-ECMO/ECLS-Rewarming transportieren.', 'Hyperthermie: Patient kühlen, Kerntemperatur messen, bei Heat Stroke schnellste aktive Kühlung priorisieren.', 'Hyperthermie: bei maligner oder toxininduzierter Hyperthermie Auslöser stoppen, 100 % O2, aktiv kühlen, Dantrolen lokal erwägen.'] },
+                    { id: 'trauma', tag: 'Spezialumstand', title: 'Traumatische Reanimation', text: 'Reversible Ursachen parallel behandeln, Kompressionen dürfen Maßnahmen nicht verzögern.', bullets: ['Sofort an massive Blutung, Hypoxie, Spannungspneumothorax und Tamponade denken.', 'Direkter Druck, Tourniquet, Beckenschlinge, Blutprodukte und TXA nach lokalem Traumaprotokoll.', 'Oxygenieren und ventilieren, aber hohen intrathorakalen Druck vermeiden; bei Verdacht bilateral entlasten.', 'Resuscitative Thorakotomie nur bei passendem Mechanismus und vorhandener Expertise.', 'Wenn präklinisch nicht behandelbar: Standard-ALS plus rascher Transport.'] }
+                ]
+            },
+            en: {
+                title: 'ERC Resuscitation Algorithms',
+                subtitle: 'Compact ERC algorithms for ALS and special resuscitation situations on scene.',
+                note: 'Based on ERC Guidelines 2025, published on October 22, 2025.',
+                introTitle: 'Fast access on scene',
+                introText: 'This page summarises the most important ERC adult resuscitation workflows. It does not replace local SOPs or official CGDIS protocols.',
+                buttons: { als: 'Open ALS chapter', special: 'Open special chapter', site: 'Open ERC website', more: 'More' },
+                cards: [
+                    { id: 'als', tag: 'ERC 2025 ALS', title: 'ALS algorithm', text: 'Standard adult cardiac arrest workflow.', bullets: ['Recognise arrest, call for help, start CPR, attach the defibrillator.', 'Check rhythm every 2 minutes: shockable (VF/pVT) or non-shockable (PEA/asystole).', 'Shockable: 1 shock, then 2 minutes CPR. After 3 shocks give adrenaline 1 mg + amiodarone 300 mg, after 5 shocks give another 150 mg.', 'Non-shockable: give adrenaline 1 mg as early as possible and then every 3-5 minutes.', 'Always in parallel: high-quality compressions, minimal pauses, treat reversible causes.'] },
+                    { id: 'causes', tag: '4 Hs / 4 Ts', title: 'Reversible causes', text: 'Checklist for every resuscitation cycle.', bullets: ['Hypoxia: check airway, oxygenation, and ventilation.', 'Hypovolaemia: identify bleeding or shock and consider fluids/blood products.', 'Metabolic/temperature: look for hypo- or hyperkalaemia, other derangements, and hypothermia.', 'Thorax/heart: consider tamponade, tension pneumothorax, coronary or pulmonary thrombosis.', 'Toxins: treat poisoning or medication error early and specifically.'] },
+                    { id: 'hyperk', tag: 'Special circumstance', title: 'Hyperkalaemia', text: 'ERC approach to severe hyperkalaemia and hyperkalaemic arrest.', bullets: ['Suspect it in renal failure, dialysis, ECG changes, bradyarrhythmia, or arrest.', 'Give 10 mL of 10% calcium chloride IV in severe hyperkalaemia with ECG changes.', 'Give 10 units insulin + 25 g glucose IV plus nebulised salbutamol 10-20 mg.', 'During arrest: give 10 mL 10% calcium chloride plus 50 mmol sodium bicarbonate separately or with a flush in between.', 'Consider dialysis and further potassium-lowering therapy early; monitor glucose closely.'] },
+                    { id: 'temp', tag: 'Special circumstance', title: 'Hypo- / Hyperthermia', text: 'Key ERC points for cold and heat-related arrests.', bullets: ['Hypothermia: measure core temperature, continue CPR, give up to 3 shocks for VF/pVT, then delay further shocks until above 30 °C.', 'Hypothermia: below 30 °C generally withhold adrenaline and other CPR drugs; from 30 °C double the dosing interval.', 'Hypothermia: if possible transport directly to a VA-ECMO/ECLS rewarming centre.', 'Hyperthermia: cool the patient, measure core temperature, and prioritise the fastest active cooling for heat stroke.', 'Hyperthermia: in malignant or toxin-induced hyperthermia stop the trigger, give 100% O2, cool actively, and consider dantrolene locally.'] },
+                    { id: 'trauma', tag: 'Special circumstance', title: 'Traumatic cardiac arrest', text: 'Treat reversible causes in parallel; compressions must not delay key actions.', bullets: ['Immediately think of major haemorrhage, hypoxia, tension pneumothorax, and tamponade.', 'Use direct pressure, tourniquets, pelvic binding, blood products, and TXA according to the local trauma pathway.', 'Oxygenate and ventilate, but avoid excessive intrathoracic pressure; decompress bilaterally if needed.', 'Consider resuscitative thoracotomy only with the right mechanism and trained expertise.', 'If prehospital correction is not possible: standard ALS plus rapid transport.'] }
+                ]
+            },
+            fr: {
+                title: 'Algorithmes ERC de réanimation',
+                subtitle: 'Algorithmes ERC compacts pour l’ALS et les situations spéciales de réanimation en intervention.',
+                note: 'Basé sur les ERC Guidelines 2025, publiées le 22 octobre 2025.',
+                introTitle: 'Accès rapide sur intervention',
+                introText: 'Cette page résume les conduites ERC les plus importantes pour la réanimation adulte. Elle ne remplace ni les SOP locales ni les protocoles officiels du CGDIS.',
+                buttons: { als: 'Ouvrir le chapitre ALS', special: 'Ouvrir le chapitre spécial', site: 'Ouvrir le site ERC', more: 'Plus' },
+                cards: [
+                    { id: 'als', tag: 'ERC 2025 ALS', title: 'Algorithme ALS', text: 'Déroulement standard de l’arrêt cardiaque adulte.', bullets: ['Reconnaître l’arrêt, appeler de l’aide, commencer la RCP, brancher le défibrillateur.', 'Contrôle du rythme toutes les 2 minutes: choquable (FV/TV sans pouls) ou non choquable (AESP/asystolie).', 'Choquable: 1 choc puis 2 minutes de RCP. Après 3 chocs adrénaline 1 mg + amiodarone 300 mg, après 5 chocs encore 150 mg.', 'Non choquable: adrénaline 1 mg dès que possible puis toutes les 3-5 minutes.', 'Toujours en parallèle: compressions de qualité, pauses minimales, traitement des causes réversibles.'] },
+                    { id: 'causes', tag: '4 H / 4 T', title: 'Causes réversibles', text: 'Liste pour chaque cycle de réanimation.', bullets: ['Hypoxie: vérifier voie aérienne, oxygénation et ventilation.', 'Hypovolémie: identifier hémorragie ou choc et envisager fluides/produits sanguins.', 'Métabolique/température: rechercher hypo- ou hyperkaliémie, autres troubles, et hypothermie.', 'Thorax/cœur: penser tamponnade, pneumothorax sous tension, thrombose coronaire ou pulmonaire.', 'Toxiques: traiter tôt et de manière ciblée intoxication ou erreur médicamenteuse.'] },
+                    { id: 'hyperk', tag: 'Circonstance spéciale', title: 'Hyperkaliémie', text: 'Approche ERC de l’hyperkaliémie sévère et de l’arrêt hyperkaliémique.', bullets: ['À suspecter en cas d’insuffisance rénale, dialyse, anomalies ECG, bradyarythmie ou arrêt.', 'Donner 10 mL de chlorure de calcium 10 % IV en cas d’hyperkaliémie sévère avec anomalies ECG.', 'Donner 10 unités d’insuline + 25 g de glucose IV plus salbutamol nébulisé 10-20 mg.', 'Pendant l’arrêt: 10 mL de chlorure de calcium 10 % plus 50 mmol de bicarbonate de sodium, séparément ou avec rinçage.', 'Envisager tôt dialyse et autres traitements de baisse du potassium; surveiller étroitement la glycémie.'] },
+                    { id: 'temp', tag: 'Circonstance spéciale', title: 'Hypo- / Hyperthermie', text: 'Points ERC importants pour les arrêts liés au froid et à la chaleur.', bullets: ['Hypothermie: mesurer la température centrale, poursuivre la RCP, donner jusqu’à 3 chocs pour FV/TV sans pouls puis attendre >30 °C.', 'Hypothermie: sous 30 °C retenir en principe adrénaline et autres médicaments de RCP; à partir de 30 °C doubler l’intervalle.', 'Hypothermie: si possible transporter directement vers un centre de réchauffement VA-ECMO/ECLS.', 'Hyperthermie: refroidir le patient, mesurer la température centrale et prioriser le refroidissement actif le plus rapide en cas de coup de chaleur.', 'Hyperthermie: en cas de forme maligne ou toxique, arrêter le déclencheur, donner 100 % O2, refroidir activement et envisager le dantrolène localement.'] },
+                    { id: 'trauma', tag: 'Circonstance spéciale', title: 'Réanimation traumatique', text: 'Traiter les causes réversibles en parallèle; les compressions ne doivent pas retarder les gestes clés.', bullets: ['Penser immédiatement à hémorragie massive, hypoxie, pneumothorax sous tension et tamponnade.', 'Utiliser pression directe, garrot, ceinture pelvienne, produits sanguins et TXA selon la filière trauma locale.', 'Oxygéner et ventiler sans pression intrathoracique excessive; décompression bilatérale si nécessaire.', 'Envisager thoracotomie de réanimation seulement avec bon mécanisme et expertise entraînée.', 'Si la correction préhospitalière est impossible: ALS standard plus transport rapide.'] }
+                ]
+            },
+            lb: {
+                title: 'ERC Reanimatiounsschemaen',
+                subtitle: 'Kompakt ERC-Algorithmen fir ALS a speziell Reanimatiounssituatiounen am Asaz.',
+                note: 'Baséiert op den ERC Guidelines 2025, verëffentlecht den 22. Oktober 2025.',
+                introTitle: 'Séier Iwwersiicht am Asaz',
+                introText: 'Dës Säit faasst déi wichtegst ERC-Abläifer fir d’Erwuessenen-Reanimatioun zesummen. Si ersetzt keng lokal SOPen an keng offiziell CGDIS-Protokoller.',
+                buttons: { als: 'ALS-Kapitel opmaachen', special: 'Spezialkapitel opmaachen', site: 'ERC-Säit opmaachen', more: 'Méi' },
+                cards: [
+                    { id: 'als', tag: 'ERC 2025 ALS', title: 'ALS-Algorithmus', text: 'Standard-Ablaf fir den Erwuessenen am Arrest.', bullets: ['Arrest erkennen, Hëllef ruffen, CPR ufänken, Defibrillator uschléissen.', 'Rhythmus all 2 Minutten kontrolléieren: schockbar (VF/pVT) oder net schockbar (PEA/Asystolie).', 'Schockbar: 1 Schock, dann 2 Minutten CPR. No 3 Schocken Adrenalin 1 mg + Amiodaron 300 mg, no 5 Schocken nach 150 mg.', 'Net schockbar: Adrenalin 1 mg esou fréi wéi méiglech an duerno all 3-5 Minutten.', 'Ëmmer parallel: héichwäerteg Kompressiounen, minimal Pausen, reversibel Ursaachen behandelen.'] },
+                    { id: 'causes', tag: '4 H / 4 T', title: 'Reversibel Ursaachen', text: 'Lëscht fir all Rea-Ronn.', bullets: ['Hypoxie: Airway, Oxygenatioun a Ventilatioun kontrolléieren.', 'Hypovolämie: Bluddung oder Schock erkennen a Volumen/Bluttprodukter erwägen.', 'Metabolik/Temperatur: Hypo- oder Hyperkaliämie, aner Stéierungen an Hypothermie sichen.', 'Thorax/Häerz: Tamponade, Spannungspneumothorax, koronär oder pulmonal Thrombose bedenken.', 'Toxinen: Intoxikatioun oder Medikamentsfeeler fréi gezielt behandelen.'] },
+                    { id: 'hyperk', tag: 'Spezialëmstand', title: 'Hyperkaliämie', text: 'ERC-Virgoe bei schwéierer Hyperkaliämie an hyperkaliämeschem Arrest.', bullets: ['Verdacht bei Nierenausfall, Dialyse, ECG-Verännerungen, Bradyarrhythmie oder Arrest.', '10 mL Kalziumchlorid 10 % IV bei schwéierer Hyperkaliämie mat ECG-Verännerungen.', '10 Eenheete Insulin + 25 g Glukos IV plus Salbutamol 10-20 mg vernebelt.', 'Am Arrest: 10 mL Kalziumchlorid 10 % plus 50 mmol Natriumbikarbonat getrennt oder mat Flush.', 'Dialys an aner kaliumsenkend Therapie fréi erwägen; Bluttzocker enk kontrolléieren.'] },
+                    { id: 'temp', tag: 'Spezialëmstand', title: 'Hypo- / Hyperthermie', text: 'Wichteg ERC-Punkte fir kal a waarm Rea-Situatiounen.', bullets: ['Hypothermie: Kärtemperatur moossen, CPR virufueren, bis zu 3 Schocke bei VF/pVT, duerno waarden bis >30 °C.', 'Hypothermie: ënner 30 °C Adrenalin an aner CPR-Medikamenter am Prinzip zeréckhalen; ab 30 °C Intervalle verduebelen.', 'Hypothermie: wa méiglech direkt an e VA-ECMO/ECLS-Rewarming-Zentrum transportéieren.', 'Hyperthermie: Patient killen, Kärtemperatur moossen a beim Heat Stroke déi séierst aktiv Ofkillung prioriséieren.', 'Hyperthermie: bei maligner oder toxininduzéierter Form Ausléiser stoppen, 100 % O2, aktiv killen a lokal Dantrolen erwägen.'] },
+                    { id: 'trauma', tag: 'Spezialëmstand', title: 'Traumatesch Reanimatioun', text: 'Reversibel Ursaachen parallel behandelen; Kompressioune däerfen wichteg Schrëtt net verzögeren.', bullets: ['Direkt un massiv Bluddung, Hypoxie, Spannungspneumothorax an Tamponade denken.', 'Direkten Drock, Tourniquet, Becke-Schlaang, Bluttprodukter an TXA no lokalem Traumawee benotzen.', 'Oxygenéieren a ventiléieren ouni héijen intrathorakale Drock; bilateral entlaaschten wann néideg.', 'Resuscitativ Thorakotomie just beim passende Mechanismus an trainéierter Expertise erwägen.', 'Wann prehospital net korrigéierbar: Standard-ALS plus séieren Transport.'] }
+                ]
+            }
+        };
+
+        function applyVisualSettings() {
+            if (window.ToolkitI18n && typeof window.ToolkitI18n.applyTranslations === 'function') {
+                window.ToolkitI18n.applyTranslations({ translations: { de: {}, en: {}, fr: {}, lb: {} } });
+            }
+        }
+
+        function currentLanguage() {
+            if (window.ToolkitI18n && typeof window.ToolkitI18n.getStoredLanguage === 'function') {
+                return window.ToolkitI18n.getStoredLanguage();
+            }
+            return 'de';
+        }
+
+        function render() {
+            const language = currentLanguage();
+            const content = CONTENT[language] || CONTENT.de;
+            document.documentElement.lang = language;
+            document.title = `🚑 ${content.title}`;
+            document.getElementById('pageTitle').textContent = content.title;
+            document.getElementById('pageSubtitle').textContent = content.subtitle;
+            document.getElementById('heroNote').textContent = content.note;
+            document.getElementById('introTitle').textContent = content.introTitle;
+            document.getElementById('introText').textContent = content.introText;
+            const alsDoc = document.getElementById('alsDoc');
+            const siteDoc = document.getElementById('siteDoc');
+            alsDoc.href = DOC_URLS.als;
+            alsDoc.textContent = content.buttons.als || 'ALS-Kapitel öffnen';
+            siteDoc.href = DOC_URLS.site;
+            siteDoc.textContent = content.buttons.site || 'ERC-Webseite öffnen';
+
+            document.getElementById('navLinks').innerHTML = content.cards.map((card) =>
+                `<a href="#${card.id}">${card.title}</a>`
+            ).join('');
+
+            document.getElementById('cardGrid').innerHTML = content.cards.map((card) => {
+                const meta = CARD_META[card.id];
+                const bullets = card.bullets.map((item) => `<li>${item}</li>`).join('');
+                return `
+                    <article id="${card.id}" class="erc-card">
+                        <div class="erc-card__head ${meta.theme}">
+                            <div class="erc-card__tag">${card.tag}</div>
+                            <h2><i class="${meta.icon}"></i><span>${card.title}</span></h2>
+                        </div>
+                        <div class="erc-card__body">
+                            <p>${card.text}</p>
+                            <ul>${bullets}</ul>
+                            <div class="erc-card__actions">
+                                <a class="btn btn-compact" href="details.html#${card.id}">${content.buttons.more}</a>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyVisualSettings();
+            render();
+        });
+    </script>
+</body>
+
+</html>

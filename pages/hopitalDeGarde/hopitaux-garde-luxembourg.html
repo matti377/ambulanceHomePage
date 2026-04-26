@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HPF72B3MM7');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hopitaux de garde au Luxembourg avec disponibilites par discipline pour aider les equipes de secours et le transport sanitaire.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="/pages/hopitalDeGarde/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_LU">
+  <meta property="og:title" content="Hopitaux de garde | Ambulance Toolkit Luxembourg">
+  <meta property="og:description" content="Hopitaux de garde au Luxembourg avec disponibilites par discipline pour aider les equipes de secours et le transport sanitaire.">
+  <title>🏥 Hôpitaux de Garde – Luxembourg</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edff 100%);
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin: 20px 0 30px;
+      width: 100%;
+      position: relative;
+    }
+
+    .settings-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 50%;
+      background: #0033a0;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .seo-breadcrumb {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 0 16px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .seo-breadcrumb a {
+      color: #0033a0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      color: #0033a0;
+      /* Luxembourg blue */
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #d00000;
+      /* Luxembourg red */
+      font-weight: 500;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .time {
+      font-size: 1.1rem;
+      margin-top: 12px;
+      color: #555;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .controls {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .controls label,
+    .controls input {
+      max-width: 100%;
+    }
+
+    .controls label {
+      font-weight: 600;
+      color: #0033a0;
+    }
+
+    .controls input {
+      padding: 6px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      max-width: 1000px;
+    }
+
+    .warning-banner {
+      display: none;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      border: 1px solid #f59e0b;
+      border-radius: 12px;
+      background: #fff7ed;
+      color: #9a3412;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      line-height: 1.5;
+    }
+
+    .warning-banner a {
+      color: inherit;
+      font-weight: 700;
+    }
+
+    .sponsor-card {
+      width: 100%;
+      max-width: 1000px;
+      margin: 26px 0 0;
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .sponsor-card img {
+      max-width: 130px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .sponsor-card p {
+      margin: 0;
+      color: #334155;
+      font-size: 0.98rem;
+    }
+
+    .sponsor-card a {
+      color: #0033a0;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .settings-modal.hidden {
+      display: none;
+    }
+
+    .settings-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+    }
+
+    .settings-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+    }
+
+    .settings-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: min(92vw, 420px);
+      margin: 12vh auto 0;
+      padding: 20px;
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .settings-modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .settings-modal__title {
+      margin: 0;
+      color: #0033a0;
+      font-size: 1.2rem;
+    }
+
+    .settings-modal__close {
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .settings-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .settings-item__label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .settings-item select {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      background: #f8fafc;
+    }
+
+    .settings-modal__actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-compact {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #0033a0;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: min(280px, 100%);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s;
+      min-width: 0;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: #0033a0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .card .hospital {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #d00000;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .card .note {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: #555;
+      font-style: italic;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .card.nord h2 {
+      border-top: 4px solid #00a040;
+    }
+
+    /* green for Nord */
+    .card.sud h2 {
+      border-top: 4px solid #d00000;
+    }
+
+    /* red for Sud */
+    .card.centre h2 {
+      border-top: 4px solid #0033a0;
+    }
+
+    /* blue for Centre */
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 12px;
+      }
+
+      header {
+        margin: 12px 0 22px;
+      }
+
+      h1 {
+        font-size: 1.85rem;
+        padding-right: 52px;
+      }
+
+      .subtitle,
+      .time {
+        font-size: 1rem;
+      }
+
+      .cards {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 16px;
+      }
+
+      .card {
+        width: 100%;
+        padding: 20px 16px;
+      }
+
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .controls label {
+        margin: 0;
+      }
+
+      .controls input {
+        width: 100%;
+      }
+
+      .sponsor-card {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+    <a href="https://ambulance.wirtz.click">Ambulance Toolkit</a> / <span>garde.lu</span>
+  </nav>
+  <header>
+    <button class="settings-btn" id="settingsToggle" type="button" aria-label="Open settings">
+      <i class="fas fa-language"></i>
+    </button>
+    <h1>🏥 Hôpitaux de Garde – Luxembourg</h1>
+    <div class="subtitle">Service d'urgence 24/7 – Régions Nord, Sud, Centre</div>
+    <div class="time" id="current-time">Heure actuelle (Luxembourg) : 08/01/2026 08:27</div>
+  </header>
+
+  <div class="controls">
+    <label for="select-date">
+      Voir la garde pour le :
+    </label>
+    <input type="date" id="select-date" min="2026-01-01" max="2026-06-30">
+    <label for="select-hour">
+      Heure :
+    </label>
+    <input type="time" id="select-hour" value="14:00">
+  </div>
+
+  <div class="warning-banner" id="verification-warning" role="alert" aria-live="polite"></div>
+
+  <div class="cards">
+    <div class="card centre">
+      <h2>Région Centre</h2>
+      <div class="hospital" id="centre">Grande Garde : Centre Hospitalier de Luxembourg<br>Petite Garde : Hôpital
+        Kirchberg</div>
+      <div class="note" id="centre-note">La Petite Garde n'assure plus les admissions après 15h00.</div>
+    </div>
+    <div class="card nord">
+      <h2>Région Nord</h2>
+      <div class="hospital" id="nord">Centre Hospitalier du Nord (Ettelbruck)</div>
+    </div>
+    <div class="card sud">
+      <h2>Région Sud</h2>
+      <div class="hospital" id="sud">Centre Hospitalier Emile Mayrisch (Esch-sur-Alzette)</div>
+    </div>
+
+  </div>
+
+  <div class="sponsor-card">
+    <a href="https://www.mixvoip.com/" target="_blank" rel="noopener noreferrer" aria-label="Mixvoip">
+      <img src="./mixvoip-logo-new.png" alt="Mixvoip logo">
+    </a>
+    <p id="sponsor-copy"></p>
+  </div>
+
+  <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div id="settingsBackdrop" class="settings-modal__backdrop"></div>
+    <div class="settings-modal__panel">
+      <div class="settings-modal__header">
+        <h2 id="settingsTitle" class="settings-modal__title">Settings</h2>
+        <button id="settingsClose" class="settings-modal__close" type="button" aria-label="Close settings">&times;</button>
+      </div>
+      <div class="settings-item">
+        <label class="settings-item__label" for="languageSelect">Language</label>
+        <select id="languageSelect">
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="lb">Lëtzebuergesch</option>
+        </select>
+      </div>
+      <div class="settings-modal__actions">
+        <button id="settingsDone" type="button" class="btn-compact">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="offline-hopitaux-garde-luxembourg-no-double-check.html" id="download-link"
+      style="color: #0033a0; text-decoration: underline; margin-top: 8px; display: inline-block;">
+      📥 Télécharger cette page pour l'utiliser hors ligne
+    </a>
+  </footer>
+
+  <script src="../../style/i18n.js"></script>
+  <script>
+    window.hospI18n = { t: (key) => key };
+    const t = (key) => window.hospI18n.t(key);
+
+    function applyPageTranslations() {
+      ToolkitI18n.applyTranslations({
+      titleKey: 'page.title',
+      text: {
+        'header h1': 'header.title',
+        'header .subtitle': 'header.subtitle',
+        'label[for="select-date"]': 'controls.dateLabel',
+        'label[for="select-hour"]': 'controls.hourLabel',
+        '#settingsTitle': 'settings.title',
+        'label[for="languageSelect"]': 'settings.language',
+        '#settingsDone': 'settings.close',
+        '.card.centre h2': 'region.centre',
+        '.card.nord h2': 'region.north',
+        '.card.sud h2': 'region.south'
+      },
+      attrs: [
+        { selector: '#settingsToggle', attr: 'aria-label', key: 'settings.openAria' },
+        { selector: '#settingsClose', attr: 'aria-label', key: 'settings.closeAria' }
+      ],
+      translations: {
+        de: {
+          'page.title': '🏥 Bereitschaftskrankenhäuser – Luxemburg',
+          'header.title': '🏥 Bereitschaftskrankenhäuser – Luxemburg',
+          'header.subtitle': 'Notdienst 24/7 – Regionen Norden, Süden, Zentrum',
+          'controls.dateLabel': 'Bereitschaft anzeigen für:',
+          'controls.hourLabel': 'Uhrzeit:',
+          'region.centre': 'Region Zentrum',
+          'region.north': 'Region Norden',
+          'region.south': 'Region Süden',
+          'time.current': 'Aktuelle Uhrzeit (Luxemburg)',
+          'centre.smallGuardNote': 'Die kleine Bereitschaft nimmt nach 15:00 keine Patienten mehr an.',
+          'warning.mismatch': 'Warnung: Die berechnete CHL/Kirchberg-Bereitschaft stimmt nicht mit der externen Quelle überein. Möglicher Fehler. Bitte auf RTL prüfen:',
+          'warning.linkLabel': 'RTL',
+          'settings.title': 'Einstellungen',
+          'settings.language': 'Sprache',
+          'settings.close': 'Schließen',
+          'settings.openAria': 'Einstellungen öffnen',
+          'settings.closeAria': 'Einstellungen schließen',
+          'sponsor.copy': 'Danke an <a href="https://www.mixvoip.com/" target="_blank" rel="noopener noreferrer">Mixvoip</a> für das Sponsoring dieser Seite.',
+          'errors.load': 'Fehler beim Laden',
+          'footer.download': '📥 Diese Seite für Offline-Nutzung herunterladen',
+          'page.grandeGarde': 'Große Bereitschaft:',
+          'page.petiteGarde': 'Kleine Bereitschaft:'
+        },
+        en: {
+          'page.title': '🏥 On-call Hospitals – Luxembourg',
+          'header.title': '🏥 On-call Hospitals – Luxembourg',
+          'header.subtitle': '24/7 emergency service – North, South, Center regions',
+          'controls.dateLabel': 'Show duty for:',
+          'controls.hourLabel': 'Time:',
+          'region.centre': 'Center Region',
+          'region.north': 'North Region',
+          'region.south': 'South Region',
+          'time.current': 'Current time (Luxembourg)',
+          'centre.smallGuardNote': 'Small duty no longer accepts patients after 15:00.',
+          'warning.mismatch': 'Warning: the computed CHL/Kirchberg duty does not match the external source. There may be an error. Please verify it on RTL:',
+          'warning.linkLabel': 'RTL',
+          'settings.title': 'Settings',
+          'settings.language': 'Language',
+          'settings.close': 'Close',
+          'settings.openAria': 'Open settings',
+          'settings.closeAria': 'Close settings',
+          'sponsor.copy': 'Thank you to <a href="https://www.mixvoip.com/" target="_blank" rel="noopener noreferrer">Mixvoip</a> for sponsoring this site.',
+          'errors.load': 'Loading error',
+          'footer.download': '📥 Download this page for offline use',
+          'page.grandeGarde': 'Big duty:',
+          'page.petiteGarde': 'Small duty:'
+        },
+        fr: {
+          'page.title': '🏥 Hôpitaux de garde – Luxembourg',
+          'header.title': '🏥 Hôpitaux de garde – Luxembourg',
+          'header.subtitle': 'Service d urgence 24/7 – Regions Nord, Sud, Centre',
+          'controls.dateLabel': 'Voir la garde pour le :',
+          'controls.hourLabel': 'Heure :',
+          'region.centre': 'Région Centre',
+          'region.north': 'Région Nord',
+          'region.south': 'Région Sud',
+          'time.current': 'Heure actuelle (Luxembourg)',
+          'centre.smallGuardNote': 'La Petite Garde n\'accepte plus les patients après 15h00.',
+          'warning.mismatch': 'Avertissement : la garde CHL/Kirchberg calculee ne correspond pas a la source externe. Il y a peut-etre une erreur. Merci de verifier sur RTL :',
+          'warning.linkLabel': 'RTL',
+          'settings.title': 'Paramètres',
+          'settings.language': 'Langue',
+          'settings.close': 'Fermer',
+          'settings.openAria': 'Ouvrir les paramètres',
+          'settings.closeAria': 'Fermer les paramètres',
+          'sponsor.copy': 'Merci à <a href="https://www.mixvoip.com/" target="_blank" rel="noopener noreferrer">Mixvoip</a> pour le sponsoring de ce site.',
+          'errors.load': 'Erreur de chargement',
+          'footer.download': '📥 Télécharger cette page pour l utiliser hors ligne',
+          'page.grandeGarde': 'Grande Garde :',
+          'page.petiteGarde': 'Petite Garde :'
+        },
+        lb: {
+          'page.title': '🏥 Dëngschtspidole – Lëtzebuerg',
+          'header.title': '🏥 Dëngschtspidol – Lëtzebuerg',
+          'header.subtitle': 'Dëngschtspidol – Regiounen Nord, Süd, Zentrum',
+          'controls.dateLabel': 'Dëngschtspidol fir den:',
+          'controls.hourLabel': 'Auerzäit:',
+          'region.centre': 'Regioun Zentrum',
+          'region.north': 'Regioun Norden',
+          'region.south': 'Regioun Süden',
+          'time.current': 'Aktuell Zäit (Lëtzebuerg)',
+          'centre.smallGuardNote': 'Déi kleng Garde hëlt no 15:00 keng Patienten méi un.',
+          'warning.mismatch': 'Warnung: Déi berechent CHL/Kirchberg-Garde entsprëcht net der externer Quell. Dëst kann e Feeler sinn. Kuck w.e.g. bei RTL no:',
+          'warning.linkLabel': 'RTL',
+          'settings.title': 'Astellungen',
+          'settings.language': 'Sprooch',
+          'settings.close': 'Zoumaachen',
+          'settings.openAria': 'Astellungen opmaachen',
+          'settings.closeAria': 'Astellungen zoumaachen',
+          'sponsor.copy': 'Merci u <a href="https://www.mixvoip.com/" target="_blank" rel="noopener noreferrer">Mixvoip</a> fir de Sponsoring vun dëser Säit.',
+          'errors.load': 'Feeler beim Luede',
+          'footer.download': '📥 Dës Säit fir Offline-Benotzung eroflueden',
+          'page.grandeGarde': 'Grouss Garde:',
+          'page.petiteGarde': 'Kleng Garde:'
+        }
+      },
+      onApplied: ({ t }) => {
+        window.hospI18n.t = t;
+        const footer = document.querySelector('footer');
+        const sponsorCopy = document.getElementById('sponsor-copy');
+        if (footer) {
+          footer.innerHTML = `
+            <a href="offline-hopitaux-garde-luxembourg-no-double-check.html" id="download-link" download
+              style="color: #0033a0; text-decoration: underline; margin-top: 8px; display: inline-block;">
+              ${t('footer.download')}
+            </a>
+          `;
+        }
+        if (sponsorCopy) {
+          sponsorCopy.innerHTML = t('sponsor.copy');
+        }
+      }
+    });
+    }
+
+    // Hospital names
+    const NORD = "Centre Hospitalier du Nord (Ettelbruck)";
+    const SUD = "Centre Hospitalier Emile Mayrisch (Esch-sur-Alzette)";
+    const CHL = "Centre Hospitalier de Luxembourg";
+    const HK = "Hôpital Kirchberg";
+    const EXTERNAL_GUARD_URL = "https://lem.codes/users/blala976/CGDIS/Gardes_CHLHK.php";
+    const EXTERNAL_GUARD_PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(EXTERNAL_GUARD_URL)}`;
+    const RTL_GUARD_URL = "https://www.rtl.lu/info/services-de-garde";
+    // Browser-side verification is disabled because the external sources do not expose
+    // CORS headers for garde.lu, which otherwise produces noisy console errors.
+    const EXTERNAL_GUARD_CHECK_ENABLED = false;
+    let externalGuardPromise = null;
+    let warningCheckToken = 0;
+    const settingsToggle = document.getElementById('settingsToggle');
+    const settingsModal = document.getElementById('settingsModal');
+    const settingsBackdrop = document.getElementById('settingsBackdrop');
+    const settingsClose = document.getElementById('settingsClose');
+    const settingsDone = document.getElementById('settingsDone');
+    const languageSelect = document.getElementById('languageSelect');
+
+    document.getElementById('select-date').addEventListener('change', updateFromPicker);
+    document.getElementById('select-hour').addEventListener('change', updateFromPicker);
+
+    function updateFromPicker() {
+      const dateInput = document.getElementById('select-date').value;
+      const timeInput = document.getElementById('select-hour').value;
+      if (!dateInput || !timeInput) return;
+
+      const [year, month, day] = dateInput.split('-').map(Number);
+      const [hour, minute] = timeInput.split(':').map(Number);
+      const selected = new Date(year, month - 1, day, hour, minute);
+      displayForDateTime(selected);
+    }
+
+    function openSettingsModal() {
+      settingsModal?.classList.remove('hidden');
+      settingsToggle?.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeSettingsModal() {
+      settingsModal?.classList.add('hidden');
+      settingsToggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    function refreshPageLanguage() {
+      const selectedLanguage = languageSelect?.value || ToolkitI18n.getStoredLanguage();
+      localStorage.setItem('language', selectedLanguage);
+      applyPageTranslations();
+      document.getElementById('current-time').textContent = `${t('time.current')} : ${luxembourgTime()}`;
+      updateFromPicker();
+    }
+
+    // Get current time in Luxembourg (without seconds, French format)
+    function luxembourgTime() {
+      return new Date().toLocaleString("fr-FR", {
+        timeZone: "Europe/Luxembourg",
+        hour12: false,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    // Parse browser-formatted Luxembourg date strings like "08/01/2026 à 14:30"
+    // and Firefox-style "08/01/2026 14:30".
+    function parseLuxDate(str) {
+      const match = str.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+à)?\s+(\d{2}):(\d{2})$/);
+      if (!match) {
+        console.error("Format de date inattendu:", str);
+        return new Date(); // fallback
+      }
+      const [, day, month, year, hour, minute] = match;
+
+      const d = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1, // months are 0-indexed
+        parseInt(day, 10),
+        parseInt(hour, 10),
+        parseInt(minute, 10)
+      );
+
+      // Safety check
+      if (isNaN(d.getTime())) {
+        console.error("Date invalide générée:", str);
+        return new Date();
+      }
+      return d;
+    }
+
+    function toDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function toUtcDayNumber(date) {
+      return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000;
+    }
+
+    function diffCalendarDays(a, b) {
+      return toUtcDayNumber(a) - toUtcDayNumber(b);
+    }
+
+    // These daytime holiday overrides come from the validated PDF schedule in this folder:
+    // garde-2026-hk-chl-valide-1.pdf
+    const CENTRE_DAY_OVERRIDES = new Map([
+      ['2026-01-01', [HK]],
+      ['2026-04-06', [CHL]],
+      ['2026-05-01', [CHL]],
+      ['2026-05-14', [CHL]],
+      ['2026-05-25', [HK]],
+      ['2026-06-23', [CHL]],
+    ]);
+    const CENTRE_NIGHT_OVERRIDES = new Map([
+      ['2026-01-01', HK],
+    ]);
+
+    function getCentreDayOverride(date) {
+      return CENTRE_DAY_OVERRIDES.get(toDateKey(date)) || null;
+    }
+
+    // Determine which hospital is on night duty on a given DATE (ignores time)
+    function getNightHospital(date) {
+      const override = CENTRE_NIGHT_OVERRIDES.get(toDateKey(date));
+      if (override) return override;
+
+      const refAlt = new Date(2026, 0, 2); // Jan 2, 2026 → CHL
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const diffAlt = diffCalendarDays(today, refAlt);
+      if (diffAlt < 0) return CHL;
+      return (diffAlt % 2 === 0) ? CHL : HK;
+    }
+
+    function parseExternalDate(dateStr) {
+      const cleanStr = dateStr.replace(/^[A-Za-zÄÖÜäöüß]{2,},\s*/, "").trim();
+      const parts = cleanStr.split('.');
+      if (parts.length < 3) return null;
+
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      const parsed = new Date(year, month, day);
+
+      return Number.isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    function normalizeDutyTokens(rawValue) {
+      return rawValue
+        .split('&')
+        .map(part => part.trim().toUpperCase())
+        .map(part => {
+          if (part.includes('CHL')) return 'CHL';
+          if (part.includes('HOKI') || part.includes('KIRCHBERG')) return 'HK';
+          return null;
+        })
+        .filter(Boolean)
+        .sort();
+    }
+
+    function sameDuty(a, b) {
+      return a.length === b.length && a.every((value, index) => value === b[index]);
+    }
+
+    function getLocalCentreDutyTokens(selectedDate) {
+      const dayOfWeek = selectedDate.getDay();
+      const hours = selectedDate.getHours();
+
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        const override = getCentreDayOverride(selectedDate);
+        if (override) return override;
+        return ['CHL', 'HK'];
+      }
+
+      return [getNightHospital(selectedDate) === CHL ? 'CHL' : 'HK'];
+    }
+
+    function parseExternalGuardRows(html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = Array.from(doc.querySelectorAll('#dienstTable tbody tr'));
+      const schedule = new Map();
+
+      rows.forEach(row => {
+        const date = parseExternalDate(row.cells[0]?.textContent || '');
+        const dayDuty = normalizeDutyTokens(row.cells[1]?.textContent || '');
+        const nightDuty = normalizeDutyTokens(row.cells[2]?.textContent || '');
+        if (!date || (dayDuty.length === 0 && nightDuty.length === 0)) return;
+        schedule.set(toDateKey(date), { dayDuty, nightDuty });
+      });
+
+      return schedule.size > 0 ? schedule : null;
+    }
+
+    function fetchExternalGuardRows() {
+      if (!EXTERNAL_GUARD_CHECK_ENABLED) {
+        return Promise.resolve(null);
+      }
+
+      if (!externalGuardPromise) {
+        externalGuardPromise = fetchExternalGuardHtml()
+          .then(html => html ? parseExternalGuardRows(html) : null)
+          .catch(error => {
+            console.warn('External guard verification unavailable:', error);
+            return null;
+          });
+      }
+
+      return externalGuardPromise;
+    }
+
+    async function fetchExternalGuardHtml() {
+      const sources = [EXTERNAL_GUARD_URL, EXTERNAL_GUARD_PROXY_URL];
+
+      for (const source of sources) {
+        try {
+          const response = await fetch(source, { cache: 'no-store' });
+          if (!response.ok) continue;
+
+          const html = await response.text();
+          if (!html || !html.includes('dienstTable')) continue;
+
+          return html;
+        } catch (error) {
+          console.warn(`Failed to fetch guard source ${source}:`, error);
+        }
+      }
+
+      return null;
+    }
+
+    function getExternalDutyTokens(schedule, selectedDate) {
+      const hours = selectedDate.getHours();
+      const currentKey = toDateKey(selectedDate);
+      const currentRow = schedule.get(currentKey);
+
+      if (hours >= 7 && hours < 17) {
+        return currentRow?.dayDuty || null;
+      }
+
+      if (hours >= 17) {
+        return currentRow?.nightDuty || null;
+      }
+
+      const previousDate = new Date(selectedDate);
+      previousDate.setDate(previousDate.getDate() - 1);
+      return schedule.get(toDateKey(previousDate))?.nightDuty || null;
+    }
+
+    function hideVerificationWarning() {
+      const warningEl = document.getElementById('verification-warning');
+      warningEl.style.display = 'none';
+      warningEl.innerHTML = '';
+    }
+
+    function showVerificationWarning() {
+      const warningEl = document.getElementById('verification-warning');
+      warningEl.innerHTML = `${t('warning.mismatch')} <a href="${RTL_GUARD_URL}" target="_blank" rel="noopener noreferrer">${t('warning.linkLabel')}</a>`;
+      warningEl.style.display = 'block';
+    }
+
+    async function updateVerificationWarning(selectedDate) {
+      const token = ++warningCheckToken;
+      const schedule = await fetchExternalGuardRows();
+      if (token !== warningCheckToken) return;
+
+      if (!schedule) {
+        hideVerificationWarning();
+        return;
+      }
+
+      const localDuty = getLocalCentreDutyTokens(selectedDate);
+      const externalDuty = getExternalDutyTokens(schedule, selectedDate);
+
+      if (!externalDuty || sameDuty(localDuty, externalDuty)) {
+        hideVerificationWarning();
+        return;
+      }
+
+      showVerificationWarning();
+    }
+
+    // Reusable function to display hospitals for any Date object
+    function displayForDateTime(selectedDate) {
+      const dayOfWeek = selectedDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+      const hours = selectedDate.getHours();
+
+      const nord = NORD;
+      const sud = SUD;
+
+      // Weekend: Saturday (6) or Sunday (0)
+      if (dayOfWeek === 6 || dayOfWeek === 0) {
+        // Find Saturday of this weekend
+        const sat = new Date(selectedDate);
+        if (dayOfWeek === 0) { // Sunday → go back 1 day
+          sat.setDate(sat.getDate() - 1);
+        }
+        const refSat = new Date(2026, 0, 3); // Jan 3, 2026 = CHL
+        const diffDays = diffCalendarDays(sat, refSat);
+        const weeksSince = Math.floor(diffDays / 7);
+        const hospital = (weeksSince % 2 === 0) ? CHL : HK;
+        document.getElementById('nord').textContent = nord;
+        document.getElementById('sud').textContent = sud;
+        document.getElementById('centre').textContent = hospital;
+        document.getElementById('centre-note').textContent = "";
+        updateVerificationWarning(selectedDate);
+        return;
+      }
+
+      // Weekday day shift: Mon–Fri, 7:00–16:59
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        const centreDayOverride = getCentreDayOverride(selectedDate);
+        if (centreDayOverride) {
+          document.getElementById('nord').textContent = nord;
+          document.getElementById('sud').textContent = sud;
+          document.getElementById('centre').textContent = centreDayOverride[0];
+          document.getElementById('centre-note').textContent = "";
+          updateVerificationWarning(selectedDate);
+          return;
+        }
+
+        // Grande Garde = hospital on duty TONIGHT (same calendar day night)
+        const grandeGarde = getNightHospital(selectedDate);
+        const petiteGarde = (grandeGarde === HK) ? CHL : HK;
+        document.getElementById('nord').textContent = nord;
+        document.getElementById('sud').textContent = sud;
+        document.getElementById('centre').innerHTML =
+          `${t('page.grandeGarde')} ${grandeGarde}<br>${t('page.petiteGarde')} ${petiteGarde}`;
+        document.getElementById('centre-note').textContent =
+          t('centre.smallGuardNote');
+        updateVerificationWarning(selectedDate);
+        return;
+      }
+
+      // Night or outside hours
+      const hospital = getNightHospital(selectedDate);
+      document.getElementById('nord').textContent = nord;
+      document.getElementById('sud').textContent = sud;
+      document.getElementById('centre').textContent = hospital;
+      document.getElementById('centre-note').textContent = "";
+      updateVerificationWarning(selectedDate);
+    }
+    function getHospitalOnDuty(luxDate) {
+      const d = luxDate;
+      const dayOfWeek = d.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+      const hours = d.getHours();
+
+      const nord = NORD;
+      const sud = SUD;
+
+      // Weekend logic: Saturday (6) or Sunday (0)
+      if (dayOfWeek === 6 || dayOfWeek === 0) {
+        const refSat = new Date(2026, 0, 3); // Saturday, Jan 3, 2026 → CHL
+        // Find the Saturday of the current weekend
+        let satOfThisWeekend;
+        if (dayOfWeek === 6) {
+          satOfThisWeekend = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        } else { // Sunday (0)
+          satOfThisWeekend = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1);
+        }
+        const diffDays = diffCalendarDays(satOfThisWeekend, refSat);
+        const weeksSince = Math.floor(diffDays / 7);
+        const hospital = (weeksSince % 2 === 0) ? CHL : HK;
+        return { nord, sud, centre: hospital, note: "" };
+      }
+
+      // Weekday day shift: 7:00 to 16:59
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        const centreDayOverride = getCentreDayOverride(d);
+        if (centreDayOverride) {
+          return { nord, sud, centre: centreDayOverride[0], note: "" };
+        }
+
+        // Grande Garde = hospital on duty TONIGHT (same as night of current day)
+        const grandeGarde = getNightHospital(d);
+        const petiteGarde = (grandeGarde === HK) ? CHL : HK;
+        const centreDisplay = `${t('page.grandeGarde')} ${grandeGarde}<br>${t('page.petiteGarde')} ${petiteGarde}`;
+        const note = t('centre.smallGuardNote');
+        return { nord, sud, centre: centreDisplay, note };
+      }
+
+      // Night or outside hours: single hospital (tonight's duty)
+      const hospital = getNightHospital(d);
+      return { nord, sud, centre: hospital, note: "" };
+    }
+
+    function updateDisplay() {
+      try {
+        // Get current time as string in Luxembourg (e.g., "11/01/2026 à 14:30")
+        const luxStr = luxembourgTime();
+        const luxDate = parseLuxDate(luxStr);
+        document.getElementById('current-time').textContent = `${t('time.current')} : ${luxStr}`;
+
+        // 👇 NEW: Set date/time pickers to Luxembourg time correctly
+        const luxYear = luxDate.getFullYear();
+        const luxMonth = String(luxDate.getMonth() + 1).padStart(2, '0');
+        const luxDay = String(luxDate.getDate()).padStart(2, '0');
+        const luxHour = String(luxDate.getHours()).padStart(2, '0');
+        const luxMinute = String(luxDate.getMinutes()).padStart(2, '0');
+
+        document.getElementById('select-date').value = `${luxYear}-${luxMonth}-${luxDay}`;
+        document.getElementById('select-hour').value = `${luxHour}:${luxMinute}`;
+
+        displayForDateTime(luxDate);
+      } catch (e) {
+        console.error("Erreur :", e);
+        document.getElementById('current-time').textContent = t('errors.load');
+      }
+    }
+    // Download offline version as HTML file
+    async function downloadOfflinePage() {
+      const offlineUrl = 'offline-hopitaux-garde-luxembourg-no-double-check.html';
+      try {
+        const response = await fetch(offlineUrl, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const htmlContent = await response.text();
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'offline-hopitaux-garde-luxembourg-no-double-check.html';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 100);
+      } catch (err) {
+        console.error('Téléchargement du fichier hors ligne échoué:', err);
+        window.location.href = offlineUrl; // fallback: direct navigation
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.id === 'download-link') {
+        e.preventDefault();
+        downloadOfflinePage();
+      }
+    });
+
+    settingsToggle?.addEventListener('click', openSettingsModal);
+    settingsClose?.addEventListener('click', closeSettingsModal);
+    settingsDone?.addEventListener('click', closeSettingsModal);
+    settingsBackdrop?.addEventListener('click', closeSettingsModal);
+    languageSelect?.addEventListener('change', refreshPageLanguage);
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && settingsModal && !settingsModal.classList.contains('hidden')) {
+        closeSettingsModal();
+      }
+    });
+
+    if (languageSelect) {
+      languageSelect.value = ToolkitI18n.getStoredLanguage();
+    }
+
+    applyPageTranslations();
+    updateDisplay();
+    // Then every minute
+    setInterval(updateDisplay, 60000);
+  </script>
+
+</body>
+
+</html>

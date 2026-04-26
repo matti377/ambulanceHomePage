@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maurer-Algorithmus fuer Sanitaetsdienste: Risiko berechnen und empfohlene Einsatzstaerke direkt ableiten.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="/pages/divers/maurer/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_LU">
+    <meta property="og:title" content="Maurer-Algorithmus | Ambulance Toolkit Luxembourg">
+    <meta property="og:description" content="Gesamtrisiko und empfohlene Einsatzstaerke fuer Veranstaltungen nach Maurer-Schema berechnen.">
+    <title>Maurer-Algorithmus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .seo-breadcrumb {
+            margin: 0 0 20px;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .seo-breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .breadcrumb-current {
+            color: #fff;
+        }
+
+        .maurer-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--card-bg);
+            color: var(--text-dark);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .panel h2,
+        .panel h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .panel p,
+        .panel li,
+        .panel table {
+            color: var(--text-dark);
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        .range-help {
+            font-size: 0.88rem;
+            color: #5d6570;
+            margin-top: 4px;
+        }
+
+        .result-hero {
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(230, 57, 70, 0.18));
+            border: 1px solid rgba(230, 57, 70, 0.2);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .result-score {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+
+        .result-label {
+            font-size: 0.98rem;
+            color: var(--text-dark);
+        }
+
+        .summary-list {
+            display: grid;
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .summary-item {
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+        .summary-item strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .staffing-box {
+            background: rgba(42, 91, 130, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .staffing-main {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .formula {
+            font-family: "Courier New", monospace;
+            font-size: 0.95rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+            overflow-x: auto;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            font-size: 0.95rem;
+        }
+
+        .info-table th,
+        .info-table td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 10px 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .info-table th {
+            color: var(--primary);
+        }
+
+        .hint {
+            margin-top: 16px;
+            font-size: 0.92rem;
+            color: #4e5661;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .maurer-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Ambulance Toolkit</a> / <span class="breadcrumb-current">Maurer-Algorithmus</span>
+        </nav>
+
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-shield-heart"></i> Maurer-Algorithmus</h1>
+            <p class="shiftplan-subtitle">Gesamtrisiko fuer Veranstaltungen berechnen und empfohlene Einsatzstaerke ableiten</p>
+        </header>
+
+        <div class="maurer-layout">
+            <section class="panel" aria-labelledby="maurerFormTitle">
+                <h2 id="maurerFormTitle">Eingaben</h2>
+                <p>Das Tool berechnet die Punkte nach dem von dir beschriebenen Maurer-Schema und ordnet die Veranstaltung direkt einer Einsatzempfehlung zu.</p>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="maxVisitors">Maximal zulaessige Besucherzahl</label>
+                        <input id="maxVisitors" type="number" min="0" step="1" value="1000">
+                    </div>
+
+                    <div class="field">
+                        <label for="expectedVisitors">Erwartete Besucherzahl</label>
+                        <input id="expectedVisitors" type="number" min="0" step="1" value="800">
+                    </div>
+
+                    <div class="field">
+                        <label for="locationFactor">Location</label>
+                        <select id="locationFactor">
+                            <option value="1">Im Freien (Faktor 1,0)</option>
+                            <option value="2">Geschlossene bauliche Anlage (Faktor 2,0)</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="eventFactor">Art der Veranstaltung</label>
+                        <select id="eventFactor">
+                            <option value="0.1">0,1 - sehr niedriges Risiko</option>
+                            <option value="0.2">0,2 - niedriges Risiko</option>
+                            <option value="0.3">0,3 - eher niedriges Risiko</option>
+                            <option value="0.4">0,4 - moderates Risiko</option>
+                            <option value="0.5" selected>0,5 - durchschnittliches Risiko</option>
+                            <option value="0.6">0,6 - erhoehtes Risiko</option>
+                            <option value="0.7">0,7 - deutlich erhoehtes Risiko</option>
+                            <option value="0.8">0,8 - hohes Risiko</option>
+                            <option value="0.9">0,9 - sehr hohes Risiko</option>
+                            <option value="1">1,0 - maximales Standardrisiko</option>
+                            <option value="1.2">1,2 - Risikoveranstaltung</option>
+                        </select>
+                        <div class="range-help">Beispiele: Theater eher 0,1-0,3, Volksfest/Fussball eher 0,4-0,6, Rockkonzert/Stadtfest eher 0,7-1,0.</div>
+                    </div>
+
+                    <div class="field">
+                        <label for="vipCount">VIPs mit erhoehtem Personenschutzbedarf</label>
+                        <input id="vipCount" type="number" min="0" step="1" value="0">
+                        <div class="range-help">10 Zusatzpunkte pro volle 5 VIPs.</div>
+                    </div>
+
+                    <div class="field">
+                        <label for="policeRisk">Polizeiliche Erkenntnisse</label>
+                        <select id="policeRisk">
+                            <option value="0" selected>Keine Zusatzgefahr</option>
+                            <option value="10">Ja, 10 Zusatzpunkte</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="panel" aria-labelledby="maurerResultTitle">
+                <h2 id="maurerResultTitle">Ergebnis</h2>
+
+                <div class="result-hero">
+                    <div id="totalScore" class="result-score">0,0 Punkte</div>
+                    <div id="resultLabel" class="result-label">Bitte Eingaben anpassen.</div>
+                </div>
+
+                <div class="summary-list">
+                    <div class="summary-item">
+                        <strong>Basiswerte</strong>
+                        <span id="basePointsText">P_zulaessig 0 + P_erwartet 0</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Gewichtete Berechnung</strong>
+                        <span id="weightedText">0 x 1,0 x 0,5 = 0,0</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Zusatzpunkte</strong>
+                        <span id="extraText">VIP 0 + Polizei 0 = 0</span>
+                    </div>
+                </div>
+
+                <div class="staffing-box">
+                    <div id="staffingMain" class="staffing-main">2 Sanitaeter</div>
+                    <div id="staffingSub">Keine zusaetzlichen Fahrzeuge oder Notaerzte empfohlen.</div>
+                </div>
+
+                <div class="hint" id="leadershipHint">Unter 30 Punkten ist in der Regel keine reduzierte Einsatzleitung erforderlich.</div>
+            </aside>
+        </div>
+
+        <section class="panel" style="margin-top: 24px;" aria-labelledby="maurerDetailsTitle">
+            <h2 id="maurerDetailsTitle">Berechnungslogik</h2>
+            <div class="formula">P_gesamt = ((P_zulaessig + P_erwartet) x F_location x F_art) + P_VIP + P_Polizei</div>
+
+            <table class="info-table">
+                <thead>
+                    <tr>
+                        <th>Gesamtpunkte</th>
+                        <th>Empfohlene Ressourcen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0 - 12</td>
+                        <td>2 Sanitaeter</td>
+                    </tr>
+                    <tr>
+                        <td>13 - 25</td>
+                        <td>3 Sanitaeter</td>
+                    </tr>
+                    <tr>
+                        <td>26 - 42</td>
+                        <td>4 Sanitaeter</td>
+                    </tr>
+                    <tr>
+                        <td>43 - 60</td>
+                        <td>5 Sanitaeter, 1 Rettungshelfer, 1 KTW</td>
+                    </tr>
+                    <tr>
+                        <td>61 - 90</td>
+                        <td>8 Sanitaeter, 2 Rettungshelfer, 1 Notarzt, 1 RTW und 1 KTW</td>
+                    </tr>
+                    <tr>
+                        <td>&gt; 91</td>
+                        <td>Individuelle Planung, Einsatzleitung erforderlich</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="hint">Besucher-Punkte werden fuer zulaessige und erwartete Besucherzahl getrennt berechnet. Bei VIPs zaehlen nur volle 5 Personen als 10 Zusatzpunkte. Das Tool rundet die Besucher-Staffeln gemaess deiner Vorgabe ueber volle 500, 1.000 oder 10.000 Besucher.</p>
+        </section>
+    </div>
+
+    <script>
+        function formatNumber(value) {
+            return new Intl.NumberFormat('de-DE', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            }).format(value);
+        }
+
+        function calculateVisitorPoints(count) {
+            if (count <= 0) return 0;
+            if (count <= 500) return 1;
+            if (count <= 5000) return Math.floor(count / 500);
+            if (count <= 20000) return 10 + Math.floor((count - 5000) / 1000);
+            return 25 + Math.floor((count - 20000) / 10000);
+        }
+
+        function getStaffing(total) {
+            if (total <= 12) {
+                return {
+                    main: '2 Sanitaeter',
+                    sub: 'Keine zusaetzlichen Fahrzeuge oder Notaerzte empfohlen.'
+                };
+            }
+            if (total <= 25) {
+                return {
+                    main: '3 Sanitaeter',
+                    sub: 'Keine zusaetzlichen Fahrzeuge oder Notaerzte empfohlen.'
+                };
+            }
+            if (total <= 42) {
+                return {
+                    main: '4 Sanitaeter',
+                    sub: 'Keine zusaetzlichen Fahrzeuge oder Notaerzte empfohlen.'
+                };
+            }
+            if (total <= 60) {
+                return {
+                    main: '5 Sanitaeter, 1 Rettungshelfer, 1 KTW',
+                    sub: 'Reduzierte Einsatzleitung sollte geprueft werden.'
+                };
+            }
+            if (total <= 90) {
+                return {
+                    main: '8 Sanitaeter, 2 Rettungshelfer, 1 Notarzt, 1 RTW und 1 KTW',
+                    sub: 'Volle stabsmaessige Einsatzleitung wird empfohlen.'
+                };
+            }
+            return {
+                main: 'Individuelle Planung notwendig',
+                sub: 'Einsatzleitung, Fahrzeuge und aerztliche Ressourcen individuell festlegen.'
+            };
+        }
+
+        function updateLeadershipHint(total) {
+            if (total >= 60) {
+                return 'Ab 60 Punkten wird eine volle stabsmaessige Einsatzleitung empfohlen.';
+            }
+            if (total >= 30) {
+                return 'Ab 30 Punkten wird eine reduzierte Einsatzleitung empfohlen.';
+            }
+            return 'Unter 30 Punkten ist in der Regel keine reduzierte Einsatzleitung erforderlich.';
+        }
+
+        function updateMaurerCalculator() {
+            const maxVisitors = Number(document.getElementById('maxVisitors').value) || 0;
+            const expectedVisitors = Number(document.getElementById('expectedVisitors').value) || 0;
+            const locationFactor = Number(document.getElementById('locationFactor').value) || 1;
+            const eventFactor = Number(document.getElementById('eventFactor').value) || 0;
+            const vipCount = Number(document.getElementById('vipCount').value) || 0;
+            const policeRisk = Number(document.getElementById('policeRisk').value) || 0;
+
+            const allowedPoints = calculateVisitorPoints(maxVisitors);
+            const expectedPoints = calculateVisitorPoints(expectedVisitors);
+            const basePoints = allowedPoints + expectedPoints;
+            const weightedScore = basePoints * locationFactor * eventFactor;
+            const vipPoints = Math.floor(vipCount / 5) * 10;
+            const totalScore = weightedScore + vipPoints + policeRisk;
+            const staffing = getStaffing(totalScore);
+
+            document.getElementById('totalScore').textContent = formatNumber(totalScore) + ' Punkte';
+            document.getElementById('resultLabel').textContent = 'Empfohlene Einstufung fuer die aktuelle Veranstaltung.';
+            document.getElementById('basePointsText').textContent = 'P_zulaessig ' + allowedPoints + ' + P_erwartet ' + expectedPoints + ' = ' + basePoints;
+            document.getElementById('weightedText').textContent = basePoints + ' x ' + formatNumber(locationFactor) + ' x ' + formatNumber(eventFactor) + ' = ' + formatNumber(weightedScore);
+            document.getElementById('extraText').textContent = 'VIP ' + vipPoints + ' + Polizei ' + policeRisk + ' = ' + (vipPoints + policeRisk);
+            document.getElementById('staffingMain').textContent = staffing.main;
+            document.getElementById('staffingSub').textContent = staffing.sub;
+            document.getElementById('leadershipHint').textContent = updateLeadershipHint(totalScore);
+        }
+
+        document.querySelectorAll('input, select').forEach((element) => {
+            element.addEventListener('input', updateMaurerCalculator);
+            element.addEventListener('change', updateMaurerCalculator);
+        });
+
+        updateMaurerCalculator();
+    </script>
+</body>
+
+</html>

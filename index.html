@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0057B8">
+
+    <!-- iOS Support -->
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SAMU Toolkit">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_LU">
+    <meta property="og:title" content="Werkzeuge fuer den Rettungsdienst | Ambulance Toolkit Luxembourg">
+    <meta name="description"
+        content="Ressourcen und Werkzeuge für den Rettungsdienst in Luxemburg: Einsatzinfos, Ausbildung, Referenzwerte und wichtige Links.">
+    <meta property="og:description"
+        content="Ressourcen und Werkzeuge fuer den Rettungsdienst in Luxemburg: Einsatzinfos, Ausbildung, Referenzwerte und wichtige Links.">
+    <title>🚑 Werkzeuge für den Rettungsdienst</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Ambulance Toolkit Luxembourg",
+            "url": "/",
+            "inLanguage": ["de", "fr", "en", "lb"],
+            "description": "Ressourcen und Werkzeuge fuer den Rettungsdienst in Luxemburg."
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <button class="settings-btn" id="settingsToggle" type="button" aria-label="Einstellungen öffnen"
+                data-i18n-attr="aria-label" data-i18n-attr-key="settings.openAria" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-briefcase-medical"></i>
+                </div>
+            </div>
+            <h1 data-i18n="header.title">🚑 Werkzeuge für den Rettungsdienst</h1>
+            <p class="subtitle" data-i18n="header.subtitle">Ihr Leitfaden zu Ressourcen und Werkzeugen für den
+                Notfallmedizinischen Dienst in Luxemburg</p>
+            <p id="betaBadge" class="beta-badge hidden" data-i18n="beta.badge">Beta-Funktionen sind aktiviert</p>
+        </header>
+
+        <!-- PWA Install Prompt (only shown if not installed) -->
+        <div id="installBanner" class="install-banner hidden">
+            <i class="fas fa-cloud-download-alt install-banner__icon"></i>
+            <div class="install-banner__content">
+                <strong data-i18n="install.title">Installieren Sie das Toolkit</strong><br>
+                <span style="font-size: 0.9rem; opacity: 0.8;" data-i18n="install.subtitle">
+                    Fügen Sie diese Seite zum Startbildschirm hinzu für eine App-ähnliche Nutzung.
+                </span>
+            </div>
+            <button id="installBtn" class="btn btn-compact" type="button" aria-label="Toolkit installieren"
+                data-i18n-attr="aria-label" data-i18n-attr-key="install.buttonAria">
+                <i class="fas fa-plus-circle"></i> <span id="installBtnLabel">Installieren</span>
+            </button>
+        </div>
+
+        <section id="announcementSection" class="announcement-stack hidden" data-i18n-attr="aria-label"
+            data-i18n-attr-key="announcement.sectionLabel" aria-label="Ankündigungen">
+            <div id="announcementList" class="announcement-stack__list"></div>
+        </section>
+
+        <section id="pinnedSection" class="category-section hidden" aria-labelledby="pinnedTitle">
+            <h2 id="pinnedTitle" class="category-title" data-i18n="pinned.title">Angeheftete Werkzeuge</h2>
+            <div id="pinnedGrid" class="tools-grid"></div>
+        </section>
+
+
+        <!-- =============== EN INTERVENTION =============== -->
+        <section class="category-section">
+            <h2 class="category-title" data-i18n="category.intervention">🚑 Im Einsatz</h2>
+            <div class="tools-grid">
+                <!-- Hôpital de garde -->
+                <div class="tool-card has-card-chip">
+                    <div class="card-header">
+                        <i class="fas fa-hospital"></i>
+                        <h2 data-i18n="cards.hospital.title">Hôpital de Garde</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.hospital.desc">Bereitschaftskrankenhäuser in Luxemburg</p>
+                        <a href="https://garde.lu" class="btn"
+                            data-i18n="cards.hospital.action">Bereitschaftskrankenhäuser anzeigen</a>
+                    </div>
+                </div>
+
+                <!-- Quick reference-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h2 data-i18n="cards.qrf.title">Informationskarten</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.qrf.desc">Kleine Informationskarten zur schnellen Entscheidungsfindung im
+                            Einsatz</p>
+                        <a href="/pages/qrfCards/index.html" class="btn" data-i18n="cards.qrf.action">Karten
+                            anzeigen</a>
+                    </div>
+                </div>
+
+                <!-- Med lookup -->
+                <div class="tool-card has-card-chip">
+                    <div class="card-header">
+                        <i class="fas fa-capsules"></i>
+                        <span class="beta-chip" data-i18n="new.cardLabel">NEU</span>
+                        <h2 data-i18n="cards.medLookup.title">Medikamenten-Suche</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.medLookup.desc">Lokale Suche nach Medikamenten, Wirkstoffen, CTI und
+                            ATC-Codes</p>
+                        <a href="pages/medLookup/index.html" class="btn" data-i18n="cards.medLookup.action">Suche
+                            öffnen</a>
+                    </div>
+                </div>
+
+                <!-- Pedi-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-baby"></i>
+                        <h2 data-i18n="cards.pedi.title">Pädiatrische Referenzwerte</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.pedi.desc">Pädiatrische Referenzwerte für Notfälle (0–15 Jahre)</p>
+                        <a href="/pages/pedi/index.html" class="btn" data-i18n="cards.pedi.action">Referenzwerte
+                            anzeigen</a>
+                    </div>
+                </div>
+
+                <!-- Clinical calculators -->
+                <div class="tool-card has-card-chip">
+                    <div class="card-header">
+                        <i class="fas fa-calculator"></i>
+                        <span class="beta-chip" data-i18n="new.cardLabel">NEU</span>
+                        <h2 data-i18n="cards.calculators.title">Klinische Rechner</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.calculators.desc">O2-Laufzeit, GCS, NEXUS-Checkliste, qSOFA und NEWS2</p>
+                        <a href="/pages/calculators/index.html" class="btn" data-i18n="cards.calculators.action">Rechner
+                            öffnen</a>
+                    </div>
+                </div>
+
+                <!-- ERC Guidelines-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h2 data-i18n="cards.erc.title">ERC Guidelines</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.erc.desc">ERC Guidelines für Notfälle</p>
+                        <a href="/pages/erc/index.html" class="btn" id="ercGuidelinesLink"
+                            data-erc-guidelines-link="true" data-i18n="cards.erc.action">Guidelines
+                            anzeigen</a>
+                    </div>
+                </div>
+
+
+                <!-- Rescue map -->
+                <div class="tool-card has-card-chip">
+                    <div class="card-header">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span class="beta-chip" data-i18n="new.cardLabel">NEU</span>
+                        <h2 data-i18n="cards.map.title">Luxemburg Rettungskarte</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.map.desc">Interaktive Karte mit CIS-Standorten und Rettungspunkten in
+                            Luxemburg</p>
+                        <a href="/pages/map/index.html" class="btn" data-i18n="cards.map.action">Karte öffnen</a>
+                    </div>
+                </div>
+
+                <!-- Tel Nummeren-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-phone"></i>
+                        <h2 data-i18n="cards.phone.title">Wichtige Telefonnummer</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.phone.desc">Telefonnummer von Krankenhaus, Seelsorge, Leitstelle, ...</p>
+                        <a href="pages/phoneNumbers/index.html" class="btn" data-i18n="cards.phone.action">Nummern
+                            anzeigen</a>
+                    </div>
+                </div>
+
+
+
+                <!-- Infectious diseases-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-virus"></i>
+                        <h2 data-i18n="cards.infect.title">Infektionskrankheiten</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.infect.desc">Liste mit Infektionskrankheiten und Schutzprotokolle</p>
+                        <a href="/pages/inectiousDiseases/index.html" class="btn" data-i18n="cards.infect.action">Liste
+                            anzeigen</a>
+                    </div>
+                </div>
+
+                <!-- Equipe CISLUX-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-person"></i>
+                        <h2 data-i18n="cards.team.title">CISLUX Dienstteam</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.team.desc">Dienstteam von CISLUX</p>
+                        <a href="/pages/equipeCisLux/index.html" class="btn" data-i18n="cards.team.action">Dienstplan
+                            anzeigen</a>
+                    </div>
+                </div>
+                <!-- Ai ECG Interpreter-->
+                <div class="tool-card beta-feature">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <span class="beta-chip" data-i18n="beta.cardLabel">BETA</span>
+                        <h2 data-i18n="cards.ecg.title">EKG-Interpreter (KI)</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.ecg.desc">EKGs in Echtzeit mit künstlicher Intelligenz interpretieren</p>
+                        <a href="/pages/ecgInterpreter/index.html" class="btn" data-i18n="cards.ecg.action">Interpreter
+                            öffnen</a>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-ruler-combined"></i>
+                        <h2 data-i18n="cards.ecgRuler.title">EKG Licht Lineal</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.ecgRuler.desc">Referenzbreiten zur bestimmung QRS und PQ Zeiten</p>
+                        <a href="/pages/ecgRuler/index.html" class="btn" data-i18n="cards.ecgRuler.action">Lineal
+                            öffnen</a>
+                    </div>
+                </div>
+
+                <div class="tool-card beta-feature">
+                    <div class="card-header">
+                        <i class="fas fa-file-signature"></i>
+                        <span class="beta-chip" data-i18n="beta.cardLabel">BETA</span>
+                        <h2>SAMU Rapport Digital</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Den papierbasierten SAMU-Rapport digital ausfuellen, lokal speichern und direkt als PDF
+                            exportieren oder teilen.</p>
+                        <a href="/pages/samuDocumentator/index.html" class="btn">Rapport oeffnen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============== FORMATION =============== -->
+        <section class="category-section">
+            <h2 class="category-title" data-i18n="category.training">🎓 Ausbildung</h2>
+            <div class="tools-grid">
+
+                <!-- Study SAMU Meds-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-pills"></i>
+                        <h2 data-i18n="cards.samuMeds.title">SAMU-Medikamente lernen</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.samuMeds.desc">Namen und Wirkung der SAMU-Medikamente lernen</p>
+                        <a href="pages/samuQuiz/samuMedsQuizlet.html" class="btn" data-i18n="cards.samuMeds.action">Quiz
+                            starten</a>
+                    </div>
+                </div>
+
+                <!-- CGDIS Leveso -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2 data-i18n="cards.leveso.title">CGDIS Leveso</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.leveso.desc">Terminvereinbarung für eine Schulungen</p>
+                        <a href="https://inscription.cgdis.lu/mobile/#/login" target="_blank" rel="noopener noreferrer"
+                            class="btn" data-i18n="cards.leveso.action">Leveso Mobile öffnen</a>
+                    </div>
+                </div>
+
+                <!-- Garde Wirtz -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h2 data-i18n="cards.docs.title">Leveso-Unterlagen</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.docs.desc">Öffentliche Zusatzdokumente der Schulungen</p>
+                        <a href="pages/levesoHandouts/index.html" class="btn" data-i18n="cards.docs.action">Dokumente
+                            ansehen</a>
+                    </div>
+                </div>
+
+                <!-- Rescue Rush Quiz -->
+                <div class="tool-card beta-feature">
+                    <div class="card-header">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2 data-i18n="cards.sapQuiz.title">Für SAP-Prüfung wiederholen</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.sapQuiz.desc">Inoffizielles Quiz zur Vorbereitung auf die theoretische
+                            SAP-Prüfung</p>
+                        <a href="pages/sapQuiz/index.html" class="btn" data-i18n="cards.sapQuiz.action">Quiz
+                            starten</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============== Divers =============== -->
+        <section class="category-section">
+            <h2 class="category-title" data-i18n="category.misc">📦 Verschiedenes</h2>
+            <div class="tools-grid">
+                <!-- CGDIS Infopage-->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-info"></i>
+                        <h2 data-i18n="cards.infoPage.title">Nützliche Links</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.infoPage.desc">Liste nützlicher Links.</p>
+                        <a href="pages/infoPage/index.html" class="btn" data-i18n="cards.infoPage.action">Seite
+                            öffnen</a>
+                    </div>
+                </div>
+                <div class="tool-card has-card-chip">
+                    <div class="card-header">
+                        <i class="fas fa-mobile-screen-button"></i>
+                        <span class="beta-chip" data-i18n="new.cardLabel">NEU</span>
+                        <h2 data-i18n="cards.resqly.title">ResQly</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.resqly.desc">App Store Link, Android Hinweis und APK Download</p>
+                        <a href="/pages/resqly/index.html" class="btn" data-i18n="cards.resqly.action">Seite
+                            öffnen</a>
+                    </div>
+                </div>
+                <!-- Gong Maker -->
+                <div class="tool-card beta-feature">
+                    <div class="card-header">
+                        <i class="fas fa-bullhorn"></i>
+                        <span class="beta-chip" data-i18n="beta.cardLabel">BETA</span>
+                        <h2 data-i18n="cards.gong.title">Feuerwehr-Gong Maker</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.gong.desc">Feuerwehr-Gongs mit Einsatzgrund, Einsatzort und alarmierten
+                            Fahrzeugen als MP3 erstellen</p>
+                        <a href="pages/gongMaker/index.html" class="btn" data-i18n="cards.gong.action">Gong Maker
+                            offnen</a>
+                    </div>
+                </div>
+                <!-- CGDIS Portail -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-landmark"></i>
+                        <h2 data-i18n="cards.portal.title">CGDIS-Portal</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.portal.desc">Offizielles Portal des CGDIS zur Dienstverfügbarkeit</p>
+                        <a href="https://portailcgdis.intranet.etat.lu/" target="_blank" rel="noopener noreferrer"
+                            class="btn" data-i18n="cards.portal.action">Portal öffnen</a>
+                    </div>
+                </div>
+
+                <!-- OSCAR -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-desktop"></i>
+                        <h2 data-i18n="cards.oscar.title">OSCAR</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.oscar.desc">OSCAR-Monitor (nur für Zentren, die ihn besitzen)</p>
+                        <a href="https://osc.systems" target="_blank" rel="noopener noreferrer" class="btn"
+                            data-i18n="cards.oscar.action">OSCAR öffnen</a>
+                    </div>
+                </div>
+
+                <!-- CGDIS Mail -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-envelope"></i>
+                        <h2 data-i18n="cards.mail.title">CGDIS E-Mail</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.mail.desc">CGDIS-E-Mails lesen</p>
+                        <a href="https://www.mail.etat.lu" target="_blank" rel="noopener noreferrer" class="btn"
+                            data-i18n="cards.mail.action">E-Mails lesen</a>
+                    </div>
+                </div>
+                <!-- Buy Rescue Rush -->
+                <div class="tool-card">
+                    <div class="card-header">
+                        <i class="fas fa-dice"></i>
+                        <h2 data-i18n="cards.game.title">Erste-Hilfe-Spiele</h2>
+                    </div>
+                    <div class="card-body">
+                        <p data-i18n="cards.game.desc">Rescue Rush, ein Lernspiel für Erste Hilfe</p>
+                        <a href="https://rescue-rush.lu/?shop#main-content" target="_blank" rel="noopener noreferrer"
+                            class="btn" data-i18n="cards.game.action">Rescue Rush kaufen</a>
+                    </div>
+                </div>
+                <div class="tool-card beta-feature">
+
+                    <div class="tool-card has-card-chip">
+                        <div class="card-header">
+                            <i class="fas fa-shield-heart"></i>
+                            <span class="beta-chip" data-i18n="new.cardLabel">NEU</span>
+                            <h2 data-i18n="cards.maurer.title">Maurer-Algorithmus</h2>
+                        </div>
+                        <div class="card-body">
+                            <p data-i18n="cards.maurer.desc">Gesamtrisiko und Einsatzstaerke fuer Veranstaltungen
+                                berechnen</p>
+                            <a href="/pages/divers/maurer/index.html" class="btn"
+                                data-i18n="cards.maurer.action">Rechner öffnen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="settingsModal" class="settings-modal hidden" role="dialog" aria-modal="true"
+        aria-labelledby="settingsTitle">
+        <div id="settingsBackdrop" class="settings-modal__backdrop"></div>
+        <div class="settings-modal__panel">
+            <div class="settings-modal__header">
+                <h2 id="settingsTitle" class="settings-modal__title" data-i18n="settings.title">Einstellungen</h2>
+                <button id="settingsClose" class="settings-modal__close" type="button"
+                    aria-label="Einstellungen schließen" data-i18n-attr="aria-label"
+                    data-i18n-attr-key="settings.closeAria">&times;</button>
+            </div>
+            <div class="settings-list">
+                <div class="settings-item">
+                    <label class="settings-item__label" for="languageSelect"
+                        data-i18n="settings.language">Sprache</label>
+                    <select id="languageSelect">
+                        <option value="de">Deutsch</option>
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="lb">Lëtzebuergesch</option>
+                    </select>
+                </div>
+                <div class="settings-item">
+                    <label class="settings-item__label" for="darkModeInput"
+                        data-i18n="settings.darkMode">Dunkelmodus</label>
+                    <input id="darkModeInput" class="settings-switch" type="checkbox">
+                </div>
+                <div class="settings-item">
+                    <label class="settings-item__label" for="betaFeaturesInput"
+                        data-i18n="settings.betaFeatures">Beta-Funktionen</label>
+                    <input id="betaFeaturesInput" class="settings-switch" type="checkbox">
+                </div>
+            </div>
+            <div class="settings-feedback">
+                <h3 class="settings-feedback__title" data-i18n="feedback.title">Feedback senden</h3>
+                <div class="settings-item">
+                    <label class="settings-item__label" for="feedbackType" data-i18n="feedback.typeLabel">Typ</label>
+                    <select id="feedbackType">
+                        <option value="bug" data-i18n="feedback.type.bug">Bug</option>
+                        <option value="visual" data-i18n="feedback.type.visual">Visual</option>
+                        <option value="medical" data-i18n="feedback.type.medical">Medical errors</option>
+                        <option value="feature" data-i18n="feedback.type.feature">Feature suggestion</option>
+                    </select>
+                </div>
+                <div class="settings-item settings-item--stack">
+                    <label class="settings-item__label" for="feedbackMessage"
+                        data-i18n="feedback.messageLabel">Nachricht</label>
+                    <textarea id="feedbackMessage" class="feedback-textarea" rows="4" maxlength="800"
+                        placeholder="Kurzes Feedback..." data-i18n-attr="placeholder"
+                        data-i18n-attr-key="feedback.messagePlaceholder"></textarea>
+                </div>
+                <button id="sendFeedbackBtn" type="button" class="btn btn-compact feedback-send"
+                    data-i18n="feedback.send">Per E-Mail senden</button>
+            </div>
+            <div class="settings-modal__actions">
+                <button id="settingsDone" type="button" class="btn btn-compact"
+                    data-i18n="settings.close">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ercNoticeModal" class="settings-modal hidden" role="dialog" aria-modal="true"
+        aria-labelledby="ercNoticeTitle">
+        <div id="ercNoticeBackdrop" class="settings-modal__backdrop"></div>
+        <div class="settings-modal__panel">
+            <div class="settings-modal__header">
+                <h2 id="ercNoticeTitle" class="settings-modal__title" data-i18n="ercNotice.title">Hinweis zu den ERC
+                    Guidelines</h2>
+                <button id="ercNoticeClose" class="settings-modal__close" type="button"
+                    aria-label="ERC-Hinweis schlieÃŸen" data-i18n-attr="aria-label"
+                    data-i18n-attr-key="ercNotice.closeAria">&times;</button>
+            </div>
+            <div class="settings-feedback erc-notice">
+                <p data-i18n="ercNotice.message">Diese ERC Guidelines wurden noch nicht komplett korrekturgelesen. Wenn
+                    Sie Fehler entdecken, melden Sie diese bitte Ã¼ber das Formular in den Einstellungen.</p>
+            </div>
+            <div class="settings-modal__actions erc-notice__actions">
+                <button id="ercNoticeSettings" type="button" class="btn btn-compact" data-i18n="ercNotice.settings">In
+                    Einstellungen melden</button>
+                <button id="ercNoticeContinue" type="button" class="btn btn-compact"
+                    data-i18n="ercNotice.continue">Trotzdem Ã¶ffnen</button>
+            </div>
+        </div>
+    </div>
+
+    <footer data-footer-profile="default" data-footer-first="footer p:first-child"
+        data-footer-last="footer p:last-child">
+        <p></p>
+        <p></p>
+    </footer>
+
+    <script src="/style/footer.js"></script>
+    <script>
+        const STORAGE_KEYS = {
+            language: 'language',
+            theme: 'theme',
+            betaFeatures: 'betaFeatures',
+            pinnedCards: 'pinnedCards',
+            seenAnnouncements: 'seenAnnouncements'
+        };
+
+        const SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'lb'];
+        const FALLBACK_LANGUAGE = 'de';
+        const ANNOUNCEMENTS_URL = '/data/announcements.json';
+
+        const translations = {
+            de: {
+                'page.title': '🚑 Werkzeuge für den Rettungsdienst',
+                'page.description': 'Ressourcen und Werkzeuge für den Rettungsdienst in Luxemburg: Einsatzinfos, Ausbildung, Referenzwerte und wichtige Links.',
+                'header.title': '🚑 Werkzeuge für den Rettungsdienst',
+                'header.subtitle': 'Ihr Leitfaden zu Ressourcen und Werkzeugen für den Notfallmedizinischen Dienst in Luxemburg',
+                'beta.badge': 'Beta-Funktionen sind aktiviert',
+                'beta.cardLabel': 'BETA',
+                'new.cardLabel': 'NEU',
+                'install.title': 'Installieren Sie das Toolkit',
+                'install.subtitle': 'Fügen Sie diese Seite zum Startbildschirm hinzu für eine App-ähnliche Nutzung.',
+                'install.button': 'Installieren',
+                'install.buttonAria': 'Toolkit installieren',
+                'install.iosHelpButton': 'Anleitung anzeigen',
+                'install.iosHelpAlert': 'Tippen Sie auf "Teilen" und dann auf "Zum Startbildschirm hinzufügen".',
+                'announcement.sectionLabel': 'Ankuendigungen',
+                'announcement.dismiss': 'Ankuendigung ausblenden',
+                'pinned.eyebrow': 'Angeheftet',
+                'pinned.title': 'Angeheftete Werkzeuge',
+                'pinned.body': 'Schnellzugriff auf Ihre angehefteten Werkzeuge. Klicken Sie auf das X, um einen Eintrag zu entfernen.',
+                'pinned.empty': 'Noch nichts angeheftet. Nutzen Sie die Nadel oben rechts auf einer Karte.',
+                'pinned.pin': 'Werkzeug anheften',
+                'pinned.unpin': 'Werkzeug lösen',
+                'category.intervention': '🚑 Im Einsatz',
+                'category.training': '🎓 Ausbildung',
+                'category.misc': '📦 Verschiedenes',
+                'cards.hospital.title': 'Hôpital de Garde',
+                'cards.hospital.desc': 'Bereitschaftskrankenhäuser in Luxemburg',
+                'cards.hospital.action': 'Bereitschaftskrankenhäuser anzeigen',
+                'cards.qrf.title': 'Informationskarten',
+                'cards.qrf.desc': 'Kleine Informationskarten zur schnellen Entscheidungsfindung im Einsatz',
+                'cards.qrf.action': 'Karten anzeigen',
+                'cards.pedi.title': 'Pädiatrische Referenzwerte',
+                'cards.pedi.desc': 'Pädiatrische Referenzwerte für Notfälle (0-15 Jahre)',
+                'cards.pedi.action': 'Referenzwerte anzeigen',
+                'cards.calculators.title': 'Klinische Rechner',
+                'cards.calculators.desc': 'O2-Laufzeit, GCS, NEXUS-Checkliste, qSOFA und NEWS2',
+                'cards.calculators.action': 'Rechner öffnen',
+                'cards.maurer.title': 'Maurer-Algorithmus',
+                'cards.maurer.desc': 'Gesamtrisiko und Einsatzstaerke fuer Veranstaltungen berechnen',
+                'cards.maurer.action': 'Rechner öffnen',
+                'cards.geo.title': 'Geoportal CGDIS',
+                'cards.geo.desc': 'Geoportal CGDIS für Karten und Geodaten',
+                'cards.geo.action': 'Geoportal CGDIS öffnen',
+                'cards.map.title': 'Luxemburg Rettungskarte',
+                'cards.map.desc': 'Interaktive Karte mit CIS-Standorten und Rettungspunkten in Luxemburg',
+                'cards.map.action': 'Karte öffnen',
+                'cards.phone.title': 'Wichtige Telefonnummer',
+                'cards.phone.desc': 'Telefonnummer von Krankenhaus, Seelsorge, Leitstelle, ...',
+                'cards.phone.action': 'Nummern anzeigen',
+                'cards.medLookup.title': 'Medikamente suchen',
+                'cards.medLookup.desc': 'Lokale Suche nach Medikamenten, Wirkstoffen, CTI und ATC-Codes',
+                'cards.medLookup.action': 'Suche öffnen',
+                'cards.infect.title': 'Infektionskrankheiten',
+                'cards.infect.desc': 'Liste mit Infektionskrankheiten und Schutzprotokolle',
+                'cards.infect.action': 'Liste anzeigen',
+                'cards.team.title': 'CISLUX Dienstteam',
+                'cards.team.desc': 'Dienstteam von CISLUX',
+                'cards.team.action': 'Dienstplan anzeigen',
+                'cards.ecg.title': 'EKG-Interpreter (KI)',
+                'cards.ecg.desc': 'EKGs in Echtzeit mit künstlicher Intelligenz interpretieren',
+                'cards.ecg.action': 'Interpreter öffnen',
+                'cards.ecgRuler.title': 'EKG Licht Lineal',
+                'cards.ecgRuler.desc': 'Referenzbreiten zur Bestimmung von QRS- und PQ-Zeiten',
+                'cards.ecgRuler.action': 'Lineal öffnen',
+                'cards.report.title': 'EMS Report Creator',
+                'cards.report.desc': 'Strukturierte Einsatzdokumentation mit ABCDE, SAMPLER, Narrative und PDF-Export',
+                'cards.report.action': 'Report öffnen',
+                'cards.samuMeds.title': 'SAMU-Medikamente lernen',
+                'cards.samuMeds.desc': 'Namen und Wirkung der SAMU-Medikamente lernen',
+                'cards.samuMeds.action': 'Quiz starten',
+                'cards.leveso.title': 'CGDIS Leveso',
+                'cards.leveso.desc': 'Terminvereinbarung für eine Schulungen',
+                'cards.leveso.action': 'Leveso Mobile öffnen',
+                'cards.docs.title': 'Leveso-Unterlagen',
+                'cards.docs.desc': 'Öffentliche Zusatzdokumente der Schulungen',
+                'cards.docs.action': 'Dokumente ansehen',
+                'cards.sapQuiz.title': 'Für SAP-Prüfung wiederholen',
+                'cards.sapQuiz.desc': 'Inoffizielles Quiz zur Vorbereitung auf die theoretische SAP-Prüfung',
+                'cards.sapQuiz.action': 'Quiz starten',
+                'cards.infoPage.title': 'Nützliche Links',
+                'cards.infoPage.desc': 'Liste nützlicher Links',
+                'cards.infoPage.action': 'Seite öffnen',
+                'cards.resqly.title': 'ResQly',
+                'cards.resqly.desc': 'App Store Link, Android-Hinweis und APK-Download',
+                'cards.resqly.action': 'Seite öffnen',
+                'cards.gong.title': 'Feuerwehr-Gong Maker',
+                'cards.gong.desc': 'Feuerwehr-Gongs mit Einsatzgrund, Einsatzort und alarmierten Fahrzeugen als MP3 erstellen',
+                'cards.gong.action': 'Gong Maker öffnen',
+                'cards.portal.title': 'CGDIS-Portal',
+                'cards.portal.desc': 'Offizielles Portal des CGDIS zur Dienstverfügbarkeit',
+                'cards.portal.action': 'Portal öffnen',
+                'cards.oscar.title': 'OSCAR',
+                'cards.oscar.desc': 'OSCAR-Monitor (nur für Zentren, die ihn besitzen)',
+                'cards.oscar.action': 'OSCAR öffnen',
+                'cards.mail.title': 'CGDIS E-Mail',
+                'cards.mail.desc': 'CGDIS-E-Mails lesen',
+                'cards.mail.action': 'E-Mails lesen',
+                'cards.game.title': 'Erste-Hilfe-Spiele',
+                'cards.game.desc': 'Rescue Rush, ein Lernspiel für Erste Hilfe',
+                'cards.game.action': 'Rescue Rush kaufen',
+                'cards.erc.title': 'ERC Guidelines',
+                'cards.erc.desc': 'ERC Guidelines für Notfälle',
+                'cards.erc.action': 'Guidelines anzeigen',
+                'ercNotice.title': 'Hinweis zu den ERC Guidelines',
+                'ercNotice.message': 'Diese ERC Guidelines wurden noch nicht komplett korrekturgelesen. Wenn Sie Fehler entdecken, melden Sie diese bitte über das Formular in den Einstellungen.',
+                'ercNotice.settings': 'In Einstellungen melden',
+                'ercNotice.continue': 'Trotzdem öffnen',
+                'ercNotice.closeAria': 'ERC-Hinweis schließen',
+                'settings.openAria': 'Einstellungen öffnen',
+                'settings.title': 'Einstellungen',
+                'settings.language': 'Sprache',
+                'settings.darkMode': 'Dunkelmodus',
+                'settings.betaFeatures': 'Beta-Funktionen',
+                'settings.close': 'Schließen',
+                'settings.closeAria': 'Einstellungen schließen',
+                'feedback.title': 'Feedback senden',
+                'feedback.typeLabel': 'Typ',
+                'feedback.messageLabel': 'Nachricht',
+                'feedback.messagePlaceholder': 'Kurzes Feedback...',
+                'feedback.send': 'Per E-Mail senden',
+                'feedback.validation': 'Bitte schreiben Sie eine kurze Nachricht, bevor Sie senden.',
+                'feedback.subjectPrefix': '[Ambulance Toolkit Feedback]',
+                'feedback.mailTypeLabel': 'Typ',
+                'feedback.mailMessageLabel': 'Nachricht',
+                'feedback.mailLanguageLabel': 'Sprache',
+                'feedback.mailThemeLabel': 'Theme',
+                'feedback.mailBetaLabel': 'Beta-Funktionen',
+                'feedback.mailPageLabel': 'Seite',
+                'feedback.mailDateLabel': 'Zeitpunkt',
+                'feedback.enabled': 'Aktiviert',
+                'feedback.disabled': 'Deaktiviert',
+                'feedback.type.bug': 'Bug',
+                'feedback.type.visual': 'Visual',
+                'feedback.type.medical': 'Medical errors',
+                'feedback.type.feature': 'Feature suggestion',
+            },
+            en: {
+                'page.title': '🚑 Emergency Service Tools',
+                'page.description': 'Resources and tools for emergency services in Luxembourg: mission info, training, reference values, and key links.',
+                'header.title': '🚑 Emergency Service Tools',
+                'header.subtitle': 'Your guide to resources and tools for emergency medical services in Luxembourg',
+                'beta.badge': 'Beta features are enabled',
+                'beta.cardLabel': 'BETA',
+                'new.cardLabel': 'NEW',
+                'install.title': 'Install the toolkit',
+                'install.subtitle': 'Add this page to your home screen for an app-like experience.',
+                'install.button': 'Install',
+                'install.buttonAria': 'Install toolkit',
+                'install.iosHelpButton': 'Show instructions',
+                'install.iosHelpAlert': 'Tap "Share" and then "Add to Home Screen".',
+                'announcement.sectionLabel': 'Announcements',
+                'announcement.dismiss': 'Dismiss announcement',
+                'pinned.eyebrow': 'Pinned',
+                'pinned.title': 'Pinned tools',
+                'pinned.body': 'Quick access to your pinned tools. Click the X to remove an item.',
+                'pinned.empty': 'Nothing pinned yet. Use the pin in the top right corner of a card.',
+                'pinned.pin': 'Pin tool',
+                'pinned.unpin': 'Unpin tool',
+                'category.intervention': '🚑 On Mission',
+                'category.training': '🎓 Training',
+                'category.misc': '📦 Miscellaneous',
+                'cards.hospital.title': 'On-call hospitals',
+                'cards.hospital.desc': 'Hospitals on duty in Luxembourg',
+                'cards.hospital.action': 'Show on-call hospitals',
+                'cards.qrf.title': 'Information cards',
+                'cards.qrf.desc': 'Quick reference cards for fast decisions on mission',
+                'cards.qrf.action': 'View cards',
+                'cards.pedi.title': 'Pediatric reference values',
+                'cards.pedi.desc': 'Pediatric emergency reference values (0-15 years)',
+                'cards.pedi.action': 'View references',
+                'cards.calculators.title': 'Clinical Calculators',
+                'cards.calculators.desc': 'O2 duration, GCS, NEXUS checklist, qSOFA, and NEWS2',
+                'cards.calculators.action': 'Open calculators',
+                'cards.maurer.title': 'Maurer Algorithm',
+                'cards.maurer.desc': 'Calculate overall event risk and recommended medical staffing',
+                'cards.maurer.action': 'Open calculator',
+                'cards.geo.title': 'CGDIS geoportal',
+                'cards.geo.desc': 'CGDIS geoportal for maps and geodata',
+                'cards.geo.action': 'Open CGDIS geoportal',
+                'cards.map.title': 'Luxembourg Rescue Map',
+                'cards.map.desc': 'Interactive map with CIS stations and rescue points across Luxembourg',
+                'cards.map.action': 'Open map',
+                'cards.phone.title': 'Important phone numbers',
+                'cards.phone.desc': 'Phone numbers for hospitals, chaplaincy, dispatch, ...',
+                'cards.phone.action': 'View numbers',
+                'cards.medLookup.title': 'Medication Search',
+                'cards.medLookup.desc': 'Local search by medication, active substance, CTI, and ATC code',
+                'cards.medLookup.action': 'Open search',
+                'cards.infect.title': 'Infectious diseases',
+                'cards.infect.desc': 'List of infectious diseases and protection protocols',
+                'cards.infect.action': 'View list',
+                'cards.team.title': 'CISLUX duty team',
+                'cards.team.desc': 'Duty team for CISLUX',
+                'cards.team.action': 'View schedule',
+                'cards.ecg.title': 'ECG Interpreter (AI)',
+                'cards.ecg.desc': 'Interpret ECGs in real time with artificial intelligence',
+                'cards.ecg.action': 'Open interpreter',
+                'cards.ecgRuler.title': 'ECG Light Ruler',
+                'cards.ecgRuler.desc': 'Reference widths for measuring QRS and PQ intervals',
+                'cards.ecgRuler.action': 'Open ruler',
+                'cards.report.title': 'EMS Report Creator',
+                'cards.report.desc': 'Structured EMS documentation with ABCDE, SAMPLER, narrative, and PDF export',
+                'cards.report.action': 'Open report',
+                'cards.samuMeds.title': 'Learn SAMU medications',
+                'cards.samuMeds.desc': 'Learn names and effects of SAMU medications',
+                'cards.samuMeds.action': 'Start quiz',
+                'cards.leveso.title': 'CGDIS Leveso',
+                'cards.leveso.desc': 'Book training sessions',
+                'cards.leveso.action': 'Open Leveso Mobile',
+                'cards.docs.title': 'Leveso documents',
+                'cards.docs.desc': 'Public supplementary training documents',
+                'cards.docs.action': 'View documents',
+                'cards.sapQuiz.title': 'Review for SAP exam',
+                'cards.sapQuiz.desc': 'Unofficial quiz to prepare for the SAP theory exam',
+                'cards.sapQuiz.action': 'Start quiz',
+                'cards.infoPage.title': 'Useful links',
+                'cards.infoPage.desc': 'List with useful links',
+                'cards.infoPage.action': 'Open page',
+                'cards.resqly.title': 'ResQly',
+                'cards.resqly.desc': 'App Store link, Android status, and APK download',
+                'cards.resqly.action': 'Open page',
+                'cards.gong.title': 'Fire Brigade Gong Maker',
+                'cards.gong.desc': 'Create fire brigade gong announcements as MP3 with incident type, location, and requested vehicles',
+                'cards.gong.action': 'Open gong maker',
+                'cards.portal.title': 'CGDIS portal',
+                'cards.portal.desc': 'Official CGDIS portal for duty availability',
+                'cards.portal.action': 'Open portal',
+                'cards.oscar.title': 'OSCAR',
+                'cards.oscar.desc': 'OSCAR monitor (only for centers that have it)',
+                'cards.oscar.action': 'Open OSCAR',
+                'cards.mail.title': 'CGDIS email',
+                'cards.mail.desc': 'Read CGDIS emails',
+                'cards.mail.action': 'Read emails',
+                'cards.game.title': 'First-aid games',
+                'cards.game.desc': 'Rescue Rush, a first-aid learning game',
+                'cards.game.action': 'Buy Rescue Rush',
+                'cards.erc.title': 'ERC Guidelines',
+                'cards.erc.desc': 'ERC Guidelines for emergencies',
+                'cards.erc.action': 'Show guidelines',
+                'ercNotice.title': 'Notice about the ERC Guidelines',
+                'ercNotice.message': 'These ERC Guidelines have not been fully proofread yet. If you find any errors, please report them using the form in settings.',
+                'ercNotice.settings': 'Report in settings',
+                'ercNotice.continue': 'Open anyway',
+                'ercNotice.closeAria': 'Close ERC notice',
+                'settings.openAria': 'Open settings',
+                'settings.title': 'Settings',
+                'settings.language': 'Language',
+                'settings.darkMode': 'Dark mode',
+                'settings.betaFeatures': 'Beta features',
+                'settings.close': 'Close',
+                'settings.closeAria': 'Close settings',
+                'feedback.title': 'Send feedback',
+                'feedback.typeLabel': 'Type',
+                'feedback.messageLabel': 'Message',
+                'feedback.messagePlaceholder': 'Short feedback...',
+                'feedback.send': 'Send by email',
+                'feedback.validation': 'Please write a short message before sending.',
+                'feedback.subjectPrefix': '[Ambulance Toolkit Feedback]',
+                'feedback.mailTypeLabel': 'Type',
+                'feedback.mailMessageLabel': 'Message',
+                'feedback.mailLanguageLabel': 'Language',
+                'feedback.mailThemeLabel': 'Theme',
+                'feedback.mailBetaLabel': 'Beta features',
+                'feedback.mailPageLabel': 'Page',
+                'feedback.mailDateLabel': 'Timestamp',
+                'feedback.enabled': 'Enabled',
+                'feedback.disabled': 'Disabled',
+                'feedback.type.bug': 'Bug',
+                'feedback.type.visual': 'Visual',
+                'feedback.type.medical': 'Medical errors',
+                'feedback.type.feature': 'Feature suggestion',
+            },
+            fr: {
+                'page.title': '🚑 Outils pour les services de secours',
+                'page.description': 'Ressources et outils pour les services de secours au Luxembourg: infos d intervention, formation, valeurs de reference et liens importants.',
+                'header.title': '🚑 Outils pour les services de secours',
+                'header.subtitle': 'Votre guide des ressources et outils pour le service medical d urgence au Luxembourg',
+                'beta.badge': 'Les fonctions béta sont activées',
+                'beta.cardLabel': 'BETA',
+                'new.cardLabel': 'NOUVEAU',
+                'install.title': 'Installer la boite a outils',
+                'install.subtitle': 'Ajoutez cette page a votre ecran d accueil pour une experience type application.',
+                'install.button': 'Installer',
+                'install.buttonAria': 'Installer la boite a outils',
+                'install.iosHelpButton': 'Voir les instructions',
+                'install.iosHelpAlert': 'Touchez "Partager" puis "Sur l ecran d accueil".',
+                'announcement.sectionLabel': 'Annonces',
+                'announcement.dismiss': 'Masquer l annonce',
+                'pinned.eyebrow': 'Favorites',
+                'pinned.title': 'Outils favoris',
+                'pinned.body': 'Accès rapide à vos outils favoris. Cliquez sur le X pour retirer un élément.',
+                'pinned.empty': 'Rien n\'est encore favori. Utilisez l\'épingle en haut à droite d\'une carte.',
+                'pinned.pin': 'Ajouter aux favoris',
+                'pinned.unpin': 'Retirer des favoris',
+                'category.intervention': '🚑 En intervention',
+                'category.training': '🎓 Formation',
+                'category.misc': '📦 Divers',
+                'cards.hospital.title': 'Hopitaux de garde',
+                'cards.hospital.desc': 'Hopitaux de garde au Luxembourg',
+                'cards.hospital.action': 'Afficher les hopitaux de garde',
+                'cards.qrf.title': 'Cartes d\'information',
+                'cards.qrf.desc': 'Petites cartes d\'information pour une décision rapide en intervention',
+                'cards.qrf.action': 'Afficher les cartes',
+                'cards.pedi.title': 'Valeurs de référence pédiatriques',
+                'cards.pedi.desc': 'Valeurs de référence pédiatriques pour les urgences (0-15 ans)',
+                'cards.pedi.action': 'Afficher les références',
+                'cards.calculators.title': 'Calculateurs cliniques',
+                'cards.calculators.desc': 'Autonomie O2, GCS, checklist NEXUS, qSOFA et NEWS2',
+                'cards.calculators.action': 'Ouvrir les calculateurs',
+                'cards.maurer.title': 'Algorithme de Maurer',
+                'cards.maurer.desc': 'Calculer le risque global et les moyens recommandes pour un evenement',
+                'cards.maurer.action': 'Ouvrir le calculateur',
+                'cards.geo.title': 'Géoportail CGDIS',
+                'cards.geo.desc': 'Géoportail CGDIS pour cartes et données géographiques',
+                'cards.geo.action': 'Ouvrir le géoportail CGDIS',
+                'cards.map.title': 'Carte de secours Luxembourg',
+                'cards.map.desc': 'Carte interactive avec les CIS et les points de secours au Luxembourg',
+                'cards.map.action': 'Ouvrir la carte',
+                'cards.phone.title': 'Numéros importants',
+                'cards.phone.desc': 'Numéros de l\'hopital, du CSU, ...',
+                'cards.phone.action': 'Afficher les numéros',
+                'cards.infect.title': 'Maladies infectieuses',
+                'cards.infect.desc': 'Liste des maladies infectieuses et protocoles de protection',
+                'cards.infect.action': 'Afficher la liste',
+                'cards.team.title': 'Equipe de garde CISLUX',
+                'cards.team.desc': 'Equipe de garde du CISLUX',
+                'cards.team.action': 'Afficher le planning',
+                'cards.ecg.title': 'Interpréteur ECG (IA)',
+                'cards.ecg.desc': 'Interpréter les ECG en temps réel avec l\'intelligence artificielle',
+                'cards.ecg.action': 'Ouvrir l\'interpréteur',
+                'cards.ecgRuler.title': 'Règle lumineuse ECG',
+                'cards.ecgRuler.desc': 'Largeurs de référence pour mesurer les intervalles QRS et PQ',
+                'cards.ecgRuler.action': 'Ouvrir la règle',
+                'cards.samuMeds.title': 'Apprendre les médicaments SAMU',
+                'cards.samuMeds.desc': 'Apprendre les noms et effets des médicaments SAMU',
+                'cards.samuMeds.action': 'Démarrer le quiz',
+                'cards.leveso.title': 'CGDIS Leveso',
+                'cards.leveso.desc': 'Prendre rendez-vous pour des formations',
+                'cards.leveso.action': 'Ouvrir Leveso Mobile',
+                'cards.docs.title': 'Documents Leveso',
+                'cards.docs.desc': 'Documents publics complémentaires des formations',
+                'cards.docs.action': 'Voir les documents',
+                'cards.sapQuiz.title': 'Réviser pour l\'examen SAP',
+                'cards.sapQuiz.desc': 'Quiz non officiel pour se préparer à l\'examen théorique SAP',
+                'cards.sapQuiz.action': 'Démarrer le quiz',
+                'cards.infoPage.title': 'Liens utiles',
+                'cards.infoPage.desc': 'Liste des liens utiles',
+                'cards.infoPage.action': 'Ouvrir la page',
+                'cards.resqly.title': 'ResQly',
+                'cards.resqly.desc': 'Lien App Store, statut Android et telechargement APK',
+                'cards.resqly.action': 'Ouvrir la page',
+                'cards.gong.title': 'Generateur de Gong Pompiers',
+                'cards.gong.desc': 'Creer des gongs pompiers en MP3 avec le type d intervention, le lieu et les vehicules engages',
+                'cards.gong.action': 'Ouvrir le generateur',
+                'cards.portal.title': 'Portail CGDIS',
+                'cards.portal.desc': 'Portail officiel CGDIS pour la disponibilité de service',
+                'cards.portal.action': 'Ouvrir le portail',
+                'cards.oscar.title': 'OSCAR',
+                'cards.oscar.desc': 'Moniteur OSCAR (uniquement pour les centres qui le possèdent)',
+                'cards.oscar.action': 'Ouvrir OSCAR',
+                'cards.mail.title': 'E-mail CGDIS',
+                'cards.mail.desc': 'Lire les e-mails CGDIS',
+                'cards.mail.action': 'Lire les e-mails',
+                'cards.game.title': 'Jeux de premiers secours',
+                'cards.game.desc': 'Rescue Rush, un jeu éducatif de premiers secours',
+                'cards.game.action': 'Acheter Rescue Rush',
+                'cards.erc.title': 'Recommandations ERC',
+                'cards.erc.desc': 'Recommandations ERC pour les urgences',
+                'cards.erc.action': 'Afficher les recommandations',
+                'ercNotice.title': 'Remarque sur les recommandations ERC',
+                'ercNotice.message': 'Ces recommandations ERC n ont pas encore ete entierement relues. Si vous trouvez des erreurs, merci de les signaler via le formulaire dans les parametres.',
+                'ercNotice.settings': 'Signaler dans les parametres',
+                'ercNotice.continue': 'Ouvrir quand meme',
+                'ercNotice.closeAria': 'Fermer la remarque ERC',
+                'settings.openAria': 'Ouvrir les paramètres',
+                'settings.title': 'Paramètres',
+                'settings.language': 'Langue',
+                'settings.darkMode': 'Mode sombre',
+                'settings.betaFeatures': 'Fonctions béta',
+                'settings.close': 'Fermer',
+                'settings.closeAria': 'Fermer les paramètres',
+                'feedback.title': 'Envoyer un retour',
+                'feedback.typeLabel': 'Type',
+                'feedback.messageLabel': 'Message',
+                'feedback.messagePlaceholder': 'Retour rapide...',
+                'feedback.send': 'Envoyer par e-mail',
+                'feedback.validation': 'Veuillez écrire un court message avant l\'envoi.',
+                'feedback.subjectPrefix': '[Feedback Ambulance Toolkit]',
+                'feedback.mailTypeLabel': 'Type',
+                'feedback.mailMessageLabel': 'Message',
+                'feedback.mailLanguageLabel': 'Langue',
+                'feedback.mailThemeLabel': 'Theme',
+                'feedback.mailBetaLabel': 'Fonctions béta',
+                'feedback.mailPageLabel': 'Page',
+                'feedback.mailDateLabel': 'Horodatage',
+                'feedback.enabled': 'Active',
+                'feedback.disabled': 'Desactivé',
+                'feedback.type.bug': 'Bug',
+                'feedback.type.visual': 'Visuel',
+                'feedback.type.medical': 'Erreurs médicales',
+                'feedback.type.feature': 'Suggestion de fonctionnalité',
+                'cards.medLookup.title': 'Recherche de médicaments',
+                'cards.medLookup.desc': 'Recherche locale par médicament, substance active, CTI et code ATC',
+                'cards.medLookup.action': 'Ouvrir la recherche',
+                'cards.report.title': 'Createur de rapport EMS',
+                'cards.report.desc': 'Documentation structuree avec ABCDE, SAMPLER, recit automatique et export PDF',
+                'cards.report.action': 'Ouvrir le rapport',
+            },
+            lb: {
+                'page.title': '🚑 Tools fir de Rettungsdéngscht',
+                'page.description': 'Ressourcen a Tools fir de Rettungsdéngscht zu Lëtzebuerg: Asazinfos, Formatioun, Referenzwäerter a wichteg Linken.',
+                'header.title': '🚑 Tools fir de Rettungsdéngscht',
+                'header.subtitle': 'Äre Guide fir Ressourcen a Tools fir de Rettungsdéngscht zu Lëtzebuerg',
+                'beta.badge': 'Beta-Features sinn aktivéiert',
+                'beta.cardLabel': 'BETA',
+                'new.cardLabel': 'NEI',
+                'install.title': 'Toolkit installéieren',
+                'install.subtitle': 'Setzt dës Säit op den Homescreen fir eng App-änlech Notzung.',
+                'install.button': 'Installéieren',
+                'install.buttonAria': 'Toolkit installéieren',
+                'install.iosHelpButton': 'Erklärung weisen',
+                'install.iosHelpAlert': 'Tippt op "Deelen" an duerno op "Op Homescreen".',
+                'announcement.sectionLabel': 'Ukënnegungen',
+                'announcement.dismiss': 'Ukënnegung ausblenden',
+                'pinned.eyebrow': 'Ugepinnt',
+                'pinned.title': 'Ugepinnten Tools',
+                'pinned.body': 'Schnellzougrëff op är beléifsten Tools. Klick op den X, fir en Element nees ewechzehuelen.',
+                'pinned.empty': 'Nach naïscht ugepinnt. Benotz d\'Nol uewe riets op enger Kaart.',
+                'pinned.pin': 'Tool upinnen',
+                'pinned.unpin': 'Tool lassmaachen',
+                'category.intervention': '🚑 Am Asaz',
+                'category.training': '🎓 Formatioun',
+                'category.misc': '📦 Verschiddenes',
+                'cards.hospital.title': 'Hôpital de garde',
+                'cards.hospital.desc': 'Hôpital de garde zu Lëtzebuerg',
+                'cards.hospital.action': 'Hôpital de garde uweisen',
+                'cards.qrf.title': 'Informatiounskaarten',
+                'cards.qrf.desc': 'Kleng Informatiounskaarte fir séier Entscheedungen am Asaz',
+                'cards.qrf.action': 'Kaarte weisen',
+                'cards.pedi.title': 'Pediatresch Referenzwäerter',
+                'cards.pedi.desc': 'Pediatresch Referenzwäerter fir Noutfäll (0-15 Joer)',
+                'cards.pedi.action': 'Referenzwäerter weisen',
+                'cards.calculators.title': 'Klinesch Rechner',
+                'cards.calculators.desc': 'O2-Lafzait, GCS, NEXUS-Checklëscht, qSOFA a NEWS2',
+                'cards.calculators.action': 'Rechner opmaachen',
+                'cards.maurer.title': 'Maurer-Algorithmus',
+                'cards.maurer.desc': 'Gesamtrisiko an Asazstaerkt fir Evenementer berechnen',
+                'cards.maurer.action': 'Rechner opmaachen',
+                'cards.geo.title': 'CGDIS Geoportal',
+                'cards.geo.desc': 'CGDIS Geoportal fir Kaarte vu Lëtzebuerg',
+                'cards.geo.action': 'CGDIS Geoportal opmaachen',
+                'cards.map.title': 'Lëtzebuerg Rettungskaart',
+                'cards.map.desc': 'Interaktiv Kaart mat CIS-Standuerter a Rettungspunkten zu Lëtzebuerg',
+                'cards.map.action': 'Kaart opmaachen',
+                'cards.phone.title': 'Wichteg Telefonsnummeren',
+                'cards.phone.desc': 'Telefonsnummere vu Spidol, Seelsuerg, CSU, ...',
+                'cards.phone.action': 'Nummere weisen',
+                'cards.infect.title': 'Infektiounskrankheeten',
+                'cards.infect.desc': 'Lëscht vun Infektiounskrankheeten a Schutzprotokoller',
+                'cards.infect.action': 'Lëscht weisen',
+                'cards.team.title': 'CISLUX Equippe',
+                'cards.team.desc': 'Aktuell Equippe vum CISLUX',
+                'cards.team.action': 'Déngschtplang uweisen',
+                'cards.ecg.title': 'EKG-Interpret (KI)',
+                'cards.ecg.desc': 'EKGen an Echtzäit mat kënschtlecher Intelligenz interpretéieren',
+                'cards.ecg.action': 'Interpret opmaachen',
+                'cards.ecgRuler.title': 'EKG Liicht-Lineal',
+                'cards.ecgRuler.desc': 'Referenzbreeten fir QRS- a PQ-Zäiten ze bestëmmen',
+                'cards.ecgRuler.action': 'Lineal opmaachen',
+                'cards.samuMeds.title': 'SAMU-Medikamenter léieren',
+                'cards.samuMeds.desc': 'Nimm a Wierkung vun de SAMU-Medikamenter léieren',
+                'cards.samuMeds.action': 'Quiz starten',
+                'cards.leveso.title': 'CGDIS Leveso',
+                'cards.leveso.desc': 'Rendez-vous fir eng Formatioun huelen',
+                'cards.leveso.action': 'Leveso Mobile opmaachen',
+                'cards.docs.title': 'Leveso-Ënnerlagen',
+                'cards.docs.desc': 'Ëffentlech Dokumenter vun de Formatiounen',
+                'cards.docs.action': 'Dokumenter kucken',
+                'cards.sapQuiz.title': 'Fir SAP-Exame widderhuelen',
+                'cards.sapQuiz.desc': 'Inoffizielle Quiz als Preparatioun op déi theoretesch SAP-Examen',
+                'cards.sapQuiz.action': 'Quiz starten',
+                'cards.infoPage.title': 'Nëtzlech Links',
+                'cards.infoPage.desc': 'Lëscht vun nëtzlechen Links',
+                'cards.infoPage.action': 'Säit opmaachen',
+                'cards.resqly.title': 'ResQly',
+                'cards.resqly.desc': 'App Store Link, Android-Status an APK-Download',
+                'cards.resqly.action': 'Säit opmaachen',
+                'cards.gong.title': 'Feierwehr-Gong Maker',
+                'cards.gong.desc': 'Feierwehr-Gongen als MP3 mat Asazgrond, Asazplaz an alarméierte Gefierer erstellen',
+                'cards.gong.action': 'Gong Maker opmaachen',
+                'cards.portal.title': 'CGDIS-Portal',
+                'cards.portal.desc': 'Offiziellen CGDIS-Portal fir seng Disponibilitéiten ze setzen',
+                'cards.portal.action': 'Portal opmaachen',
+                'cards.oscar.title': 'OSCAR',
+                'cards.oscar.desc': 'OSCAR-Monitor (nëmme fir Zentren déi en hunn)',
+                'cards.oscar.action': 'OSCAR opmaachen',
+                'cards.mail.title': 'CGDIS E-Mail',
+                'cards.mail.desc': 'CGDIS-E-Maile liesen',
+                'cards.mail.action': 'E-Maile liesen',
+                'cards.game.title': 'Éischt-Hëllef-Spiller',
+                'cards.game.desc': 'Rescue Rush, e Léierspill fir Éischt Hëllef',
+                'cards.game.action': 'Rescue Rush kafen',
+                'cards.erc.title': 'ERC Guidelines',
+                'cards.erc.desc': 'ERC Guidelines fir Noutfäll',
+                'cards.erc.action': 'Guidelines kucken',
+                'ercNotice.title': 'Hiweis zu den ERC Guidelines',
+                'ercNotice.message': 'Dës ERC Guidelines sinn nach net komplett korrekturgelies. Wann dir Feeler fannt, mellt se w.e.g. iwwert de Formulaire an den Astellungen.',
+                'ercNotice.settings': 'An Astellunge mellen',
+                'ercNotice.continue': 'Trotzdem opmaachen',
+                'ercNotice.closeAria': 'ERC-Hiweis zoumaachen',
+                'settings.openAria': 'Astellungen opmaachen',
+                'settings.title': 'Astellungen',
+                'settings.language': 'Sprooch',
+                'settings.darkMode': 'Däischtere Modus',
+                'settings.betaFeatures': 'Beta-Features',
+                'settings.close': 'Zoumaachen',
+                'settings.closeAria': 'Astellungen zoumaachen',
+                'feedback.title': 'Feedback schécken',
+                'feedback.typeLabel': 'Typ',
+                'feedback.messageLabel': 'Noriicht',
+                'feedback.messagePlaceholder': 'Kuerze Feedback...',
+                'feedback.send': 'Per E-Mail schécken',
+                'feedback.validation': 'Schreift w.e.g. eng kuerz Noriicht ier dir schéckt.',
+                'feedback.subjectPrefix': '[Ambulance Toolkit Feedback]',
+                'feedback.mailTypeLabel': 'Typ',
+                'feedback.mailMessageLabel': 'Noriicht',
+                'feedback.mailLanguageLabel': 'Sprooch',
+                'feedback.mailThemeLabel': 'Theme',
+                'feedback.mailBetaLabel': 'Beta-Features',
+                'feedback.mailPageLabel': 'Säit',
+                'feedback.mailDateLabel': 'Zäitpunkt',
+                'feedback.enabled': 'Aktivéiert',
+                'feedback.disabled': 'Deaktivéiert',
+                'feedback.type.bug': 'Bug',
+                'feedback.type.visual': 'Visuelle Feeler',
+                'feedback.type.medical': 'Medezinesch Feeler',
+                'feedback.type.feature': 'Feature-Propose',
+                'cards.medLookup.title': 'Medikamentesich',
+                'cards.medLookup.desc': 'Lokal Sich no Medikamenter, Wierkstoff, CTI an ATC-Code',
+                'cards.medLookup.action': 'Sich lancéieren',
+                'cards.report.title': 'EMS Report Creator',
+                'cards.report.desc': 'Strukturéiert Asazdokumentatioun mat ABCDE, SAMPLER, Narrative an PDF-Export',
+                'cards.report.action': 'Report opmaachen',
+
+
+            }
+        };
+
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsBackdrop = document.getElementById('settingsBackdrop');
+        const settingsClose = document.getElementById('settingsClose');
+        const settingsDone = document.getElementById('settingsDone');
+        const ercGuidelinesLink = document.getElementById('ercGuidelinesLink');
+        const ercNoticeModal = document.getElementById('ercNoticeModal');
+        const ercNoticeBackdrop = document.getElementById('ercNoticeBackdrop');
+        const ercNoticeClose = document.getElementById('ercNoticeClose');
+        const ercNoticeSettings = document.getElementById('ercNoticeSettings');
+        const ercNoticeContinue = document.getElementById('ercNoticeContinue');
+        const languageSelect = document.getElementById('languageSelect');
+        const darkModeInput = document.getElementById('darkModeInput');
+        const betaFeaturesInput = document.getElementById('betaFeaturesInput');
+        const feedbackType = document.getElementById('feedbackType');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const sendFeedbackBtn = document.getElementById('sendFeedbackBtn');
+        const betaBadge = document.getElementById('betaBadge');
+        const installBanner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+        const installBtnLabel = document.getElementById('installBtnLabel');
+        const announcementSection = document.getElementById('announcementSection');
+        const announcementList = document.getElementById('announcementList');
+        const pinnedSection = document.getElementById('pinnedSection');
+        const pinnedGrid = document.getElementById('pinnedGrid');
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const mainToolCards = Array.from(document.querySelectorAll('.category-section .tool-card'));
+        const body = document.body;
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        let pendingErcGuidelinesHref = ercGuidelinesLink?.getAttribute('href') || '/pages/erc/index.html';
+
+        const state = {
+            language: sanitizeLanguage(localStorage.getItem(STORAGE_KEYS.language)),
+            theme: localStorage.getItem(STORAGE_KEYS.theme) === 'dark' ? 'dark' : 'light',
+            betaFeatures: localStorage.getItem(STORAGE_KEYS.betaFeatures) === 'true',
+            pinnedCards: getStoredPinnedCards(),
+            seenAnnouncements: getStoredStringList(STORAGE_KEYS.seenAnnouncements),
+            announcements: []
+        };
+
+        function getStoredStringList(storageKey) {
+            try {
+                const rawValue = localStorage.getItem(storageKey);
+                if (!rawValue) {
+                    return [];
+                }
+
+                const parsedValue = JSON.parse(rawValue);
+                if (!Array.isArray(parsedValue)) {
+                    return [];
+                }
+
+                return [...new Set(parsedValue.filter((item) => typeof item === 'string' && item.trim()))];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function getStoredPinnedCards() {
+            return getStoredStringList(STORAGE_KEYS.pinnedCards);
+        }
+
+        function sanitizeLanguage(language) {
+            return SUPPORTED_LANGUAGES.includes(language) ? language : FALLBACK_LANGUAGE;
+        }
+
+        function getTranslation(key) {
+            const activeLanguage = translations[state.language] || translations[FALLBACK_LANGUAGE];
+            return activeLanguage[key] || translations[FALLBACK_LANGUAGE][key] || key;
+        }
+
+        function slugifyCardId(value) {
+            return String(value || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function getCardId(card, index) {
+            if (card.dataset.cardId) {
+                return card.dataset.cardId;
+            }
+
+            const translationKey = card.querySelector('h2[data-i18n]')?.dataset.i18n;
+            const href = card.querySelector('.btn')?.getAttribute('href');
+            const fallbackValue = translationKey || href || `card-${index + 1}`;
+            const cardId = slugifyCardId(fallbackValue) || `card-${index + 1}`;
+            card.dataset.cardId = cardId;
+            return cardId;
+        }
+
+        function isPinned(cardId) {
+            return state.pinnedCards.includes(cardId);
+        }
+
+        function persistPinnedCards() {
+            localStorage.setItem(STORAGE_KEYS.pinnedCards, JSON.stringify(state.pinnedCards));
+        }
+
+        function persistSeenAnnouncements() {
+            localStorage.setItem(STORAGE_KEYS.seenAnnouncements, JSON.stringify(state.seenAnnouncements));
+        }
+
+        function updatePinButton(button, pinned) {
+            if (!button) {
+                return;
+            }
+
+            const label = getTranslation(pinned ? 'pinned.unpin' : 'pinned.pin');
+            const icon = button.querySelector('i');
+            button.classList.toggle('is-pinned', pinned);
+            button.setAttribute('aria-label', label);
+            button.setAttribute('title', label);
+            if (icon) {
+                icon.className = pinned ? 'fas fa-xmark' : 'fas fa-thumbtack';
+                icon.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function createPinButton(cardId, pinned = false) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'card-pin-btn';
+            button.dataset.cardPinButton = 'true';
+            button.dataset.cardId = cardId;
+            button.innerHTML = '<i class="fas fa-thumbtack" aria-hidden="true"></i>';
+            updatePinButton(button, pinned);
+            return button;
+        }
+
+        function syncOriginalPinButtons() {
+            mainToolCards.forEach((card, index) => {
+                const cardId = getCardId(card, index);
+                const button = card.querySelector('[data-card-pin-button]');
+                updatePinButton(button, isPinned(cardId));
+            });
+        }
+
+        function renderPinnedCards() {
+            if (!pinnedGrid || !pinnedSection) {
+                return;
+            }
+
+            pinnedGrid.replaceChildren();
+
+            const visiblePinnedCards = state.pinnedCards
+                .map((cardId) => mainToolCards.find((card, index) => getCardId(card, index) === cardId))
+                .filter((card) => card && (!card.classList.contains('beta-feature') || state.betaFeatures));
+
+            visiblePinnedCards.forEach((sourceCard, index) => {
+                const cardId = getCardId(sourceCard, index);
+                const cardClone = sourceCard.cloneNode(true);
+                cardClone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+                cardClone.querySelectorAll('[data-card-pin-button]').forEach((element) => element.remove());
+                cardClone.querySelector('.card-header')?.appendChild(createPinButton(cardId, true));
+                pinnedGrid.appendChild(cardClone);
+            });
+
+            pinnedSection.classList.toggle('hidden', visiblePinnedCards.length === 0);
+            syncOriginalPinButtons();
+        }
+
+        function togglePinnedCard(cardId) {
+            if (!cardId) {
+                return;
+            }
+
+            if (isPinned(cardId)) {
+                state.pinnedCards = state.pinnedCards.filter((item) => item !== cardId);
+            } else {
+                state.pinnedCards = [...state.pinnedCards, cardId];
+            }
+
+            persistPinnedCards();
+            renderPinnedCards();
+        }
+
+        function initializePinButtons() {
+            mainToolCards.forEach((card, index) => {
+                const cardId = getCardId(card, index);
+                const header = card.querySelector('.card-header');
+
+                if (!header || header.querySelector('[data-card-pin-button]')) {
+                    return;
+                }
+
+                header.appendChild(createPinButton(cardId, isPinned(cardId)));
+            });
+        }
+
+        function getLocalizedAnnouncementValue(value) {
+            if (typeof value === 'string') {
+                return value;
+            }
+
+            if (!value || typeof value !== 'object') {
+                return '';
+            }
+
+            return value[state.language]
+                || value[FALLBACK_LANGUAGE]
+                || Object.values(value).find((entry) => typeof entry === 'string')
+                || '';
+        }
+
+        function normalizeAnnouncementValue(value) {
+            if (typeof value === 'string') {
+                return value;
+            }
+
+            if (value && typeof value === 'object') {
+                return value;
+            }
+
+            return '';
+        }
+
+        function sanitizeAnnouncementAction(action) {
+            if (!action || typeof action !== 'object' || typeof action.href !== 'string' || !action.href.trim()) {
+                return null;
+            }
+
+            return {
+                href: action.href.trim(),
+                label: normalizeAnnouncementValue(action.label),
+                download: Boolean(action.download),
+                variant: action.variant === 'link' ? 'link' : 'button'
+            };
+        }
+
+        function sanitizeAnnouncement(item, index) {
+            if (!item || typeof item !== 'object') {
+                return null;
+            }
+
+            const id = typeof item.id === 'string' ? item.id.trim() : '';
+            if (!id) {
+                return null;
+            }
+
+            const actions = Array.isArray(item.actions)
+                ? item.actions.map(sanitizeAnnouncementAction).filter(Boolean)
+                : [];
+
+            return {
+                id,
+                eyebrow: normalizeAnnouncementValue(item.eyebrow),
+                title: normalizeAnnouncementValue(item.title),
+                body: normalizeAnnouncementValue(item.body),
+                actions,
+                order: Number.isFinite(item.order) ? item.order : index
+            };
+        }
+
+        function createAnnouncementAction(action, announcementId) {
+            const link = document.createElement('a');
+            const label = getLocalizedAnnouncementValue(action.label);
+
+            link.href = action.href;
+            link.textContent = label || action.href;
+            link.className = action.variant === 'link' ? 'announcement-banner__link' : 'btn btn-compact';
+            link.dataset.announcementAction = announcementId;
+
+            if (action.download) {
+                link.setAttribute('download', '');
+            }
+
+            return link;
+        }
+
+        function createAnnouncementCard(announcement) {
+            const article = document.createElement('article');
+            article.className = 'announcement-banner';
+            article.dataset.announcementId = announcement.id;
+
+            const dismissButton = document.createElement('button');
+            dismissButton.type = 'button';
+            dismissButton.className = 'announcement-banner__dismiss';
+            dismissButton.dataset.announcementDismiss = announcement.id;
+            dismissButton.setAttribute('aria-label', getTranslation('announcement.dismiss'));
+            dismissButton.setAttribute('title', getTranslation('announcement.dismiss'));
+            dismissButton.textContent = '\u00D7';
+            dismissButton.style.cssText = 'position:absolute;top:14px;right:14px;z-index:2;display:flex;align-items:center;justify-content:center;width:34px;height:34px;min-width:34px;min-height:34px;margin:0;padding:0;border:0;border-radius:999px;background:rgba(0,87,184,0.12);color:#1d3557;font-size:24px;font-weight:700;line-height:1;font-family:Arial,sans-serif;cursor:pointer;appearance:none;-webkit-appearance:none;-moz-appearance:none;box-sizing:border-box;';
+
+            const content = document.createElement('div');
+            content.className = 'announcement-banner__content';
+
+            const eyebrowText = getLocalizedAnnouncementValue(announcement.eyebrow);
+            if (eyebrowText) {
+                const eyebrow = document.createElement('span');
+                eyebrow.className = 'announcement-banner__eyebrow';
+                eyebrow.textContent = eyebrowText;
+                content.appendChild(eyebrow);
+            }
+
+            const titleText = getLocalizedAnnouncementValue(announcement.title);
+            if (titleText) {
+                const title = document.createElement('h2');
+                title.textContent = titleText;
+                content.appendChild(title);
+            }
+
+            const bodyText = getLocalizedAnnouncementValue(announcement.body);
+            if (bodyText) {
+                const bodyCopy = document.createElement('p');
+                bodyCopy.textContent = bodyText;
+                content.appendChild(bodyCopy);
+            }
+
+            const actions = document.createElement('div');
+            actions.className = 'announcement-banner__actions';
+            announcement.actions.forEach((action) => {
+                actions.appendChild(createAnnouncementAction(action, announcement.id));
+            });
+
+            article.append(dismissButton, content);
+
+            if (announcement.actions.length > 0) {
+                article.appendChild(actions);
+            } else {
+                article.classList.add('announcement-banner--no-actions');
+            }
+
+            return article;
+        }
+
+        function renderAnnouncements() {
+            if (!announcementSection || !announcementList) {
+                return;
+            }
+
+            announcementSection.setAttribute('aria-label', getTranslation('announcement.sectionLabel'));
+            announcementList.replaceChildren();
+
+            const visibleAnnouncements = state.announcements
+                .filter((announcement) => announcement?.id && !state.seenAnnouncements.includes(announcement.id))
+                .sort((left, right) => left.order - right.order);
+
+            visibleAnnouncements.forEach((announcement) => {
+                announcementList.appendChild(createAnnouncementCard(announcement));
+            });
+
+            announcementSection.classList.toggle('hidden', visibleAnnouncements.length === 0);
+        }
+
+        function dismissAnnouncement(announcementId) {
+            if (!announcementId || state.seenAnnouncements.includes(announcementId)) {
+                return;
+            }
+
+            state.seenAnnouncements = [...state.seenAnnouncements, announcementId];
+            persistSeenAnnouncements();
+            renderAnnouncements();
+        }
+
+        async function loadAnnouncements() {
+            try {
+                const response = await fetch(ANNOUNCEMENTS_URL, { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`Failed to load announcements: ${response.status}`);
+                }
+
+                const payload = await response.json();
+                const items = Array.isArray(payload) ? payload : payload.announcements;
+                if (!Array.isArray(items)) {
+                    throw new Error('Announcement payload must be an array.');
+                }
+
+                const seenIds = new Set();
+                state.announcements = items
+                    .map((item, index) => sanitizeAnnouncement(item, index))
+                    .filter((item) => item && !seenIds.has(item.id) && seenIds.add(item.id));
+            } catch (error) {
+                console.warn('Unable to load announcements.', error);
+                state.announcements = [];
+            }
+
+            renderAnnouncements();
+        }
+
+        function handleErcGuidelinesClick(event) {
+            event.preventDefault();
+            pendingErcGuidelinesHref = event.currentTarget.getAttribute('href') || pendingErcGuidelinesHref;
+            openErcNoticeModal();
+        }
+
+        function updateInstallButtonLabel() {
+            if (!installBtnLabel || !installBtn) {
+                return;
+            }
+
+            installBtnLabel.textContent = isIOS ? getTranslation('install.iosHelpButton') : getTranslation('install.button');
+            installBtn.setAttribute('aria-label', getTranslation('install.buttonAria'));
+        }
+
+        function applyLanguage(language, persist = false) {
+            state.language = sanitizeLanguage(language);
+            document.documentElement.lang = state.language;
+
+            if (languageSelect) {
+                languageSelect.value = state.language;
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach((element) => {
+                const key = element.dataset.i18n;
+                element.textContent = getTranslation(key);
+            });
+
+            document.querySelectorAll('[data-i18n-attr]').forEach((element) => {
+                const attributeName = element.dataset.i18nAttr;
+                const translationKey = element.dataset.i18nAttrKey;
+                if (attributeName && translationKey) {
+                    element.setAttribute(attributeName, getTranslation(translationKey));
+                }
+            });
+
+            document.title = getTranslation('page.title');
+            if (metaDescription) {
+                metaDescription.setAttribute('content', getTranslation('page.description'));
+            }
+
+            updateInstallButtonLabel();
+            renderAnnouncements();
+            syncOriginalPinButtons();
+            renderPinnedCards();
+
+            if (persist) {
+                localStorage.setItem(STORAGE_KEYS.language, state.language);
+            }
+        }
+
+        function applyTheme(theme, persist = false) {
+            state.theme = theme === 'dark' ? 'dark' : 'light';
+            const darkModeEnabled = state.theme === 'dark';
+
+            body.classList.toggle('dark-theme', darkModeEnabled);
+            if (darkModeInput) {
+                darkModeInput.checked = darkModeEnabled;
+            }
+
+            if (persist) {
+                localStorage.setItem(STORAGE_KEYS.theme, state.theme);
+            }
+        }
+
+        function applyBetaFeatures(enabled, persist = false) {
+            state.betaFeatures = Boolean(enabled);
+            body.classList.toggle('beta-features-enabled', state.betaFeatures);
+
+            if (betaFeaturesInput) {
+                betaFeaturesInput.checked = state.betaFeatures;
+            }
+
+            if (betaBadge) {
+                betaBadge.classList.toggle('hidden', !state.betaFeatures);
+            }
+
+            if (persist) {
+                localStorage.setItem(STORAGE_KEYS.betaFeatures, String(state.betaFeatures));
+            }
+
+            renderPinnedCards();
+        }
+
+        function openSettingsModal() {
+            settingsModal?.classList.remove('hidden');
+            settingsToggle?.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSettingsModal() {
+            settingsModal?.classList.add('hidden');
+            settingsToggle?.setAttribute('aria-expanded', 'false');
+        }
+
+        function openErcNoticeModal() {
+            ercNoticeModal?.classList.remove('hidden');
+        }
+
+        function closeErcNoticeModal() {
+            ercNoticeModal?.classList.add('hidden');
+        }
+
+        document.addEventListener('click', (event) => {
+            const ercLink = event.target.closest('[data-erc-guidelines-link]');
+            if (ercLink) {
+                handleErcGuidelinesClick({
+                    preventDefault: () => event.preventDefault(),
+                    currentTarget: ercLink
+                });
+                return;
+            }
+
+            const pinButton = event.target.closest('[data-card-pin-button]');
+            if (pinButton) {
+                togglePinnedCard(pinButton.dataset.cardId);
+                return;
+            }
+
+            const announcementAction = event.target.closest('[data-announcement-action]');
+            if (announcementAction) {
+                dismissAnnouncement(announcementAction.dataset.announcementAction);
+                return;
+            }
+
+            const dismissButton = event.target.closest('[data-announcement-dismiss]');
+            if (!dismissButton) {
+                return;
+            }
+
+            dismissAnnouncement(dismissButton.dataset.announcementDismiss);
+        });
+
+        settingsToggle?.addEventListener('click', openSettingsModal);
+        settingsClose?.addEventListener('click', closeSettingsModal);
+        settingsDone?.addEventListener('click', closeSettingsModal);
+        settingsBackdrop?.addEventListener('click', closeSettingsModal);
+
+        ercNoticeClose?.addEventListener('click', closeErcNoticeModal);
+        ercNoticeBackdrop?.addEventListener('click', closeErcNoticeModal);
+        ercNoticeContinue?.addEventListener('click', () => {
+            closeErcNoticeModal();
+            window.location.href = pendingErcGuidelinesHref;
+        });
+        ercNoticeSettings?.addEventListener('click', () => {
+            closeErcNoticeModal();
+            openSettingsModal();
+            if (feedbackType) {
+                feedbackType.value = 'medical';
+            }
+            feedbackMessage?.focus();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && settingsModal && !settingsModal.classList.contains('hidden')) {
+                closeSettingsModal();
+                return;
+            }
+
+            if (event.key === 'Escape' && ercNoticeModal && !ercNoticeModal.classList.contains('hidden')) {
+                closeErcNoticeModal();
+            }
+        });
+
+        languageSelect?.addEventListener('change', (event) => {
+            applyLanguage(event.target.value, true);
+        });
+
+        darkModeInput?.addEventListener('change', (event) => {
+            applyTheme(event.target.checked ? 'dark' : 'light', true);
+        });
+
+        betaFeaturesInput?.addEventListener('change', (event) => {
+            applyBetaFeatures(event.target.checked, true);
+        });
+
+        sendFeedbackBtn?.addEventListener('click', () => {
+            const selectedType = feedbackType?.value || 'bug';
+            const message = feedbackMessage?.value.trim() || '';
+
+            if (!message) {
+                alert(getTranslation('feedback.validation'));
+                feedbackMessage?.focus();
+                return;
+            }
+
+            const feedbackState = state.betaFeatures ? getTranslation('feedback.enabled') : getTranslation('feedback.disabled');
+            const typeLabel = getTranslation(`feedback.type.${selectedType}`);
+            const subject = `${getTranslation('feedback.subjectPrefix')} ${typeLabel}`;
+            const body = [
+                `${getTranslation('feedback.mailTypeLabel')}: ${typeLabel}`,
+                `${getTranslation('feedback.mailMessageLabel')}:`,
+                message,
+                '',
+                `${getTranslation('feedback.mailLanguageLabel')}: ${state.language}`,
+                `${getTranslation('feedback.mailThemeLabel')}: ${state.theme}`,
+                `${getTranslation('feedback.mailBetaLabel')}: ${feedbackState}`,
+                `${getTranslation('feedback.mailPageLabel')}: ${window.location.href}`,
+                `${getTranslation('feedback.mailDateLabel')}: ${new Date().toISOString()}`
+            ].join('\n');
+
+            const mailtoLink = `mailto:ambulance@wirtz.click?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        });
+
+        initializePinButtons();
+        applyLanguage(state.language);
+        applyTheme(state.theme);
+        applyBetaFeatures(state.betaFeatures);
+        loadAnnouncements();
+
+        // Check if already installed as PWA
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+            || window.navigator.standalone === true;
+
+        if (!isStandalone) {
+            installBanner?.classList.remove('hidden');
+
+            let deferredPrompt;
+
+            if (installBtn && !isIOS) {
+                installBtn.style.display = 'none';
+            }
+
+            // Listen for beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (event) => {
+                event.preventDefault();
+                deferredPrompt = event;
+
+                if (installBtn) {
+                    installBtn.style.display = 'inline-block';
+                }
+            });
+
+            if (isIOS && installBtn) {
+                installBtn.style.display = 'inline-block';
+            }
+
+            // Handle install button click
+            installBtn?.addEventListener('click', async () => {
+                if (isIOS) {
+                    alert(getTranslation('install.iosHelpAlert'));
+                    return;
+                }
+
+                if (!deferredPrompt) {
+                    return;
+                }
+
+                deferredPrompt.prompt();
+                const choiceResult = await deferredPrompt.userChoice;
+                if (choiceResult.outcome === 'accepted') {
+                    installBanner?.classList.add('hidden');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            installBanner?.classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>

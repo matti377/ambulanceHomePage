@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Medikamenten-Suche fuer CTI, Handelsnamen, Wirkstoffe und ATC-Codes.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="canonical" href="/pages/medLookup/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="de_LU">
+    <meta property="og:title" content="Medikamenten-Suche | Ambulance Toolkit Luxembourg">
+    <meta property="og:description" content="Durchsuche CTI, Handelsnamen, Wirkstoffe und ATC-Codes direkt aus der lokalen Medikamentenliste.">
+    <title>Medikamenten-Suche</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .seo-breadcrumb {
+            margin: 0 0 20px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .seo-breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .search-panel,
+        .results-panel {
+            background: var(--card-bg);
+            color: var(--text-dark);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        .search-panel {
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .search-intro {
+            margin: 8px 0 18px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 87, 184, 0.15);
+            font-size: 1rem;
+            background: #fff;
+            color: #222;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 87, 184, 0.12);
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .results-action {
+            display: flex;
+            justify-content: center;
+            margin-top: 18px;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(0, 87, 184, 0.08);
+            color: #1d3557;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .helper-text {
+            margin-top: 14px;
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.96rem;
+        }
+
+        .results-panel {
+            padding: 20px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .results-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .results-subtitle {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .results-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .med-card {
+            border: 1px solid rgba(0, 87, 184, 0.12);
+            border-radius: 16px;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.94));
+        }
+
+        .med-name {
+            font-size: 1.08rem;
+            font-weight: 700;
+            line-height: 1.45;
+            color: #12345b;
+            margin-bottom: 12px;
+        }
+
+        .med-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .med-field {
+            background: rgba(0, 87, 184, 0.05);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .med-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            color: #4b6584;
+            margin-bottom: 6px;
+        }
+
+        .med-value {
+            line-height: 1.5;
+            word-break: break-word;
+            color: #1d1d1d;
+        }
+
+        .empty-state,
+        .loading-state,
+        .error-state {
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .empty-state,
+        .loading-state {
+            background: rgba(0, 87, 184, 0.06);
+            color: #355070;
+        }
+
+        .error-state {
+            background: rgba(230, 57, 70, 0.1);
+            color: #8d1e2a;
+        }
+
+        .spinner {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 4px solid rgba(0, 87, 184, 0.18);
+            border-top-color: var(--secondary);
+            margin: 0 auto 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .search-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-actions {
+                width: 100%;
+            }
+
+            .search-actions .btn-shift {
+                flex: 1;
+                text-align: center;
+            }
+
+            .results-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="seo-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Ambulance Toolkit</a> / <span data-i18n="breadcrumb.current">Medikamenten-Suche</span>
+        </nav>
+
+        <header class="shiftplan-header">
+            <h1><i class="fas fa-pills"></i> <span data-i18n="header.title">Medikamenten-Suche</span></h1>
+            <p class="shiftplan-subtitle" data-i18n="header.subtitle">Suche nach Handelsnamen, Wirkstoff, CTI oder ATC-Code</p>
+        </header>
+
+        <section class="search-panel">
+            <h2 data-i18n="search.title">Lokale Medikamentendatenbank</h2>
+            <p class="search-intro" data-i18n="search.intro">
+                Die Daten werden zuerst in <code>medsLU.csv</code> gesucht. Falls dort nichts gefunden wird, erfolgt
+                automatisch ein Fallback auf <code>medsIn.csv</code>. Mehrere Suchbegriffe werden gemeinsam
+                angewendet, damit Sie schneller zum passenden Treffer kommen.
+            </p>
+
+            <div class="search-row">
+                <input id="searchInput" class="search-input" type="search"
+                    placeholder="z. B. norepinephrine, tapentadol, CTI 600711 oder C01CA03" autocomplete="off">
+                <div class="search-actions">
+                    <button id="clearButton" class="btn-shift" type="button"
+                        style="background:#6c757d;" data-i18n="search.clear">Zuruecksetzen</button>
+                </div>
+            </div>
+
+            <div class="meta-row">
+                <div class="meta-pill"><i class="fas fa-database"></i> <span id="entryCount">0 Eintraege</span></div>
+                <div class="meta-pill"><i class="fas fa-flag"></i> <span id="sourceLabel">Quelle: wird geladen</span></div>
+                <div class="meta-pill"><i class="fas fa-layer-group"></i> <span id="resultCount">0 Treffer</span></div>
+            </div>
+
+            <p class="helper-text" id="helperText">Daten werden geladen...</p>
+        </section>
+
+        <section class="results-panel">
+            <div class="results-header">
+                <div>
+                    <div class="results-title" data-i18n="results.title">Trefferliste</div>
+                    <div class="results-subtitle" id="resultsSubtitle">Noch keine Suche gestartet.</div>
+                </div>
+            </div>
+            <div id="resultsContainer">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Die Medikamentendaten werden eingelesen...</p>
+                </div>
+            </div>
+            <div class="results-action">
+                <a href="/pages/pathologyMedSearcher/index.html" class="btn-shift" data-i18n="search.pathologyLink">Franzoesische Medikamente nach Pathologie suchen</a>
+            </div>
+        </section>
+
+        <footer class="shiftplan-footer" data-footer-profile="default"
+            data-footer-first=".shiftplan-footer p:first-child" data-footer-last=".shiftplan-footer p:last-child">
+            <p></p>
+            <p></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        (function () {
+            const MAX_RESULTS = 150;
+            const searchInput = document.getElementById('searchInput');
+            const clearButton = document.getElementById('clearButton');
+            const entryCount = document.getElementById('entryCount');
+            const sourceLabel = document.getElementById('sourceLabel');
+            const resultCount = document.getElementById('resultCount');
+            const helperText = document.getElementById('helperText');
+            const resultsSubtitle = document.getElementById('resultsSubtitle');
+            const resultsContainer = document.getElementById('resultsContainer');
+
+            const translations = {
+                de: {
+                    'page.title': 'Medikamenten Suche',
+                    'page.description': 'Medikamenten Suche für CTI, Handelsnamen, Wirkstoffe und ATC-Codes.',
+                    'breadcrumb.current': 'Medikamenten Suche',
+                    'header.title': 'Medikamenten Suche',
+                    'header.subtitle': 'Suche nach Handelsnamen, Wirkstoff, CTI oder ATC-Code',
+                    'search.title': 'Lokale Medikamentendatenbank',
+                    'search.intro': 'Die Daten werden zuerst in <code>medsLU.csv</code> gesucht. Falls dort nichts gefunden wird, erfolgt automatisch ein Fallback auf <code>medsIn.csv</code>. Mehrere Suchbegriffe werden gemeinsam angewendet, damit Sie schneller zum passenden Treffer kommen.',
+                    'search.placeholder': 'z. B. norepinephrine, tapentadol, CTI 600711 oder C01CA03',
+                    'search.pathologyLink': 'Franzoesische Medikamente nach Pathologie suchen',
+                    'search.clear': 'Zurücksetzen',
+                    'results.title': 'Trefferliste',
+                    'results.initialSubtitle': 'Noch keine Suche gestartet.',
+                    'results.promptSubtitle': 'Suche nach einem Medikament, Wirkstoff, CTI oder ATC-Code.',
+                    'results.emptyQuery': 'Noch kein Suchbegriff eingegeben.',
+                    'results.noMatch': 'Keine passenden Medikamente gefunden.',
+                    'results.noMatchFor': 'Keine Treffer für "{query}".',
+                    'results.matchFor': '{count} Treffer für "{query}".',
+                    'results.truncated': 'Es werden die ersten {max} von {count} Treffern angezeigt.',
+                    'results.loading': 'Die Medikamentendaten werden eingelesen...',
+                    'results.labelCti': 'CTI',
+                    'results.labelSubstance': 'Wirkstoff',
+                    'results.labelAtc': 'ATC',
+                    'helper.loading': 'Daten werden geladen...',
+                    'helper.examples': 'Mehrere Begriffe sind möglich, zum Beispiel "norepinephrine, concor".',
+                    'helper.luFound': 'Treffer in medsLU.csv gefunden.',
+                    'helper.inFallback': 'Keine Treffer in medsLU.csv. Fallback auf medsIn.csv wurde verwendet.',
+                    'helper.none': 'Keine Treffer in medsLU.csv oder medsIn.csv.',
+                    'helper.loaded': 'Suche sofort möglich. {lu} LU-Einträge und {intl} internationale Einträge wurden geladen.',
+                    'helper.loadError': 'Die Medikamentenlisten konnten nicht geladen werden.',
+                    'source.loading': 'Quelle: wird geladen',
+                    'source.default': 'Quelle: Luxemburg zuerst, danach International',
+                    'source.none': 'Quelle: keine Treffer',
+                    'source.error': 'Quelle: Fehler',
+                    'source.lu': 'Quelle: medsLU.csv',
+                    'source.in': 'Quelle: medsIn.csv',
+                    'count.entries': '{count} Einträge',
+                    'count.results': '{count} Treffer',
+                    'error.title': 'Fehler beim Laden der Daten.',
+                    'error.unknown': 'Unbekannter Fehler beim Laden der Medikamentendaten.'
+                },
+                en: {
+                    'page.title': 'Medication Search',
+                    'page.description': 'Medication search for CTI, brand names, active substances, and ATC codes.',
+                    'breadcrumb.current': 'Medication Search',
+                    'header.title': 'Medication Search',
+                    'header.subtitle': 'Search by brand name, active substance, CTI, or ATC code',
+                    'search.title': 'Local medication database',
+                    'search.intro': 'The search checks <code>medsLU.csv</code> first. If nothing is found there, it automatically falls back to <code>medsIn.csv</code>. Multiple search terms can be combined to reach the right result faster.',
+                    'search.placeholder': 'e.g. norepinephrine, tapentadol, CTI 600711 or C01CA03',
+                    'search.pathologyLink': 'Search French medicines by pathology',
+                    'search.clear': 'Reset',
+                    'results.title': 'Results',
+                    'results.initialSubtitle': 'No search started yet.',
+                    'results.promptSubtitle': 'Search for a medication, active substance, CTI, or ATC code.',
+                    'results.emptyQuery': 'No search term entered yet.',
+                    'results.noMatch': 'No matching medications found.',
+                    'results.noMatchFor': 'No results for "{query}".',
+                    'results.matchFor': '{count} results for "{query}".',
+                    'results.truncated': 'Showing the first {max} of {count} results.',
+                    'results.loading': 'Loading medication data...',
+                    'results.labelCti': 'CTI',
+                    'results.labelSubstance': 'Active substance',
+                    'results.labelAtc': 'ATC',
+                    'helper.loading': 'Loading data...',
+                    'helper.examples': 'You can use multiple terms, for example "norepinephrine c01ca03".',
+                    'helper.luFound': 'Matches found in medsLU.csv.',
+                    'helper.inFallback': 'No matches in medsLU.csv. Fallback to medsIn.csv was used.',
+                    'helper.none': 'No matches in medsLU.csv or medsIn.csv.',
+                    'helper.loaded': 'Search is ready. {lu} Luxembourg entries and {intl} international entries were loaded.',
+                    'helper.loadError': 'The medication lists could not be loaded.',
+                    'source.loading': 'Source: loading',
+                    'source.default': 'Source: Luxembourg first, then international',
+                    'source.none': 'Source: no results',
+                    'source.error': 'Source: error',
+                    'source.lu': 'Source: medsLU.csv',
+                    'source.in': 'Source: medsIn.csv',
+                    'count.entries': '{count} entries',
+                    'count.results': '{count} results',
+                    'error.title': 'Error while loading data.',
+                    'error.unknown': 'Unknown error while loading medication data.'
+                },
+                fr: {
+                    'page.title': 'Recherche de médicaments',
+                    'page.description': 'Recherche de médicaments par CTI, nom commercial, substance active et code ATC.',
+                    'breadcrumb.current': 'Recherche de médicaments',
+                    'header.title': 'Recherche de médicaments',
+                    'header.subtitle': 'Rechercher par nom commercial, substance active, CTI ou code ATC',
+                    'search.title': 'Base locale de médicaments',
+                    'search.intro': 'La recherche vérifie d\'abord <code>medsLU.csv</code>. Si aucun resultat n\'y est trouvé, elle bascule automatiquement vers <code>medsIn.csv</code>. Plusieurs termes peuvent être combinés pour arriver plus vite au bon résultat.',
+                    'search.placeholder': 'par ex. norepinephrine, tapentadol, CTI 600711 ou C01CA03',
+                    'search.pathologyLink': 'Rechercher des medicaments francais par pathologie',
+                    'search.clear': 'Réinitialiser',
+                    'results.title': 'Résultats',
+                    'results.initialSubtitle': 'Aucune recherche lancée pour le moment.',
+                    'results.promptSubtitle': 'Recherchez un medicament, une substance active, un CTI ou un code ATC.',
+                    'results.emptyQuery': 'Aucun terme de recherche saisi.',
+                    'results.noMatch': 'Aucun medicament correspondant trouvé.',
+                    'results.noMatchFor': 'Aucun résultat pour "{query}".',
+                    'results.matchFor': '{count} résultats pour "{query}".',
+                    'results.truncated': 'Affichage des {max} premiers résultats sur {count}.',
+                    'results.loading': 'Chargement des données des médicaments...',
+                    'results.labelCti': 'CTI',
+                    'results.labelSubstance': 'Substance active',
+                    'results.labelAtc': 'ATC',
+                    'helper.loading': 'Chargement des données...',
+                    'helper.examples': 'Plusieurs termes sont possibles, par exemple "norepinephrine c01ca03".',
+                    'helper.luFound': 'Résultats trouves dans medsLU.csv.',
+                    'helper.inFallback': 'Aucun résultat dans medsLU.csv. Le fallback vers medsIn.csv a été utilise.',
+                    'helper.none': 'Aucun résultat dans medsLU.csv ni medsIn.csv.',
+                    'helper.loaded': 'La recherche est prète. {lu} entrées luxembourgeoises et {intl} entrées internationales ont été chargées.',
+                    'helper.loadError': 'Les listes de médicaments n\'ont pas pu être chargées.',
+                    'source.loading': 'Source : chargement',
+                    'source.default': 'Source : Luxembourg d\'abord, puis international',
+                    'source.none': 'Source : aucun résultat',
+                    'source.error': 'Source : erreur',
+                    'source.lu': 'Source : medsLU.csv',
+                    'source.in': 'Source : medsIn.csv',
+                    'count.entries': '{count} entrées',
+                    'count.results': '{count} résultats',
+                    'error.title': 'Erreur lors du chargement des données.',
+                    'error.unknown': 'Erreur inconnue lors du chargement des données des médicaments.'
+                },
+                lb: {
+                    'page.title': 'Medikamenter Sich',
+                    'page.description': 'Medikamenter Sich fir CTI, Handelsnimm, Wierkstoffer an ATC-Coden.',
+                    'breadcrumb.current': 'Medikamenter Sich',
+                    'header.title': 'Medikamenter Sich',
+                    'header.subtitle': 'Sich no Handelsnumm, Wierkstoff, CTI oder ATC-Code',
+                    'search.title': 'Lokal Medikamenter Datebank',
+                    'search.intro': 'D\'Sich kuckt fir d\'éischt an <code>medsLU.csv</code>. Wann do näischt fonnt gëtt, gëtt automatesch op <code>medsIn.csv</code> zeréckgegraff. Méi Sichbegrëffer kënnen zesumme benotzt ginn, fir méi séier dat richtegt Resultat ze fannen.',
+                    'search.placeholder': 'z. B. norepinephrine, tapentadol, CTI 600711 oder C01CA03',
+                    'search.pathologyLink': 'Franséisch Medikamenter no Pathologie sichen',
+                    'search.clear': 'Zerécksetzen',
+                    'results.title': 'Resultater',
+                    'results.initialSubtitle': 'Nach keng Sich gestart.',
+                    'results.promptSubtitle': 'Sich no engem Medikament, Wierkstoff, CTI oder ATC-Code.',
+                    'results.emptyQuery': 'Nach kee Sichbegrëff aginn.',
+                    'results.noMatch': 'Keng passend Medikamenter fonnt.',
+                    'results.noMatchFor': 'Keng Treffer fir "{query}".',
+                    'results.matchFor': '{count} Treffer fir "{query}".',
+                    'results.truncated': 'Et gi just déi éischt {max} vun {count} Treffer gewisen.',
+                    'results.loading': 'D\'Medikamentendate ginn gelies...',
+                    'results.labelCti': 'CTI',
+                    'results.labelSubstance': 'Wierkstoff',
+                    'results.labelAtc': 'ATC',
+                    'helper.loading': 'Date ginn gelueden...',
+                    'helper.examples': 'Méi Begrëffer si méiglech, zum Beispill "norepinephrine c01ca03".',
+                    'helper.luFound': 'Treffer an medsLU.csv fonnt.',
+                    'helper.inFallback': 'Keng Treffer an medsLU.csv. Zeréckgräifen op medsIn.csv gouf benotzt.',
+                    'helper.none': 'Keng Treffer an medsLU.csv oder medsIn.csv.',
+                    'helper.loaded': 'D\'Sich ass prett. {lu} Lëtzebuerg-Einträg an {intl} international Einträg goufe gelueden.',
+                    'helper.loadError': 'D\'Medikamenterlëschte konnten net geluede ginn.',
+                    'source.loading': 'Quell: gëtt gelueden',
+                    'source.default': 'Quell: fir d\'éischt Lëtzebuerg, duerno international',
+                    'source.none': 'Quell: keng Treffer',
+                    'source.error': 'Quell: Feeler',
+                    'source.lu': 'Quell: medsLU.csv',
+                    'source.in': 'Quell: medsIn.csv',
+                    'count.entries': '{count} Einträg',
+                    'count.results': '{count} Treffer',
+                    'error.title': 'Feeler beim Luede vun den Donnéeën.',
+                    'error.unknown': 'Onbekannte Feeler beim Luede vun de Medikamentendonnéeën.'
+                }
+            };
+
+            const state = {
+                luEntries: [],
+                inEntries: [],
+                ready: false,
+                language: 'de'
+            };
+
+            function t(key, params = {}) {
+                const active = translations[state.language] || translations.de;
+                let value = active[key] || translations.de[key] || key;
+                Object.entries(params).forEach(([paramKey, paramValue]) => {
+                    value = value.replaceAll(`{${paramKey}}`, String(paramValue));
+                });
+                return value;
+            }
+
+            ToolkitI18n.applyTranslations({
+                titleKey: 'page.title',
+                translations,
+                text: {
+                    '[data-i18n="breadcrumb.current"]': 'breadcrumb.current',
+                    '[data-i18n="header.title"]': 'header.title',
+                    '[data-i18n="header.subtitle"]': 'header.subtitle',
+                    '[data-i18n="search.title"]': 'search.title',
+                    '[data-i18n="search.pathologyLink"]': 'search.pathologyLink',
+                    '[data-i18n="results.title"]': 'results.title',
+                    '[data-i18n="search.clear"]': 'search.clear'
+                },
+                attrs: [
+                    { selector: '#searchInput', attr: 'placeholder', key: 'search.placeholder' },
+                    { selector: 'meta[name="description"]', attr: 'content', key: 'page.description' },
+                    { selector: 'meta[property="og:title"]', attr: 'content', key: 'page.title' },
+                    { selector: 'meta[property="og:description"]', attr: 'content', key: 'page.description' }
+                ],
+                onApplied: ({ language }) => {
+                    state.language = language;
+                    const introElement = document.querySelector('[data-i18n="search.intro"]');
+                    if (introElement) {
+                        introElement.innerHTML = t('search.intro');
+                    }
+                    helperText.textContent = state.ready ? helperText.textContent : t('helper.loading');
+                    resultsSubtitle.textContent = state.ready ? resultsSubtitle.textContent : t('results.initialSubtitle');
+                    sourceLabel.textContent = state.ready ? sourceLabel.textContent : t('source.loading');
+                }
+            });
+
+            function escapeHtml(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function normalize(value) {
+                return String(value || '')
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .toLowerCase()
+                    .trim();
+            }
+
+            function parseCsv(csvText) {
+                const rows = [];
+                let currentField = '';
+                let currentRow = [];
+                let inQuotes = false;
+
+                for (let i = 0; i < csvText.length; i += 1) {
+                    const char = csvText[i];
+                    const nextChar = csvText[i + 1];
+
+                    if (char === '"') {
+                        if (inQuotes && nextChar === '"') {
+                            currentField += '"';
+                            i += 1;
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                        continue;
+                    }
+
+                    if (char === ',' && !inQuotes) {
+                        currentRow.push(currentField);
+                        currentField = '';
+                        continue;
+                    }
+
+                    if ((char === '\n' || char === '\r') && !inQuotes) {
+                        if (char === '\r' && nextChar === '\n') {
+                            i += 1;
+                        }
+                        currentRow.push(currentField);
+                        if (currentRow.some((value) => value !== '')) {
+                            rows.push(currentRow);
+                        }
+                        currentField = '';
+                        currentRow = [];
+                        continue;
+                    }
+
+                    currentField += char;
+                }
+
+                if (currentField.length > 0 || currentRow.length > 0) {
+                    currentRow.push(currentField);
+                    if (currentRow.some((value) => value !== '')) {
+                        rows.push(currentRow);
+                    }
+                }
+
+                return rows;
+            }
+
+            function setLoading() {
+                resultsContainer.innerHTML = `
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>${escapeHtml(t('results.loading'))}</p>
+                    </div>
+                `;
+            }
+
+            function setError(message) {
+                resultsContainer.innerHTML = `
+                    <div class="error-state">
+                        <p>${escapeHtml(message)}</p>
+                    </div>
+                `;
+            }
+
+            function renderEmpty(message) {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <p>${escapeHtml(message)}</p>
+                    </div>
+                `;
+            }
+
+            function renderResults(entries, query, sourceKey) {
+                const limitedEntries = entries.slice(0, MAX_RESULTS);
+                resultCount.textContent = t('count.results', { count: entries.length });
+
+                if (!query) {
+                    sourceLabel.textContent = t('source.default');
+                    resultsSubtitle.textContent = t('results.promptSubtitle');
+                    renderEmpty(t('results.emptyQuery'));
+                    return;
+                }
+
+                if (entries.length === 0) {
+                    sourceLabel.textContent = t('source.none');
+                    resultsSubtitle.textContent = t('results.noMatchFor', { query });
+                    renderEmpty(t('results.noMatch'));
+                    return;
+                }
+
+                const truncated = entries.length > MAX_RESULTS;
+                sourceLabel.textContent = sourceKey === 'lu' ? t('source.lu') : t('source.in');
+                resultsSubtitle.textContent = truncated
+                    ? t('results.truncated', { max: MAX_RESULTS, count: entries.length })
+                    : t('results.matchFor', { count: entries.length, query });
+
+                const cardsHtml = limitedEntries.map((entry) => `
+                    <article class="med-card">
+                        <div class="med-name">${escapeHtml(entry.name)}</div>
+                        <div class="med-grid">
+                            <div class="med-field">
+                                <div class="med-label">${escapeHtml(t('results.labelCti'))}</div>
+                                <div class="med-value">${escapeHtml(entry.cti)}</div>
+                            </div>
+                            <div class="med-field">
+                                <div class="med-label">${escapeHtml(t('results.labelSubstance'))}</div>
+                                <div class="med-value">${escapeHtml(entry.substance)}</div>
+                            </div>
+                            <div class="med-field">
+                                <div class="med-label">${escapeHtml(t('results.labelAtc'))}</div>
+                                <div class="med-value">${escapeHtml(entry.atc)}</div>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+
+                resultsContainer.innerHTML = `<div class="results-list">${cardsHtml}</div>`;
+            }
+
+            function searchEntries(rawQuery) {
+                const query = rawQuery.trim();
+                const normalizedQuery = normalize(query);
+
+                if (!normalizedQuery) {
+                    renderResults([], '', '');
+                    helperText.textContent = t('helper.examples');
+                    return;
+                }
+
+                const terms = normalizedQuery.split(/\s+/).filter(Boolean);
+                const luMatches = state.luEntries.filter((entry) => terms.every((term) => entry.searchText.includes(term)));
+
+                if (luMatches.length > 0) {
+                    renderResults(luMatches, query, 'lu');
+                    helperText.textContent = t('helper.luFound');
+                    return;
+                }
+
+                const inMatches = state.inEntries.filter((entry) => terms.every((term) => entry.searchText.includes(term)));
+                renderResults(inMatches, query, inMatches.length > 0 ? 'in' : '');
+                helperText.textContent = inMatches.length > 0
+                    ? t('helper.inFallback')
+                    : t('helper.none');
+            }
+
+            function mapLuRows(rows) {
+                const uniqueEntries = [];
+                const seen = new Set();
+
+                for (let i = 0; i < rows.length; i += 1) {
+                    const row = rows[i];
+                    const cti = '';
+                    const name = (row[1] || '').trim();
+                    const atc = '';
+                    const substance = (row[4] || '').trim();
+                    const form = [row[2] || '', row[3] || ''].map((value) => value.trim()).filter(Boolean).join(' | ');
+
+                    if (!cti && !name && !substance && !form) {
+                        continue;
+                    }
+
+                    const uniqueKey = [cti, name, substance, atc, form].join('|');
+                    if (seen.has(uniqueKey)) {
+                        continue;
+                    }
+
+                    seen.add(uniqueKey);
+                    uniqueEntries.push({
+                        cti,
+                        name,
+                        substance: form ? `${substance}${substance && form ? ' | ' : ''}${form}` : substance,
+                        atc,
+                        searchText: normalize([name, substance, form].join(' '))
+                    });
+                }
+
+                return uniqueEntries;
+            }
+
+            function mapInRows(rows) {
+                const uniqueEntries = [];
+                const seen = new Set();
+
+                for (let i = 1; i < rows.length; i += 1) {
+                    const row = rows[i];
+                    const cti = (row[0] || '').trim();
+                    const name = (row[1] || '').trim();
+                    const substance = (row[2] || '').trim();
+                    const atc = (row[3] || '').trim();
+
+                    if (!cti && !name && !substance && !atc) {
+                        continue;
+                    }
+
+                    const uniqueKey = [cti, name, substance, atc].join('|');
+                    if (seen.has(uniqueKey)) {
+                        continue;
+                    }
+
+                    seen.add(uniqueKey);
+                    uniqueEntries.push({
+                        cti,
+                        name,
+                        substance,
+                        atc,
+                        searchText: normalize([cti, name, substance, atc].join(' '))
+                    });
+                }
+
+                return uniqueEntries;
+            }
+
+            async function loadEntries() {
+                setLoading();
+
+                try {
+                    const [luResponse, inResponse] = await Promise.all([
+                        fetch('./data/medsLU.csv'),
+                        fetch('./data/medsIn.csv')
+                    ]);
+
+                    if (!luResponse.ok) {
+                        throw new Error('Die Datei medsLU.csv konnte nicht geladen werden.');
+                    }
+
+                    if (!inResponse.ok) {
+                        throw new Error('Die Datei medsIn.csv konnte nicht geladen werden.');
+                    }
+
+                    const [luText, inText] = await Promise.all([
+                        luResponse.text(),
+                        inResponse.text()
+                    ]);
+
+                    const luRows = parseCsv(luText);
+                    const inRows = parseCsv(inText);
+
+                    if (luRows.length < 1) {
+                        throw new Error('Die Datei medsLU.csv enthaelt keine verwertbaren Daten.');
+                    }
+
+                    if (inRows.length < 2) {
+                        throw new Error('Die Datei medsIn.csv enthaelt keine verwertbaren Daten.');
+                    }
+
+                    state.luEntries = mapLuRows(luRows);
+                    state.inEntries = mapInRows(inRows);
+                    state.ready = true;
+                    entryCount.textContent = t('count.entries', { count: state.luEntries.length + state.inEntries.length });
+                    sourceLabel.textContent = t('source.default');
+                    helperText.textContent = t('helper.loaded', { lu: state.luEntries.length, intl: state.inEntries.length });
+                    renderResults([], '', '');
+                } catch (error) {
+                    console.error(error);
+                    helperText.textContent = t('helper.loadError');
+                    resultsSubtitle.textContent = t('error.title');
+                    sourceLabel.textContent = t('source.error');
+                    setError(error.message || t('error.unknown'));
+                }
+            }
+
+            let debounceTimer = null;
+            searchInput.addEventListener('input', (event) => {
+                if (!state.ready) {
+                    return;
+                }
+
+                window.clearTimeout(debounceTimer);
+                debounceTimer = window.setTimeout(() => {
+                    searchEntries(event.target.value);
+                }, 120);
+            });
+
+            clearButton.addEventListener('click', () => {
+                searchInput.value = '';
+                if (state.ready) {
+                    searchEntries('');
+                }
+                searchInput.focus();
+            });
+
+            loadEntries();
+        })();
+    </script>
+</body>
+
+</html>

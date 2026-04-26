@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERC Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <style>
+        .hero {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .hero .logo {
+            margin: 0 auto 16px;
+        }
+
+        .detail-card {
+            background: var(--card-bg);
+            color: var(--text-dark);
+            border-radius: 18px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+        }
+
+        .top-card {
+            padding: 24px;
+            margin-bottom: 20px;
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+            color: var(--text-light);
+        }
+
+        .top-actions,
+        .doc-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .top-actions .btn,
+        .doc-links .btn,
+        .detail-card .btn {
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .details-grid {
+            display: grid;
+            gap: 22px;
+            margin-bottom: 32px;
+        }
+
+        .detail-card {
+            overflow: hidden;
+        }
+
+        .detail-head {
+            color: #fff;
+            padding: 20px;
+        }
+
+        .detail-head h2 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.45rem;
+        }
+
+        .detail-tag {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        .detail-body {
+            padding: 20px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .detail-body p,
+        .detail-body li {
+            line-height: 1.65;
+        }
+
+        .detail-body ul {
+            padding-left: 20px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .image-card {
+            border: 1px solid rgba(0, 87, 184, 0.16);
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(0, 87, 184, 0.05);
+        }
+
+        .dark-theme .image-card {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .image-card img {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #fff;
+            cursor: zoom-in;
+        }
+
+        .image-card figcaption {
+            padding: 12px 14px;
+            font-size: 0.95rem;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.84);
+        }
+
+        .lightbox.is-open {
+            display: flex;
+        }
+
+        .lightbox__backdrop {
+            position: absolute;
+            inset: 0;
+        }
+
+        .lightbox__panel {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 12px;
+            max-width: min(1100px, 100%);
+            max-height: 100%;
+        }
+
+        .lightbox__image {
+            max-width: 100%;
+            max-height: 78vh;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .lightbox__caption {
+            color: #fff;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .lightbox__close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-als { background: linear-gradient(135deg, #0057b8, #1d3557); }
+        .theme-causes { background: linear-gradient(135deg, #5f0f40, #9a031e); }
+        .theme-potassium { background: linear-gradient(135deg, #ef476f, #d62828); }
+        .theme-temp { background: linear-gradient(135deg, #118ab2, #fb8500); }
+        .theme-trauma { background: linear-gradient(135deg, #6b705c, #bc4749); }
+
+        @media (max-width: 700px) {
+            body { padding: 16px; }
+            .top-actions .btn,
+            .doc-links .btn,
+            .detail-card .btn { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="hero">
+            <div class="logo">
+                <i class="fas fa-book-medical"></i>
+            </div>
+            <h1 id="pageTitle"></h1>
+            <p id="pageSubtitle" class="subtitle"></p>
+        </header>
+
+        <section class="top-card" style="text-align:center;">
+            <div class="top-actions">
+                <a id="backLink" class="btn btn-compact" href="./index.html">Zurück zur Übersicht</a>
+            </div>
+        </section>
+
+        <nav id="navLinks" class="nav-links" aria-label="ERC detail navigation"></nav>
+
+        <main id="detailsGrid" class="details-grid"></main>
+
+        <div id="imageLightbox" class="lightbox" aria-hidden="true">
+            <div class="lightbox__backdrop"></div>
+            <div class="lightbox__panel">
+                <button id="lightboxClose" class="lightbox__close" type="button" aria-label="Close image">&times;</button>
+                <img id="lightboxImage" class="lightbox__image" src="" alt="">
+                <div id="lightboxCaption" class="lightbox__caption"></div>
+            </div>
+        </div>
+
+        <footer data-footer-profile="default" data-footer-first="#footerNotice" data-footer-last="#footerCopy">
+            <p id="footerNotice"></p>
+            <p id="footerCopy"></p>
+        </footer>
+    </div>
+
+    <script src="/style/i18n.js"></script>
+    <script src="/style/footer.js"></script>
+    <script>
+        const DOC_URLS = {
+            als: 'https://erc.edu/media/vedoa2ga/gl2025-05-als-e.pdf',
+            special: 'https://erc.edu/media/wwufbysp/gl2025-06-spec-circ-e.pdf'
+        };
+
+        const SECTIONS = [
+            { id: 'als', icon: 'fas fa-heartbeat', theme: 'theme-als', images: ['als_algortihm.png', 'postreanimation algorithmus.png'] },
+            { id: 'causes', icon: 'fas fa-list-check', theme: 'theme-causes', images: [] },
+            { id: 'hyperk', icon: 'fas fa-bolt', theme: 'theme-potassium', images: ['algoritmo hiperK.jpg'] },
+            { id: 'temp', icon: 'fas fa-temperature-half', theme: 'theme-temp', images: ['Hypothermia algorithm ERC.png', 'icpr.png', 'Hyperthermia.png'] },
+            { id: 'trauma', icon: 'fas fa-triangle-exclamation', theme: 'theme-trauma', images: ['trauma arresst.png'] }
+        ];
+
+        const CONTENT = {
+            de: {
+                title: 'ERC Erklärungen',
+                subtitle: 'Mehr Details zu den Algorithmen und die dazugehörigen Bilder aus deinem ERC-Ordner.',
+                introTitle: 'Detailseite',
+                introText: 'Hier bleiben die gleichen Themen wie in der Übersicht, aber mit etwas mehr Kontext. Die Bilder unten stammen aus deinem lokalen Ordner `erc/images`.',
+                back: 'Zurück zur Übersicht',
+                alsDoc: 'ALS-Kapitel öffnen',
+                specialDoc: 'Spezialkapitel öffnen',
+                captions: {
+                    'als_algortihm.png': 'ALS-Übersicht',
+                    'postreanimation algorithmus.png': 'Post-ROSC / Postreanimation',
+                    'algoritmo hiperK.jpg': 'Hyperkaliämie-Algorithmus',
+                    'Hypothermia algorithm ERC.png': 'Hypothermie-Algorithmus',
+                    'icpr.png': 'Intermittierende CPR bei Hypothermie',
+                    'Hyperthermia.png': 'Hyperthermie-Algorithmus',
+                    'trauma arresst.png': 'Traumatischer Arrest'
+                },
+                sections: {
+                    als: { tag: 'ERC 2025 ALS', title: 'ALS-Algorithmus', text: 'Der ALS-Ablauf bleibt dein Grundgerüst. Die wichtigsten Fixpunkte sind 2-Minuten-Zyklen, saubere Rhythmuschecks und frühes Arbeiten an reversiblen Ursachen.', bullets: ['Schockbar: nach 3 Schocks Adrenalin 1 mg und Amiodaron 300 mg, nach 5 Schocks weitere 150 mg.', 'Nicht schockbar: Adrenalin so früh wie möglich nach Zugang und dann alle 3-5 Minuten.', 'ROSC heißt nicht Ende: direkt in Post-ROSC-Versorgung, 12-Kanal, Oxygenierung, Ursache suchen.'] },
+                    causes: { tag: '4 Hs / 4 Ts', title: 'Reversible Ursachen', text: 'Die 4 Hs und 4 Ts sind die Suchstrategie während jeder Rea-Runde. Am besten bewusst laut im Team durchgehen.', bullets: ['Hypoxie und Hypovolämie sind präklinisch oft die schnellsten Treffer.', 'Hyperkaliämie, Hypothermie und andere metabolische Ursachen aktiv mitdenken.', 'Tamponade, Spannungspneumothorax, Thrombose und Toxine gezielt ausschließen.'] },
+                    hyperk: { tag: 'Spezialumstand', title: 'Hyperkaliämie', text: 'Bei schwerer Hyperkaliämie geht es um drei Dinge: Myokard stabilisieren, Kalium in die Zelle verschieben und Kalium aus dem Körper bekommen.', bullets: ['Calciumchlorid schützt das Herz bei ECG-Veränderungen.', 'Insulin plus Glukose und Salbutamol senken den Serumkaliumwert schnell.', 'Bei Arrest ergänzt ERC Natriumbikarbonat und denkt früh an Dialyse oder ECPR nach lokalem Standard.'] },
+                    temp: { tag: 'Spezialumstand', title: 'Hypo- / Hyperthermie', text: 'Hypothermie und Hyperthermie brauchen andere Prioritäten als Standard-ALS. Genau dafür sind die Bilder unten praktisch.', bullets: ['Hypothermie: unter 30 °C Medikamente zurückhalten, bis zu 3 Schocks bei VF/pVT, wenn möglich ECLS-Rewarming-Zentrum.', 'Intermittierende CPR ist nur ein Spezialfall für schwierige Rettungssituationen bei tiefer Kerntemperatur.', 'Hyperthermie: bei Heat Stroke zählt schnelle aktive Kühlung; Antipyretika helfen hier nicht.'] },
+                    trauma: { tag: 'Spezialumstand', title: 'Traumatische Reanimation', text: 'Bei der Trauma-Rea stehen Ursache und Intervention im Vordergrund. Reine Standard-Kompressionen ohne Korrektur der Ursache bringen oft wenig.', bullets: ['Massive Blutung, Spannungspneumothorax, Hypoxie und Tamponade zuerst.', 'Tourniquet, Beckenschlinge, Blutprodukte, Entlastung und schneller Transport sind die Kernschritte.', 'Thorakotomie nur wenn Mechanismus, Zeitfenster und Expertise wirklich passen.'] }
+                }
+            },
+            en: {
+                title: 'ERC Explanations',
+                subtitle: 'More detail for the algorithms plus the images from your local ERC folder.',
+                introTitle: 'Detail page',
+                introText: 'This page keeps the same topics as the overview, but with a bit more context. The images below come from your local `erc/images` folder.',
+                back: 'Back to overview',
+                alsDoc: 'Open ALS chapter',
+                specialDoc: 'Open special chapter',
+                captions: {
+                    'als_algortihm.png': 'ALS overview',
+                    'postreanimation algorithmus.png': 'Post-ROSC / post-resuscitation',
+                    'algoritmo hiperK.jpg': 'Hyperkalaemia algorithm',
+                    'Hypothermia algorithm ERC.png': 'Hypothermia algorithm',
+                    'icpr.png': 'Intermittent CPR in hypothermia',
+                    'Hyperthermia.png': 'Hyperthermia algorithm',
+                    'trauma arresst.png': 'Traumatic arrest'
+                },
+                sections: {
+                    als: { tag: 'ERC 2025 ALS', title: 'ALS algorithm', text: 'ALS remains the backbone. The key anchors are 2-minute cycles, clean rhythm checks, and early work on reversible causes.', bullets: ['Shockable: after 3 shocks give adrenaline 1 mg and amiodarone 300 mg; after 5 shocks give another 150 mg.', 'Non-shockable: give adrenaline as early as possible once access is available, then every 3-5 minutes.', 'ROSC is not the end: move straight into post-ROSC care, 12-lead ECG, oxygenation, and cause search.'] },
+                    causes: { tag: '4 Hs / 4 Ts', title: 'Reversible causes', text: 'The 4 Hs and 4 Ts are your search pattern during every arrest cycle. It helps to say them out loud as a team.', bullets: ['Hypoxia and hypovolaemia are often the fastest prehospital wins.', 'Hyperkalaemia, hypothermia, and other metabolic causes should be actively considered.', 'Tamponade, tension pneumothorax, thrombosis, and toxins should be excluded on purpose.'] },
+                    hyperk: { tag: 'Special circumstance', title: 'Hyperkalaemia', text: 'In severe hyperkalaemia, think in three moves: stabilise the myocardium, shift potassium intracellularly, and remove potassium from the body.', bullets: ['Calcium chloride protects the heart when ECG changes are present.', 'Insulin plus glucose and salbutamol lower serum potassium quickly.', 'In arrest, ERC adds sodium bicarbonate and supports early dialysis or ECPR according to local systems.'] },
+                    temp: { tag: 'Special circumstance', title: 'Hypo- / Hyperthermia', text: 'Hypothermia and hyperthermia need different priorities than standard ALS. That is exactly where the images below help.', bullets: ['Hypothermia: below 30 °C withhold drugs, give up to 3 shocks for VF/pVT, and target an ECLS rewarming centre if possible.', 'Intermittent CPR is only a special-case option for difficult rescue settings with very low core temperature.', 'Hyperthermia: in heat stroke, rapid active cooling matters most; antipyretics do not fix the problem.'] },
+                    trauma: { tag: 'Special circumstance', title: 'Traumatic cardiac arrest', text: 'In trauma arrest, cause correction and intervention lead the sequence. Standard compressions alone often do little if the cause is not fixed.', bullets: ['Think first about major haemorrhage, tension pneumothorax, hypoxia, and tamponade.', 'Tourniquets, pelvic binders, blood products, decompression, and rapid transport are the key actions.', 'Thoracotomy only makes sense when mechanism, timing, and expertise truly fit.'] }
+                }
+            },
+            fr: {
+                title: 'Explications ERC',
+                subtitle: 'Plus de détails sur les algorithmes avec les images de ton dossier ERC local.',
+                introTitle: 'Page détaillée',
+                introText: 'Cette page reprend les mêmes thèmes que la vue d’ensemble, avec un peu plus de contexte. Les images ci-dessous viennent de ton dossier local `erc/images`.',
+                back: 'Retour à la vue d’ensemble',
+                alsDoc: 'Ouvrir le chapitre ALS',
+                specialDoc: 'Ouvrir le chapitre spécial',
+                captions: {
+                    'als_algortihm.png': 'Vue ALS',
+                    'postreanimation algorithmus.png': 'Post-ROSC / post-réanimation',
+                    'algoritmo hiperK.jpg': 'Algorithme hyperkaliémie',
+                    'Hypothermia algorithm ERC.png': 'Algorithme hypothermie',
+                    'icpr.png': 'RCP intermittente en hypothermie',
+                    'Hyperthermia.png': 'Algorithme hyperthermie',
+                    'trauma arresst.png': 'Arrêt traumatique'
+                },
+                sections: {
+                    als: { tag: 'ERC 2025 ALS', title: 'Algorithme ALS', text: 'L’ALS reste la structure de base. Les repères principaux sont les cycles de 2 minutes, les contrôles de rythme propres et le traitement précoce des causes réversibles.', bullets: ['Choquable: après 3 chocs adrénaline 1 mg et amiodarone 300 mg; après 5 chocs encore 150 mg.', 'Non choquable: adrénaline le plus tôt possible après accès vasculaire puis toutes les 3-5 minutes.', 'Le ROSC n’est pas la fin: passer directement à la prise en charge post-ROSC, ECG 12 dérivations, oxygénation et recherche de cause.'] },
+                    causes: { tag: '4 H / 4 T', title: 'Causes réversibles', text: 'Les 4 H et 4 T sont la stratégie de recherche pendant chaque cycle de réanimation. Les énoncer à voix haute en équipe aide souvent.', bullets: ['Hypoxie et hypovolémie sont souvent les causes préhospitalières les plus rapidement corrigeables.', 'Hyperkaliémie, hypothermie et autres causes métaboliques doivent être cherchées activement.', 'Tamponnade, pneumothorax sous tension, thrombose et toxiques doivent être exclus de façon ciblée.'] },
+                    hyperk: { tag: 'Circonstance spéciale', title: 'Hyperkaliémie', text: 'En hyperkaliémie sévère, pense en trois étapes: stabiliser le myocarde, faire entrer le potassium dans la cellule, puis l’éliminer du corps.', bullets: ['Le chlorure de calcium protège le cœur en cas d’anomalies ECG.', 'Insuline plus glucose et salbutamol abaissent rapidement le potassium sérique.', 'En arrêt, l’ERC ajoute le bicarbonate et soutient une dialyse précoce ou l’ECPR selon le système local.'] },
+                    temp: { tag: 'Circonstance spéciale', title: 'Hypo- / Hyperthermie', text: 'Hypothermie et hyperthermie demandent des priorités différentes de l’ALS standard. C’est précisément là que les images ci-dessous sont utiles.', bullets: ['Hypothermie: sous 30 °C retenir les médicaments, jusqu’à 3 chocs pour FV/TV sans pouls, et viser un centre de réchauffement ECLS si possible.', 'La RCP intermittente reste une option exceptionnelle pour des secours difficiles avec température centrale très basse.', 'Hyperthermie: dans le coup de chaleur, le refroidissement actif rapide est la priorité; les antipyrétiques ne corrigent pas le problème.'] },
+                    trauma: { tag: 'Circonstance spéciale', title: 'Réanimation traumatique', text: 'Dans l’arrêt traumatique, la correction de la cause et l’intervention passent avant tout. Les compressions seules aident peu si la cause reste non corrigée.', bullets: ['Penser d’abord à l’hémorragie massive, au pneumothorax sous tension, à l’hypoxie et à la tamponnade.', 'Garrot, ceinture pelvienne, produits sanguins, décompression et transport rapide sont les gestes clés.', 'La thoracotomie n’a du sens que si le mécanisme, le délai et l’expertise correspondent vraiment.'] }
+                }
+            },
+            lb: {
+                title: 'ERC Erklärungen',
+                subtitle: 'Méi Detailer zu den Algorithmen an d’Biller aus dengem lokalen ERC-Ordner.',
+                introTitle: 'Detail-Säit',
+                introText: 'Dës Säit huet déi selwecht Themen ewéi d’Iwwersiicht, just mat e bësse méi Kontext. D’Biller hei drënner kommen aus dengem lokalen Dossier `erc/images`.',
+                back: 'Zeréck op d’Iwwersiicht',
+                alsDoc: 'ALS-Kapitel opmaachen',
+                specialDoc: 'Spezialkapitel opmaachen',
+                captions: {
+                    'als_algortihm.png': 'ALS-Iwwersiicht',
+                    'postreanimation algorithmus.png': 'Post-ROSC / Post-Reanimatioun',
+                    'algoritmo hiperK.jpg': 'Hyperkaliämie-Algorithmus',
+                    'Hypothermia algorithm ERC.png': 'Hypothermie-Algorithmus',
+                    'icpr.png': 'Intermittent CPR bei Hypothermie',
+                    'Hyperthermia.png': 'Hyperthermie-Algorithmus',
+                    'trauma arresst.png': 'Traumateschen Arrest'
+                },
+                sections: {
+                    als: { tag: 'ERC 2025 ALS', title: 'ALS-Algorithmus', text: 'ALS bleift d’Grondgerüst. Déi wichtegst Punkten si 2-Minutte-Zyklen, propper Rhythmuschecks a fréi Aarbecht un de reversiblen Ursaachen.', bullets: ['Schockbar: no 3 Schocken Adrenalin 1 mg an Amiodaron 300 mg; no 5 Schocken nach 150 mg.', 'Net schockbar: Adrenalin esou fréi wéi méiglech nom Zougang an duerno all 3-5 Minutten.', 'ROSC ass net d’Enn: direkt a Post-ROSC-Versuergung, 12-Kanal, Oxygenatioun an Ursaachesich goen.'] },
+                    causes: { tag: '4 H / 4 T', title: 'Reversibel Ursaachen', text: 'D’4 H an 4 T sinn däi Sichmuster an all Rea-Ronn. Et hëlleft dacks, se am Team bewosst haart duerchzegoen.', bullets: ['Hypoxie an Hypovolämie si prehospital dacks déi séierst Treffer.', 'Hyperkaliämie, Hypothermie an aner metabolesch Ursaache solle aktiv matgeduecht ginn.', 'Tamponade, Spannungspneumothorax, Thrombose an Toxinen gezielt ausschléissen.'] },
+                    hyperk: { tag: 'Spezialëmstand', title: 'Hyperkaliämie', text: 'Bei schwéierer Hyperkaliämie geet et ëm dräi Schrëtt: Myokard stabiliséieren, Kalium an d’Zell drécken a Kalium aus dem Kierper kréien.', bullets: ['Kalziumchlorid schützt d’Häerz bei ECG-Verännerungen.', 'Insulin plus Glukos a Salbutamol reduzéieren de Serumkalium séier.', 'Am Arrest ergänzt ERC Bikarbonat an denkt fréi un Dialys oder ECPR nom lokale System.'] },
+                    temp: { tag: 'Spezialëmstand', title: 'Hypo- / Hyperthermie', text: 'Hypothermie an Hyperthermie brauchen aner Prioritéite wéi Standard-ALS. Genee dofir si Biller hei drënner praktesch.', bullets: ['Hypothermie: ënner 30 °C Medikamenter zeréckhalen, bis zu 3 Schocke bei VF/pVT, a wa méiglech en ECLS-Rewarming-Zentrum ufueren.', 'Intermittent CPR ass just eng Spezial-Léisung fir schwéier Rettungssituatiounen mat ganz niddreger Kärtemperatur.', 'Hyperthermie: beim Heat Stroke zielt séier aktiv Ofkillung; Antipyretika léisen de Problem net.'] },
+                    trauma: { tag: 'Spezialëmstand', title: 'Traumatesch Reanimatioun', text: 'Bei der Trauma-Rea stinn d’Ursaach an d’Interventioun am Virdergrond. Nëmme Standard-Kompressioune bréngen dacks wéineg, wann d’Ursaach net korrigéiert gëtt.', bullets: ['Fir d’éischt un massiv Bluddung, Spannungspneumothorax, Hypoxie an Tamponade denken.', 'Tourniquet, Becke-Schlaang, Bluttprodukter, Entlaaschtung a séieren Transport si Kärschrëtt.', 'Thorakotomie mécht just Sënn wann Mechanismus, Zäitfënster an Expertise wierklech passen.'] }
+                }
+            }
+        };
+
+        function applyVisualSettings() {
+            if (window.ToolkitI18n && typeof window.ToolkitI18n.applyTranslations === 'function') {
+                window.ToolkitI18n.applyTranslations({ translations: { de: {}, en: {}, fr: {}, lb: {} } });
+            }
+        }
+
+        function currentLanguage() {
+            if (window.ToolkitI18n && typeof window.ToolkitI18n.getStoredLanguage === 'function') {
+                return window.ToolkitI18n.getStoredLanguage();
+            }
+            return 'de';
+        }
+
+        function openLightbox(src, alt) {
+            const lightbox = document.getElementById('imageLightbox');
+            const image = document.getElementById('lightboxImage');
+            const caption = document.getElementById('lightboxCaption');
+            if (!lightbox || !image || !caption) {
+                return;
+            }
+            image.src = src;
+            image.alt = alt;
+            caption.textContent = alt;
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('imageLightbox');
+            const image = document.getElementById('lightboxImage');
+            const caption = document.getElementById('lightboxCaption');
+            if (!lightbox || !image || !caption) {
+                return;
+            }
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            image.src = '';
+            image.alt = '';
+            caption.textContent = '';
+            document.body.style.overflow = '';
+        }
+
+        function bindImageClicks() {
+            document.querySelectorAll('.image-card img').forEach((image) => {
+                image.addEventListener('click', () => {
+                    openLightbox(image.getAttribute('src'), image.getAttribute('alt') || '');
+                });
+            });
+        }
+
+        function render() {
+            const language = currentLanguage();
+            const content = CONTENT[language] || CONTENT.de;
+            document.documentElement.lang = language;
+            document.title = `🚑 ${content.title}`;
+
+            const pageTitle = document.getElementById('pageTitle');
+            if (pageTitle) pageTitle.textContent = content.title;
+
+            const pageSubtitle = document.getElementById('pageSubtitle');
+            if (pageSubtitle) pageSubtitle.textContent = content.subtitle;
+
+
+            const backLink = document.getElementById('backLink');
+            if (backLink) {
+                backLink.textContent = content.back;
+                backLink.href = './index.html';
+            }
+
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks) {
+                navLinks.innerHTML = SECTIONS.map((section) => {
+                    const local = content.sections[section.id];
+                    return `<a href="#${section.id}">${local.title}</a>`;
+                }).join('');
+            }
+
+            const detailsGrid = document.getElementById('detailsGrid');
+            if (detailsGrid) {
+                detailsGrid.innerHTML = SECTIONS.map((section) => {
+                    const local = content.sections[section.id];
+                    const bullets = local.bullets.map((item) => `<li>${item}</li>`).join('');
+                    const images = section.images.map((file) => `
+                        <figure class="image-card">
+                            <img src="./images/${file}" alt="${content.captions[file]}" loading="lazy">
+                            <figcaption>${content.captions[file]}</figcaption>
+                        </figure>
+                    `).join('');
+
+                    return `
+                        <article id="${section.id}" class="detail-card">
+                            <div class="detail-head ${section.theme}">
+                                <div class="detail-tag">${local.tag}</div>
+                                <h2><i class="${section.icon}"></i><span>${local.title}</span></h2>
+                            </div>
+                            <div class="detail-body">
+                                <p>${local.text}</p>
+                                <ul>${bullets}</ul>
+                                ${images ? `<div class="image-grid">${images}</div>` : ''}
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+
+                bindImageClicks();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyVisualSettings();
+            render();
+
+            const lightboxClose = document.getElementById('lightboxClose');
+            if (lightboxClose) {
+                lightboxClose.addEventListener('click', closeLightbox);
+            }
+
+            const lightboxBackdrop = document.querySelector('#imageLightbox .lightbox__backdrop');
+            if (lightboxBackdrop) {
+                lightboxBackdrop.addEventListener('click', closeLightbox);
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

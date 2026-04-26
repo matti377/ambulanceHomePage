@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Mobile-first EMS report creator with ABCDE, SAMPLER, meds search, narrative generation, PDF export, and sharing.">
+    <title>EMS Report Creator</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HPF72B3MM7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HPF72B3MM7');
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root { --surface: rgba(255,255,255,.96); --soft: rgba(255,255,255,.88); --border: rgba(0,87,184,.16); --shadow: 0 16px 40px rgba(0,0,0,.18); --danger: #c1121f; --warn: #f4a261; --ok: #2a9d8f; --muted:#5f6c80; }
+        body.dark-theme { --surface: rgba(18,24,34,.96); --soft: rgba(29,35,48,.94); --border: rgba(120,160,255,.2); --muted:#c7d0de; }
+        .container { max-width: 1440px; margin: 0 auto; }
+        .page { display:grid; gap:18px; padding:20px 20px 110px; }
+        .panel, .sticky-bar, .sidebox, .card { background:var(--surface); color:var(--text-dark); border:1px solid var(--border); border-radius:20px; box-shadow:var(--shadow); }
+        .panel, .card, .sidebox { padding:18px; display:grid; gap:14px; }
+        .hero-row, .actions, .chips, .draft-actions, .share-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+        .title-wrap h1 { margin:0; font-size:clamp(1.9rem,3vw,2.7rem); color:var(--dark); text-shadow:none; }
+        .subtitle, .muted, .status { color:var(--muted); line-height:1.5; }
+        .chip, .toggle, .inline-btn, .quick-chip { border:1px solid var(--border); background:var(--soft); color:var(--text-dark); border-radius:999px; min-height:38px; padding:8px 14px; cursor:pointer; font:inherit; }
+        .inline-btn { border-radius:12px; }
+        .chip.warn { color:var(--warn); }
+        .chip.ok { color:var(--ok); }
+        .progress { height:12px; background:rgba(0,87,184,.1); border-radius:999px; overflow:hidden; }
+        .progress > span { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--secondary),var(--primary)); transition:width .2s ease; }
+        .layout { display:grid; gap:18px; grid-template-columns:minmax(0,1.45fr) minmax(320px,.8fr); }
+        .main { display:grid; gap:18px; }
+        .subcard { padding:14px; border:1px solid var(--border); border-radius:16px; background:var(--soft); display:grid; gap:12px; }
+        .card-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+        .card-head h2, .subcard h3 { margin:0; color:var(--dark); }
+        .grid { display:grid; gap:12px; grid-template-columns:repeat(12,minmax(0,1fr)); }
+        .span-12 { grid-column:span 12; } .span-8 { grid-column:span 8; } .span-6 { grid-column:span 6; } .span-4 { grid-column:span 4; } .span-3 { grid-column:span 3; }
+        .field { display:grid; gap:6px; min-width:0; }
+        label, legend { font-weight:700; color:var(--dark); }
+        input, textarea, select { width:100%; min-height:46px; border-radius:14px; border:1px solid rgba(0,87,184,.16); background:rgba(255,255,255,.82); color:#1d1d1d; padding:12px 14px; font:inherit; }
+        body.dark-theme input, body.dark-theme textarea, body.dark-theme select { background:rgba(16,21,31,.92); color:#f4f7fb; border-color:rgba(120,160,255,.2); }
+        textarea { resize:vertical; min-height:110px; }
+        fieldset { border:1px solid var(--border); border-radius:16px; padding:14px; margin:0; }
+        .checks { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+        .check { display:flex; gap:10px; align-items:center; border:1px solid var(--border); border-radius:14px; padding:10px 12px; background:var(--soft); }
+        .check input { width:auto; min-height:auto; }
+        .med-shell { position:relative; }
+        .med-results { position:absolute; top:calc(100% + 8px); left:0; right:0; display:none; max-height:320px; overflow:auto; border:1px solid var(--border); border-radius:16px; background:var(--surface); box-shadow:var(--shadow); z-index:20; }
+        .med-results.open { display:block; }
+        .med-result { width:100%; border:none; border-bottom:1px solid var(--border); background:transparent; color:var(--text-dark); text-align:left; padding:14px; cursor:pointer; }
+        .med-result:last-child { border-bottom:none; }
+        .med-result strong { display:block; margin-bottom:4px; }
+        .list { display:grid; gap:10px; }
+        .item, .warning { padding:14px; border:1px solid var(--border); border-radius:16px; background:var(--soft); display:grid; gap:10px; }
+        .warning { border-left:5px solid var(--warn); }
+        .warning.danger { border-left-color:var(--danger); } .warning.ok { border-left-color:var(--ok); }
+        .item-head { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+        .sidebox { position:sticky; top:18px; }
+        .preview-box { border:1px dashed var(--border); border-radius:16px; padding:16px; background:rgba(0,87,184,.04); min-height:180px; white-space:pre-wrap; line-height:1.6; }
+        .sticky-bar { position:fixed; left:max(12px,env(safe-area-inset-left)); right:max(12px,env(safe-area-inset-right)); bottom:max(12px,env(safe-area-inset-bottom)); z-index:30; padding:12px; display:grid; gap:10px; }
+        .sticky-grid { display:grid; gap:10px; grid-template-columns:repeat(4,minmax(0,1fr)); }
+        .sticky-grid button { min-height:52px; border:none; border-radius:14px; background:linear-gradient(135deg,var(--primary),#2167da); color:#fff; font:inherit; font-weight:700; cursor:pointer; }
+        .sticky-grid button.alt { background:rgba(0,87,184,.12); color:var(--dark); }
+        .sticky-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.94rem; }
+        .print-area { display:none; }
+        .compact-mode .card, .compact-mode .panel, .compact-mode .sidebox { padding:14px; }
+        .compact-mode textarea { min-height:88px; }
+        .print-preview-on .main, .print-preview-on .panel, .print-preview-on .sticky-bar { opacity:.38; }
+        .print-preview-on #previewPane { outline:2px solid rgba(230,57,70,.32); }
+        @media (max-width:1080px) { .layout { grid-template-columns:1fr; } .sidebox { position:static; } }
+        @media (max-width:720px) { .grid { grid-template-columns:repeat(6,minmax(0,1fr)); } .span-8, .span-6, .span-4, .span-3 { grid-column:span 6; } .sticky-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media print {
+            body { background:#fff !important; color:#111 !important; padding:0; }
+            .panel, .main, .sidebox, .sticky-bar { display:none !important; }
+            .print-area { display:block; }
+            .print-page { min-height:277mm; padding:16mm 14mm; display:grid; gap:10px; page-break-after:always; }
+            .print-page:last-child { page-break-after:auto; }
+            .print-block { border:1px solid #d0d7e3; border-radius:12px; padding:10px 12px; }
+            .print-head h1 { margin:0 0 8px; font-size:22px; color:#12345b; text-shadow:none; }
+            .print-grid { display:grid; gap:8px 14px; grid-template-columns:repeat(2,minmax(0,1fr)); }
+            .print-kv strong { display:block; margin-bottom:4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="page">
+            <header class="panel">
+                <div class="hero-row">
+                    <div class="title-wrap">
+                        <div class="chips">
+                            <span class="chip">BETA</span>
+                            <span class="chip ok" id="savePill">Autosave aktiv</span>
+                        </div>
+                        <h1>EMS Report Creator</h1>
+                        <p class="subtitle">Strukturierte Einsatzdokumentation mit ABCDE, SAMPLER, smarter Med-Suche, Narrative, PDF und Browser-Share.</p>
+                    </div>
+                    <div class="actions">
+                        <button type="button" class="toggle" id="darkToggle"><i class="fas fa-moon"></i> Dark</button>
+                        <button type="button" class="toggle" id="compactToggle"><i class="fas fa-minimize"></i> Compact</button>
+                        <button type="button" class="toggle" id="previewToggle"><i class="fas fa-eye"></i> Print Preview</button>
+                        <button type="button" class="toggle" id="resetBtn"><i class="fas fa-rotate-left"></i> Reset</button>
+                    </div>
+                </div>
+                <div class="hero-row">
+                    <div class="status" id="headerStatus">Case wird vorbereitet.</div>
+                    <div class="actions">
+                        <label class="chip"><input type="radio" name="mode" id="modeMission" checked> Mission</label>
+                        <label class="chip"><input type="radio" name="mode" id="modeHandover"> Handover</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="status" id="progressLabel">Fortschritt 0 / 8</div>
+                    <div class="progress"><span id="progressFill"></span></div>
+                </div>
+            </header>
+
+            <div class="layout">
+                <main class="main">
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>1. Einsatz und Patient</h2>
+                                <div class="muted">Basisdaten fuer Dokumentation, PDF und Handover.</div>
+                            </div>
+                            <div class="actions">
+                                <button type="button" class="inline-btn" id="caseIdBtn"><i class="fas fa-hashtag"></i> Case ID</button>
+                                <button type="button" class="inline-btn" data-now="incidentTime"><i class="fas fa-clock"></i> Jetzt</button>
+                            </div>
+                        </div>
+                        <div class="grid" data-progress-group>
+                            <div class="field span-4"><label for="caseId">Case ID</label><input id="caseId" required></div>
+                            <div class="field span-4"><label for="reportDate">Datum</label><input id="reportDate" type="date" required></div>
+                            <div class="field span-4"><label for="incidentTime">Einsatzzeit</label><input id="incidentTime" type="time" required></div>
+                            <div class="field span-6"><label for="unitName">Fahrzeug / Einheit</label><input id="unitName"></div>
+                            <div class="field span-6"><label for="crewNames">Besatzung</label><input id="crewNames"></div>
+                            <div class="field span-6"><label for="patientName">Patient</label><input id="patientName"></div>
+                            <div class="field span-3"><label for="patientAge">Alter</label><input id="patientAge" inputmode="numeric"></div>
+                            <div class="field span-3"><label for="patientSex">Geschlecht</label><select id="patientSex"><option value="">Auswaehlen</option><option>weiblich</option><option>maennlich</option><option>divers</option></select></div>
+                            <div class="field span-8"><label for="incidentLocation">Einsatzort</label><input id="incidentLocation"></div>
+                            <div class="field span-4"><label for="destination">Ziel</label><input id="destination"></div>
+                            <div class="field span-12"><label for="dispatchInfo">Meldebild / Dispatch</label><textarea id="dispatchInfo"></textarea></div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>2. Quick Helpers</h2>
+                                <div class="muted">Common complaints, schnelle Findings und Red-Flag-Monitoring.</div>
+                            </div>
+                        </div>
+                        <div class="grid">
+                            <div class="field span-12">
+                                <label>Common complaints</label>
+                                <div class="chips" data-target="symptoms">
+                                    <button type="button" class="quick-chip" data-chip="Thoraxschmerz">Chest pain</button>
+                                    <button type="button" class="quick-chip" data-chip="Dyspnoe">Dyspnea</button>
+                                    <button type="button" class="quick-chip" data-chip="Synkope">Syncope</button>
+                                    <button type="button" class="quick-chip" data-chip="Krampfanfall">Seizure</button>
+                                    <button type="button" class="quick-chip" data-chip="Trauma">Trauma</button>
+                                    <button type="button" class="quick-chip" data-chip="Allergische Reaktion">Allergic reaction</button>
+                                    <button type="button" class="quick-chip" data-chip="Abdominalschmerz">Abdominal pain</button>
+                                </div>
+                            </div>
+                            <div class="field span-12">
+                                <label>Warnings</label>
+                                <div class="list" id="warningList"><div class="muted">Noch keine Red Flags erkannt.</div></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>3. ABCDE</h2>
+                                <div class="muted">Alle relevanten Findings als notierbare Struktur.</div>
+                            </div>
+                        </div>
+                        <div class="subcard">
+                            <h3>A - Airway</h3>
+                            <div class="muted">Atemweg frei, bedroht, Stridor, Fremdkoerper, Erbrechen, Aspiration, Sicherung.</div>
+                            <div class="grid" data-progress-group>
+                                <div class="field span-12"><label>Quick findings</label><div class="chips" data-target="airwayFindings"><button type="button" class="quick-chip" data-chip="Atemweg frei">Atemweg frei</button><button type="button" class="quick-chip" data-chip="Atemweg bedroht">Atemweg bedroht</button><button type="button" class="quick-chip" data-chip="Stridor">Stridor</button><button type="button" class="quick-chip" data-chip="Erbrechen">Erbrechen</button><button type="button" class="quick-chip" data-chip="Aspirationsgefahr">Aspiration</button></div></div>
+                                <div class="field span-6"><label for="airwayStatus">Status</label><select id="airwayStatus"><option value="">Auswaehlen</option><option>frei</option><option>teilweise kompromittiert</option><option>kritisch bedroht</option><option>gesichert</option></select></div>
+                                <div class="field span-6"><label for="airwayInterventions">Massnahmen</label><input id="airwayInterventions"></div>
+                                <div class="field span-12"><label for="airwayFindings">Findings</label><textarea id="airwayFindings"></textarea></div>
+                            </div>
+                        </div>
+                        <div class="subcard">
+                            <h3>B - Breathing</h3>
+                            <div class="muted">AF, SpO2, Atemarbeit, Auskultation, Cyanose, O2, NIV.</div>
+                            <div class="grid" data-progress-group>
+                                <div class="field span-12"><label>Quick findings</label><div class="chips" data-target="breathingFindings"><button type="button" class="quick-chip" data-chip="beidseits belueftet">Beidseits belueftet</button><button type="button" class="quick-chip" data-chip="Tachypnoe">Tachypnoe</button><button type="button" class="quick-chip" data-chip="Dyspnoe">Dyspnoe</button><button type="button" class="quick-chip" data-chip="Rasselgeraesche">Rasselgeraesche</button><button type="button" class="quick-chip" data-chip="Giemen">Giemen</button><button type="button" class="quick-chip" data-chip="Zyanose">Zyanose</button></div></div>
+                                <div class="field span-3"><label for="respRate">AF /min</label><input id="respRate" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="spo2">SpO2 %</label><input id="spo2" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="oxygenFlow">O2 L/min</label><input id="oxygenFlow" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="etco2">etCO2</label><input id="etco2" inputmode="decimal"></div>
+                                <div class="field span-6"><label for="breathingStatus">Status</label><select id="breathingStatus"><option value="">Auswaehlen</option><option>stabil</option><option>kompensiert auffaellig</option><option>kritisch</option></select></div>
+                                <div class="field span-6"><label for="breathingInterventions">Massnahmen</label><input id="breathingInterventions"></div>
+                                <div class="field span-12"><label for="breathingFindings">Findings</label><textarea id="breathingFindings"></textarea></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="subcard">
+                            <h3>C - Circulation</h3>
+                            <div class="muted">Puls, RR, Haut, Rekap, Blutung, Schockzeichen, Zugang.</div>
+                            <div class="grid" data-progress-group>
+                                <div class="field span-12"><label>Quick findings</label><div class="chips" data-target="circulationFindings"><button type="button" class="quick-chip" data-chip="peripher warm">Peripher warm</button><button type="button" class="quick-chip" data-chip="kaltschweissig">Kaltschweissig</button><button type="button" class="quick-chip" data-chip="schwacher Radialispuls">Schwacher Puls</button><button type="button" class="quick-chip" data-chip="aktive Blutung">Blutung</button><button type="button" class="quick-chip" data-chip="Schockzeichen">Schockzeichen</button></div></div>
+                                <div class="field span-3"><label for="heartRate">HF /min</label><input id="heartRate" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="systolicBp">RR sys</label><input id="systolicBp" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="diastolicBp">RR dia</label><input id="diastolicBp" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="capRefill">Rekap sek</label><input id="capRefill" inputmode="decimal"></div>
+                                <div class="field span-6"><label for="circulationStatus">Status</label><select id="circulationStatus"><option value="">Auswaehlen</option><option>stabil</option><option>auffaellig</option><option>schockig</option></select></div>
+                                <div class="field span-6"><label for="circulationInterventions">Massnahmen</label><input id="circulationInterventions"></div>
+                                <div class="field span-12"><label for="circulationFindings">Findings</label><textarea id="circulationFindings"></textarea></div>
+                            </div>
+                        </div>
+                        <div class="subcard">
+                            <h3>D - Disability</h3>
+                            <div class="muted">GCS / AVPU, Pupillen, BZ, Schmerzen, Neurologie, Krampfanfall.</div>
+                            <div class="grid" data-progress-group>
+                                <div class="field span-12"><label>Quick findings</label><div class="chips" data-target="disabilityFindings"><button type="button" class="quick-chip" data-chip="GCS 15">GCS 15</button><button type="button" class="quick-chip" data-chip="desorientiert">Desorientiert</button><button type="button" class="quick-chip" data-chip="Pupillen isokor">Pupillen isokor</button><button type="button" class="quick-chip" data-chip="Fokalneurologie">Fokalneurologie</button><button type="button" class="quick-chip" data-chip="Krampfanfall">Krampfanfall</button></div></div>
+                                <div class="field span-3"><label for="gcs">GCS</label><input id="gcs" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="avpu">AVPU</label><select id="avpu"><option value="">Auswaehlen</option><option>A</option><option>V</option><option>P</option><option>U</option></select></div>
+                                <div class="field span-3"><label for="bloodGlucose">BZ mmol/L</label><input id="bloodGlucose" inputmode="decimal"></div>
+                                <div class="field span-3"><label for="painScore">NRS</label><input id="painScore" inputmode="decimal"></div>
+                                <div class="field span-6"><label for="disabilityStatus">Status</label><select id="disabilityStatus"><option value="">Auswaehlen</option><option>wach</option><option>eingetruebt</option><option>kritisch neurologisch</option></select></div>
+                                <div class="field span-6"><label for="pupils">Pupillen</label><input id="pupils" placeholder="isokor, anisokor ..."></div>
+                                <div class="field span-12"><label for="disabilityFindings">Findings</label><textarea id="disabilityFindings"></textarea></div>
+                            </div>
+                        </div>
+                        <div class="subcard">
+                            <h3>E - Exposure / Environment</h3>
+                            <div class="muted">Temperatur, Trauma-Check, Haut, Lagerung, Waermeerhalt, Umfeld.</div>
+                            <div class="grid" data-progress-group>
+                                <div class="field span-12"><label>Quick findings</label><div class="chips" data-target="exposureFindings"><button type="button" class="quick-chip" data-chip="keine weitere Verletzung">Keine weitere Verletzung</button><button type="button" class="quick-chip" data-chip="Hypothermie">Hypothermie</button><button type="button" class="quick-chip" data-chip="Exanthem">Exanthem</button><button type="button" class="quick-chip" data-chip="Sturz aus Hoehe">Sturzmechanismus</button><button type="button" class="quick-chip" data-chip="Waermeerhalt durchgefuehrt">Waermeerhalt</button></div></div>
+                                <div class="field span-4"><label for="temperature">Temp C</label><input id="temperature" inputmode="decimal"></div>
+                                <div class="field span-4"><label for="traumaCheck">Trauma</label><select id="traumaCheck"><option value="">Auswaehlen</option><option>kein Hinweis</option><option>leicht</option><option>relevant</option><option>polytrauma-verdaechtig</option></select></div>
+                                <div class="field span-4"><label for="environment">Umfeld</label><input id="environment"></div>
+                                <div class="field span-12"><label for="exposureFindings">Findings</label><textarea id="exposureFindings"></textarea></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>4. SAMPLER</h2>
+                                <div class="muted">Symptoms, Allergies, Medication, Past history, Last oral intake, Event, Risk factors.</div>
+                            </div>
+                        </div>
+                        <div class="grid" data-progress-group>
+                            <div class="field span-12"><label for="symptoms">S - Symptoms</label><textarea id="symptoms" required></textarea></div>
+                            <div class="field span-8"><label for="allergies">A - Allergies</label><input id="allergies"></div>
+                            <div class="field span-4"><label for="allergyQuickFill">Quick fill</label><select id="allergyQuickFill"><option value="">Auswaehlen</option><option>keine bekannt</option><option>Penicillin</option><option>Kontrastmittel</option><option>Latex</option><option>NSAID</option></select></div>
+                            <div class="field span-12">
+                                <label for="medSearch">M - Patient medication</label>
+                                <div class="med-shell">
+                                    <input id="medSearch" autocomplete="off" placeholder="Handelsname, Wirkstoff oder Wirkung suchen">
+                                    <div id="medResults" class="med-results" role="listbox" aria-label="Medication results"></div>
+                                </div>
+                                <div class="muted" id="medStatus">Lokale Medikamentendaten werden vorbereitet.</div>
+                            </div>
+                            <div class="field span-12"><div class="list" id="medList"><div class="muted">Noch keine Medikamente hinzugefuegt.</div></div></div>
+                            <div class="field span-12"><label for="pastMedicalHistory">P - Past medical history</label><textarea id="pastMedicalHistory"></textarea><div class="chips" data-target="pastMedicalHistory"><button type="button" class="quick-chip" data-chip="Hypertonie">Hypertonie</button><button type="button" class="quick-chip" data-chip="Diabetes mellitus">Diabetes</button><button type="button" class="quick-chip" data-chip="KHK">KHK</button><button type="button" class="quick-chip" data-chip="COPD">COPD</button><button type="button" class="quick-chip" data-chip="Epilepsie">Epilepsie</button></div></div>
+                            <div class="field span-4"><label for="lastOralTime">L - Letzte orale Aufnahme</label><input id="lastOralTime" type="time"></div>
+                            <div class="field span-4"><label for="lastOralType">Art</label><select id="lastOralType"><option value="">Auswaehlen</option><option>fest</option><option>fluessig</option><option>beides</option><option>unbekannt</option></select></div>
+                            <div class="field span-4"><label>&nbsp;</label><button type="button" class="inline-btn" data-now="lastOralTime"><i class="fas fa-clock"></i> Jetzt setzen</button></div>
+                            <div class="field span-12"><label for="eventDescription">E - Event</label><textarea id="eventDescription"></textarea></div>
+                            <div class="field span-12"><fieldset><legend>R - Risk factors</legend><div class="checks"><label class="check"><input type="checkbox" name="riskFactors" value="Alkohol"> Alkohol</label><label class="check"><input type="checkbox" name="riskFactors" value="Drogen"> Drogen</label><label class="check"><input type="checkbox" name="riskFactors" value="Schwangerschaft"> Pregnant</label><label class="check"><input type="checkbox" name="riskFactors" value="Rauchen"> Rauchen</label><label class="check"><input type="checkbox" name="riskFactors" value="Antikoagulation"> Antikoagulation</label><label class="check"><input type="checkbox" name="riskFactors" value="Infektkontakt"> Infektkontakt</label></div></fieldset></div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>5. Vitals, Exam and Treatment</h2>
+                                <div class="muted">Ergaenzende Untersuchung, EKG, Behandlungsschritte, Zeiten und Handover.</div>
+                            </div>
+                        </div>
+                        <div class="grid" data-progress-group>
+                            <div class="field span-3"><label for="ecgRhythm">EKG / Rhythmus</label><input id="ecgRhythm"></div>
+                            <div class="field span-3"><label for="temperatureRepeat">Temp Recheck C</label><input id="temperatureRepeat" inputmode="decimal"></div>
+                            <div class="field span-3"><label for="painLocation">Schmerzlokalisation</label><input id="painLocation"></div>
+                            <div class="field span-3"><label for="weightEstimate">Gewicht ca. kg</label><input id="weightEstimate" inputmode="decimal"></div>
+                            <div class="field span-12"><label for="physicalExam">Koerperliche Untersuchung</label><textarea id="physicalExam"></textarea></div>
+                            <div class="field span-12"><label>Treatments with times</label><div class="list" id="treatmentList"><div class="muted">Noch keine Massnahmen dokumentiert.</div></div><div class="actions"><button type="button" class="inline-btn" id="addTreatmentBtn"><i class="fas fa-plus"></i> Massnahme</button><button type="button" class="inline-btn" id="addTreatmentNowBtn"><i class="fas fa-bolt"></i> Mit aktueller Zeit</button></div></div>
+                            <div class="field span-6"><label for="transportMode">Transport</label><select id="transportMode"><option value="">Auswaehlen</option><option>kein Transport</option><option>sitzend</option><option>liegend</option><option>Notarztbegleitet</option></select></div>
+                            <div class="field span-6"><label for="handoverTo">Uebergabe an</label><input id="handoverTo"></div>
+                            <div class="field span-12"><label for="handoverNotes">Transport / Uebergabe</label><textarea id="handoverNotes"></textarea></div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-head">
+                            <div>
+                                <h2>6. Narrative and Export</h2>
+                                <div class="muted">Automatisch generierte Einsatzgeschichte fuer Bericht, Print und Share.</div>
+                            </div>
+                            <div class="actions"><button type="button" class="inline-btn" id="generateBtn"><i class="fas fa-file-pen"></i> Generate Narrative</button></div>
+                        </div>
+                        <div class="grid" data-progress-group>
+                            <div class="field span-12"><label for="narrative">Narrative</label><textarea id="narrative" style="min-height:220px;"></textarea></div>
+                            <div class="field span-12"><label for="summary">Short handover / share summary</label><textarea id="summary" style="min-height:140px;"></textarea></div>
+                            <div class="field span-12"><div class="share-actions"><button type="button" class="inline-btn" id="copyNarrativeBtn"><i class="fas fa-copy"></i> Copy report text</button><button type="button" class="inline-btn" id="copySummaryBtn"><i class="fas fa-copy"></i> Copy PDF filename / summary</button><button type="button" class="inline-btn" id="nativeShareBtn"><i class="fas fa-share-nodes"></i> Native share</button><button type="button" class="inline-btn" id="emailBtn"><i class="fas fa-envelope"></i> Email</button><button type="button" class="inline-btn" id="whatsappBtn"><i class="fab fa-whatsapp"></i> WhatsApp</button><button type="button" class="inline-btn" id="downloadPdfBtn"><i class="fas fa-file-pdf"></i> Download PDF</button><button type="button" class="inline-btn" id="printBtn"><i class="fas fa-print"></i> Print / Save PDF</button></div><div class="muted" id="shareStatus">Share-Fallbacks werden je nach Browser automatisch verwendet.</div></div>
+                        </div>
+                    </section>
+                </main>
+
+                <aside class="sidebox">
+                    <div class="card-head">
+                        <div><h2>Drafts</h2><div class="muted">Automatisch gespeichert in localStorage.</div></div>
+                        <div class="draft-actions"><button type="button" class="inline-btn" id="saveDraftBtn"><i class="fas fa-floppy-disk"></i> Save</button><button type="button" class="inline-btn" id="saveAsDraftBtn"><i class="fas fa-pen-to-square"></i> Save as</button></div>
+                    </div>
+                    <div class="status" id="autosaveStatus">Noch nicht gespeichert.</div>
+                    <div class="list" id="draftList"><div class="muted">Noch keine Drafts vorhanden.</div></div>
+                </aside>
+
+                <aside class="sidebox" id="previewPane">
+                    <div class="card-head">
+                        <div><h2>Live Preview</h2><div class="muted">Narrative, Handover und PDF-Header in kompakter Vorschau.</div></div>
+                    </div>
+                    <div class="preview-box" id="previewBox">Noch keine Vorschau verfuegbar.</div>
+                </aside>
+            </div>
+        </section>
+        <div class="sticky-bar">
+            <div class="sticky-grid">
+                <button type="button" class="alt" id="stickySaveBtn"><i class="fas fa-floppy-disk"></i> Save</button>
+                <button type="button" id="stickyGenerateBtn"><i class="fas fa-file-lines"></i> Generate</button>
+                <button type="button" id="stickyExportBtn"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                <button type="button" class="alt" id="stickyShareBtn"><i class="fas fa-share-nodes"></i> Share</button>
+            </div>
+            <div class="sticky-meta">
+                <span id="validationStatus">Pflichtfelder offen.</span>
+                <span id="medCacheStatus">Med-Cache leer.</span>
+            </div>
+        </div>
+        <div class="print-area" id="printArea"></div>
+    </div>
+    <script src="/style/i18n.js"></script>
+    <script>
+        (function () {
+            'use strict';
+            const STORAGE = { drafts: 'reportCreator.drafts', current: 'reportCreator.currentDraft', settings: 'reportCreator.settings', medCache: 'reportCreator.medCache' };
+            const AUTOSAVE_MS = 5000;
+            const REQUIRED = ['caseId', 'reportDate', 'incidentTime', 'symptoms'];
+            const FIELDS = ['caseId', 'reportDate', 'incidentTime', 'unitName', 'crewNames', 'patientName', 'patientAge', 'patientSex', 'incidentLocation', 'destination', 'dispatchInfo', 'airwayStatus', 'airwayInterventions', 'airwayFindings', 'breathingStatus', 'breathingInterventions', 'breathingFindings', 'respRate', 'spo2', 'oxygenFlow', 'etco2', 'circulationStatus', 'circulationInterventions', 'circulationFindings', 'heartRate', 'systolicBp', 'diastolicBp', 'capRefill', 'disabilityStatus', 'pupils', 'disabilityFindings', 'gcs', 'avpu', 'bloodGlucose', 'painScore', 'temperature', 'traumaCheck', 'environment', 'exposureFindings', 'symptoms', 'allergies', 'pastMedicalHistory', 'lastOralTime', 'lastOralType', 'eventDescription', 'ecgRhythm', 'temperatureRepeat', 'painLocation', 'weightEstimate', 'physicalExam', 'transportMode', 'handoverTo', 'handoverNotes', 'narrative', 'summary'];
+            const ids = {
+                body: document.body, progressFill: document.getElementById('progressFill'), progressLabel: document.getElementById('progressLabel'),
+                headerStatus: document.getElementById('headerStatus'), savePill: document.getElementById('savePill'), autosaveStatus: document.getElementById('autosaveStatus'),
+                draftList: document.getElementById('draftList'), warningList: document.getElementById('warningList'), previewBox: document.getElementById('previewBox'),
+                medStatus: document.getElementById('medStatus'), medCacheStatus: document.getElementById('medCacheStatus'), medResults: document.getElementById('medResults'),
+                medList: document.getElementById('medList'), treatmentList: document.getElementById('treatmentList'), validationStatus: document.getElementById('validationStatus'),
+                shareStatus: document.getElementById('shareStatus'), printArea: document.getElementById('printArea')
+            };
+            const state = { settings: { dark: localStorage.getItem('theme') === 'dark', compact: false, preview: false }, medDb: [], meds: [], treatments: [], drafts: [], currentDraftId: '', timer: null };
+            const effectMap = [
+                { terms: ['norepinephrine', 'noradren', 'epinephrine', 'adrenaline'], effect: 'vasopressor, catecholamine, Kreislaufstabilisierung' },
+                { terms: ['salbutamol', 'ipratropium', 'broncho'], effect: 'bronchodilatation, Atemwegsmedikation' },
+                { terms: ['dexameth', 'predni', 'hydrocort'], effect: 'corticosteroid, antientzuendlich' },
+                { terms: ['morph', 'fentanyl', 'tapentadol', 'tramadol'], effect: 'analgesie, opioid' },
+                { terms: ['metoclopramid', 'ondansetron'], effect: 'antiemetisch' },
+                { terms: ['insulin', 'metformin'], effect: 'antidiabetisch, blutzuckersenkend' }
+            ];
+            const parse = (v, fallback) => { try { return JSON.parse(v); } catch { return fallback; } };
+            const norm = (v) => String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+            const slug = (v) => norm(v).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            const esc = (v) => String(v || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            const nowTime = () => new Date().toTimeString().slice(0, 5);
+            const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+            const caseId = () => { const d = new Date(); return `LU-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}-${Math.floor(100 + Math.random() * 900)}`; };
+            function csv(text) {
+                const rows = []; let field = ''; let row = []; let quoted = false;
+                for (let i = 0; i < text.length; i += 1) {
+                    const c = text[i], n = text[i + 1];
+                    if (c === '"') { if (quoted && n === '"') { field += '"'; i += 1; } else { quoted = !quoted; } continue; }
+                    if (c === ',' && !quoted) { row.push(field); field = ''; continue; }
+                    if ((c === '\n' || c === '\r') && !quoted) { if (c === '\r' && n === '\n') { i += 1; } row.push(field); if (row.some((x) => x !== '')) { rows.push(row); } row = []; field = ''; continue; }
+                    field += c;
+                }
+                if (field.length || row.length) { row.push(field); if (row.some((x) => x !== '')) { rows.push(row); } }
+                return rows;
+            }
+            const effect = (text) => (effectMap.find((e) => e.terms.some((t) => text.includes(t))) || {}).effect || 'Wirkung nicht hinterlegt';
+            function medEntry(raw) {
+                const searchable = norm([raw.brandName, raw.substance, raw.effect, raw.atc, raw.source].join(' '));
+                return { id: raw.id, brandName: raw.brandName || 'Unbekannt', substance: raw.substance || '', effect: raw.effect || effect(searchable), atc: raw.atc || '', source: raw.source || '', searchable };
+            }
+            function score(query, entry) {
+                const q = norm(query); if (!q) { return 0; }
+                let s = 0;
+                [entry.brandName, entry.substance, entry.effect].map(norm).forEach((field) => {
+                    if (!field) { return; }
+                    if (field === q) { s += 140; }
+                    if (field.startsWith(q)) { s += 80; }
+                    if (field.includes(q)) { s += 55; }
+                    q.split(/\s+/).forEach((term) => { if (field.includes(term)) { s += 18; } });
+                });
+                return s;
+            }
+            function val(id) { return document.getElementById(id).value.trim(); }
+            function num(id) { const n = Number.parseFloat(val(id)); return Number.isFinite(n) ? n : null; }
+            function collect() {
+                const data = {}; FIELDS.forEach((id) => { data[id] = val(id); });
+                data.riskFactors = Array.from(document.querySelectorAll('input[name="riskFactors"]:checked')).map((el) => el.value);
+                data.meds = state.meds.slice(); data.treatments = state.treatments.slice(); data.mode = document.getElementById('modeMission').checked ? 'mission' : 'handover'; return data;
+            }
+            function fill(data) {
+                FIELDS.forEach((id) => { if (typeof data[id] === 'string') { document.getElementById(id).value = data[id]; } });
+                document.querySelectorAll('input[name="riskFactors"]').forEach((el) => { el.checked = Array.isArray(data.riskFactors) && data.riskFactors.includes(el.value); });
+                state.meds = Array.isArray(data.meds) ? data.meds : []; state.treatments = Array.isArray(data.treatments) ? data.treatments : [];
+                document.getElementById(data.mode === 'handover' ? 'modeHandover' : 'modeMission').checked = true;
+                renderMeds(); renderTreatments(); refresh();
+            }
+            function applySettings() { ids.body.classList.toggle('dark-theme', state.settings.dark); ids.body.classList.toggle('compact-mode', state.settings.compact); ids.body.classList.toggle('print-preview-on', state.settings.preview); localStorage.setItem('theme', state.settings.dark ? 'dark' : 'light'); localStorage.setItem(STORAGE.settings, JSON.stringify(state.settings)); }
+            function loadState() { state.drafts = parse(localStorage.getItem(STORAGE.drafts), []); state.currentDraftId = localStorage.getItem(STORAGE.current) || ''; state.settings = { ...state.settings, ...parse(localStorage.getItem(STORAGE.settings), {}) }; applySettings(); }
+            function saveDraft(promptName) {
+                const existing = state.drafts.find((d) => d.id === state.currentDraftId);
+                const defaultName = existing?.name || `${val('caseId') || 'Report'} Draft`;
+                const name = promptName ? window.prompt('Draft name', defaultName) : defaultName;
+                if (promptName && !name) { return; }
+                const payload = { id: state.currentDraftId || `draft-${Date.now()}`, name: name || defaultName, updatedAt: new Date().toISOString(), data: collect() };
+                state.currentDraftId = payload.id;
+                const idx = state.drafts.findIndex((d) => d.id === payload.id);
+                if (idx >= 0) { state.drafts.splice(idx, 1, payload); } else { state.drafts.push(payload); }
+                localStorage.setItem(STORAGE.drafts, JSON.stringify(state.drafts));
+                localStorage.setItem(STORAGE.current, state.currentDraftId);
+                ids.autosaveStatus.textContent = `Gespeichert: ${new Date(payload.updatedAt).toLocaleTimeString()}`;
+                ids.savePill.textContent = 'Gespeichert';
+                renderDrafts();
+            }
+            function autosave() { saveDraft(false); }
+            function schedule() { clearTimeout(state.timer); ids.savePill.textContent = 'Autosave ausstehend'; state.timer = setTimeout(() => { try { autosave(); } catch { ids.autosaveStatus.textContent = 'Autosave fehlgeschlagen.'; } }, AUTOSAVE_MS); }
+            function renderDrafts() {
+                if (!state.drafts.length) { ids.draftList.innerHTML = '<div class="muted">Noch keine Drafts vorhanden.</div>'; return; }
+                ids.draftList.innerHTML = state.drafts.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((draft) => `<div class="item"><div class="item-head"><div><strong>${esc(draft.name)}</strong><br><span class="muted">${esc(new Date(draft.updatedAt).toLocaleString())}</span></div>${draft.id === state.currentDraftId ? '<span class="chip ok">Aktiv</span>' : ''}</div><div class="draft-actions"><button type="button" class="inline-btn" data-load="${draft.id}">Load</button><button type="button" class="inline-btn" data-rename="${draft.id}">Rename</button><button type="button" class="inline-btn" data-delete="${draft.id}">Delete</button></div></div>`).join('');
+            }
+            function renderMeds() {
+                if (!state.meds.length) { ids.medList.innerHTML = '<div class="muted">Noch keine Medikamente hinzugefuegt.</div>'; return; }
+                ids.medList.innerHTML = state.meds.map((med, index) => `<div class="item"><div class="item-head"><div><strong>${esc(med.brandName)}</strong><br><span class="muted">${esc(med.substance || 'Kein Wirkstoff')}</span><br><span class="muted">${esc(med.effect || 'Wirkung offen')}</span></div><button type="button" class="inline-btn" data-removemed="${index}"><i class="fas fa-trash"></i></button></div></div>`).join('');
+            }
+            function renderTreatments() {
+                if (!state.treatments.length) { ids.treatmentList.innerHTML = '<div class="muted">Noch keine Massnahmen dokumentiert.</div>'; return; }
+                ids.treatmentList.innerHTML = state.treatments.map((t, i) => `<div class="item"><div class="grid"><div class="field span-3"><label>Zeit</label><input data-ttime="${i}" value="${esc(t.time)}"></div><div class="field span-9"><label>Massnahme</label><input data-ttext="${i}" value="${esc(t.text)}"></div></div><button type="button" class="inline-btn" data-removet="${i}"><i class="fas fa-trash"></i> Entfernen</button></div>`).join('');
+            }
+            function renderWarnings() {
+                const warnings = [];
+                const spo2 = num('spo2'), rr = num('systolicBp'), hr = num('heartRate'), gcs = num('gcs'), bz = num('bloodGlucose');
+                if (spo2 !== null && spo2 < 90) { warnings.push({ cls: 'danger', text: `SpO2 kritisch niedrig (${spo2} %).` }); } else if (spo2 !== null && spo2 < 94) { warnings.push({ cls: '', text: `SpO2 erniedrigt (${spo2} %).` }); }
+                if (rr !== null && rr < 90) { warnings.push({ cls: 'danger', text: `Systolischer RR kritisch niedrig (${rr}).` }); } else if (rr !== null && rr > 200) { warnings.push({ cls: 'danger', text: `Systolischer RR kritisch hoch (${rr}).` }); }
+                if (gcs !== null && gcs < 9) { warnings.push({ cls: 'danger', text: `GCS niedrig (${gcs}).` }); }
+                if (bz !== null && bz < 3.5) { warnings.push({ cls: 'danger', text: `Hypoglykaemie moeglich (${bz} mmol/L).` }); }
+                if (hr !== null && hr < 45) { warnings.push({ cls: '', text: `Bradykardie (${hr}/min).` }); } else if (hr !== null && hr > 130) { warnings.push({ cls: '', text: `Tachykardie (${hr}/min).` }); }
+                const allergy = norm(val('allergies')); const names = state.meds.map((m) => norm(`${m.brandName} ${m.substance}`));
+                if (allergy && names.some((n) => n && (allergy.includes(n) || n.split(/\s+/).some((part) => part.length > 4 && allergy.includes(part))))) { warnings.push({ cls: 'danger', text: 'Allergiewarnung: gewaehltes Medikament passt moeglicherweise zur dokumentierten Allergie.' }); }
+                const dup = names.filter((m, i) => m && names.indexOf(m) !== i); if (dup.length) { warnings.push({ cls: '', text: 'Doppelte Medikamenteneintraege erkannt.' }); }
+                warnings.push({ cls: 'ok', text: 'Drug interaction checker vorbereitet: Platzhalter fuer spaetere Erweiterung.' });
+                ids.warningList.innerHTML = warnings.map((w) => `<div class="warning ${w.cls}">${esc(w.text)}</div>`).join('');
+            }
+            function narrative() {
+                const d = collect(); const sections = [];
+                const patient = [d.patientName && `Patient ${d.patientName},`, d.patientAge && `${d.patientAge} Jahre,`, d.patientSex].filter(Boolean).join(' ').replace(/,\s*$/, '');
+                sections.push([d.reportDate && `Am ${d.reportDate}`, d.incidentTime && `um ${d.incidentTime} Uhr`, d.unitName && `wurde ${d.unitName}`, d.incidentLocation && `zum Einsatzort ${d.incidentLocation}`, d.dispatchInfo && `mit dem Meldebild "${d.dispatchInfo}" alarmiert.`].filter(Boolean).join(' '));
+                sections.push([patient && `${patient}.`, d.eventDescription && `Vor Ort zeigte sich folgendes Ereignis: ${d.eventDescription}.`, d.symptoms && `Leitsymptomatik: ${d.symptoms}.`].filter(Boolean).join(' '));
+                const abcde = [
+                    d.airwayStatus || d.airwayFindings || d.airwayInterventions ? `A: Atemweg ${d.airwayStatus || 'beurteilt'}, Befunde ${[d.airwayFindings, d.airwayInterventions && `Massnahmen: ${d.airwayInterventions}`].filter(Boolean).join(' ')}.` : '',
+                    d.breathingStatus || d.breathingFindings || d.respRate || d.spo2 ? `B: Atmung ${d.breathingStatus || 'beurteilt'}, AF ${d.respRate || '-'} /min, SpO2 ${d.spo2 || '-'} %, etCO2 ${d.etco2 || '-'}, O2 ${d.oxygenFlow || '-'} L/min. ${[d.breathingFindings, d.breathingInterventions && `Massnahmen: ${d.breathingInterventions}`].filter(Boolean).join(' ')}` : '',
+                    d.circulationStatus || d.circulationFindings || d.heartRate || d.systolicBp ? `C: Kreislauf ${d.circulationStatus || 'beurteilt'}, HF ${d.heartRate || '-'} /min, RR ${d.systolicBp || '-'} / ${d.diastolicBp || '-'} mmHg, Rekap ${d.capRefill || '-'} s. ${[d.circulationFindings, d.circulationInterventions && `Massnahmen: ${d.circulationInterventions}`].filter(Boolean).join(' ')}` : '',
+                    d.disabilityStatus || d.disabilityFindings || d.gcs || d.bloodGlucose ? `D: Neurologisch ${d.disabilityStatus || 'beurteilt'}, GCS ${d.gcs || '-'}, AVPU ${d.avpu || '-'}, Pupillen ${d.pupils || '-'}, BZ ${d.bloodGlucose || '-'} mmol/L, NRS ${d.painScore || '-'}. ${d.disabilityFindings || ''}` : '',
+                    d.traumaCheck || d.exposureFindings || d.temperature ? `E: Exposure mit Temperatur ${d.temperature || '-'} C, Traumaeinschaetzung ${d.traumaCheck || '-'}, Umfeld ${d.environment || '-'}. ${d.exposureFindings || ''}` : ''
+                ].filter(Boolean);
+                if (abcde.length) { sections.push(abcde.join(' ')); }
+                const sampler = [d.allergies && `Allergien: ${d.allergies}.`, state.meds.length && `Dauermedikation: ${state.meds.map((m) => m.brandName).join(', ')}.`, d.pastMedicalHistory && `Vorerkrankungen: ${d.pastMedicalHistory}.`, (d.lastOralTime || d.lastOralType) && `Letzte orale Aufnahme ${d.lastOralTime || 'unbekannt'} (${d.lastOralType || 'unbekannt'}).`, d.eventDescription && `Event: ${d.eventDescription}.`, d.riskFactors.length && `Risikofaktoren: ${d.riskFactors.join(', ')}.`].filter(Boolean);
+                if (sampler.length) { sections.push(`SAMPLER: ${sampler.join(' ')}`); }
+                if (d.physicalExam || d.ecgRhythm || d.weightEstimate) { sections.push([d.physicalExam && `Koerperliche Untersuchung: ${d.physicalExam}.`, d.ecgRhythm && `EKG/Rhythmus: ${d.ecgRhythm}.`, d.weightEstimate && `Gewicht ca. ${d.weightEstimate} kg.`].filter(Boolean).join(' ')); }
+                if (state.treatments.length) { sections.push(`Massnahmen: ${state.treatments.map((t) => `${t.time || '--:--'} ${t.text}`).join('; ')}.`); }
+                if (d.transportMode || d.destination || d.handoverTo || d.handoverNotes) { sections.push([d.transportMode && `Transport ${d.transportMode}.`, d.destination && `Ziel ${d.destination}.`, d.handoverTo && `Uebergabe an ${d.handoverTo}.`, d.handoverNotes && `${d.handoverNotes}.`].filter(Boolean).join(' ')); }
+                document.getElementById('narrative').value = sections.filter(Boolean).join('\n\n').trim();
+                document.getElementById('summary').value = [patient, d.symptoms, d.spo2 && `SpO2 ${d.spo2}%`, d.systolicBp && `RR ${d.systolicBp}/${d.diastolicBp || '?'}`, d.heartRate && `HF ${d.heartRate}`, d.gcs && `GCS ${d.gcs}`, d.destination && `Transport ${d.destination}`].filter(Boolean).join(' | ');
+                refresh();
+            }
+            function pdfFilename() { return `${slug(val('caseId') || 'report')}-${val('reportDate') || today()}.pdf`; }
+            function printHtml() {
+                const d = collect();
+                const sections = [
+                    { title: 'Patient and Mission', fields: { 'Case ID': d.caseId, 'Date': d.reportDate, 'Time': d.incidentTime, 'Unit': d.unitName, 'Crew': d.crewNames, 'Patient': d.patientName, 'Age / Sex': [d.patientAge, d.patientSex].filter(Boolean).join(' / '), 'Location': d.incidentLocation, 'Dispatch': d.dispatchInfo } },
+                    { title: 'ABCDE', fields: { 'Airway': [d.airwayStatus, d.airwayFindings, d.airwayInterventions].filter(Boolean).join(' | '), 'Breathing': [d.breathingStatus, `AF ${d.respRate || '-'}`, `SpO2 ${d.spo2 || '-'}`, d.breathingFindings].filter(Boolean).join(' | '), 'Circulation': [d.circulationStatus, `HF ${d.heartRate || '-'}`, `RR ${d.systolicBp || '-'}/${d.diastolicBp || '-'}`, d.circulationFindings].filter(Boolean).join(' | '), 'Disability': [d.disabilityStatus, `GCS ${d.gcs || '-'}`, `BZ ${d.bloodGlucose || '-'}`, d.disabilityFindings].filter(Boolean).join(' | '), 'Exposure': [d.traumaCheck, `Temp ${d.temperature || '-'}`, d.exposureFindings].filter(Boolean).join(' | ') } },
+                    { title: 'SAMPLER', fields: { 'Symptoms': d.symptoms, 'Allergies': d.allergies, 'Medication': state.meds.map((m) => m.brandName).join(', '), 'Past history': d.pastMedicalHistory, 'Last oral intake': [d.lastOralTime, d.lastOralType].filter(Boolean).join(' / '), 'Event': d.eventDescription, 'Risk factors': d.riskFactors.join(', ') } },
+                    { title: 'Treatment and Transport', fields: { 'Physical exam': d.physicalExam, 'ECG': d.ecgRhythm, 'Treatments': state.treatments.map((t) => `${t.time || '--:--'} ${t.text}`).join('; '), 'Transport': d.transportMode, 'Destination': d.destination, 'Handover': [d.handoverTo, d.handoverNotes].filter(Boolean).join(' | ') } },
+                    { title: 'Narrative', fields: { 'Narrative': d.narrative, 'Short handover': d.summary } }
+                ].filter((s) => Object.values(s.fields).some(Boolean));
+                return `<div class="print-page"><header class="print-block print-head"><h1>Ambulance Toolkit Luxembourg - EMS Report</h1><div class="print-grid"><div class="print-kv"><strong>Case ID</strong><div>${esc(d.caseId || '-')}</div></div><div class="print-kv"><strong>Date / Time</strong><div>${esc([d.reportDate, d.incidentTime].filter(Boolean).join(' '))}</div></div><div class="print-kv"><strong>Patient</strong><div>${esc([d.patientName, d.patientAge && `${d.patientAge}J`, d.patientSex].filter(Boolean).join(' / ') || '-')}</div></div><div class="print-kv"><strong>Destination</strong><div>${esc(d.destination || '-')}</div></div></div></header>${sections.map((s) => `<section class="print-block"><h2 style="margin:0 0 10px; font-size:18px; color:#12345b;">${esc(s.title)}</h2><div class="print-grid">${Object.entries(s.fields).filter(([, v]) => v).map(([k, v]) => `<div class="print-kv"><strong>${esc(k)}</strong><div>${esc(v)}</div></div>`).join('')}</div></section>`).join('')}</div>`;
+            }
+            function refresh() {
+                const groups = Array.from(document.querySelectorAll('[data-progress-group]'));
+                const done = groups.filter((g) => Array.from(g.querySelectorAll('input, textarea, select')).some((el) => el.type === 'checkbox' ? el.checked : el.value.trim())).length;
+                ids.progressLabel.textContent = `Fortschritt ${done} / ${groups.length}`;
+                ids.progressFill.style.width = `${Math.round((done / groups.length) * 100)}%`;
+                const missing = REQUIRED.filter((id) => !val(id));
+                ids.validationStatus.textContent = missing.length ? `Pflichtfelder offen: ${missing.join(', ')}` : 'Pflichtfelder komplett.';
+                ids.headerStatus.textContent = `${val('caseId') || 'ohne ID'} • ${val('destination') || 'ohne Ziel'} • ${document.getElementById('modeMission').checked ? 'Mission mode' : 'Handover mode'}`;
+                ids.previewBox.textContent = [`Case: ${val('caseId') || '-'}`, `Patient: ${[val('patientName'), val('patientAge') && `${val('patientAge')}J`, val('patientSex')].filter(Boolean).join(', ') || '-'}`, `Symptoms: ${val('symptoms') || '-'}`, `ABCDE: A ${val('airwayStatus') || '-'} | B SpO2 ${val('spo2') || '-'} / AF ${val('respRate') || '-'} | C RR ${val('systolicBp') || '-'}/${val('diastolicBp') || '-'} HF ${val('heartRate') || '-'} | D GCS ${val('gcs') || '-'} BZ ${val('bloodGlucose') || '-'} | E ${val('traumaCheck') || '-'}`, `Narrative: ${val('narrative') || '-'}`, `Handover: ${val('summary') || '-'}`].join('\n\n');
+                renderWarnings();
+            }
+            async function copyText(text, ok) { try { await navigator.clipboard.writeText(text); ids.shareStatus.textContent = ok; } catch { ids.shareStatus.textContent = 'Copy fehlgeschlagen.'; } }
+            async function downloadPdf() {
+                const wrap = document.createElement('div'); wrap.innerHTML = printHtml(); wrap.style.width = '210mm'; wrap.style.background = '#fff'; wrap.style.color = '#111';
+                if (window.html2pdf) {
+                    try {
+                        await html2pdf().set({ margin: [8, 8, 8, 8], filename: pdfFilename(), image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css', 'legacy'] } }).from(wrap).save();
+                        ids.shareStatus.textContent = 'PDF erstellt.';
+                        return;
+                    } catch { }
+                }
+                ids.shareStatus.textContent = 'PDF-Download nicht direkt verfuegbar. Print-Dialog wird geoeffnet.';
+                printReport();
+            }
+            function printReport() { ids.printArea.innerHTML = printHtml(); window.print(); }
+            async function nativeShare() {
+                const text = val('summary') || val('narrative');
+                if (!navigator.share) { ids.shareStatus.textContent = 'Native Share nicht verfuegbar. Bitte Email, WhatsApp oder Copy nutzen.'; return; }
+                try { await navigator.share({ title: `EMS Report ${val('caseId')}`.trim(), text: text || 'EMS report summary' }); ids.shareStatus.textContent = 'Native Share gestartet.'; } catch (e) { if (e && e.name !== 'AbortError') { ids.shareStatus.textContent = 'Native Share fehlgeschlagen.'; } }
+            }
+            function emailShare() { window.location.href = `mailto:?subject=${encodeURIComponent(`EMS Report ${val('caseId')}`.trim())}&body=${encodeURIComponent(val('narrative') || val('summary') || 'Report summary')}`; }
+            function whatsappShare() { window.open(`https://wa.me/?text=${encodeURIComponent(val('summary') || val('narrative') || 'EMS report summary')}`, '_blank', 'noopener'); }
+            async function loadMeds() {
+                const cached = parse(localStorage.getItem(STORAGE.medCache), []);
+                if (Array.isArray(cached) && cached.length) { state.medDb = cached; ids.medStatus.textContent = `${cached.length} Medikamente aus Cache verfuegbar.`; ids.medCacheStatus.textContent = `Med-Cache: ${cached.length} Eintraege`; }
+                try {
+                    const [luRes, inRes] = await Promise.all([fetch('/pages/medLookup/data/medsLU.csv'), fetch('/pages/medLookup/data/medsIn.csv')]);
+                    if (!luRes.ok || !inRes.ok) { throw new Error('source'); }
+                    const [luText, inText] = await Promise.all([luRes.text(), inRes.text()]);
+                    const luRows = csv(luText), inRows = csv(inText), entries = [], seen = new Set();
+                    luRows.forEach((row) => {
+                        const brandName = (row[1] || '').trim(); const substance = (row[4] || '').trim(); const formInfo = [row[2] || '', row[3] || ''].map((v) => v.trim()).filter(Boolean).join(' | ');
+                        if (!brandName && !substance) { return; }
+                        const entry = medEntry({ id: `lu-${slug(brandName)}-${slug(substance)}`, brandName, substance: [substance, formInfo].filter(Boolean).join(' | '), effect: effect(norm(`${brandName} ${substance}`)), atc: '', source: 'medsLU' });
+                        if (!seen.has(entry.id)) { seen.add(entry.id); entries.push(entry); }
+                    });
+                    inRows.slice(1).forEach((row) => {
+                        const brandName = (row[1] || '').trim(); const substance = (row[2] || '').trim(); const atc = (row[3] || '').trim();
+                        if (!brandName && !substance) { return; }
+                        const entry = medEntry({ id: `in-${slug(brandName)}-${slug(substance)}-${slug(atc)}`, brandName, substance, effect: effect(norm(`${brandName} ${substance} ${atc}`)), atc, source: 'medsIn' });
+                        if (!seen.has(entry.id)) { seen.add(entry.id); entries.push(entry); }
+                    });
+                    state.medDb = entries;
+                    localStorage.setItem(STORAGE.medCache, JSON.stringify(entries));
+                    ids.medStatus.textContent = `${entries.length} Medikamente geladen. Suche nach Handelsname, Wirkstoff oder Wirkung.`;
+                    ids.medCacheStatus.textContent = `Med-Cache: ${entries.length} Eintraege`;
+                } catch {
+                    ids.medStatus.textContent = state.medDb.length ? 'Live-Reload fehlgeschlagen, Cache wird weiter genutzt.' : 'Medikationsdaten konnten nicht geladen werden.';
+                    ids.medCacheStatus.textContent = state.medDb.length ? 'Med-Cache: Fallback aktiv' : 'Med-Cache: Fehler';
+                }
+            }
+            function showMedResults(query) {
+                if (!query.trim()) { ids.medResults.classList.remove('open'); ids.medResults.innerHTML = ''; return; }
+                const results = state.medDb.map((entry) => ({ entry, score: score(query, entry) })).filter((item) => item.score > 0).sort((a, b) => b.score - a.score).slice(0, 12);
+                if (!results.length) { ids.medResults.innerHTML = '<div class="muted" style="padding:14px;">Keine Treffer gefunden.</div>'; ids.medResults.classList.add('open'); return; }
+                ids.medResults.innerHTML = results.map(({ entry }) => `<button type="button" class="med-result" data-addmed="${esc(entry.id)}"><strong>${esc(entry.brandName)}</strong><span class="muted">${esc(entry.substance || 'Kein Wirkstoff')} • ${esc(entry.effect || 'Wirkung offen')}</span></button>`).join('');
+                ids.medResults.classList.add('open');
+            }
+            function addMed(id) { const med = state.medDb.find((m) => m.id === id); if (!med) { return; } state.meds.push({ brandName: med.brandName, substance: med.substance, effect: med.effect, atc: med.atc, source: med.source }); renderMeds(); refresh(); schedule(); document.getElementById('medSearch').value = ''; ids.medResults.classList.remove('open'); ids.medStatus.textContent = `${med.brandName} hinzugefuegt.`; }
+            function bind() {
+                FIELDS.forEach((id) => { const el = document.getElementById(id); el.addEventListener('input', () => { refresh(); schedule(); }); el.addEventListener('change', () => { refresh(); schedule(); }); });
+                document.querySelectorAll('input[name="riskFactors"]').forEach((el) => el.addEventListener('change', () => { refresh(); schedule(); }));
+                document.querySelectorAll('[data-chip]').forEach((button) => button.addEventListener('click', () => { const target = document.getElementById(button.closest('[data-target]').dataset.target); target.value = target.value.trim() ? `${target.value.trim()}, ${button.dataset.chip}` : button.dataset.chip; refresh(); schedule(); }));
+                document.querySelectorAll('[data-now]').forEach((button) => button.addEventListener('click', () => { const target = document.getElementById(button.dataset.now); target.value = nowTime(); refresh(); schedule(); }));
+                document.getElementById('allergyQuickFill').addEventListener('change', (e) => { if (!e.target.value) { return; } const allergies = document.getElementById('allergies'); allergies.value = allergies.value.trim() ? `${allergies.value.trim()}, ${e.target.value}` : e.target.value; e.target.value = ''; refresh(); schedule(); });
+                document.getElementById('caseIdBtn').addEventListener('click', () => { document.getElementById('caseId').value = caseId(); refresh(); schedule(); });
+                document.getElementById('darkToggle').addEventListener('click', () => { state.settings.dark = !state.settings.dark; applySettings(); });
+                document.getElementById('compactToggle').addEventListener('click', () => { state.settings.compact = !state.settings.compact; applySettings(); });
+                document.getElementById('previewToggle').addEventListener('click', () => { state.settings.preview = !state.settings.preview; applySettings(); });
+                document.getElementById('resetBtn').addEventListener('click', () => { if (!window.confirm('Formular und aktuelle Draft-Werte wirklich zuruecksetzen?')) { return; } FIELDS.forEach((id) => { document.getElementById(id).value = ''; }); document.querySelectorAll('input[name="riskFactors"]').forEach((el) => { el.checked = false; }); state.meds = []; state.treatments = []; document.getElementById('reportDate').value = today(); document.getElementById('incidentTime').value = nowTime(); document.getElementById('caseId').value = caseId(); renderMeds(); renderTreatments(); refresh(); schedule(); });
+                document.getElementById('medSearch').addEventListener('input', (e) => showMedResults(e.target.value));
+                document.getElementById('addTreatmentBtn').addEventListener('click', () => { state.treatments.push({ time: '', text: '' }); renderTreatments(); refresh(); schedule(); });
+                document.getElementById('addTreatmentNowBtn').addEventListener('click', () => { state.treatments.push({ time: nowTime(), text: '' }); renderTreatments(); refresh(); schedule(); });
+                document.getElementById('saveDraftBtn').addEventListener('click', () => saveDraft(false));
+                document.getElementById('saveAsDraftBtn').addEventListener('click', () => saveDraft(true));
+                document.getElementById('generateBtn').addEventListener('click', narrative);
+                document.getElementById('copyNarrativeBtn').addEventListener('click', () => copyText(val('narrative'), 'Report copied.'));
+                document.getElementById('copySummaryBtn').addEventListener('click', () => copyText(`${pdfFilename()}\n${val('summary')}`, 'Summary copied.'));
+                document.getElementById('nativeShareBtn').addEventListener('click', nativeShare);
+                document.getElementById('emailBtn').addEventListener('click', emailShare);
+                document.getElementById('whatsappBtn').addEventListener('click', whatsappShare);
+                document.getElementById('downloadPdfBtn').addEventListener('click', downloadPdf);
+                document.getElementById('printBtn').addEventListener('click', printReport);
+                document.getElementById('stickySaveBtn').addEventListener('click', () => saveDraft(false));
+                document.getElementById('stickyGenerateBtn').addEventListener('click', narrative);
+                document.getElementById('stickyExportBtn').addEventListener('click', downloadPdf);
+                document.getElementById('stickyShareBtn').addEventListener('click', nativeShare);
+                document.addEventListener('click', (e) => {
+                    const add = e.target.closest('[data-addmed]'); if (add) { addMed(add.dataset.addmed); return; }
+                    const rm = e.target.closest('[data-removemed]'); if (rm) { state.meds.splice(Number(rm.dataset.removemed), 1); renderMeds(); refresh(); schedule(); return; }
+                    const rt = e.target.closest('[data-removet]'); if (rt) { state.treatments.splice(Number(rt.dataset.removet), 1); renderTreatments(); refresh(); schedule(); return; }
+                    const load = e.target.closest('[data-load]'); if (load) { const draft = state.drafts.find((d) => d.id === load.dataset.load); if (draft) { state.currentDraftId = draft.id; localStorage.setItem(STORAGE.current, draft.id); fill(draft.data || {}); ids.autosaveStatus.textContent = `Draft geladen: ${draft.name}`; renderDrafts(); } return; }
+                    const rename = e.target.closest('[data-rename]'); if (rename) { const draft = state.drafts.find((d) => d.id === rename.dataset.rename); if (!draft) { return; } const next = window.prompt('Neuer Draft-Name', draft.name); if (!next) { return; } draft.name = next; draft.updatedAt = new Date().toISOString(); localStorage.setItem(STORAGE.drafts, JSON.stringify(state.drafts)); renderDrafts(); return; }
+                    const del = e.target.closest('[data-delete]'); if (del) { if (!window.confirm('Draft wirklich loeschen?')) { return; } state.drafts = state.drafts.filter((d) => d.id !== del.dataset.delete); localStorage.setItem(STORAGE.drafts, JSON.stringify(state.drafts)); if (state.currentDraftId === del.dataset.delete) { state.currentDraftId = ''; localStorage.removeItem(STORAGE.current); } renderDrafts(); return; }
+                    if (!e.target.closest('.med-shell')) { ids.medResults.classList.remove('open'); }
+                });
+                document.getElementById('treatmentList').addEventListener('input', (e) => { const ti = e.target.dataset.ttime, tx = e.target.dataset.ttext; if (ti !== undefined) { state.treatments[Number(ti)].time = e.target.value.trim(); } if (tx !== undefined) { state.treatments[Number(tx)].text = e.target.value.trim(); } refresh(); schedule(); });
+            }
+            function init() {
+                ToolkitI18n.applyTranslations({});
+                loadState();
+                if (!val('reportDate')) { document.getElementById('reportDate').value = today(); }
+                if (!val('incidentTime')) { document.getElementById('incidentTime').value = nowTime(); }
+                if (!val('caseId')) { document.getElementById('caseId').value = caseId(); }
+                bind(); renderDrafts(); renderMeds(); renderTreatments(); refresh(); loadMeds();
+                if (state.currentDraftId) { const current = state.drafts.find((d) => d.id === state.currentDraftId); if (current) { fill(current.data || {}); } }
+            }
+            init();
+        })();
+    </script>
+</body>
+</html>

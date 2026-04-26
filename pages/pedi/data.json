@@ -1,0 +1,152 @@
+[
+  {
+    "age": 0,
+    "range": "0",
+    "weight": 3.5,
+    "respirationRate": "30-60",
+    "heartRate": "100-190",
+    "bloodPressureSyst": "65-95",
+    "MAP": 50,
+    "minMAP": 40
+  },
+  {
+    "age": 0,
+    "range": "6 months",
+    "weight": 7,
+    "respirationRate": "25-50",
+    "heartRate": "100-180",
+    "bloodPressureSyst": "70-95",
+    "MAP": 50,
+    "minMAP": 40
+  },
+  {
+    "age": 0,
+    "range": "3 months",
+    "weight": 5,
+    "respirationRate": "25-60",
+    "heartRate": "100-180",
+    "bloodPressureSyst": "50-80",
+    "MAP": 45,
+    "minMAP": 35
+  },
+  {
+    "age": 0,
+    "range": "9 months",
+    "weight": 9,
+    "respirationRate": "20-50",
+    "heartRate": "100-170",
+    "bloodPressureSyst": "70-95",
+    "MAP": 50,
+    "minMAP": 40
+  },
+  {
+    "age": 1,
+    "range": "1",
+    "weight": 10,
+    "respirationRate": "20-50",
+    "heartRate": "100-170",
+    "bloodPressureSyst": "70-100",
+    "MAP": 55,
+    "minMAP": 40
+  },
+  {
+    "age": 2,
+    "range": "2",
+    "weight": 12,
+    "respirationRate": "18-40",
+    "heartRate": "90-160",
+    "bloodPressureSyst": "75-100",
+    "MAP": 58,
+    "minMAP": 48
+  },
+  {
+    "age": 3,
+    "range": "3",
+    "weight": 14,
+    "respirationRate": "18-35",
+    "heartRate": "80-140",
+    "bloodPressureSyst": "75-100",
+    "MAP": 60,
+    "minMAP": 50
+  },
+  {
+    "age": 4,
+    "range": "4",
+    "weight": 16,
+    "respirationRate": "18-35",
+    "heartRate": "80-140",
+    "bloodPressureSyst": "80-110",
+    "MAP": 61,
+    "minMAP": 51
+  },
+  {
+    "age": 5,
+    "range": "5",
+    "weight": 18,
+    "respirationRate": "17-30",
+    "heartRate": "70-140",
+    "bloodPressureSyst": "80-110",
+    "MAP": 62,
+    "minMAP": 52
+  },
+  {
+    "age": 6,
+    "range": "6",
+    "weight": 20,
+    "respirationRate": "17-30",
+    "heartRate": "60-120",
+    "bloodPressureSyst": "80-110",
+    "MAP": 64,
+    "minMAP": 54
+  },
+  {
+    "age": 7,
+    "range": "7",
+    "weight": 24,
+    "respirationRate": "15-25",
+    "heartRate": "60-120",
+    "bloodPressureSyst": "85-115",
+    "MAP": 65,
+    "minMAP": 55
+  },
+  {
+    "age": 8,
+    "range": "8",
+    "weight": 26,
+    "respirationRate": "15-25",
+    "heartRate": "60-120",
+    "bloodPressureSyst": "85-115",
+    "MAP": 67,
+    "minMAP": 57
+  },
+  {
+    "age": 9,
+    "range": "9-10",
+    "weight": 33,
+    "respirationRate": "15-25",
+    "heartRate": "60-120",
+    "bloodPressureSyst": "85-120",
+    "MAP": 70,
+    "minMAP": 60
+  },
+  {
+    "age": 11,
+    "range": "11-13",
+    "weight": 40,
+    "respirationRate": "15-20",
+    "heartRate": "60-110",
+    "bloodPressureSyst": "90-120",
+    "MAP": 73,
+    "minMAP": 63
+  },
+  {
+    "age": 14,
+    "range": "14-15",
+    "weight": 50,
+    "respirationRate": "12-20",
+    "heartRate": "60-100",
+    "bloodPressureSyst": "90-130",
+    "MAP": 80,
+    "minMAP": 65
+  }
+]

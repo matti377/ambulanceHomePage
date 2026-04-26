@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "default": {
+      "de": {
+        "firstHtml": "<strong>Hinweis:</strong> Diese Website und die bereitgestellten Dokumente dienen nur zu Informationszwecken. Der Autor übernimmt keine Verantwortung für Fehler, Auslassungen oder Folgen, die sich aus der Nutzung dieser Informationen ergeben. Bitte stets die offiziellen Protokolle des CGDIS konsultieren.",
+        "lastText": "© 2026 Ambulance Toolkit Luxemburg | Steht nicht in Verbindung zum CGDIS"
+      },
+      "en": {
+        "firstHtml": "<strong>Note:</strong> This website and the provided documents are for informational purposes only. The author accepts no responsibility for errors, omissions, or consequences resulting from the use of this information. Always consult the official CGDIS protocols.",
+        "lastText": "© 2026 Ambulance Toolkit Luxembourg | Not affiliated with CGDIS"
+      },
+      "fr": {
+        "firstHtml": "<strong>Remarque:</strong> Ce site web et les documents fournis sont uniquement a titre informatif. L'auteur décline toute responsabilité en cas d'erreurs, d'omissions ou de conséquences liées a l'utilisation de ces informations. Consultez toujours les protocoles officiels du CGDIS.",
+        "lastText": "© 2026 Ambulance Toolkit Luxembourg | Sans lien avec le CGDIS"
+      },
+      "lb": {
+        "firstHtml": "<strong>Hiweis:</strong> Dës Websäit an d'Dokumenter déngen nëmmen Informatiounszwecker. Den Auteur iwwerhëlt keng Verantwortung fir Feeler oder Konsequenzen duerch d'Notzung vun dësen Informatiounen. Kuckt ëmmer déi offiziell CGDIS-Protokoller.",
+        "lastText": "© 2026 Ambulance Toolkit Lëtzebuerg | Näischt mam CGDIS ze dinn"
+      }
+    }
+  }
+}
