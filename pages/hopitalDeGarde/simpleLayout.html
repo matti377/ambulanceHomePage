@@ -45,6 +45,7 @@
 
     .monitor-shell {
       width: min(100%, 460px);
+      max-width: 100%;
       border-radius: 22px;
       background: linear-gradient(180deg, #275de5 0%, #0b2788 100%);
       padding: 10px;
@@ -133,6 +134,77 @@
       color: rgba(255, 255, 255, 0.92);
       font-size: 0.78rem;
       text-align: center;
+    }
+
+    @media (min-width: 900px) {
+      body {
+        padding: 10px;
+      }
+
+      .monitor-shell {
+        width: min(100%, 1400px);
+      }
+
+      .hospital-list {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .hospital-card {
+        min-height: 120px;
+      }
+    }
+
+    @media (min-width: 700px) and (max-height: 420px) {
+      body {
+        padding: 6px;
+        align-items: stretch;
+      }
+
+      .monitor-shell {
+        width: 100%;
+        border-radius: 16px;
+        padding: 8px;
+      }
+
+      .monitor-screen {
+        padding: 8px;
+      }
+
+      .monitor-title {
+        margin-bottom: 8px;
+        padding: 10px 14px;
+        font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+      }
+
+      .hospital-list {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .hospital-card {
+        min-height: 72px;
+        padding: 10px 8px;
+      }
+
+      .hospital-card__content {
+        gap: 4px;
+      }
+
+      .hospital-card__code {
+        font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+      }
+
+      .hospital-card__status {
+        font-size: clamp(0.82rem, 1.5vw, 1rem);
+      }
+
+      .monitor-footer {
+        margin-top: 6px;
+        font-size: 0.7rem;
+      }
     }
 
     @media (max-width: 480px) {
