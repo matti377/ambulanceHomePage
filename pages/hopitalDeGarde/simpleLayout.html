@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Hôpital de Garde Monitor</title>
+  <style>
+    :root {
+      --monitor-blue: #1147d9;
+      --monitor-blue-dark: #0a2d8c;
+      --monitor-panel: #ffffff;
+      --card-closed-bg: linear-gradient(180deg, #f7f7f7 0%, #ececec 100%);
+      --card-closed-text: #1f2937;
+      --card-active-bg: linear-gradient(180deg, #154ff3 0%, #0a2f9f 100%);
+      --card-active-text: #ffffff;
+      --shadow-soft: 0 14px 28px rgba(10, 33, 104, 0.16);
+      --shadow-card: 0 8px 14px rgba(10, 33, 104, 0.1);
+      --radius-panel: 20px;
+      --radius-card: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #2b62ff 0%, #0c2d9b 36%, #071958 100%);
+      color: #0f172a;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .monitor-shell {
+      width: min(100%, 460px);
+      border-radius: 22px;
+      background: linear-gradient(180deg, #275de5 0%, #0b2788 100%);
+      padding: 10px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .monitor-screen {
+      background: var(--monitor-panel);
+      border-radius: var(--radius-panel);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .monitor-title {
+      margin: 0 0 10px;
+      background: linear-gradient(180deg, #0b267d 0%, #081b5d 100%);
+      color: #ffffff;
+      text-align: center;
+      font-size: clamp(1.35rem, 4vw, 1.8rem);
+      line-height: 1.1;
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .hospital-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 4px 2px 2px;
+    }
+
+    .hospital-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 92px;
+      border-radius: var(--radius-card);
+      text-decoration: none;
+      text-align: center;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+
+    .hospital-card:hover,
+    .hospital-card:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 24px rgba(10, 33, 104, 0.18);
+      outline: none;
+      filter: saturate(1.08);
+    }
+
+    .hospital-card--closed {
+      background: var(--card-closed-bg);
+      color: var(--card-closed-text);
+    }
+
+    .hospital-card--active {
+      background: var(--card-active-bg);
+      color: var(--card-active-text);
+    }
+
+    .hospital-card__content {
+      display: grid;
+      gap: 6px;
+    }
+
+    .hospital-card__code {
+      font-size: clamp(1.8rem, 6vw, 2.3rem);
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .hospital-card__status {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .monitor-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .monitor-shell {
+        padding: 10px;
+      }
+
+      .monitor-screen {
+        padding: 10px;
+      }
+
+      .hospital-card {
+        min-height: 84px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="monitor-shell" aria-label="Monitor hôpital de garde" role="main">
+    <div class="monitor-screen">
+      <h1 class="monitor-title" id="monitorTitle">Hôpital de Garde</h1>
+
+      <div class="hospital-list">
+        <a id="card-chl" class="hospital-card hospital-card--closed" href="../phoneNumbers/index.html">
+          <span class="hospital-card__content">
+            <span class="hospital-card__code">CHL</span>
+            <span class="hospital-card__status">geschlossen</span>
+          </span>
+        </a>
+
+        <a id="card-hoki" class="hospital-card hospital-card--closed" href="../phoneNumbers/index.html">
+          <span class="hospital-card__content">
+            <span class="hospital-card__code">HOKI</span>
+            <span class="hospital-card__status">geschlossen</span>
+          </span>
+        </a>
+
+        <a id="card-chdn" class="hospital-card hospital-card--active" href="../phoneNumbers/index.html">
+          <span class="hospital-card__content">
+            <span class="hospital-card__code">CHDN</span>
+            <span class="hospital-card__status">24/7</span>
+          </span>
+        </a>
+
+        <a id="card-chem" class="hospital-card hospital-card--active" href="../phoneNumbers/index.html">
+          <span class="hospital-card__content">
+            <span class="hospital-card__code">CHEM</span>
+            <span class="hospital-card__status">24/7</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="monitor-footer" id="monitorFooter">Luxembourg duty monitor</div>
+  </div>
+
+  <script>
+    const DEFAULT_LINKS = {
+      chl: "../phoneNumbers/index.html",
+      hoki: "../phoneNumbers/index.html",
+      chdn: "../phoneNumbers/index.html",
+      chem: "../phoneNumbers/index.html"
+    };
+    const RTL_GUARD_URL = "https://www.rtl.lu/info/services-de-garde";
+    const RTL_GUARD_PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(RTL_GUARD_URL)}`;
+    const RTL_CACHE_MS = 60 * 1000;
+
+    const cards = {
+      chl: document.getElementById("card-chl"),
+      hoki: document.getElementById("card-hoki"),
+      chdn: document.getElementById("card-chdn"),
+      chem: document.getElementById("card-chem")
+    };
+    const monitorFooter = document.getElementById("monitorFooter");
+    let rtlStateCache = null;
+    let rtlStateFetchedAt = 0;
+    let rtlStatePromise = null;
+
+    const params = new URLSearchParams(window.location.search);
+    const linkTarget = params.get("target") || "_top";
+    const title = params.get("title");
+
+    if (title) {
+      document.getElementById("monitorTitle").textContent = title;
+    }
+
+    Object.entries(cards).forEach(([key, element]) => {
+      element.href = params.get(`${key}Href`) || DEFAULT_LINKS[key];
+      element.target = linkTarget;
+      if (linkTarget === "_blank") {
+        element.rel = "noopener noreferrer";
+      }
+    });
+
+    function getLuxembourgSnapshot() {
+      const formatter = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Luxembourg",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      });
+
+      const parts = Object.fromEntries(
+        formatter
+          .formatToParts(new Date())
+          .filter((part) => part.type !== "literal")
+          .map((part) => [part.type, part.value])
+      );
+
+      return {
+        date: new Date(
+          Number(parts.year),
+          Number(parts.month) - 1,
+          Number(parts.day),
+          Number(parts.hour),
+          Number(parts.minute),
+          Number(parts.second)
+        ),
+        dateLabel: `${parts.day}.${parts.month}.${parts.year}`
+      };
+    }
+
+    function normalizeText(value) {
+      return (value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function isHospitalOpen(timesText, currentDate) {
+      const normalized = normalizeText(timesText).toLowerCase();
+      if (!normalized) {
+        return false;
+      }
+
+      if (normalized.includes("24/24")) {
+        return true;
+      }
+
+      const match = normalized.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
+      if (!match) {
+        return false;
+      }
+
+      const startMinutes = Number(match[1]) * 60 + Number(match[2]);
+      const endHour = Number(match[3]);
+      const endMinutes = endHour * 60 + Number(match[4]);
+      const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
+      const safeEndMinutes = endHour === 24 ? 1440 : endMinutes;
+
+      if (safeEndMinutes > startMinutes) {
+        return currentMinutes >= startMinutes && currentMinutes < safeEndMinutes;
+      }
+
+      return currentMinutes >= startMinutes || currentMinutes < safeEndMinutes;
+    }
+
+    function createClosedState() {
+      return { status: "geschlossen", mode: "closed" };
+    }
+
+    function createOpenState() {
+      return { status: "geöffnet", mode: "active" };
+    }
+
+    function createRtlTimedFallbackState(currentDate) {
+      return {
+        chl: isHospitalOpen("07:00:00 - 24:00:00", currentDate) ? createOpenState() : createClosedState(),
+        hoki: isHospitalOpen("00:00:00 - 17:00:00", currentDate) ? createOpenState() : createClosedState(),
+        chem: createOpenState(),
+        chdn: createOpenState(),
+        footer: "RTL Zeiten"
+      };
+    }
+
+    function extractZoneHtml(html, zoneLabel) {
+      const escapedLabel = zoneLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const startPattern = new RegExp(`<h2[^>]*>${escapedLabel}<\\/h2>`, "i");
+      const startMatch = html.match(startPattern);
+      if (!startMatch || startMatch.index === undefined) {
+        return "";
+      }
+
+      const startIndex = startMatch.index + startMatch[0].length;
+      const rest = html.slice(startIndex);
+      const nextHeadingIndex = rest.search(/<h2[^>]*>/i);
+      return nextHeadingIndex >= 0 ? rest.slice(0, nextHeadingIndex) : rest;
+    }
+
+    function parseStateFromZoneHtml(zoneHtml, hospitalMatchers, currentDate) {
+      const fallbackState = createClosedState();
+
+      for (const matcher of hospitalMatchers) {
+        const position = zoneHtml.indexOf(matcher);
+        if (position === -1) {
+          continue;
+        }
+
+        const slice = zoneHtml.slice(position, position + 1200);
+        const noTags = normalizeText(slice.replace(/<[^>]+>/g, " "));
+        return isHospitalOpen(noTags, currentDate) ? createOpenState() : createClosedState();
+      }
+
+      return fallbackState;
+    }
+
+    function findZoneList(doc, zoneLabel) {
+      const headings = Array.from(doc.querySelectorAll("h2"));
+      const heading = headings.find((element) => normalizeText(element.textContent).toLowerCase() === zoneLabel);
+      if (!heading) {
+        return null;
+      }
+
+      let next = heading.nextElementSibling;
+      while (next && next.tagName !== "UL") {
+        next = next.nextElementSibling;
+      }
+      return next;
+    }
+
+    function parseRtlHospitalState(html, currentDate) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const centreList = findZoneList(doc, "zentrum");
+      const southList = findZoneList(doc, "süden");
+      const northList = findZoneList(doc, "norden");
+
+      const state = {
+        chl: createClosedState(),
+        hoki: createClosedState(),
+        chem: createOpenState(),
+        chdn: createOpenState(),
+        footer: "RTL.lu"
+      };
+
+      if (centreList) {
+        Array.from(centreList.querySelectorAll("li")).forEach((item) => {
+          const title = normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent);
+          const times = normalizeText(item.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
+          const isOpen = isHospitalOpen(times, currentDate);
+
+          if (title.includes("Centre Hospitalier de Luxembourg (CHL)") && !title.includes("Kannerklinik")) {
+            state.chl = isOpen ? createOpenState() : createClosedState();
+          }
+
+          if (title.includes("Hôpital Kirchberg") || title.includes("(HK)")) {
+            state.hoki = isOpen ? createOpenState() : createClosedState();
+          }
+        });
+      }
+
+      if (state.chl.mode === "closed" && state.hoki.mode === "closed") {
+        const centreHtml = extractZoneHtml(html, "Zentrum");
+        state.chl = parseStateFromZoneHtml(
+          centreHtml,
+          ["Centre Hospitalier de Luxembourg (CHL)", "Centre Hospitalier de Luxembourg \\(CHL\\)".replace(/\\/g, "")],
+          currentDate
+        );
+        state.hoki = parseStateFromZoneHtml(
+          centreHtml,
+          ["Hôpital Kirchberg", "Hôpitaux Robert Schuman - Hôpital Kirchberg (HK)", "(HK) - Urgences"],
+          currentDate
+        );
+      }
+
+      if (southList) {
+        const chemUrgence = Array.from(southList.querySelectorAll("li")).find((item) =>
+          normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent).includes("Site Esch - Urgences")
+        );
+        if (chemUrgence) {
+          const times = normalizeText(chemUrgence.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
+          state.chem = isHospitalOpen(times, currentDate) ? createOpenState() : createClosedState();
+        }
+      }
+
+      if (state.chem.mode === "closed") {
+        const southHtml = extractZoneHtml(html, "Süden");
+        state.chem = parseStateFromZoneHtml(
+          southHtml,
+          ["Centre Hospitalier Emile Mayrisch - Site Esch - Urgences"],
+          currentDate
+        );
+      }
+
+      if (northList) {
+        const chdnUrgence = Array.from(northList.querySelectorAll("li")).find((item) =>
+          normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent).includes("Site Ettelbruck - Urgences")
+        );
+        if (chdnUrgence) {
+          const times = normalizeText(chdnUrgence.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
+          state.chdn = isHospitalOpen(times, currentDate) ? createOpenState() : createClosedState();
+        }
+      }
+
+      if (state.chdn.mode === "closed") {
+        const northHtml = extractZoneHtml(html, "Norden");
+        state.chdn = parseStateFromZoneHtml(
+          northHtml,
+          ["Centre Hospitalier du Nord - Site Ettelbruck - Urgences"],
+          currentDate
+        );
+      }
+
+      if (state.chl.mode === "closed" && state.hoki.mode === "closed") {
+        const timedFallback = createRtlTimedFallbackState(currentDate);
+        state.chl = timedFallback.chl;
+        state.hoki = timedFallback.hoki;
+        state.footer = "RTL Zeiten";
+      }
+
+      return state;
+    }
+
+    async function fetchRtlHospitalState(currentDate) {
+      const now = Date.now();
+      if (rtlStateCache && now - rtlStateFetchedAt < RTL_CACHE_MS) {
+        return rtlStateCache;
+      }
+
+      if (rtlStatePromise) {
+        return rtlStatePromise;
+      }
+
+      rtlStatePromise = (async () => {
+        const sources = [RTL_GUARD_URL, RTL_GUARD_PROXY_URL];
+
+        for (const source of sources) {
+          try {
+            const response = await fetch(source, { cache: "no-store" });
+            if (!response.ok) {
+              continue;
+            }
+
+            const html = await response.text();
+            if (!html || !html.includes("Spideeler")) {
+              continue;
+            }
+
+            const parsedState = parseRtlHospitalState(html, currentDate);
+            rtlStateCache = parsedState;
+            rtlStateFetchedAt = Date.now();
+            return parsedState;
+          } catch (error) {
+            console.warn("RTL fetch failed for", source, error);
+          }
+        }
+
+        return {
+          ...createRtlTimedFallbackState(currentDate),
+          footer: "RTL Fallback"
+        };
+      })();
+
+      try {
+        return await rtlStatePromise;
+      } finally {
+        rtlStatePromise = null;
+      }
+    }
+
+    function applyCardState(element, status, mode) {
+      element.classList.remove("hospital-card--closed", "hospital-card--active");
+      element.classList.add(`hospital-card--${mode}`);
+      element.querySelector(".hospital-card__status").textContent = status;
+    }
+
+    async function renderMonitor() {
+      const snapshot = getLuxembourgSnapshot();
+      const luxDate = snapshot.date;
+      const rtlState = await fetchRtlHospitalState(luxDate);
+
+      applyCardState(cards.chl, rtlState.chl.status, rtlState.chl.mode);
+      applyCardState(cards.hoki, rtlState.hoki.status, rtlState.hoki.mode);
+      applyCardState(cards.chdn, rtlState.chdn.status, rtlState.chdn.mode);
+      applyCardState(cards.chem, rtlState.chem.status, rtlState.chem.mode);
+
+      monitorFooter.textContent = `${snapshot.dateLabel} · ${rtlState.footer}`;
+    }
+
+    renderMonitor();
+    setInterval(renderMonitor, 60000);
+  </script>
+</body>
+
+</html>
