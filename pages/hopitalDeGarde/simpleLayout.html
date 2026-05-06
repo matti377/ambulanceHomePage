@@ -202,10 +202,6 @@
       chdn: "../phoneNumbers/index.html",
       chem: "../phoneNumbers/index.html"
     };
-    const RTL_GUARD_URL = "https://www.rtl.lu/info/services-de-garde";
-    const RTL_GUARD_PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(RTL_GUARD_URL)}`;
-    const RTL_CACHE_MS = 60 * 1000;
-
     const cards = {
       chl: document.getElementById("card-chl"),
       hoki: document.getElementById("card-hoki"),
@@ -213,9 +209,8 @@
       chem: document.getElementById("card-chem")
     };
     const monitorFooter = document.getElementById("monitorFooter");
-    let rtlStateCache = null;
-    let rtlStateFetchedAt = 0;
-    let rtlStatePromise = null;
+    let currentRenderedState = null;
+    let warningBlinkOn = false;
 
     const params = new URLSearchParams(window.location.search);
     const linkTarget = params.get("target") || "_top";
@@ -297,208 +292,56 @@
       return currentMinutes >= startMinutes || currentMinutes < safeEndMinutes;
     }
 
-    function createClosedState() {
-      return { status: "geschlossen", mode: "closed" };
+    function getMinutesUntilClose(timesText, currentDate) {
+      const normalized = normalizeText(timesText).toLowerCase();
+      if (!normalized || normalized.includes("24/24")) {
+        return null;
+      }
+
+      const match = normalized.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
+      if (!match) {
+        return null;
+      }
+
+      const startMinutes = Number(match[1]) * 60 + Number(match[2]);
+      const endHour = Number(match[3]);
+      const endMinutes = endHour === 24 ? 1440 : Number(match[3]) * 60 + Number(match[4]);
+      const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
+
+      if (currentMinutes < startMinutes || currentMinutes >= endMinutes) {
+        return null;
+      }
+
+      return endMinutes - currentMinutes;
     }
 
-    function createOpenState() {
-      return { status: "geöffnet", mode: "active" };
+    function createClosedState() {
+      return { status: "geschlossen", mode: "closed", closeSoon: false };
+    }
+
+    function createOpenState(closeSoon = false) {
+      return { status: "geöffnet", mode: "active", closeSoon };
     }
 
     function createRtlTimedFallbackState(currentDate) {
       return {
-        chl: isHospitalOpen("07:00:00 - 24:00:00", currentDate) ? createOpenState() : createClosedState(),
-        hoki: isHospitalOpen("00:00:00 - 17:00:00", currentDate) ? createOpenState() : createClosedState(),
+        chl: isHospitalOpen("07:00:00 - 24:00:00", currentDate)
+          ? createOpenState((getMinutesUntilClose("07:00:00 - 24:00:00", currentDate) ?? 9999) <= 60)
+          : createClosedState(),
+        hoki: isHospitalOpen("00:00:00 - 17:00:00", currentDate)
+          ? createOpenState((getMinutesUntilClose("00:00:00 - 17:00:00", currentDate) ?? 9999) <= 60)
+          : createClosedState(),
         chem: createOpenState(),
         chdn: createOpenState(),
         footer: "RTL Zeiten"
       };
     }
 
-    function extractZoneHtml(html, zoneLabel) {
-      const escapedLabel = zoneLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const startPattern = new RegExp(`<h2[^>]*>${escapedLabel}<\\/h2>`, "i");
-      const startMatch = html.match(startPattern);
-      if (!startMatch || startMatch.index === undefined) {
-        return "";
-      }
-
-      const startIndex = startMatch.index + startMatch[0].length;
-      const rest = html.slice(startIndex);
-      const nextHeadingIndex = rest.search(/<h2[^>]*>/i);
-      return nextHeadingIndex >= 0 ? rest.slice(0, nextHeadingIndex) : rest;
-    }
-
-    function parseStateFromZoneHtml(zoneHtml, hospitalMatchers, currentDate) {
-      const fallbackState = createClosedState();
-
-      for (const matcher of hospitalMatchers) {
-        const position = zoneHtml.indexOf(matcher);
-        if (position === -1) {
-          continue;
-        }
-
-        const slice = zoneHtml.slice(position, position + 1200);
-        const noTags = normalizeText(slice.replace(/<[^>]+>/g, " "));
-        return isHospitalOpen(noTags, currentDate) ? createOpenState() : createClosedState();
-      }
-
-      return fallbackState;
-    }
-
-    function findZoneList(doc, zoneLabel) {
-      const headings = Array.from(doc.querySelectorAll("h2"));
-      const heading = headings.find((element) => normalizeText(element.textContent).toLowerCase() === zoneLabel);
-      if (!heading) {
-        return null;
-      }
-
-      let next = heading.nextElementSibling;
-      while (next && next.tagName !== "UL") {
-        next = next.nextElementSibling;
-      }
-      return next;
-    }
-
-    function parseRtlHospitalState(html, currentDate) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-
-      const centreList = findZoneList(doc, "zentrum");
-      const southList = findZoneList(doc, "süden");
-      const northList = findZoneList(doc, "norden");
-
-      const state = {
-        chl: createClosedState(),
-        hoki: createClosedState(),
-        chem: createOpenState(),
-        chdn: createOpenState(),
-        footer: "RTL.lu"
+    function getMonitorState(currentDate) {
+      return {
+        ...createRtlTimedFallbackState(currentDate),
+        footer: "RTL Zeiten lokal"
       };
-
-      if (centreList) {
-        Array.from(centreList.querySelectorAll("li")).forEach((item) => {
-          const title = normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent);
-          const times = normalizeText(item.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
-          const isOpen = isHospitalOpen(times, currentDate);
-
-          if (title.includes("Centre Hospitalier de Luxembourg (CHL)") && !title.includes("Kannerklinik")) {
-            state.chl = isOpen ? createOpenState() : createClosedState();
-          }
-
-          if (title.includes("Hôpital Kirchberg") || title.includes("(HK)")) {
-            state.hoki = isOpen ? createOpenState() : createClosedState();
-          }
-        });
-      }
-
-      if (state.chl.mode === "closed" && state.hoki.mode === "closed") {
-        const centreHtml = extractZoneHtml(html, "Zentrum");
-        state.chl = parseStateFromZoneHtml(
-          centreHtml,
-          ["Centre Hospitalier de Luxembourg (CHL)", "Centre Hospitalier de Luxembourg \\(CHL\\)".replace(/\\/g, "")],
-          currentDate
-        );
-        state.hoki = parseStateFromZoneHtml(
-          centreHtml,
-          ["Hôpital Kirchberg", "Hôpitaux Robert Schuman - Hôpital Kirchberg (HK)", "(HK) - Urgences"],
-          currentDate
-        );
-      }
-
-      if (southList) {
-        const chemUrgence = Array.from(southList.querySelectorAll("li")).find((item) =>
-          normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent).includes("Site Esch - Urgences")
-        );
-        if (chemUrgence) {
-          const times = normalizeText(chemUrgence.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
-          state.chem = isHospitalOpen(times, currentDate) ? createOpenState() : createClosedState();
-        }
-      }
-
-      if (state.chem.mode === "closed") {
-        const southHtml = extractZoneHtml(html, "Süden");
-        state.chem = parseStateFromZoneHtml(
-          southHtml,
-          ["Centre Hospitalier Emile Mayrisch - Site Esch - Urgences"],
-          currentDate
-        );
-      }
-
-      if (northList) {
-        const chdnUrgence = Array.from(northList.querySelectorAll("li")).find((item) =>
-          normalizeText(item.querySelector(".EmergencyServices_title__4LNDN")?.textContent).includes("Site Ettelbruck - Urgences")
-        );
-        if (chdnUrgence) {
-          const times = normalizeText(chdnUrgence.querySelector(".EmergencyServices_times__6BvQM")?.textContent);
-          state.chdn = isHospitalOpen(times, currentDate) ? createOpenState() : createClosedState();
-        }
-      }
-
-      if (state.chdn.mode === "closed") {
-        const northHtml = extractZoneHtml(html, "Norden");
-        state.chdn = parseStateFromZoneHtml(
-          northHtml,
-          ["Centre Hospitalier du Nord - Site Ettelbruck - Urgences"],
-          currentDate
-        );
-      }
-
-      if (state.chl.mode === "closed" && state.hoki.mode === "closed") {
-        const timedFallback = createRtlTimedFallbackState(currentDate);
-        state.chl = timedFallback.chl;
-        state.hoki = timedFallback.hoki;
-        state.footer = "RTL Zeiten";
-      }
-
-      return state;
-    }
-
-    async function fetchRtlHospitalState(currentDate) {
-      const now = Date.now();
-      if (rtlStateCache && now - rtlStateFetchedAt < RTL_CACHE_MS) {
-        return rtlStateCache;
-      }
-
-      if (rtlStatePromise) {
-        return rtlStatePromise;
-      }
-
-      rtlStatePromise = (async () => {
-        const sources = [RTL_GUARD_URL, RTL_GUARD_PROXY_URL];
-
-        for (const source of sources) {
-          try {
-            const response = await fetch(source, { cache: "no-store" });
-            if (!response.ok) {
-              continue;
-            }
-
-            const html = await response.text();
-            if (!html || !html.includes("Spideeler")) {
-              continue;
-            }
-
-            const parsedState = parseRtlHospitalState(html, currentDate);
-            rtlStateCache = parsedState;
-            rtlStateFetchedAt = Date.now();
-            return parsedState;
-          } catch (error) {
-            console.warn("RTL fetch failed for", source, error);
-          }
-        }
-
-        return {
-          ...createRtlTimedFallbackState(currentDate),
-          footer: "RTL Fallback"
-        };
-      })();
-
-      try {
-        return await rtlStatePromise;
-      } finally {
-        rtlStatePromise = null;
-      }
     }
 
     function applyCardState(element, status, mode) {
@@ -507,21 +350,40 @@
       element.querySelector(".hospital-card__status").textContent = status;
     }
 
-    async function renderMonitor() {
+    function applyRenderedState(state) {
+      const chlStatus = state.chl.closeSoon && warningBlinkOn ? "schließt in Kürze" : state.chl.status;
+      const hokiStatus = state.hoki.closeSoon && warningBlinkOn ? "schließt in Kürze" : state.hoki.status;
+      const chdnStatus = state.chdn.closeSoon && warningBlinkOn ? "schließt in Kürze" : state.chdn.status;
+      const chemStatus = state.chem.closeSoon && warningBlinkOn ? "schließt in Kürze" : state.chem.status;
+
+      applyCardState(cards.chl, chlStatus, state.chl.mode);
+      applyCardState(cards.hoki, hokiStatus, state.hoki.mode);
+      applyCardState(cards.chdn, chdnStatus, state.chdn.mode);
+      applyCardState(cards.chem, chemStatus, state.chem.mode);
+    }
+
+    function updateWarningBlink() {
+      if (!currentRenderedState) {
+        return;
+      }
+
+      warningBlinkOn = !warningBlinkOn;
+      applyRenderedState(currentRenderedState);
+    }
+
+    function renderMonitor() {
       const snapshot = getLuxembourgSnapshot();
       const luxDate = snapshot.date;
-      const rtlState = await fetchRtlHospitalState(luxDate);
+      const monitorState = getMonitorState(luxDate);
+      currentRenderedState = monitorState;
+      applyRenderedState(monitorState);
 
-      applyCardState(cards.chl, rtlState.chl.status, rtlState.chl.mode);
-      applyCardState(cards.hoki, rtlState.hoki.status, rtlState.hoki.mode);
-      applyCardState(cards.chdn, rtlState.chdn.status, rtlState.chdn.mode);
-      applyCardState(cards.chem, rtlState.chem.status, rtlState.chem.mode);
-
-      monitorFooter.textContent = `${snapshot.dateLabel} · ${rtlState.footer}`;
+      monitorFooter.textContent = `${snapshot.dateLabel} · ${monitorState.footer}`;
     }
 
     renderMonitor();
     setInterval(renderMonitor, 60000);
+    setInterval(updateWarningBlink, 1000);
   </script>
 </body>
 
