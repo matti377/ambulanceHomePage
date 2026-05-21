@@ -283,6 +283,8 @@
     const monitorFooter = document.getElementById("monitorFooter");
     let currentRenderedState = null;
     let warningBlinkOn = false;
+    const CHL = "CHL";
+    const HK = "HOKI";
 
     const params = new URLSearchParams(window.location.search);
     const linkTarget = params.get("target") || "_top";
@@ -332,59 +334,113 @@
       };
     }
 
-    function normalizeText(value) {
-      return (value || "").replace(/\s+/g, " ").trim();
+    function toDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
-    function isHospitalOpen(timesText, currentDate) {
-      const normalized = normalizeText(timesText).toLowerCase();
-      if (!normalized) {
-        return false;
-      }
-
-      if (normalized.includes("24/24")) {
-        return true;
-      }
-
-      const match = normalized.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
-      if (!match) {
-        return false;
-      }
-
-      const startMinutes = Number(match[1]) * 60 + Number(match[2]);
-      const endHour = Number(match[3]);
-      const endMinutes = endHour * 60 + Number(match[4]);
-      const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
-      const safeEndMinutes = endHour === 24 ? 1440 : endMinutes;
-
-      if (safeEndMinutes > startMinutes) {
-        return currentMinutes >= startMinutes && currentMinutes < safeEndMinutes;
-      }
-
-      return currentMinutes >= startMinutes || currentMinutes < safeEndMinutes;
+    function toUtcDayNumber(date) {
+      return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000;
     }
 
-    function getMinutesUntilClose(timesText, currentDate) {
-      const normalized = normalizeText(timesText).toLowerCase();
-      if (!normalized || normalized.includes("24/24")) {
+    function diffCalendarDays(a, b) {
+      return toUtcDayNumber(a) - toUtcDayNumber(b);
+    }
+
+    const CENTRE_DAY_OVERRIDES = new Map([
+      ["2026-01-01", [HK]],
+      ["2026-04-06", [CHL]],
+      ["2026-05-01", [CHL]],
+      ["2026-05-14", [CHL]],
+      ["2026-05-25", [HK]],
+      ["2026-06-23", [CHL]]
+    ]);
+    const CENTRE_NIGHT_OVERRIDES = new Map([
+      ["2026-01-01", HK]
+    ]);
+
+    function getCentreDayOverride(date) {
+      return CENTRE_DAY_OVERRIDES.get(toDateKey(date)) || null;
+    }
+
+    function getNightHospital(date) {
+      const override = CENTRE_NIGHT_OVERRIDES.get(toDateKey(date));
+      if (override) {
+        return override;
+      }
+
+      const refAlt = new Date(2026, 0, 2); // Jan 2, 2026 -> CHL
+      const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const diffAlt = diffCalendarDays(today, refAlt);
+      if (diffAlt < 0) {
+        return CHL;
+      }
+
+      return diffAlt % 2 === 0 ? CHL : HK;
+    }
+
+    function getOppositeHospital(hospitalCode) {
+      return hospitalCode === CHL ? HK : CHL;
+    }
+
+    function getDutyAnchorDate(currentDate) {
+      const anchorDate = new Date(currentDate);
+      if (currentDate.getHours() < 17) {
+        anchorDate.setDate(anchorDate.getDate() - 1);
+      }
+
+      return anchorDate;
+    }
+
+    function getActiveCentreHospitals(currentDate) {
+      const dayOfWeek = currentDate.getDay();
+      const hours = currentDate.getHours();
+      const grandeGarde = getNightHospital(getDutyAnchorDate(currentDate));
+
+      if (dayOfWeek === 6 || dayOfWeek === 0) {
+        const sat = new Date(currentDate);
+        if (dayOfWeek === 0) {
+          sat.setDate(sat.getDate() - 1);
+        }
+
+        const refSat = new Date(2026, 0, 3); // Jan 3, 2026 -> CHL
+        const diffDays = diffCalendarDays(sat, refSat);
+        const weeksSince = Math.floor(diffDays / 7);
+        return [weeksSince % 2 === 0 ? CHL : HK];
+      }
+
+      if (dayOfWeek >= 1 && dayOfWeek <= 5 && hours >= 7 && hours < 17) {
+        const centreDayOverride = getCentreDayOverride(currentDate);
+        if (centreDayOverride) {
+          return centreDayOverride;
+        }
+
+        return [grandeGarde, getOppositeHospital(grandeGarde)];
+      }
+
+      return [grandeGarde];
+    }
+
+    function isHospitalOpen(hospitalCode, currentDate) {
+      return getActiveCentreHospitals(currentDate).includes(hospitalCode);
+    }
+
+    function getMinutesUntilClose(hospitalCode, currentDate) {
+      if (!isHospitalOpen(hospitalCode, currentDate)) {
         return null;
       }
 
-      const match = normalized.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
-      if (!match) {
-        return null;
+      const searchMinutes = 7 * 24 * 60;
+      for (let offsetMinutes = 1; offsetMinutes <= searchMinutes; offsetMinutes += 1) {
+        const nextDate = new Date(currentDate.getTime() + offsetMinutes * 60000);
+        if (!isHospitalOpen(hospitalCode, nextDate)) {
+          return offsetMinutes;
+        }
       }
 
-      const startMinutes = Number(match[1]) * 60 + Number(match[2]);
-      const endHour = Number(match[3]);
-      const endMinutes = endHour === 24 ? 1440 : Number(match[3]) * 60 + Number(match[4]);
-      const currentMinutes = currentDate.getHours() * 60 + currentDate.getMinutes();
-
-      if (currentMinutes < startMinutes || currentMinutes >= endMinutes) {
-        return null;
-      }
-
-      return endMinutes - currentMinutes;
+      return null;
     }
 
     function createClosedState() {
@@ -397,11 +453,11 @@
 
     function createRtlTimedFallbackState(currentDate) {
       return {
-        chl: isHospitalOpen("07:00:00 - 24:00:00", currentDate)
-          ? createOpenState((getMinutesUntilClose("07:00:00 - 24:00:00", currentDate) ?? 9999) <= 60)
+        chl: isHospitalOpen(CHL, currentDate)
+          ? createOpenState((getMinutesUntilClose(CHL, currentDate) ?? 9999) <= 60)
           : createClosedState(),
-        hoki: isHospitalOpen("00:00:00 - 17:00:00", currentDate)
-          ? createOpenState((getMinutesUntilClose("00:00:00 - 17:00:00", currentDate) ?? 9999) <= 60)
+        hoki: isHospitalOpen(HK, currentDate)
+          ? createOpenState((getMinutesUntilClose(HK, currentDate) ?? 9999) <= 60)
           : createClosedState(),
         chem: createOpenState(),
         chdn: createOpenState(),
