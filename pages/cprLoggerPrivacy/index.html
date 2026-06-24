@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPR Logger - Bedside resuscitation logging</title>
+  <meta
+    name="description"
+    content="CPR Logger is a focused bedside app for cardiac arrest event logging with multilingual UI, local session recovery, and one-tap PDF export."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="CPR Logger - Bedside resuscitation logging" />
+  <meta
+    property="og:description"
+    content="Log rhythm, shocks, medications, ROSC, and post-ROSC reassessment in one focused CPR workflow."
+  />
+  <link rel="icon" type="image/png" href="website/assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/pages/cprLoggerPrivacy/styles.css" />
+</head>
+<body>
+  <div class="grid-backdrop" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">
+      <img src="website/assets/logo.png" alt="CPR Logger logo" />
+      <span>CPR Logger</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#screens">Screens</a>
+      <a href="#trust">Trust</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="pulse-dot"></span> Offline · Focused · Ready</span>
+        <h1>The <span class="accent">CPR timeline</span>, captured as it happens.</h1>
+        <p class="lede">
+          CPR Logger is a bedside-first resuscitation logger for the seconds that matter.
+          Start with the initial rhythm, record shocks and medications in one tap, switch
+          into post-ROSC reassessment, and export a clean PDF handover without sending the
+          session off the device.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#screens">See the screens</a>
+          <a class="btn btn-ghost" href="#features">Explore the workflow</a>
+        </div>
+        <ul class="hero-stats">
+          <li><strong>4</strong><span>languages</span></li>
+          <li><strong>1 tap</strong><span>PDF export</span></li>
+          <li><strong>Local</strong><span>session resume</span></li>
+        </ul>
+      </div>
+      <div class="hero-art">
+        <div class="phone-glow"></div>
+        <img
+          class="phone hero-phone"
+          src="website/assets/mockups/iphone/active.png"
+          alt="CPR Logger active resuscitation screen with timers and action tiles"
+        />
+      </div>
+    </section>
+
+    <section class="strip">
+      <p>
+        Designed with and for the <strong>unite de reanimation</strong> at the
+        Centre Hospitalier de Luxembourg. Documentation support only; clinical
+        decisions remain with the care team and local protocol.
+      </p>
+    </section>
+
+    <section id="features" class="section">
+      <div class="section-head">
+        <h2>Everything the code team needs. Nothing it doesn't.</h2>
+        <p>
+          No accounts, no dashboards, no noise. Just a resilient event log built for
+          real-world resuscitation workflow.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="ico ico-blue">⎓</div>
+          <h3>Live resuscitation clock</h3>
+          <p>
+            Elapsed time, next rhythm check, and last adrenaline stay large, visible,
+            and readable at a glance.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-red">⚡</div>
+          <h3>One-tap event logging</h3>
+          <p>
+            Capture rhythm changes, shocks, drugs, and interventions with a single,
+            color-coded action instead of free-text scrambling.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-green">♥</div>
+          <h3>ROSC and post-ROSC flow</h3>
+          <p>
+            Transition cleanly into structured post-arrest reassessment with ABCDE notes
+            and vital signs once circulation returns.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-purple">⤓</div>
+          <h3>Instant PDF handover</h3>
+          <p>
+            Generate a share-ready event log with rhythm history, shock count,
+            medication totals, and post-ROSC documentation.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-amber">↺</div>
+          <h3>Crash-safe session recovery</h3>
+          <p>
+            If the device is interrupted, the active session stays stored locally and can
+            be resumed without rebuilding the timeline.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-teal">⌘</div>
+          <h3>Phone and tablet ready</h3>
+          <p>
+            The same focused interface scales from a pocket device to a full-size bedside
+            tablet without losing clarity.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" class="section">
+      <div class="section-head">
+        <h2>From first compression to handover</h2>
+        <p>Four steps. Minimal friction. A clean record at the end.</p>
+      </div>
+      <div class="workflow">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h3>Choose the rhythm</h3>
+          <p>Start from pVT, VF, PEA, asystole, or unknown and launch the session clock immediately.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h3>Log the events</h3>
+          <p>Tap shocks, medications, and interventions while the timers keep the cycle visible.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h3>Record ROSC</h3>
+          <p>Switch into the post-ROSC ABCDE workflow and capture the reassessment in structure, not scraps.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <h3>Export and share</h3>
+          <p>Create the PDF event log and hand over a readable record to the next team.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="screens" class="section">
+      <div class="section-head">
+        <h2>A closer look</h2>
+        <p>Dark, high-contrast, and intentionally glanceable for resus bays and low-light rooms.</p>
+      </div>
+      <div class="gallery">
+        <figure class="shot">
+          <img src="website/assets/mockups/iphone/home.png" alt="Initial rhythm selection screen" />
+          <figcaption>Choose the initial rhythm</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="website/assets/mockups/iphone/active.png" alt="Active resuscitation screen with timers and event actions" />
+          <figcaption>Live timers and actions</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="website/assets/mockups/iphone/meds.png" alt="Medication and intervention logging screen" />
+          <figcaption>Medication logging</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="website/assets/mockups/iphone/abcde.png" alt="Post-ROSC ABCDE assessment screen" />
+          <figcaption>Post-ROSC ABCDE</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="website/assets/mockups/iphone/report.png" alt="PDF CPR report preview" />
+          <figcaption>Shareable PDF report</figcaption>
+        </figure>
+      </div>
+
+      <div class="ipad-showcase">
+        <figure>
+          <img src="website/assets/mockups/ipad/home.png" alt="CPR Logger rhythm selection on iPad" />
+        </figure>
+        <figure>
+          <img src="website/assets/mockups/ipad/report.png" alt="CPR Logger event report on iPad" />
+        </figure>
+      </div>
+    </section>
+
+    <section id="trust" class="section">
+      <div class="section-head">
+        <h2>Built for hospital reality</h2>
+        <p>
+          CPR Logger keeps the interaction surface small and the operational boundaries clear.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="ico ico-green">◌</div>
+          <h3>On-device by default</h3>
+          <p>
+            Active sessions, settings, and recent logs stay local to the device instead of
+            depending on account setup or cloud availability.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-blue">⌁</div>
+          <h3>Multilingual team support</h3>
+          <p>
+            Switch instantly between German, English, French, and Luxembourgish for mixed teams and handovers.
+          </p>
+        </article>
+        <article class="feature-card">
+          <div class="ico ico-red">!</div>
+          <h3>Documentation, not decision support</h3>
+          <p>
+            The app helps the team capture what happened. It does not replace local protocols,
+            clinical judgment, or the team lead.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-final">
+      <div class="cta-card">
+        <img src="website/assets/logo.png" alt="" aria-hidden="true" />
+        <h2>Ready when the alarm sounds.</h2>
+        <p>CPR Logger keeps the record so the team can keep the room.</p>
+        <a class="btn btn-primary" href="#screens">Explore the screens</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="foot-brand">
+      <img src="website/assets/logo.png" alt="CPR Logger logo" />
+      <div>
+        <strong>CPR Logger</strong>
+        <span>Standalone CPR event logger · multilingual emergency workflow</span>
+      </div>
+    </div>
+    <p class="foot-note">Built for the unite de reanimation, Centre Hospitalier de Luxembourg.</p>
+  </footer>
+</body>
+</html>
