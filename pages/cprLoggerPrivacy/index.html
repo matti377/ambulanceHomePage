@@ -3,262 +3,958 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CPR Logger - Bedside resuscitation logging</title>
+  <title>CPR Logger Privacy Policy</title>
   <meta
     name="description"
-    content="CPR Logger is a focused bedside app for cardiac arrest event logging with multilingual UI, local session recovery, and one-tap PDF export."
+    content="Privacy Policy for CPR Logger, a local-first CPR event logging app with on-device session storage and PDF export."
   />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:title" content="CPR Logger - Bedside resuscitation logging" />
+  <meta property="og:title" content="CPR Logger Privacy Policy" />
   <meta
     property="og:description"
-    content="Log rhythm, shocks, medications, ROSC, and post-ROSC reassessment in one focused CPR workflow."
+    content="Learn what CPR Logger stores on-device, how PDF sharing works, and what data the app does not collect."
   />
-  <link rel="icon" type="image/png" href="website/assets/logo.png" />
+  <link rel="icon" type="image/png" href="data/images/appImage/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="/pages/cprLoggerPrivacy/styles.css" />
+  <style>
+    :root {
+      --bg: #070b16;
+      --bg-2: #0b1120;
+      --panel: #121a2b;
+      --line: #1f2a40;
+      --text: #eef2f8;
+      --muted: #9aa7bd;
+      --muted-2: #6b7890;
+      --accent: #e8615f;
+      --accent-dark: #d24b49;
+      --blue: #3aa6e6;
+      --green: #2fbf8f;
+      --purple: #8b6cf0;
+      --amber: #e0a14a;
+      --teal: #2bb3a3;
+      --radius: 18px;
+      --radius-lg: 26px;
+      --maxw: 1140px;
+      --shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .grid-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(900px 500px at 80% -5%, rgba(232, 97, 95, 0.1), transparent 60%),
+        radial-gradient(800px 600px at 0% 10%, rgba(58, 166, 230, 0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg-2), var(--bg) 40%);
+    }
+
+    .grid-backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(120, 150, 200, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 150, 200, 0.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px clamp(18px, 5vw, 48px);
+      background: rgba(7, 11, 22, 0.7);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+    }
+
+    .section {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: clamp(64px, 9vw, 120px) clamp(18px, 5vw, 48px);
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 52px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-top: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+      box-shadow: 0 14px 34px -12px rgba(232, 97, 95, 0.65);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 44px -12px rgba(232, 97, 95, 0.75);
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover,
+    .btn-ghost:focus-visible {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: clamp(50px, 8vw, 96px) clamp(18px, 5vw, 48px) clamp(40px, 6vw, 80px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: clamp(30px, 5vw, 70px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 0 rgba(47, 191, 143, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(47, 191, 143, 0.55);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(47, 191, 143, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(47, 191, 143, 0);
+      }
+    }
+
+    .hero h1 {
+      margin: 22px 0 18px;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .lede {
+      max-width: 580px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 30px 0 38px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-stats li {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stats strong {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-stats span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .hero-art {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .phone-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(232, 97, 95, 0.28), transparent 65%);
+      filter: blur(20px);
+      transform: translate(-50%, -50%);
+    }
+
+    .privacy-summary {
+      width: min(100%, 430px);
+      padding: 30px 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(500px 220px at 50% 0%, rgba(232, 97, 95, 0.12), transparent 70%),
+        linear-gradient(180deg, var(--panel), rgba(18, 26, 43, 0.72));
+      box-shadow: var(--shadow);
+    }
+
+    .privacy-summary h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .privacy-summary .meta {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82rem;
+    }
+
+    .privacy-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      color: var(--muted);
+    }
+
+    .privacy-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .privacy-list li::before {
+      content: "";
+      position: absolute;
+      top: 0.65em;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(232, 97, 95, 0.12);
+    }
+
+    .strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .strip p {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 28px clamp(18px, 5vw, 48px);
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .strip strong {
+      color: var(--text);
+    }
+
+    .feature-grid,
+    .policy-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .policy-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-card,
+    .policy-card,
+    .contact-card {
+      padding: 28px 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel), rgba(18, 26, 43, 0.5));
+    }
+
+    .feature-card {
+      transition: transform 0.18s ease, border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: #2c3a58;
+    }
+
+    .ico {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 14px;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    .ico-blue {
+      background: rgba(58, 166, 230, 0.16);
+      color: var(--blue);
+    }
+
+    .ico-red {
+      background: rgba(232, 97, 95, 0.16);
+      color: var(--accent);
+    }
+
+    .ico-green {
+      background: rgba(47, 191, 143, 0.16);
+      color: var(--green);
+    }
+
+    .ico-purple {
+      background: rgba(139, 108, 240, 0.16);
+      color: var(--purple);
+    }
+
+    .ico-amber {
+      background: rgba(224, 161, 74, 0.16);
+      color: var(--amber);
+    }
+
+    .ico-teal {
+      background: rgba(43, 179, 163, 0.16);
+      color: var(--teal);
+    }
+
+    .feature-card h3,
+    .policy-card h3,
+    .contact-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .feature-card p,
+    .policy-card p,
+    .contact-card p {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .policy-card ul {
+      margin-top: 14px;
+      padding-left: 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 10px;
+    }
+
+    .policy-card li strong {
+      color: var(--text);
+    }
+
+    .policy-note {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border: 1px solid rgba(232, 97, 95, 0.25);
+      border-left: 3px solid var(--accent);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.025);
+      color: var(--muted);
+    }
+
+    .policy-note strong {
+      color: var(--text);
+    }
+
+    .workflow {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step {
+      padding: 26px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .step-num {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 16px;
+      border-radius: 11px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 800;
+    }
+
+    .step h3 {
+      margin-bottom: 7px;
+      font-size: 1.05rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .contact-row {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .contact-card a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .contact-card a:hover,
+    .contact-card a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .contact-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .site-footer {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 40px clamp(18px, 5vw, 48px);
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .foot-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .foot-brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .foot-brand strong {
+      display: block;
+      font-weight: 700;
+    }
+
+    .foot-brand span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .foot-note {
+      max-width: 420px;
+      color: var(--muted-2);
+      font-size: 0.88rem;
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-cta,
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .feature-grid,
+      .policy-grid,
+      .workflow,
+      .contact-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero-stats {
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .site-footer {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .foot-note {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="grid-backdrop" aria-hidden="true"></div>
 
   <header class="site-header">
     <a class="brand" href="#top">
-      <img src="website/assets/logo.png" alt="CPR Logger logo" />
+      <img src="data/images/appImage/logo.png" alt="CPR Logger logo" />
       <span>CPR Logger</span>
     </a>
-    <nav class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#workflow">Workflow</a>
-      <a href="#screens">Screens</a>
-      <a href="#trust">Trust</a>
+    <nav class="nav-links" aria-label="Privacy policy sections">
+      <a href="#overview">Overview</a>
+      <a href="#storage">Storage</a>
+      <a href="#sharing">Sharing</a>
+      <a href="#permissions">Permissions</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main id="top">
     <section class="hero">
       <div class="hero-copy">
-        <span class="eyebrow"><span class="pulse-dot"></span> Offline · Focused · Ready</span>
-        <h1>The <span class="accent">CPR timeline</span>, captured as it happens.</h1>
+        <span class="eyebrow"><span class="pulse-dot"></span> Privacy policy</span>
+        <h1>Your <span class="accent">CPR timeline</span> stays with the care team.</h1>
         <p class="lede">
-          CPR Logger is a bedside-first resuscitation logger for the seconds that matter.
-          Start with the initial rhythm, record shocks and medications in one tap, switch
-          into post-ROSC reassessment, and export a clean PDF handover without sending the
-          session off the device.
+          CPR Logger is a local-first bedside tool for logging resuscitation events.
+          The app does not require user accounts, does not include analytics or advertising
+          SDKs, and does not send CPR session data to the developer.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#screens">See the screens</a>
-          <a class="btn btn-ghost" href="#features">Explore the workflow</a>
+          <a class="btn btn-primary" href="#storage">What is stored</a>
+          <a class="btn btn-ghost" href="#contact">Contact</a>
         </div>
         <ul class="hero-stats">
-          <li><strong>4</strong><span>languages</span></li>
-          <li><strong>1 tap</strong><span>PDF export</span></li>
-          <li><strong>Local</strong><span>session resume</span></li>
+          <li><strong>0</strong><span>accounts required</span></li>
+          <li><strong>Local</strong><span>session storage</span></li>
+          <li><strong>User</strong><span>controlled sharing</span></li>
         </ul>
       </div>
+
       <div class="hero-art">
         <div class="phone-glow"></div>
-        <img
-          class="phone hero-phone"
-          src="website/assets/mockups/iphone/active.png"
-          alt="CPR Logger active resuscitation screen with timers and action tiles"
-        />
+        <aside class="privacy-summary" aria-label="Privacy summary">
+          <span class="meta">Effective date: 2026-06-24</span>
+          <h2>Quick summary</h2>
+          <ul class="privacy-list">
+            <li>CPR sessions, notes, and post-ROSC assessment data are stored on-device.</li>
+            <li>PDF reports are generated locally and are only shared when you choose to share them.</li>
+            <li>This version of the app does not include built-in analytics, ads, or cloud sync.</li>
+          </ul>
+        </aside>
       </div>
     </section>
 
     <section class="strip">
       <p>
-        Designed with and for the <strong>unite de reanimation</strong> at the
-        Centre Hospitalier de Luxembourg. Documentation support only; clinical
-        decisions remain with the care team and local protocol.
+        This page applies to the current CPR Logger app configuration in this project and is
+        effective as of <strong>June 24, 2026</strong>.
       </p>
     </section>
 
-    <section id="features" class="section">
+    <section id="overview" class="section">
       <div class="section-head">
-        <h2>Everything the code team needs. Nothing it doesn't.</h2>
+        <h2>Overview</h2>
         <p>
-          No accounts, no dashboards, no noise. Just a resilient event log built for
-          real-world resuscitation workflow.
+          CPR Logger is designed to help clinicians capture a resuscitation timeline quickly and
+          clearly. Privacy follows the same principle: keep data close to the bedside and under the
+          team's control.
         </p>
       </div>
+
       <div class="feature-grid">
         <article class="feature-card">
-          <div class="ico ico-blue">⎓</div>
-          <h3>Live resuscitation clock</h3>
+          <div class="ico ico-blue">1</div>
+          <h3>Local-first by design</h3>
           <p>
-            Elapsed time, next rhythm check, and last adrenaline stay large, visible,
-            and readable at a glance.
+            The app stores its settings and session history on the device so an interrupted
+            resuscitation can be resumed and recent sessions can be reopened later.
           </p>
         </article>
+
         <article class="feature-card">
-          <div class="ico ico-red">⚡</div>
-          <h3>One-tap event logging</h3>
+          <div class="ico ico-red">2</div>
+          <h3>No built-in tracking</h3>
           <p>
-            Capture rhythm changes, shocks, drugs, and interventions with a single,
-            color-coded action instead of free-text scrambling.
+            This version of CPR Logger does not contain sign-in, advertising, analytics, or a
+            backend service that receives your CPR session data.
           </p>
         </article>
+
         <article class="feature-card">
-          <div class="ico ico-green">♥</div>
-          <h3>ROSC and post-ROSC flow</h3>
+          <div class="ico ico-green">3</div>
+          <h3>You control exports</h3>
           <p>
-            Transition cleanly into structured post-arrest reassessment with ABCDE notes
-            and vital signs once circulation returns.
-          </p>
-        </article>
-        <article class="feature-card">
-          <div class="ico ico-purple">⤓</div>
-          <h3>Instant PDF handover</h3>
-          <p>
-            Generate a share-ready event log with rhythm history, shock count,
-            medication totals, and post-ROSC documentation.
-          </p>
-        </article>
-        <article class="feature-card">
-          <div class="ico ico-amber">↺</div>
-          <h3>Crash-safe session recovery</h3>
-          <p>
-            If the device is interrupted, the active session stays stored locally and can
-            be resumed without rebuilding the timeline.
-          </p>
-        </article>
-        <article class="feature-card">
-          <div class="ico ico-teal">⌘</div>
-          <h3>Phone and tablet ready</h3>
-          <p>
-            The same focused interface scales from a pocket device to a full-size bedside
-            tablet without losing clarity.
+            Reports are created locally as PDF files. Data leaves the app only when you
+            intentionally share or move a file using your device's own tools.
           </p>
         </article>
       </div>
     </section>
 
-    <section id="workflow" class="section">
+    <section id="storage" class="section">
       <div class="section-head">
-        <h2>From first compression to handover</h2>
-        <p>Four steps. Minimal friction. A clean record at the end.</p>
+        <h2>What CPR Logger stores on your device</h2>
+        <p>
+          To support the clinical workflow, the app keeps certain information locally on the device.
+          That storage may include personal or patient-related information if you choose to enter it.
+        </p>
       </div>
+
+      <div class="policy-grid">
+        <article class="policy-card">
+          <h3>App preferences</h3>
+          <p>The app stores a small set of configuration values needed for daily use.</p>
+          <ul>
+            <li><strong>Language</strong> selection.</li>
+            <li><strong>Reminder settings</strong> such as the adrenaline interval.</li>
+            <li><strong>UI preference</strong> for whether the start disclaimer is shown.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <h3>Active and recent sessions</h3>
+          <p>
+            The app keeps the current session plus up to 20 recent completed sessions so work can be
+            resumed or reviewed on-device.
+          </p>
+          <ul>
+            <li><strong>Session timing</strong> such as start time, end time, and rhythm-check timers.</li>
+            <li><strong>Timeline events</strong> including rhythms, shocks, medications, interventions, and notes.</li>
+            <li><strong>Post-ROSC assessment</strong> fields such as ABCDE entries, vitals, and free text.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <h3>Exported PDF reports</h3>
+          <p>When you export a report, CPR Logger creates the PDF locally on the device.</p>
+          <ul>
+            <li><strong>Generation is local</strong> and does not require sending the report to us.</li>
+            <li><strong>Stored files</strong> may remain in the app's local documents area until removed.</li>
+            <li><strong>Shared copies</strong> may also exist in other apps or destinations you choose.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <h3>Device backups</h3>
+          <p>
+            CPR Logger itself does not upload your session data to the developer. However, operating
+            system backup features may copy locally stored app data depending on your device settings.
+          </p>
+          <ul>
+            <li><strong>Apple or Google backup services</strong> may include app data if enabled on the device.</li>
+            <li><strong>We do not operate or receive</strong> those backups ourselves.</li>
+            <li><strong>Backup behavior</strong> can vary based on platform, device policy, and account settings.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="policy-note">
+        <strong>Important:</strong> CPR Logger does not ask for patient identity fields, but free-text
+        notes and exported reports can still contain sensitive information if users choose to enter it.
+      </div>
+    </section>
+
+    <section id="sharing" class="section">
+      <div class="section-head">
+        <h2>How sharing works</h2>
+        <p>
+          The app does not automatically transmit reports. Sharing happens only when a user decides to
+          send or export a file.
+        </p>
+      </div>
+
       <div class="workflow">
-        <div class="step">
+        <article class="step">
           <span class="step-num">1</span>
-          <h3>Choose the rhythm</h3>
-          <p>Start from pVT, VF, PEA, asystole, or unknown and launch the session clock immediately.</p>
-        </div>
-        <div class="step">
+          <h3>Generate locally</h3>
+          <p>
+            CPR Logger creates the PDF event log on-device from the session data already stored on the
+            device.
+          </p>
+        </article>
+
+        <article class="step">
           <span class="step-num">2</span>
-          <h3>Log the events</h3>
-          <p>Tap shocks, medications, and interventions while the timers keep the cycle visible.</p>
-        </div>
-        <div class="step">
+          <h3>Share only on request</h3>
+          <p>
+            A report is shared only when the user taps the share action and chooses a destination using
+            the system share sheet.
+          </p>
+        </article>
+
+        <article class="step">
           <span class="step-num">3</span>
-          <h3>Record ROSC</h3>
-          <p>Switch into the post-ROSC ABCDE workflow and capture the reassessment in structure, not scraps.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">4</span>
-          <h3>Export and share</h3>
-          <p>Create the PDF event log and hand over a readable record to the next team.</p>
-        </div>
+          <h3>Destination controls apply</h3>
+          <p>
+            Once a file is sent to Mail, Messages, AirDrop, cloud storage, or another app, that
+            destination handles the file under its own privacy and security rules.
+          </p>
+        </article>
       </div>
     </section>
 
-    <section id="screens" class="section">
+    <section id="permissions" class="section">
       <div class="section-head">
-        <h2>A closer look</h2>
-        <p>Dark, high-contrast, and intentionally glanceable for resus bays and low-light rooms.</p>
-      </div>
-      <div class="gallery">
-        <figure class="shot">
-          <img src="website/assets/mockups/iphone/home.png" alt="Initial rhythm selection screen" />
-          <figcaption>Choose the initial rhythm</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="website/assets/mockups/iphone/active.png" alt="Active resuscitation screen with timers and event actions" />
-          <figcaption>Live timers and actions</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="website/assets/mockups/iphone/meds.png" alt="Medication and intervention logging screen" />
-          <figcaption>Medication logging</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="website/assets/mockups/iphone/abcde.png" alt="Post-ROSC ABCDE assessment screen" />
-          <figcaption>Post-ROSC ABCDE</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="website/assets/mockups/iphone/report.png" alt="PDF CPR report preview" />
-          <figcaption>Shareable PDF report</figcaption>
-        </figure>
-      </div>
-
-      <div class="ipad-showcase">
-        <figure>
-          <img src="website/assets/mockups/ipad/home.png" alt="CPR Logger rhythm selection on iPad" />
-        </figure>
-        <figure>
-          <img src="website/assets/mockups/ipad/report.png" alt="CPR Logger event report on iPad" />
-        </figure>
-      </div>
-    </section>
-
-    <section id="trust" class="section">
-      <div class="section-head">
-        <h2>Built for hospital reality</h2>
+        <h2>Permissions and device behavior</h2>
         <p>
-          CPR Logger keeps the interaction surface small and the operational boundaries clear.
+          The current mobile app configuration keeps permissions narrow and focused on the resuscitation
+          workflow.
         </p>
       </div>
+
       <div class="feature-grid">
         <article class="feature-card">
-          <div class="ico ico-green">◌</div>
-          <h3>On-device by default</h3>
+          <div class="ico ico-purple">A</div>
+          <h3>No camera or location access</h3>
           <p>
-            Active sessions, settings, and recent logs stay local to the device instead of
-            depending on account setup or cloud availability.
+            The current app configuration does not request runtime access to camera, microphone,
+            location, contacts, or photo-library style personal data permissions.
           </p>
         </article>
+
         <article class="feature-card">
-          <div class="ico ico-blue">⌁</div>
-          <h3>Multilingual team support</h3>
+          <div class="ico ico-amber">B</div>
+          <h3>Screen stays visible in active use</h3>
           <p>
-            Switch instantly between German, English, French, and Luxembourgish for mixed teams and handovers.
+            During a live session, the app may keep the screen awake and temporarily increase app
+            brightness so the timeline remains readable under pressure.
           </p>
         </article>
+
         <article class="feature-card">
-          <div class="ico ico-red">!</div>
-          <h3>Documentation, not decision support</h3>
+          <div class="ico ico-teal">C</div>
+          <h3>Preview and export are local</h3>
           <p>
-            The app helps the team capture what happened. It does not replace local protocols,
-            clinical judgment, or the team lead.
+            PDF preview uses local files on the device, and export functions are designed to run
+            without transmitting data to the developer.
           </p>
         </article>
       </div>
     </section>
 
-    <section class="cta-final">
-      <div class="cta-card">
-        <img src="website/assets/logo.png" alt="" aria-hidden="true" />
-        <h2>Ready when the alarm sounds.</h2>
-        <p>CPR Logger keeps the record so the team can keep the room.</p>
-        <a class="btn btn-primary" href="#screens">Explore the screens</a>
+    <section class="section">
+      <div class="section-head">
+        <h2>Retention, deletion, and security</h2>
+        <p>
+          Because the app is local-first, day-to-day privacy also depends on how the device itself is
+          protected.
+        </p>
+      </div>
+
+      <div class="policy-grid">
+        <article class="policy-card">
+          <h3>Retention</h3>
+          <ul>
+            <li><strong>Active session data</strong> remains on-device until the session is completed or discarded.</li>
+            <li><strong>Recent sessions</strong> remain locally available until deleted, with the list capped at 20 items.</li>
+            <li><strong>Exported PDFs</strong> may remain on the device or in chosen destinations until removed there.</li>
+          </ul>
+        </article>
+
+        <article class="policy-card">
+          <h3>Deletion and security</h3>
+          <ul>
+            <li><strong>In-app deletion</strong> can remove active or recent session data stored by the app.</li>
+            <li><strong>Shared copies</strong> must be deleted from the destination app or storage service separately.</li>
+            <li><strong>Device safeguards</strong> such as passcodes, MDM controls, and encrypted backups remain important.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <h2>Changes and contact</h2>
+        <p>
+          This privacy policy may be updated as CPR Logger changes. The version published on this page
+          should be treated as the current policy for the corresponding release.
+        </p>
+      </div>
+
+      <div class="contact-row">
+        <article class="contact-card">
+          <h3>Questions about privacy</h3>
+          <p>
+            If you have questions about this policy or want to report a privacy concern, contact:
+          </p>
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:matti.wirtz@gmail.com">matti.wirtz@gmail.com</a>
+          </div>
+        </article>
+
+        <article class="contact-card">
+          <h3>Policy scope</h3>
+          <p>
+            This page describes the app behavior visible in the current CPR Logger project as of
+            June 24, 2026, including on-device storage, PDF export, and manual sharing behavior.
+          </p>
+        </article>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="foot-brand">
-      <img src="website/assets/logo.png" alt="CPR Logger logo" />
+      <img src="data/images/appImage/logo.png" alt="CPR Logger logo" />
       <div>
         <strong>CPR Logger</strong>
-        <span>Standalone CPR event logger · multilingual emergency workflow</span>
+        <span>Standalone CPR event logger - multilingual emergency workflow</span>
       </div>
     </div>
-    <p class="foot-note">Built for the unite de reanimation, Centre Hospitalier de Luxembourg.</p>
+    <p class="foot-note">
+      Local-first privacy for a bedside workflow. Reports are created on-device and only leave the app
+      when the user chooses to share them.
+    </p>
   </footer>
 </body>
 </html>
