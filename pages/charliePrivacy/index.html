@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Privacy Policy for Charlie. Learn how the app handles notifications, local settings, and your data.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#15231d">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Charlie — Privacy Policy">
+  <meta property="og:description" content="Charlie does not collect personal information or require an account.">
+  <title>Charlie — Privacy Policy</title>
+
+  <style>
+    :root {
+      --ink: #15231d;
+      --ink-soft: #43534b;
+      --paper: #f8f5ed;
+      --paper-deep: #eee9dc;
+      --card: rgba(255, 253, 247, 0.88);
+      --accent: #d7693e;
+      --accent-dark: #aa4826;
+      --mint: #bdd7c5;
+      --line: rgba(21, 35, 29, 0.13);
+      --shadow: 0 24px 70px rgba(39, 50, 43, 0.12);
+      --radius: 24px;
+      --max-width: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(189, 215, 197, 0.65), transparent 30rem),
+        radial-gradient(circle at 95% 22%, rgba(215, 105, 62, 0.13), transparent 26rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .site-header {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+      padding: 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #fffdf7;
+      background: var(--ink);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(21, 35, 29, 0.2);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .header-link {
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    .hero {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 38px auto 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 0.7fr);
+      align-items: end;
+      gap: clamp(40px, 8vw, 100px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 20px;
+      color: var(--accent-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      content: "";
+      background: var(--accent);
+    }
+
+    h1 {
+      max-width: 740px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.15rem, 8vw, 6.8rem);
+      font-weight: 500;
+      letter-spacing: -0.065em;
+      line-height: 0.92;
+    }
+
+    .hero-copy {
+      margin: 0 0 8px;
+      color: var(--ink-soft);
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      line-height: 1.6;
+    }
+
+    .updated {
+      margin: 24px 0 0;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .policy-layout {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto 96px;
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      align-items: start;
+      gap: clamp(34px, 7vw, 80px);
+    }
+
+    .policy-nav {
+      position: sticky;
+      top: 28px;
+      padding: 22px;
+      background: rgba(255, 253, 247, 0.62);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .policy-nav p {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .policy-nav ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .policy-nav li + li {
+      margin-top: 8px;
+    }
+
+    .policy-nav a {
+      display: block;
+      padding: 4px 0;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 160ms ease, transform 160ms ease;
+    }
+
+    .policy-nav a:hover {
+      color: var(--accent-dark);
+      transform: translateX(3px);
+    }
+
+    .policy-card {
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid rgba(21, 35, 29, 0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .summary {
+      padding: clamp(28px, 5vw, 48px);
+      color: #fffdf7;
+      background: var(--ink);
+    }
+
+    .summary-label {
+      margin: 0 0 10px;
+      color: var(--mint);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .summary h2 {
+      max-width: 620px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 4vw, 2.45rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .policy-content {
+      padding: 0 clamp(28px, 5vw, 52px);
+    }
+
+    .policy-section {
+      padding: clamp(32px, 5vw, 48px) 0;
+      scroll-margin-top: 28px;
+    }
+
+    .policy-section + .policy-section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-number {
+      display: inline-block;
+      min-width: 38px;
+      margin-bottom: 10px;
+      color: var(--accent-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .policy-section h2 {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .policy-section p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .policy-section p + p {
+      margin-top: 14px;
+    }
+
+    .permission-note {
+      margin-top: 22px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      background: var(--paper-deep);
+      border-radius: 16px;
+    }
+
+    .bell {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fffdf7;
+      background: var(--accent);
+      border-radius: 13px;
+    }
+
+    .bell svg {
+      width: 21px;
+      height: 21px;
+    }
+
+    .permission-note strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--ink);
+    }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--accent-dark);
+      font-size: 1.06rem;
+      font-weight: 800;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+    }
+
+    footer {
+      padding: 34px 20px 42px;
+      color: var(--ink-soft);
+      background: var(--paper-deep);
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 0.86rem;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        width: min(calc(100% - 32px), var(--max-width));
+      }
+
+      .hero {
+        width: min(calc(100% - 32px), var(--max-width));
+        margin: 32px auto 56px;
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .hero-copy {
+        max-width: 580px;
+      }
+
+      .policy-layout {
+        width: min(calc(100% - 24px), var(--max-width));
+        margin-bottom: 56px;
+        grid-template-columns: 1fr;
+      }
+
+      .policy-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-link {
+        display: none;
+      }
+
+      h1 {
+        font-size: clamp(3.1rem, 19vw, 4.7rem);
+      }
+
+      .permission-note {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Charlie privacy policy home">
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span>Charlie</span>
+    </a>
+    <a class="header-link" href="mailto:matti.wirtz@gmail.com">Privacy questions</a>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Your data, clearly explained</p>
+        <h1 id="page-title">Privacy<br>Policy</h1>
+      </div>
+      <div>
+        <p class="hero-copy">
+          Charlie is designed with privacy in mind. You can use the app without an account, and Charlie does not collect your personal information.
+        </p>
+        <p class="updated">Last updated · 14 August 2026</p>
+      </div>
+    </section>
+
+    <div class="policy-layout">
+      <nav class="policy-nav" aria-label="Privacy policy contents">
+        <p>On this page</p>
+        <ol>
+          <li><a href="#collection">Data collection</a></li>
+          <li><a href="#permissions">Permissions</a></li>
+          <li><a href="#storage">Data storage</a></li>
+          <li><a href="#services">Platform services</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#changes">Policy changes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </nav>
+
+      <article class="policy-card">
+        <header class="summary">
+          <p class="summary-label">The short version</p>
+          <h2>No account. No personal-data collection. Your preferences remain on your device.</h2>
+        </header>
+
+        <div class="policy-content">
+          <section class="policy-section" id="collection">
+            <span class="section-number">01</span>
+            <h2>Data collection</h2>
+            <p>
+              Charlie does not collect personal information such as your name, email address, or account details. The app does not require you to create an account.
+            </p>
+          </section>
+
+          <section class="policy-section" id="permissions">
+            <span class="section-number">02</span>
+            <h2>Device permissions</h2>
+            <p>
+              Charlie may ask for permission to send notifications. Permission is optional and can be changed at any time in your device settings.
+            </p>
+            <div class="permission-note">
+              <span class="bell" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </span>
+              <p>
+                <strong>Notifications</strong>
+                Used to let you know about new calls.
+              </p>
+            </div>
+          </section>
+
+          <section class="policy-section" id="storage">
+            <span class="section-number">03</span>
+            <h2>Data storage</h2>
+            <p>
+              App settings and preferences are stored locally on your device. Charlie does not upload these settings to its own external servers. Local data remains on your device until you clear the app’s data or uninstall the app.
+            </p>
+          </section>
+
+          <section class="policy-section" id="services">
+            <span class="section-number">04</span>
+            <h2>Platform services</h2>
+            <p>
+              When notifications are enabled, delivery may rely on services provided by your device or operating-system provider. Those services process information according to their own privacy policies.
+            </p>
+          </section>
+
+          <section class="policy-section" id="security">
+            <span class="section-number">05</span>
+            <h2>Security</h2>
+            <p>
+              We take reasonable measures to help Charlie operate securely. However, no method of electronic storage or transmission can be guaranteed to be completely secure.
+            </p>
+          </section>
+
+          <section class="policy-section" id="changes">
+            <span class="section-number">06</span>
+            <h2>Changes to this policy</h2>
+            <p>
+              This privacy policy may be updated as Charlie evolves. Any changes will be published on this page, and the “Last updated” date above will be revised.
+            </p>
+          </section>
+
+          <section class="policy-section" id="contact">
+            <span class="section-number">07</span>
+            <h2>Contact</h2>
+            <p>If you have a question about Charlie or this privacy policy, you can get in touch by email.</p>
+            <a class="contact-link" href="mailto:matti.wirtz@gmail.com">matti.wirtz@gmail.com</a>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Charlie. Privacy, in plain language.</p>
+  </footer>
+</body>
+</html>
